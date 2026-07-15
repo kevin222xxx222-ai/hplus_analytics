@@ -1,0 +1,367 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  VIEWER
+}
+
+enum StoreCode {
+  KASUKABE
+  KOSHIGAYA
+  NODA
+}
+
+enum CastStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum MediaType {
+  CTI
+  TOWN
+  HEAVEN
+}
+
+enum AliasReviewStatus {
+  PENDING
+  MAPPED
+  IGNORED
+}
+
+enum ImportSourceKind {
+  MANUAL_UPLOAD
+  GOOGLE_DRIVE
+}
+
+enum ImportDataType {
+  CTI_CAST_REPORT
+  TOWN_STORE
+  TOWN_CAST
+  TOWN_URL
+  TOWN_LP
+  HEAVEN_STORE
+  HEAVEN_CAST
+}
+
+enum ImportBatchStatus {
+  UPLOADED
+  VALIDATING
+  PREVIEW_READY
+  WAITING_FOR_CAST_LINK
+  IMPORTING
+  COMPLETED
+  COMPLETED_WITH_WARNINGS
+  FAILED
+  CANCELLED
+}
+
+enum ImportMode {
+  DAILY
+  MONTH_TO_DATE
+  MONTHLY_FINAL
+  UNKNOWN
+}
+
+enum ImportErrorLevel {
+  WARNING
+  ERROR
+}
+
+enum ImportErrorStatus {
+  OPEN
+  RESOLVED
+  IGNORED
+}
+
+enum ImprovementType {
+  EXPOSURE_SHORTAGE
+  PAGE_CONVERSION_DECLINE
+  REPEAT_IMPROVEMENT
+  ATTENDANCE_OPPORTUNITY_LOSS
+  SHARP_DECLINE
+  GROWING
+}
+
+enum ImprovementLogStatus {
+  ACTIVE
+  RESOLVED
+  DISMISSED
+}
+
+model User {
+  id            String        @id @default(uuid()) @db.Uuid
+  loginId       String        @unique @map("login_id") @db.VarChar(100)
+  email         String?       @unique @db.VarChar(255)
+  displayName   String        @map("display_name") @db.VarChar(100)
+  passwordHash  String        @map("password_hash") @db.VarChar(255)
+  role          UserRole      @default(VIEWER)
+  isActive      Boolean       @default(true) @map("is_active")
+  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
+  sessions      Session[]
+  importBatches ImportBatch[]
+
+  @@map("users")
+}
+
+model Session {
+  id         String   @id @default(uuid()) @db.Uuid
+  tokenHash  String   @unique @map("token_hash") @db.Char(64)
+  userId     String   @map("user_id") @db.Uuid
+  expiresAt  DateTime @map("expires_at") @db.Timestamptz(3)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  lastUsedAt DateTime @default(now()) @map("last_used_at") @db.Timestamptz(3)
+  ipAddress  String?  @map("ip_address") @db.VarChar(64)
+  userAgent  String?  @map("user_agent") @db.VarChar(512)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+model Store {
+  id                    String           @id @default(uuid()) @db.Uuid
+  code                  StoreCode        @unique
+  name                  String           @db.VarChar(100)
+  shortName             String           @map("short_name") @db.VarChar(50)
+  displayOrder          Int              @default(0) @map("display_order")
+  isActive              Boolean          @default(true) @map("is_active")
+  hasManagementMetrics  Boolean          @default(true) @map("has_management_metrics")
+  hasAcquisitionMetrics Boolean          @default(false) @map("has_acquisition_metrics")
+  createdAt             DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt             DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
+  casts                 Cast[]
+  aliases               CastAlias[]
+  mediaListings         MediaListing[]
+  importSources         ImportSource[]
+  improvementLogs       ImprovementLog[]
+  ctiCastDailies        CtiCastDaily[]
+
+  @@map("stores")
+}
+
+model Cast {
+  id              String           @id @default(uuid()) @db.Uuid
+  displayName     String           @map("display_name") @db.VarChar(100)
+  normalizedName  String           @map("normalized_name") @db.VarChar(100)
+  status          CastStatus       @default(ACTIVE)
+  startedOn       DateTime         @map("started_on") @db.Date
+  endedOn         DateTime?        @map("ended_on") @db.Date
+  primaryStoreId  String?          @map("primary_store_id") @db.Uuid
+  notes           String?          @db.Text
+  createdAt       DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
+  primaryStore    Store?           @relation(fields: [primaryStoreId], references: [id], onDelete: SetNull)
+  aliases         CastAlias[]
+  mediaListings   MediaListing[]
+  improvementLogs ImprovementLog[]
+  ctiCastDailies  CtiCastDaily[]
+
+  @@index([normalizedName])
+  @@index([primaryStoreId, status])
+  @@map("casts")
+}
+
+model CastAlias {
+  id              String            @id @default(uuid()) @db.Uuid
+  mediaType       MediaType         @map("media_type")
+  aliasName       String            @map("alias_name") @db.VarChar(100)
+  normalizedAlias String            @map("normalized_alias") @db.VarChar(100)
+  reviewStatus    AliasReviewStatus @default(PENDING) @map("review_status")
+  castId          String?           @map("cast_id") @db.Uuid
+  storeId         String?           @map("store_id") @db.Uuid
+  validFrom       DateTime?         @map("valid_from") @db.Date
+  validTo         DateTime?         @map("valid_to") @db.Date
+  createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime          @updatedAt @map("updated_at") @db.Timestamptz(3)
+  cast            Cast?             @relation(fields: [castId], references: [id], onDelete: SetNull)
+  store           Store?            @relation(fields: [storeId], references: [id], onDelete: SetNull)
+
+  @@unique([mediaType, storeId, normalizedAlias, validFrom])
+  @@index([reviewStatus])
+  @@index([castId])
+  @@map("cast_aliases")
+}
+
+model MediaListing {
+  id         String    @id @default(uuid()) @db.Uuid
+  castId     String    @map("cast_id") @db.Uuid
+  storeId    String    @map("store_id") @db.Uuid
+  mediaType  MediaType @map("media_type")
+  isListed   Boolean   @default(true) @map("is_listed")
+  listedFrom DateTime? @map("listed_from") @db.Date
+  listedTo   DateTime? @map("listed_to") @db.Date
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt  DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+  cast       Cast      @relation(fields: [castId], references: [id], onDelete: Cascade)
+  store      Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@unique([castId, storeId, mediaType])
+  @@index([storeId, mediaType, isListed])
+  @@map("media_listings")
+}
+
+model ImportSource {
+  id         String           @id @default(uuid()) @db.Uuid
+  name       String           @db.VarChar(120)
+  kind       ImportSourceKind @default(MANUAL_UPLOAD)
+  mediaType  MediaType        @map("media_type")
+  dataType   ImportDataType   @map("data_type")
+  metricType String?          @map("metric_type") @db.VarChar(100)
+  storeId    String?          @map("store_id") @db.Uuid
+  folderPath String?          @map("folder_path") @db.VarChar(500)
+  isActive   Boolean          @default(true) @map("is_active")
+  createdAt  DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt  DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
+  store      Store?           @relation(fields: [storeId], references: [id], onDelete: SetNull)
+  errors     ImportError[]
+  batches    ImportBatch[]
+
+  @@unique([name])
+  @@index([mediaType, dataType, storeId])
+  @@map("import_sources")
+}
+
+model ImportError {
+  id             String            @id @default(uuid()) @db.Uuid
+  runId          String            @map("run_id") @db.Uuid
+  importSourceId String?           @map("import_source_id") @db.Uuid
+  importBatchId  String?           @map("import_batch_id") @db.Uuid
+  fileName       String            @map("file_name") @db.VarChar(255)
+  fileHash       String?           @map("file_hash") @db.Char(64)
+  sheetName      String?           @map("sheet_name") @db.VarChar(255)
+  rowNumber      Int?              @map("row_number")
+  columnName     String?           @map("column_name") @db.VarChar(255)
+  errorCode      String            @map("error_code") @db.VarChar(100)
+  level          ImportErrorLevel  @default(ERROR)
+  status         ImportErrorStatus @default(OPEN)
+  message        String            @db.Text
+  rawData        Json?             @map("raw_data") @db.JsonB
+  resolvedAt     DateTime?         @map("resolved_at") @db.Timestamptz(3)
+  createdAt      DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  importSource   ImportSource?     @relation(fields: [importSourceId], references: [id], onDelete: SetNull)
+  importBatch    ImportBatch?      @relation(fields: [importBatchId], references: [id], onDelete: Cascade)
+
+  @@index([runId])
+  @@index([importSourceId, status])
+  @@index([importBatchId, level])
+  @@index([fileHash])
+  @@index([status, createdAt])
+  @@map("import_errors")
+}
+
+model ImportBatch {
+  id               String            @id @default(uuid()) @db.Uuid
+  runId            String            @unique @default(uuid()) @map("run_id") @db.Uuid
+  importSourceId   String            @map("import_source_id") @db.Uuid
+  originalFilename String            @map("original_filename") @db.VarChar(255)
+  storedFilename   String            @map("stored_filename") @db.VarChar(255)
+  storagePath      String            @map("storage_path") @db.VarChar(1000)
+  fileHash         String            @map("file_hash") @db.Char(64)
+  fileSizeBytes    BigInt            @map("file_size_bytes")
+  dataType         ImportDataType    @map("data_type")
+  importMode       ImportMode        @map("import_mode")
+  targetFrom       DateTime          @map("target_from") @db.Date
+  targetTo         DateTime          @map("target_to") @db.Date
+  status           ImportBatchStatus @default(UPLOADED)
+  startedAt        DateTime          @default(now()) @map("started_at") @db.Timestamptz(3)
+  completedAt      DateTime?         @map("completed_at") @db.Timestamptz(3)
+  uploadedByUserId String?           @map("uploaded_by_user_id") @db.Uuid
+  insertedCount    Int               @default(0) @map("inserted_count")
+  updatedCount     Int               @default(0) @map("updated_count")
+  skippedCount     Int               @default(0) @map("skipped_count")
+  pendingCount     Int               @default(0) @map("pending_count")
+  warningCount     Int               @default(0) @map("warning_count")
+  errorCount       Int               @default(0) @map("error_count")
+  sourceSheetNames Json?             @map("source_sheet_names") @db.JsonB
+  detectedColumns  Json?             @map("detected_columns") @db.JsonB
+  metadata         Json?             @db.JsonB
+  failureMessage   String?           @map("failure_message") @db.Text
+  createdAt        DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime          @updatedAt @map("updated_at") @db.Timestamptz(3)
+  importSource     ImportSource      @relation(fields: [importSourceId], references: [id], onDelete: Restrict)
+  uploadedByUser   User?             @relation(fields: [uploadedByUserId], references: [id], onDelete: SetNull)
+  errors           ImportError[]
+  ctiCastDailies   CtiCastDaily[]
+
+  @@index([fileHash, status])
+  @@index([dataType, targetFrom, targetTo])
+  @@index([status, createdAt])
+  @@index([uploadedByUserId])
+  @@map("import_batches")
+}
+
+model CtiCastDaily {
+  id                      String      @id @default(uuid()) @db.Uuid
+  businessDate            DateTime    @map("business_date") @db.Date
+  storeId                 String      @map("store_id") @db.Uuid
+  castId                  String      @map("cast_id") @db.Uuid
+  importBatchId           String      @map("import_batch_id") @db.Uuid
+  sourceSheetName         String      @map("source_sheet_name") @db.VarChar(255)
+  sourceRowNumber         Int         @map("source_row_number")
+  attendanceCount         Int         @map("attendance_count")
+  attendanceMinutes       Int         @map("attendance_minutes")
+  sameDayAbsenceCount     Int         @map("same_day_absence_count")
+  reservationCount        Int         @map("reservation_count")
+  cancellationCount       Int         @map("cancellation_count")
+  serviceCount            Int         @map("service_count")
+  sourceServiceCount      Int?        @map("source_service_count")
+  regularNominationCount  Int         @map("regular_nomination_count")
+  photoNominationCount    Int         @map("photo_nomination_count")
+  freeCount               Int         @map("free_count")
+  contractCount           Int         @map("contract_count")
+  sourceContractCount     Int?        @map("source_contract_count")
+  newCount                Int?        @map("new_count")
+  repeatCount             Int?        @map("repeat_count")
+  salesAmount             Int         @map("sales_amount")
+  castRewardAmount        Int         @map("cast_reward_amount")
+  ctiProfitAmount         Int         @map("cti_profit_amount")
+  payoutAfterRewardAmount Int         @map("payout_after_reward_amount")
+  diaryCountCti           Int         @map("diary_count_cti")
+  paidOptionCount         Int         @map("paid_option_count")
+  createdAt               DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt               DateTime    @updatedAt @map("updated_at") @db.Timestamptz(3)
+  store                   Store       @relation(fields: [storeId], references: [id], onDelete: Restrict)
+  cast                    Cast        @relation(fields: [castId], references: [id], onDelete: Restrict)
+  importBatch             ImportBatch @relation(fields: [importBatchId], references: [id], onDelete: Restrict)
+
+  @@unique([businessDate, storeId, castId])
+  @@index([castId, businessDate])
+  @@index([storeId, businessDate])
+  @@index([importBatchId])
+  @@map("cti_cast_daily")
+}
+
+model ImprovementLog {
+  id                String               @id @default(uuid()) @db.Uuid
+  castId            String?              @map("cast_id") @db.Uuid
+  storeId           String?              @map("store_id") @db.Uuid
+  type              ImprovementType
+  status            ImprovementLogStatus @default(ACTIVE)
+  title             String               @db.VarChar(160)
+  message           String               @db.Text
+  ruleVersion       String               @map("rule_version") @db.VarChar(50)
+  observedFrom      DateTime             @map("observed_from") @db.Date
+  observedTo        DateTime             @map("observed_to") @db.Date
+  detectedAt        DateTime             @default(now()) @map("detected_at") @db.Timestamptz(3)
+  evidence          Json?                @db.JsonB
+  comparisonContext Json?                @map("comparison_context") @db.JsonB
+  resolvedAt        DateTime?            @map("resolved_at") @db.Timestamptz(3)
+  createdAt         DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime             @updatedAt @map("updated_at") @db.Timestamptz(3)
+  cast              Cast?                @relation(fields: [castId], references: [id], onDelete: SetNull)
+  store             Store?               @relation(fields: [storeId], references: [id], onDelete: SetNull)
+
+  @@index([castId, status, detectedAt])
+  @@index([storeId, type, status])
+  @@index([observedFrom, observedTo])
+  @@map("improvement_logs")
+}

@@ -1,0 +1,15 @@
+import { Plus, UserCheck, UserX } from "lucide-react";
+import { createCastAction, setCastStatusAction } from "@/app/actions/masters";
+import { PageHeader } from "@/components/page-header";
+import { CastStatus } from "@/generated/prisma/client";
+import { requireAdmin } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+
+export default async function CastsPage() {
+  await requireAdmin();
+  const [casts, stores] = await Promise.all([prisma.cast.findMany({ include: { primaryStore: true, aliases: true }, orderBy: [{ status: "asc" }, { displayName: "asc" }] }), prisma.store.findMany({ where: { isActive: true }, orderBy: { displayOrder: "asc" } })]);
+  return <><PageHeader title="キャスト管理" description="名前を主キーにせず内部IDを発行し、在籍期間で同名の別人を識別します。" />
+    <section className="panel mb-6 p-5"><h2 className="text-base font-semibold text-slate-900">キャストを登録</h2><form action={createCastAction} className="mt-4 grid gap-4 lg:grid-cols-[1fr_180px_220px_1fr_auto] lg:items-end"><div><label className="form-label">キャスト名</label><input name="displayName" required className="form-input mt-2" /></div><div><label className="form-label">在籍開始日</label><input name="startedOn" type="date" required className="form-input mt-2" /></div><div><label className="form-label">主所属店舗</label><select name="primaryStoreId" className="form-input mt-2"><option value="">未設定</option>{stores.map((s) => <option key={s.id} value={s.id}>{s.shortName}</option>)}</select></div><div><label className="form-label">メモ</label><input name="notes" className="form-input mt-2" /></div><button className="primary-button"><Plus className="size-4" />登録</button></form></section>
+    <section className="panel overflow-hidden"><div className="table-wrap"><table><thead><tr><th>キャスト</th><th>内部ID</th><th>主所属</th><th>在籍開始</th><th>エイリアス</th><th>状態</th><th>変更</th></tr></thead><tbody>{casts.map((cast) => <tr key={cast.id}><td className="font-medium text-slate-900">{cast.displayName}</td><td className="font-mono text-xs text-slate-400">{cast.id.slice(0, 8)}…</td><td>{cast.primaryStore?.shortName || "—"}</td><td>{cast.startedOn.toLocaleDateString("ja-JP")}</td><td>{cast.aliases.length}</td><td><span className={`status-badge ${cast.status === "ACTIVE" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-500"}`}>{cast.status === "ACTIVE" ? "在籍" : "退店"}</span></td><td><form action={setCastStatusAction} className="flex items-center gap-2"><input type="hidden" name="id" value={cast.id} /><input type="hidden" name="status" value={cast.status === CastStatus.ACTIVE ? CastStatus.INACTIVE : CastStatus.ACTIVE} />{cast.status === CastStatus.ACTIVE && <input type="date" name="endedOn" className="compact-input" required />}<button className="icon-button" title={cast.status === CastStatus.ACTIVE ? "退店にする" : "在籍に戻す"}>{cast.status === CastStatus.ACTIVE ? <UserX className="size-4" /> : <UserCheck className="size-4" />}</button></form></td></tr>)}</tbody></table>{casts.length === 0 && <p className="empty-state">キャストはまだ登録されていません。</p>}</div></section>
+  </>;
+}

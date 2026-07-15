@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f4f6f8;
+  --foreground: #17201e;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Inter", "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  margin: 0;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button, select {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+@layer components {
+  .panel {
+    @apply rounded-2xl border border-slate-200/80 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.03)];
+  }
+
+  .form-label {
+    @apply text-xs font-semibold text-slate-600;
+  }
+
+  .form-input {
+    @apply h-11 w-full rounded-xl border border-slate-200 bg-white px-3.5 text-sm text-slate-800 outline-none transition placeholder:text-slate-300 focus:border-emerald-500 focus:ring-3 focus:ring-emerald-100;
+  }
+
+  .compact-input {
+    @apply h-9 rounded-lg border border-slate-200 bg-white px-2.5 text-xs text-slate-700 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100;
+  }
+
+  .primary-button {
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[#176c56] px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#105743] disabled:opacity-60;
+  }
+
+  .secondary-button {
+    @apply inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 transition hover:border-emerald-300 hover:text-emerald-700;
+  }
+
+  .icon-button {
+    @apply grid size-9 place-items-center rounded-lg border border-slate-200 bg-white text-slate-500 transition hover:border-emerald-300 hover:text-emerald-700;
+  }
+
+  .status-badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold;
+  }
+
+  .status-dot {
+    @apply size-2.5 rounded-full ring-4 ring-slate-100;
+  }
+
+  .check-row {
+    @apply flex items-center gap-2.5;
+  }
+
+  .check-row input {
+    @apply size-4 accent-emerald-600;
+  }
+
+  .table-wrap {
+    @apply overflow-x-auto;
+  }
+
+  .table-wrap table {
+    @apply w-full border-collapse text-left text-sm;
+  }
+
+  .table-wrap th {
+    @apply whitespace-nowrap border-b border-slate-200 bg-slate-50/80 px-5 py-3 text-[11px] font-bold tracking-wide text-slate-500;
+  }
+
+  .table-wrap td {
+    @apply whitespace-nowrap border-b border-slate-100 px-5 py-4 text-slate-600;
+  }
+
+  .table-wrap tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .empty-state {
+    @apply px-6 py-14 text-center text-sm text-slate-400;
+  }
+}
