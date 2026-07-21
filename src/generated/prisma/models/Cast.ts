@@ -35,6 +35,8 @@ export type CastMinAggregateOutputType = {
   notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  mergedIntoCastId: string | null
+  mergedAt: Date | null
 }
 
 export type CastMaxAggregateOutputType = {
@@ -48,6 +50,8 @@ export type CastMaxAggregateOutputType = {
   notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  mergedIntoCastId: string | null
+  mergedAt: Date | null
 }
 
 export type CastCountAggregateOutputType = {
@@ -61,6 +65,8 @@ export type CastCountAggregateOutputType = {
   notes: number
   createdAt: number
   updatedAt: number
+  mergedIntoCastId: number
+  mergedAt: number
   _all: number
 }
 
@@ -76,6 +82,8 @@ export type CastMinAggregateInputType = {
   notes?: true
   createdAt?: true
   updatedAt?: true
+  mergedIntoCastId?: true
+  mergedAt?: true
 }
 
 export type CastMaxAggregateInputType = {
@@ -89,6 +97,8 @@ export type CastMaxAggregateInputType = {
   notes?: true
   createdAt?: true
   updatedAt?: true
+  mergedIntoCastId?: true
+  mergedAt?: true
 }
 
 export type CastCountAggregateInputType = {
@@ -102,6 +112,8 @@ export type CastCountAggregateInputType = {
   notes?: true
   createdAt?: true
   updatedAt?: true
+  mergedIntoCastId?: true
+  mergedAt?: true
   _all?: true
 }
 
@@ -188,6 +200,8 @@ export type CastGroupByOutputType = {
   notes: string | null
   createdAt: Date
   updatedAt: Date
+  mergedIntoCastId: string | null
+  mergedAt: Date | null
   _count: CastCountAggregateOutputType | null
   _min: CastMinAggregateOutputType | null
   _max: CastMaxAggregateOutputType | null
@@ -222,11 +236,21 @@ export type CastWhereInput = {
   notes?: Prisma.StringNullableFilter<"Cast"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Cast"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Cast"> | Date | string
+  mergedIntoCastId?: Prisma.UuidNullableFilter<"Cast"> | string | null
+  mergedAt?: Prisma.DateTimeNullableFilter<"Cast"> | Date | string | null
   primaryStore?: Prisma.XOR<Prisma.StoreNullableScalarRelationFilter, Prisma.StoreWhereInput> | null
   aliases?: Prisma.CastAliasListRelationFilter
   mediaListings?: Prisma.MediaListingListRelationFilter
   improvementLogs?: Prisma.ImprovementLogListRelationFilter
   ctiCastDailies?: Prisma.CtiCastDailyListRelationFilter
+  townCastDailies?: Prisma.TownCastDailyListRelationFilter
+  townUrlDailies?: Prisma.TownUrlDailyListRelationFilter
+  townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
+  nameHistories?: Prisma.CastNameHistoryListRelationFilter
+  mergedInto?: Prisma.XOR<Prisma.CastNullableScalarRelationFilter, Prisma.CastWhereInput> | null
+  mergedSources?: Prisma.CastListRelationFilter
+  mergesAsSource?: Prisma.CastMergeHistoryListRelationFilter
+  mergesAsTarget?: Prisma.CastMergeHistoryListRelationFilter
 }
 
 export type CastOrderByWithRelationInput = {
@@ -240,11 +264,21 @@ export type CastOrderByWithRelationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  mergedIntoCastId?: Prisma.SortOrderInput | Prisma.SortOrder
+  mergedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   primaryStore?: Prisma.StoreOrderByWithRelationInput
   aliases?: Prisma.CastAliasOrderByRelationAggregateInput
   mediaListings?: Prisma.MediaListingOrderByRelationAggregateInput
   improvementLogs?: Prisma.ImprovementLogOrderByRelationAggregateInput
   ctiCastDailies?: Prisma.CtiCastDailyOrderByRelationAggregateInput
+  townCastDailies?: Prisma.TownCastDailyOrderByRelationAggregateInput
+  townUrlDailies?: Prisma.TownUrlDailyOrderByRelationAggregateInput
+  townLandingDailies?: Prisma.TownLandingDailyOrderByRelationAggregateInput
+  nameHistories?: Prisma.CastNameHistoryOrderByRelationAggregateInput
+  mergedInto?: Prisma.CastOrderByWithRelationInput
+  mergedSources?: Prisma.CastOrderByRelationAggregateInput
+  mergesAsSource?: Prisma.CastMergeHistoryOrderByRelationAggregateInput
+  mergesAsTarget?: Prisma.CastMergeHistoryOrderByRelationAggregateInput
 }
 
 export type CastWhereUniqueInput = Prisma.AtLeast<{
@@ -261,11 +295,21 @@ export type CastWhereUniqueInput = Prisma.AtLeast<{
   notes?: Prisma.StringNullableFilter<"Cast"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Cast"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Cast"> | Date | string
+  mergedIntoCastId?: Prisma.UuidNullableFilter<"Cast"> | string | null
+  mergedAt?: Prisma.DateTimeNullableFilter<"Cast"> | Date | string | null
   primaryStore?: Prisma.XOR<Prisma.StoreNullableScalarRelationFilter, Prisma.StoreWhereInput> | null
   aliases?: Prisma.CastAliasListRelationFilter
   mediaListings?: Prisma.MediaListingListRelationFilter
   improvementLogs?: Prisma.ImprovementLogListRelationFilter
   ctiCastDailies?: Prisma.CtiCastDailyListRelationFilter
+  townCastDailies?: Prisma.TownCastDailyListRelationFilter
+  townUrlDailies?: Prisma.TownUrlDailyListRelationFilter
+  townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
+  nameHistories?: Prisma.CastNameHistoryListRelationFilter
+  mergedInto?: Prisma.XOR<Prisma.CastNullableScalarRelationFilter, Prisma.CastWhereInput> | null
+  mergedSources?: Prisma.CastListRelationFilter
+  mergesAsSource?: Prisma.CastMergeHistoryListRelationFilter
+  mergesAsTarget?: Prisma.CastMergeHistoryListRelationFilter
 }, "id">
 
 export type CastOrderByWithAggregationInput = {
@@ -279,6 +323,8 @@ export type CastOrderByWithAggregationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  mergedIntoCastId?: Prisma.SortOrderInput | Prisma.SortOrder
+  mergedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CastCountOrderByAggregateInput
   _max?: Prisma.CastMaxOrderByAggregateInput
   _min?: Prisma.CastMinOrderByAggregateInput
@@ -298,6 +344,8 @@ export type CastScalarWhereWithAggregatesInput = {
   notes?: Prisma.StringNullableWithAggregatesFilter<"Cast"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Cast"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Cast"> | Date | string
+  mergedIntoCastId?: Prisma.UuidNullableWithAggregatesFilter<"Cast"> | string | null
+  mergedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Cast"> | Date | string | null
 }
 
 export type CastCreateInput = {
@@ -310,11 +358,20 @@ export type CastCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedAt?: Date | string | null
   primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
   aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
 }
 
 export type CastUncheckedCreateInput = {
@@ -328,10 +385,19 @@ export type CastUncheckedCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
 }
 
 export type CastUpdateInput = {
@@ -344,11 +410,20 @@ export type CastUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
   aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
 }
 
 export type CastUncheckedUpdateInput = {
@@ -362,10 +437,19 @@ export type CastUncheckedUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
 }
 
 export type CastCreateManyInput = {
@@ -379,6 +463,8 @@ export type CastCreateManyInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
 }
 
 export type CastUpdateManyMutationInput = {
@@ -391,6 +477,7 @@ export type CastUpdateManyMutationInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CastUncheckedUpdateManyInput = {
@@ -404,6 +491,8 @@ export type CastUncheckedUpdateManyInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type CastListRelationFilter = {
@@ -414,6 +503,11 @@ export type CastListRelationFilter = {
 
 export type CastOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type CastNullableScalarRelationFilter = {
+  is?: Prisma.CastWhereInput | null
+  isNot?: Prisma.CastWhereInput | null
 }
 
 export type CastCountOrderByAggregateInput = {
@@ -427,6 +521,8 @@ export type CastCountOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  mergedIntoCastId?: Prisma.SortOrder
+  mergedAt?: Prisma.SortOrder
 }
 
 export type CastMaxOrderByAggregateInput = {
@@ -440,6 +536,8 @@ export type CastMaxOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  mergedIntoCastId?: Prisma.SortOrder
+  mergedAt?: Prisma.SortOrder
 }
 
 export type CastMinOrderByAggregateInput = {
@@ -453,11 +551,8 @@ export type CastMinOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type CastNullableScalarRelationFilter = {
-  is?: Prisma.CastWhereInput | null
-  isNot?: Prisma.CastWhereInput | null
+  mergedIntoCastId?: Prisma.SortOrder
+  mergedAt?: Prisma.SortOrder
 }
 
 export type CastScalarRelationFilter = {
@@ -507,12 +602,112 @@ export type CastUncheckedUpdateManyWithoutPrimaryStoreNestedInput = {
   deleteMany?: Prisma.CastScalarWhereInput | Prisma.CastScalarWhereInput[]
 }
 
+export type CastCreateNestedOneWithoutMergedSourcesInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutMergedSourcesInput, Prisma.CastUncheckedCreateWithoutMergedSourcesInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutMergedSourcesInput
+  connect?: Prisma.CastWhereUniqueInput
+}
+
+export type CastCreateNestedManyWithoutMergedIntoInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutMergedIntoInput, Prisma.CastUncheckedCreateWithoutMergedIntoInput> | Prisma.CastCreateWithoutMergedIntoInput[] | Prisma.CastUncheckedCreateWithoutMergedIntoInput[]
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutMergedIntoInput | Prisma.CastCreateOrConnectWithoutMergedIntoInput[]
+  createMany?: Prisma.CastCreateManyMergedIntoInputEnvelope
+  connect?: Prisma.CastWhereUniqueInput | Prisma.CastWhereUniqueInput[]
+}
+
+export type CastUncheckedCreateNestedManyWithoutMergedIntoInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutMergedIntoInput, Prisma.CastUncheckedCreateWithoutMergedIntoInput> | Prisma.CastCreateWithoutMergedIntoInput[] | Prisma.CastUncheckedCreateWithoutMergedIntoInput[]
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutMergedIntoInput | Prisma.CastCreateOrConnectWithoutMergedIntoInput[]
+  createMany?: Prisma.CastCreateManyMergedIntoInputEnvelope
+  connect?: Prisma.CastWhereUniqueInput | Prisma.CastWhereUniqueInput[]
+}
+
 export type EnumCastStatusFieldUpdateOperationsInput = {
   set?: $Enums.CastStatus
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type CastUpdateOneWithoutMergedSourcesNestedInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutMergedSourcesInput, Prisma.CastUncheckedCreateWithoutMergedSourcesInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutMergedSourcesInput
+  upsert?: Prisma.CastUpsertWithoutMergedSourcesInput
+  disconnect?: Prisma.CastWhereInput | boolean
+  delete?: Prisma.CastWhereInput | boolean
+  connect?: Prisma.CastWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CastUpdateToOneWithWhereWithoutMergedSourcesInput, Prisma.CastUpdateWithoutMergedSourcesInput>, Prisma.CastUncheckedUpdateWithoutMergedSourcesInput>
+}
+
+export type CastUpdateManyWithoutMergedIntoNestedInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutMergedIntoInput, Prisma.CastUncheckedCreateWithoutMergedIntoInput> | Prisma.CastCreateWithoutMergedIntoInput[] | Prisma.CastUncheckedCreateWithoutMergedIntoInput[]
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutMergedIntoInput | Prisma.CastCreateOrConnectWithoutMergedIntoInput[]
+  upsert?: Prisma.CastUpsertWithWhereUniqueWithoutMergedIntoInput | Prisma.CastUpsertWithWhereUniqueWithoutMergedIntoInput[]
+  createMany?: Prisma.CastCreateManyMergedIntoInputEnvelope
+  set?: Prisma.CastWhereUniqueInput | Prisma.CastWhereUniqueInput[]
+  disconnect?: Prisma.CastWhereUniqueInput | Prisma.CastWhereUniqueInput[]
+  delete?: Prisma.CastWhereUniqueInput | Prisma.CastWhereUniqueInput[]
+  connect?: Prisma.CastWhereUniqueInput | Prisma.CastWhereUniqueInput[]
+  update?: Prisma.CastUpdateWithWhereUniqueWithoutMergedIntoInput | Prisma.CastUpdateWithWhereUniqueWithoutMergedIntoInput[]
+  updateMany?: Prisma.CastUpdateManyWithWhereWithoutMergedIntoInput | Prisma.CastUpdateManyWithWhereWithoutMergedIntoInput[]
+  deleteMany?: Prisma.CastScalarWhereInput | Prisma.CastScalarWhereInput[]
+}
+
+export type CastUncheckedUpdateManyWithoutMergedIntoNestedInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutMergedIntoInput, Prisma.CastUncheckedCreateWithoutMergedIntoInput> | Prisma.CastCreateWithoutMergedIntoInput[] | Prisma.CastUncheckedCreateWithoutMergedIntoInput[]
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutMergedIntoInput | Prisma.CastCreateOrConnectWithoutMergedIntoInput[]
+  upsert?: Prisma.CastUpsertWithWhereUniqueWithoutMergedIntoInput | Prisma.CastUpsertWithWhereUniqueWithoutMergedIntoInput[]
+  createMany?: Prisma.CastCreateManyMergedIntoInputEnvelope
+  set?: Prisma.CastWhereUniqueInput | Prisma.CastWhereUniqueInput[]
+  disconnect?: Prisma.CastWhereUniqueInput | Prisma.CastWhereUniqueInput[]
+  delete?: Prisma.CastWhereUniqueInput | Prisma.CastWhereUniqueInput[]
+  connect?: Prisma.CastWhereUniqueInput | Prisma.CastWhereUniqueInput[]
+  update?: Prisma.CastUpdateWithWhereUniqueWithoutMergedIntoInput | Prisma.CastUpdateWithWhereUniqueWithoutMergedIntoInput[]
+  updateMany?: Prisma.CastUpdateManyWithWhereWithoutMergedIntoInput | Prisma.CastUpdateManyWithWhereWithoutMergedIntoInput[]
+  deleteMany?: Prisma.CastScalarWhereInput | Prisma.CastScalarWhereInput[]
+}
+
+export type CastCreateNestedOneWithoutNameHistoriesInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutNameHistoriesInput, Prisma.CastUncheckedCreateWithoutNameHistoriesInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutNameHistoriesInput
+  connect?: Prisma.CastWhereUniqueInput
+}
+
+export type CastUpdateOneRequiredWithoutNameHistoriesNestedInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutNameHistoriesInput, Prisma.CastUncheckedCreateWithoutNameHistoriesInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutNameHistoriesInput
+  upsert?: Prisma.CastUpsertWithoutNameHistoriesInput
+  connect?: Prisma.CastWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CastUpdateToOneWithWhereWithoutNameHistoriesInput, Prisma.CastUpdateWithoutNameHistoriesInput>, Prisma.CastUncheckedUpdateWithoutNameHistoriesInput>
+}
+
+export type CastCreateNestedOneWithoutMergesAsSourceInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutMergesAsSourceInput, Prisma.CastUncheckedCreateWithoutMergesAsSourceInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutMergesAsSourceInput
+  connect?: Prisma.CastWhereUniqueInput
+}
+
+export type CastCreateNestedOneWithoutMergesAsTargetInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutMergesAsTargetInput, Prisma.CastUncheckedCreateWithoutMergesAsTargetInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutMergesAsTargetInput
+  connect?: Prisma.CastWhereUniqueInput
+}
+
+export type CastUpdateOneRequiredWithoutMergesAsSourceNestedInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutMergesAsSourceInput, Prisma.CastUncheckedCreateWithoutMergesAsSourceInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutMergesAsSourceInput
+  upsert?: Prisma.CastUpsertWithoutMergesAsSourceInput
+  connect?: Prisma.CastWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CastUpdateToOneWithWhereWithoutMergesAsSourceInput, Prisma.CastUpdateWithoutMergesAsSourceInput>, Prisma.CastUncheckedUpdateWithoutMergesAsSourceInput>
+}
+
+export type CastUpdateOneRequiredWithoutMergesAsTargetNestedInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutMergesAsTargetInput, Prisma.CastUncheckedCreateWithoutMergesAsTargetInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutMergesAsTargetInput
+  upsert?: Prisma.CastUpsertWithoutMergesAsTargetInput
+  connect?: Prisma.CastWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CastUpdateToOneWithWhereWithoutMergesAsTargetInput, Prisma.CastUpdateWithoutMergesAsTargetInput>, Prisma.CastUncheckedUpdateWithoutMergesAsTargetInput>
 }
 
 export type CastCreateNestedOneWithoutAliasesInput = {
@@ -559,6 +754,52 @@ export type CastUpdateOneRequiredWithoutCtiCastDailiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CastUpdateToOneWithWhereWithoutCtiCastDailiesInput, Prisma.CastUpdateWithoutCtiCastDailiesInput>, Prisma.CastUncheckedUpdateWithoutCtiCastDailiesInput>
 }
 
+export type CastCreateNestedOneWithoutTownCastDailiesInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutTownCastDailiesInput, Prisma.CastUncheckedCreateWithoutTownCastDailiesInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutTownCastDailiesInput
+  connect?: Prisma.CastWhereUniqueInput
+}
+
+export type CastUpdateOneRequiredWithoutTownCastDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutTownCastDailiesInput, Prisma.CastUncheckedCreateWithoutTownCastDailiesInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutTownCastDailiesInput
+  upsert?: Prisma.CastUpsertWithoutTownCastDailiesInput
+  connect?: Prisma.CastWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CastUpdateToOneWithWhereWithoutTownCastDailiesInput, Prisma.CastUpdateWithoutTownCastDailiesInput>, Prisma.CastUncheckedUpdateWithoutTownCastDailiesInput>
+}
+
+export type CastCreateNestedOneWithoutTownUrlDailiesInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutTownUrlDailiesInput, Prisma.CastUncheckedCreateWithoutTownUrlDailiesInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutTownUrlDailiesInput
+  connect?: Prisma.CastWhereUniqueInput
+}
+
+export type CastUpdateOneWithoutTownUrlDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutTownUrlDailiesInput, Prisma.CastUncheckedCreateWithoutTownUrlDailiesInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutTownUrlDailiesInput
+  upsert?: Prisma.CastUpsertWithoutTownUrlDailiesInput
+  disconnect?: Prisma.CastWhereInput | boolean
+  delete?: Prisma.CastWhereInput | boolean
+  connect?: Prisma.CastWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CastUpdateToOneWithWhereWithoutTownUrlDailiesInput, Prisma.CastUpdateWithoutTownUrlDailiesInput>, Prisma.CastUncheckedUpdateWithoutTownUrlDailiesInput>
+}
+
+export type CastCreateNestedOneWithoutTownLandingDailiesInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutTownLandingDailiesInput, Prisma.CastUncheckedCreateWithoutTownLandingDailiesInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutTownLandingDailiesInput
+  connect?: Prisma.CastWhereUniqueInput
+}
+
+export type CastUpdateOneWithoutTownLandingDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutTownLandingDailiesInput, Prisma.CastUncheckedCreateWithoutTownLandingDailiesInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutTownLandingDailiesInput
+  upsert?: Prisma.CastUpsertWithoutTownLandingDailiesInput
+  disconnect?: Prisma.CastWhereInput | boolean
+  delete?: Prisma.CastWhereInput | boolean
+  connect?: Prisma.CastWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CastUpdateToOneWithWhereWithoutTownLandingDailiesInput, Prisma.CastUpdateWithoutTownLandingDailiesInput>, Prisma.CastUncheckedUpdateWithoutTownLandingDailiesInput>
+}
+
 export type CastCreateNestedOneWithoutImprovementLogsInput = {
   create?: Prisma.XOR<Prisma.CastCreateWithoutImprovementLogsInput, Prisma.CastUncheckedCreateWithoutImprovementLogsInput>
   connectOrCreate?: Prisma.CastCreateOrConnectWithoutImprovementLogsInput
@@ -585,10 +826,19 @@ export type CastCreateWithoutPrimaryStoreInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedAt?: Date | string | null
   aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
 }
 
 export type CastUncheckedCreateWithoutPrimaryStoreInput = {
@@ -601,10 +851,19 @@ export type CastUncheckedCreateWithoutPrimaryStoreInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
 }
 
 export type CastCreateOrConnectWithoutPrimaryStoreInput = {
@@ -647,6 +906,548 @@ export type CastScalarWhereInput = {
   notes?: Prisma.StringNullableFilter<"Cast"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Cast"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Cast"> | Date | string
+  mergedIntoCastId?: Prisma.UuidNullableFilter<"Cast"> | string | null
+  mergedAt?: Prisma.DateTimeNullableFilter<"Cast"> | Date | string | null
+}
+
+export type CastCreateWithoutMergedSourcesInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedAt?: Date | string | null
+  primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastUncheckedCreateWithoutMergedSourcesInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  primaryStoreId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastCreateOrConnectWithoutMergedSourcesInput = {
+  where: Prisma.CastWhereUniqueInput
+  create: Prisma.XOR<Prisma.CastCreateWithoutMergedSourcesInput, Prisma.CastUncheckedCreateWithoutMergedSourcesInput>
+}
+
+export type CastCreateWithoutMergedIntoInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedAt?: Date | string | null
+  primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastUncheckedCreateWithoutMergedIntoInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  primaryStoreId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedAt?: Date | string | null
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastCreateOrConnectWithoutMergedIntoInput = {
+  where: Prisma.CastWhereUniqueInput
+  create: Prisma.XOR<Prisma.CastCreateWithoutMergedIntoInput, Prisma.CastUncheckedCreateWithoutMergedIntoInput>
+}
+
+export type CastCreateManyMergedIntoInputEnvelope = {
+  data: Prisma.CastCreateManyMergedIntoInput | Prisma.CastCreateManyMergedIntoInput[]
+  skipDuplicates?: boolean
+}
+
+export type CastUpsertWithoutMergedSourcesInput = {
+  update: Prisma.XOR<Prisma.CastUpdateWithoutMergedSourcesInput, Prisma.CastUncheckedUpdateWithoutMergedSourcesInput>
+  create: Prisma.XOR<Prisma.CastCreateWithoutMergedSourcesInput, Prisma.CastUncheckedCreateWithoutMergedSourcesInput>
+  where?: Prisma.CastWhereInput
+}
+
+export type CastUpdateToOneWithWhereWithoutMergedSourcesInput = {
+  where?: Prisma.CastWhereInput
+  data: Prisma.XOR<Prisma.CastUpdateWithoutMergedSourcesInput, Prisma.CastUncheckedUpdateWithoutMergedSourcesInput>
+}
+
+export type CastUpdateWithoutMergedSourcesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastUncheckedUpdateWithoutMergedSourcesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStoreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastUpsertWithWhereUniqueWithoutMergedIntoInput = {
+  where: Prisma.CastWhereUniqueInput
+  update: Prisma.XOR<Prisma.CastUpdateWithoutMergedIntoInput, Prisma.CastUncheckedUpdateWithoutMergedIntoInput>
+  create: Prisma.XOR<Prisma.CastCreateWithoutMergedIntoInput, Prisma.CastUncheckedCreateWithoutMergedIntoInput>
+}
+
+export type CastUpdateWithWhereUniqueWithoutMergedIntoInput = {
+  where: Prisma.CastWhereUniqueInput
+  data: Prisma.XOR<Prisma.CastUpdateWithoutMergedIntoInput, Prisma.CastUncheckedUpdateWithoutMergedIntoInput>
+}
+
+export type CastUpdateManyWithWhereWithoutMergedIntoInput = {
+  where: Prisma.CastScalarWhereInput
+  data: Prisma.XOR<Prisma.CastUpdateManyMutationInput, Prisma.CastUncheckedUpdateManyWithoutMergedIntoInput>
+}
+
+export type CastCreateWithoutNameHistoriesInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedAt?: Date | string | null
+  primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastUncheckedCreateWithoutNameHistoriesInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  primaryStoreId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastCreateOrConnectWithoutNameHistoriesInput = {
+  where: Prisma.CastWhereUniqueInput
+  create: Prisma.XOR<Prisma.CastCreateWithoutNameHistoriesInput, Prisma.CastUncheckedCreateWithoutNameHistoriesInput>
+}
+
+export type CastUpsertWithoutNameHistoriesInput = {
+  update: Prisma.XOR<Prisma.CastUpdateWithoutNameHistoriesInput, Prisma.CastUncheckedUpdateWithoutNameHistoriesInput>
+  create: Prisma.XOR<Prisma.CastCreateWithoutNameHistoriesInput, Prisma.CastUncheckedCreateWithoutNameHistoriesInput>
+  where?: Prisma.CastWhereInput
+}
+
+export type CastUpdateToOneWithWhereWithoutNameHistoriesInput = {
+  where?: Prisma.CastWhereInput
+  data: Prisma.XOR<Prisma.CastUpdateWithoutNameHistoriesInput, Prisma.CastUncheckedUpdateWithoutNameHistoriesInput>
+}
+
+export type CastUpdateWithoutNameHistoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastUncheckedUpdateWithoutNameHistoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStoreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastCreateWithoutMergesAsSourceInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedAt?: Date | string | null
+  primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastUncheckedCreateWithoutMergesAsSourceInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  primaryStoreId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastCreateOrConnectWithoutMergesAsSourceInput = {
+  where: Prisma.CastWhereUniqueInput
+  create: Prisma.XOR<Prisma.CastCreateWithoutMergesAsSourceInput, Prisma.CastUncheckedCreateWithoutMergesAsSourceInput>
+}
+
+export type CastCreateWithoutMergesAsTargetInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedAt?: Date | string | null
+  primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+}
+
+export type CastUncheckedCreateWithoutMergesAsTargetInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  primaryStoreId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+}
+
+export type CastCreateOrConnectWithoutMergesAsTargetInput = {
+  where: Prisma.CastWhereUniqueInput
+  create: Prisma.XOR<Prisma.CastCreateWithoutMergesAsTargetInput, Prisma.CastUncheckedCreateWithoutMergesAsTargetInput>
+}
+
+export type CastUpsertWithoutMergesAsSourceInput = {
+  update: Prisma.XOR<Prisma.CastUpdateWithoutMergesAsSourceInput, Prisma.CastUncheckedUpdateWithoutMergesAsSourceInput>
+  create: Prisma.XOR<Prisma.CastCreateWithoutMergesAsSourceInput, Prisma.CastUncheckedCreateWithoutMergesAsSourceInput>
+  where?: Prisma.CastWhereInput
+}
+
+export type CastUpdateToOneWithWhereWithoutMergesAsSourceInput = {
+  where?: Prisma.CastWhereInput
+  data: Prisma.XOR<Prisma.CastUpdateWithoutMergesAsSourceInput, Prisma.CastUncheckedUpdateWithoutMergesAsSourceInput>
+}
+
+export type CastUpdateWithoutMergesAsSourceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastUncheckedUpdateWithoutMergesAsSourceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStoreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastUpsertWithoutMergesAsTargetInput = {
+  update: Prisma.XOR<Prisma.CastUpdateWithoutMergesAsTargetInput, Prisma.CastUncheckedUpdateWithoutMergesAsTargetInput>
+  create: Prisma.XOR<Prisma.CastCreateWithoutMergesAsTargetInput, Prisma.CastUncheckedCreateWithoutMergesAsTargetInput>
+  where?: Prisma.CastWhereInput
+}
+
+export type CastUpdateToOneWithWhereWithoutMergesAsTargetInput = {
+  where?: Prisma.CastWhereInput
+  data: Prisma.XOR<Prisma.CastUpdateWithoutMergesAsTargetInput, Prisma.CastUncheckedUpdateWithoutMergesAsTargetInput>
+}
+
+export type CastUpdateWithoutMergesAsTargetInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+}
+
+export type CastUncheckedUpdateWithoutMergesAsTargetInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStoreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
 }
 
 export type CastCreateWithoutAliasesInput = {
@@ -659,10 +1460,19 @@ export type CastCreateWithoutAliasesInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedAt?: Date | string | null
   primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
 }
 
 export type CastUncheckedCreateWithoutAliasesInput = {
@@ -676,9 +1486,18 @@ export type CastUncheckedCreateWithoutAliasesInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
 }
 
 export type CastCreateOrConnectWithoutAliasesInput = {
@@ -707,10 +1526,19 @@ export type CastUpdateWithoutAliasesInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutAliasesInput = {
@@ -724,9 +1552,18 @@ export type CastUncheckedUpdateWithoutAliasesInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
 }
 
 export type CastCreateWithoutMediaListingsInput = {
@@ -739,10 +1576,19 @@ export type CastCreateWithoutMediaListingsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedAt?: Date | string | null
   primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
   aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
 }
 
 export type CastUncheckedCreateWithoutMediaListingsInput = {
@@ -756,9 +1602,18 @@ export type CastUncheckedCreateWithoutMediaListingsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
 }
 
 export type CastCreateOrConnectWithoutMediaListingsInput = {
@@ -787,10 +1642,19 @@ export type CastUpdateWithoutMediaListingsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
   aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutMediaListingsInput = {
@@ -804,9 +1668,18 @@ export type CastUncheckedUpdateWithoutMediaListingsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
 }
 
 export type CastCreateWithoutCtiCastDailiesInput = {
@@ -819,10 +1692,19 @@ export type CastCreateWithoutCtiCastDailiesInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedAt?: Date | string | null
   primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
   aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
 }
 
 export type CastUncheckedCreateWithoutCtiCastDailiesInput = {
@@ -836,9 +1718,18 @@ export type CastUncheckedCreateWithoutCtiCastDailiesInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
 }
 
 export type CastCreateOrConnectWithoutCtiCastDailiesInput = {
@@ -867,10 +1758,19 @@ export type CastUpdateWithoutCtiCastDailiesInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
   aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutCtiCastDailiesInput = {
@@ -884,9 +1784,366 @@ export type CastUncheckedUpdateWithoutCtiCastDailiesInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastCreateWithoutTownCastDailiesInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedAt?: Date | string | null
+  primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastUncheckedCreateWithoutTownCastDailiesInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  primaryStoreId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastCreateOrConnectWithoutTownCastDailiesInput = {
+  where: Prisma.CastWhereUniqueInput
+  create: Prisma.XOR<Prisma.CastCreateWithoutTownCastDailiesInput, Prisma.CastUncheckedCreateWithoutTownCastDailiesInput>
+}
+
+export type CastUpsertWithoutTownCastDailiesInput = {
+  update: Prisma.XOR<Prisma.CastUpdateWithoutTownCastDailiesInput, Prisma.CastUncheckedUpdateWithoutTownCastDailiesInput>
+  create: Prisma.XOR<Prisma.CastCreateWithoutTownCastDailiesInput, Prisma.CastUncheckedCreateWithoutTownCastDailiesInput>
+  where?: Prisma.CastWhereInput
+}
+
+export type CastUpdateToOneWithWhereWithoutTownCastDailiesInput = {
+  where?: Prisma.CastWhereInput
+  data: Prisma.XOR<Prisma.CastUpdateWithoutTownCastDailiesInput, Prisma.CastUncheckedUpdateWithoutTownCastDailiesInput>
+}
+
+export type CastUpdateWithoutTownCastDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastUncheckedUpdateWithoutTownCastDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStoreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastCreateWithoutTownUrlDailiesInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedAt?: Date | string | null
+  primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastUncheckedCreateWithoutTownUrlDailiesInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  primaryStoreId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastCreateOrConnectWithoutTownUrlDailiesInput = {
+  where: Prisma.CastWhereUniqueInput
+  create: Prisma.XOR<Prisma.CastCreateWithoutTownUrlDailiesInput, Prisma.CastUncheckedCreateWithoutTownUrlDailiesInput>
+}
+
+export type CastUpsertWithoutTownUrlDailiesInput = {
+  update: Prisma.XOR<Prisma.CastUpdateWithoutTownUrlDailiesInput, Prisma.CastUncheckedUpdateWithoutTownUrlDailiesInput>
+  create: Prisma.XOR<Prisma.CastCreateWithoutTownUrlDailiesInput, Prisma.CastUncheckedCreateWithoutTownUrlDailiesInput>
+  where?: Prisma.CastWhereInput
+}
+
+export type CastUpdateToOneWithWhereWithoutTownUrlDailiesInput = {
+  where?: Prisma.CastWhereInput
+  data: Prisma.XOR<Prisma.CastUpdateWithoutTownUrlDailiesInput, Prisma.CastUncheckedUpdateWithoutTownUrlDailiesInput>
+}
+
+export type CastUpdateWithoutTownUrlDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastUncheckedUpdateWithoutTownUrlDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStoreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastCreateWithoutTownLandingDailiesInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedAt?: Date | string | null
+  primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastUncheckedCreateWithoutTownLandingDailiesInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  primaryStoreId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastCreateOrConnectWithoutTownLandingDailiesInput = {
+  where: Prisma.CastWhereUniqueInput
+  create: Prisma.XOR<Prisma.CastCreateWithoutTownLandingDailiesInput, Prisma.CastUncheckedCreateWithoutTownLandingDailiesInput>
+}
+
+export type CastUpsertWithoutTownLandingDailiesInput = {
+  update: Prisma.XOR<Prisma.CastUpdateWithoutTownLandingDailiesInput, Prisma.CastUncheckedUpdateWithoutTownLandingDailiesInput>
+  create: Prisma.XOR<Prisma.CastCreateWithoutTownLandingDailiesInput, Prisma.CastUncheckedCreateWithoutTownLandingDailiesInput>
+  where?: Prisma.CastWhereInput
+}
+
+export type CastUpdateToOneWithWhereWithoutTownLandingDailiesInput = {
+  where?: Prisma.CastWhereInput
+  data: Prisma.XOR<Prisma.CastUpdateWithoutTownLandingDailiesInput, Prisma.CastUncheckedUpdateWithoutTownLandingDailiesInput>
+}
+
+export type CastUpdateWithoutTownLandingDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastUncheckedUpdateWithoutTownLandingDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStoreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
 }
 
 export type CastCreateWithoutImprovementLogsInput = {
@@ -899,10 +2156,19 @@ export type CastCreateWithoutImprovementLogsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedAt?: Date | string | null
   primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
   aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
 }
 
 export type CastUncheckedCreateWithoutImprovementLogsInput = {
@@ -916,9 +2182,18 @@ export type CastUncheckedCreateWithoutImprovementLogsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
 }
 
 export type CastCreateOrConnectWithoutImprovementLogsInput = {
@@ -947,10 +2222,19 @@ export type CastUpdateWithoutImprovementLogsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
   aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutImprovementLogsInput = {
@@ -964,9 +2248,18 @@ export type CastUncheckedUpdateWithoutImprovementLogsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
 }
 
 export type CastCreateManyPrimaryStoreInput = {
@@ -979,6 +2272,8 @@ export type CastCreateManyPrimaryStoreInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
 }
 
 export type CastUpdateWithoutPrimaryStoreInput = {
@@ -991,10 +2286,19 @@ export type CastUpdateWithoutPrimaryStoreInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutPrimaryStoreInput = {
@@ -1007,10 +2311,19 @@ export type CastUncheckedUpdateWithoutPrimaryStoreInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
 }
 
 export type CastUncheckedUpdateManyWithoutPrimaryStoreInput = {
@@ -1023,6 +2336,86 @@ export type CastUncheckedUpdateManyWithoutPrimaryStoreInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type CastCreateManyMergedIntoInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  primaryStoreId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedAt?: Date | string | null
+}
+
+export type CastUpdateWithoutMergedIntoInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastUncheckedUpdateWithoutMergedIntoInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStoreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastUncheckedUpdateManyWithoutMergedIntoInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStoreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -1035,6 +2428,13 @@ export type CastCountOutputType = {
   mediaListings: number
   improvementLogs: number
   ctiCastDailies: number
+  townCastDailies: number
+  townUrlDailies: number
+  townLandingDailies: number
+  nameHistories: number
+  mergedSources: number
+  mergesAsSource: number
+  mergesAsTarget: number
 }
 
 export type CastCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1042,6 +2442,13 @@ export type CastCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   mediaListings?: boolean | CastCountOutputTypeCountMediaListingsArgs
   improvementLogs?: boolean | CastCountOutputTypeCountImprovementLogsArgs
   ctiCastDailies?: boolean | CastCountOutputTypeCountCtiCastDailiesArgs
+  townCastDailies?: boolean | CastCountOutputTypeCountTownCastDailiesArgs
+  townUrlDailies?: boolean | CastCountOutputTypeCountTownUrlDailiesArgs
+  townLandingDailies?: boolean | CastCountOutputTypeCountTownLandingDailiesArgs
+  nameHistories?: boolean | CastCountOutputTypeCountNameHistoriesArgs
+  mergedSources?: boolean | CastCountOutputTypeCountMergedSourcesArgs
+  mergesAsSource?: boolean | CastCountOutputTypeCountMergesAsSourceArgs
+  mergesAsTarget?: boolean | CastCountOutputTypeCountMergesAsTargetArgs
 }
 
 /**
@@ -1082,6 +2489,55 @@ export type CastCountOutputTypeCountCtiCastDailiesArgs<ExtArgs extends runtime.T
   where?: Prisma.CtiCastDailyWhereInput
 }
 
+/**
+ * CastCountOutputType without action
+ */
+export type CastCountOutputTypeCountTownCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TownCastDailyWhereInput
+}
+
+/**
+ * CastCountOutputType without action
+ */
+export type CastCountOutputTypeCountTownUrlDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TownUrlDailyWhereInput
+}
+
+/**
+ * CastCountOutputType without action
+ */
+export type CastCountOutputTypeCountTownLandingDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TownLandingDailyWhereInput
+}
+
+/**
+ * CastCountOutputType without action
+ */
+export type CastCountOutputTypeCountNameHistoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CastNameHistoryWhereInput
+}
+
+/**
+ * CastCountOutputType without action
+ */
+export type CastCountOutputTypeCountMergedSourcesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CastWhereInput
+}
+
+/**
+ * CastCountOutputType without action
+ */
+export type CastCountOutputTypeCountMergesAsSourceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CastMergeHistoryWhereInput
+}
+
+/**
+ * CastCountOutputType without action
+ */
+export type CastCountOutputTypeCountMergesAsTargetArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CastMergeHistoryWhereInput
+}
+
 
 export type CastSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1094,11 +2550,21 @@ export type CastSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  mergedIntoCastId?: boolean
+  mergedAt?: boolean
   primaryStore?: boolean | Prisma.Cast$primaryStoreArgs<ExtArgs>
   aliases?: boolean | Prisma.Cast$aliasesArgs<ExtArgs>
   mediaListings?: boolean | Prisma.Cast$mediaListingsArgs<ExtArgs>
   improvementLogs?: boolean | Prisma.Cast$improvementLogsArgs<ExtArgs>
   ctiCastDailies?: boolean | Prisma.Cast$ctiCastDailiesArgs<ExtArgs>
+  townCastDailies?: boolean | Prisma.Cast$townCastDailiesArgs<ExtArgs>
+  townUrlDailies?: boolean | Prisma.Cast$townUrlDailiesArgs<ExtArgs>
+  townLandingDailies?: boolean | Prisma.Cast$townLandingDailiesArgs<ExtArgs>
+  nameHistories?: boolean | Prisma.Cast$nameHistoriesArgs<ExtArgs>
+  mergedInto?: boolean | Prisma.Cast$mergedIntoArgs<ExtArgs>
+  mergedSources?: boolean | Prisma.Cast$mergedSourcesArgs<ExtArgs>
+  mergesAsSource?: boolean | Prisma.Cast$mergesAsSourceArgs<ExtArgs>
+  mergesAsTarget?: boolean | Prisma.Cast$mergesAsTargetArgs<ExtArgs>
   _count?: boolean | Prisma.CastCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cast"]>
 
@@ -1113,7 +2579,10 @@ export type CastSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  mergedIntoCastId?: boolean
+  mergedAt?: boolean
   primaryStore?: boolean | Prisma.Cast$primaryStoreArgs<ExtArgs>
+  mergedInto?: boolean | Prisma.Cast$mergedIntoArgs<ExtArgs>
 }, ExtArgs["result"]["cast"]>
 
 export type CastSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1127,7 +2596,10 @@ export type CastSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  mergedIntoCastId?: boolean
+  mergedAt?: boolean
   primaryStore?: boolean | Prisma.Cast$primaryStoreArgs<ExtArgs>
+  mergedInto?: boolean | Prisma.Cast$mergedIntoArgs<ExtArgs>
 }, ExtArgs["result"]["cast"]>
 
 export type CastSelectScalar = {
@@ -1141,22 +2613,34 @@ export type CastSelectScalar = {
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  mergedIntoCastId?: boolean
+  mergedAt?: boolean
 }
 
-export type CastOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "displayName" | "normalizedName" | "status" | "startedOn" | "endedOn" | "primaryStoreId" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["cast"]>
+export type CastOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "displayName" | "normalizedName" | "status" | "startedOn" | "endedOn" | "primaryStoreId" | "notes" | "createdAt" | "updatedAt" | "mergedIntoCastId" | "mergedAt", ExtArgs["result"]["cast"]>
 export type CastInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   primaryStore?: boolean | Prisma.Cast$primaryStoreArgs<ExtArgs>
   aliases?: boolean | Prisma.Cast$aliasesArgs<ExtArgs>
   mediaListings?: boolean | Prisma.Cast$mediaListingsArgs<ExtArgs>
   improvementLogs?: boolean | Prisma.Cast$improvementLogsArgs<ExtArgs>
   ctiCastDailies?: boolean | Prisma.Cast$ctiCastDailiesArgs<ExtArgs>
+  townCastDailies?: boolean | Prisma.Cast$townCastDailiesArgs<ExtArgs>
+  townUrlDailies?: boolean | Prisma.Cast$townUrlDailiesArgs<ExtArgs>
+  townLandingDailies?: boolean | Prisma.Cast$townLandingDailiesArgs<ExtArgs>
+  nameHistories?: boolean | Prisma.Cast$nameHistoriesArgs<ExtArgs>
+  mergedInto?: boolean | Prisma.Cast$mergedIntoArgs<ExtArgs>
+  mergedSources?: boolean | Prisma.Cast$mergedSourcesArgs<ExtArgs>
+  mergesAsSource?: boolean | Prisma.Cast$mergesAsSourceArgs<ExtArgs>
+  mergesAsTarget?: boolean | Prisma.Cast$mergesAsTargetArgs<ExtArgs>
   _count?: boolean | Prisma.CastCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CastIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   primaryStore?: boolean | Prisma.Cast$primaryStoreArgs<ExtArgs>
+  mergedInto?: boolean | Prisma.Cast$mergedIntoArgs<ExtArgs>
 }
 export type CastIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   primaryStore?: boolean | Prisma.Cast$primaryStoreArgs<ExtArgs>
+  mergedInto?: boolean | Prisma.Cast$mergedIntoArgs<ExtArgs>
 }
 
 export type $CastPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1167,6 +2651,14 @@ export type $CastPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     mediaListings: Prisma.$MediaListingPayload<ExtArgs>[]
     improvementLogs: Prisma.$ImprovementLogPayload<ExtArgs>[]
     ctiCastDailies: Prisma.$CtiCastDailyPayload<ExtArgs>[]
+    townCastDailies: Prisma.$TownCastDailyPayload<ExtArgs>[]
+    townUrlDailies: Prisma.$TownUrlDailyPayload<ExtArgs>[]
+    townLandingDailies: Prisma.$TownLandingDailyPayload<ExtArgs>[]
+    nameHistories: Prisma.$CastNameHistoryPayload<ExtArgs>[]
+    mergedInto: Prisma.$CastPayload<ExtArgs> | null
+    mergedSources: Prisma.$CastPayload<ExtArgs>[]
+    mergesAsSource: Prisma.$CastMergeHistoryPayload<ExtArgs>[]
+    mergesAsTarget: Prisma.$CastMergeHistoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1179,6 +2671,8 @@ export type $CastPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     notes: string | null
     createdAt: Date
     updatedAt: Date
+    mergedIntoCastId: string | null
+    mergedAt: Date | null
   }, ExtArgs["result"]["cast"]>
   composites: {}
 }
@@ -1578,6 +3072,14 @@ export interface Prisma__CastClient<T, Null = never, ExtArgs extends runtime.Typ
   mediaListings<T extends Prisma.Cast$mediaListingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$mediaListingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MediaListingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   improvementLogs<T extends Prisma.Cast$improvementLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$improvementLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImprovementLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ctiCastDailies<T extends Prisma.Cast$ctiCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$ctiCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CtiCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  townCastDailies<T extends Prisma.Cast$townCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$townCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  townUrlDailies<T extends Prisma.Cast$townUrlDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$townUrlDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownUrlDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  townLandingDailies<T extends Prisma.Cast$townLandingDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$townLandingDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownLandingDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  nameHistories<T extends Prisma.Cast$nameHistoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$nameHistoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastNameHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mergedInto<T extends Prisma.Cast$mergedIntoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$mergedIntoArgs<ExtArgs>>): Prisma.Prisma__CastClient<runtime.Types.Result.GetResult<Prisma.$CastPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  mergedSources<T extends Prisma.Cast$mergedSourcesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$mergedSourcesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mergesAsSource<T extends Prisma.Cast$mergesAsSourceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$mergesAsSourceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastMergeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mergesAsTarget<T extends Prisma.Cast$mergesAsTargetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$mergesAsTargetArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastMergeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1617,6 +3119,8 @@ export interface CastFieldRefs {
   readonly notes: Prisma.FieldRef<"Cast", 'String'>
   readonly createdAt: Prisma.FieldRef<"Cast", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Cast", 'DateTime'>
+  readonly mergedIntoCastId: Prisma.FieldRef<"Cast", 'String'>
+  readonly mergedAt: Prisma.FieldRef<"Cast", 'DateTime'>
 }
     
 
@@ -2130,6 +3634,193 @@ export type Cast$ctiCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.CtiCastDailyScalarFieldEnum | Prisma.CtiCastDailyScalarFieldEnum[]
+}
+
+/**
+ * Cast.townCastDailies
+ */
+export type Cast$townCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TownCastDaily
+   */
+  select?: Prisma.TownCastDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TownCastDaily
+   */
+  omit?: Prisma.TownCastDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TownCastDailyInclude<ExtArgs> | null
+  where?: Prisma.TownCastDailyWhereInput
+  orderBy?: Prisma.TownCastDailyOrderByWithRelationInput | Prisma.TownCastDailyOrderByWithRelationInput[]
+  cursor?: Prisma.TownCastDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TownCastDailyScalarFieldEnum | Prisma.TownCastDailyScalarFieldEnum[]
+}
+
+/**
+ * Cast.townUrlDailies
+ */
+export type Cast$townUrlDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TownUrlDaily
+   */
+  select?: Prisma.TownUrlDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TownUrlDaily
+   */
+  omit?: Prisma.TownUrlDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TownUrlDailyInclude<ExtArgs> | null
+  where?: Prisma.TownUrlDailyWhereInput
+  orderBy?: Prisma.TownUrlDailyOrderByWithRelationInput | Prisma.TownUrlDailyOrderByWithRelationInput[]
+  cursor?: Prisma.TownUrlDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TownUrlDailyScalarFieldEnum | Prisma.TownUrlDailyScalarFieldEnum[]
+}
+
+/**
+ * Cast.townLandingDailies
+ */
+export type Cast$townLandingDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TownLandingDaily
+   */
+  select?: Prisma.TownLandingDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TownLandingDaily
+   */
+  omit?: Prisma.TownLandingDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TownLandingDailyInclude<ExtArgs> | null
+  where?: Prisma.TownLandingDailyWhereInput
+  orderBy?: Prisma.TownLandingDailyOrderByWithRelationInput | Prisma.TownLandingDailyOrderByWithRelationInput[]
+  cursor?: Prisma.TownLandingDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TownLandingDailyScalarFieldEnum | Prisma.TownLandingDailyScalarFieldEnum[]
+}
+
+/**
+ * Cast.nameHistories
+ */
+export type Cast$nameHistoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CastNameHistory
+   */
+  select?: Prisma.CastNameHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CastNameHistory
+   */
+  omit?: Prisma.CastNameHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CastNameHistoryInclude<ExtArgs> | null
+  where?: Prisma.CastNameHistoryWhereInput
+  orderBy?: Prisma.CastNameHistoryOrderByWithRelationInput | Prisma.CastNameHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.CastNameHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CastNameHistoryScalarFieldEnum | Prisma.CastNameHistoryScalarFieldEnum[]
+}
+
+/**
+ * Cast.mergedInto
+ */
+export type Cast$mergedIntoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Cast
+   */
+  select?: Prisma.CastSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Cast
+   */
+  omit?: Prisma.CastOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CastInclude<ExtArgs> | null
+  where?: Prisma.CastWhereInput
+}
+
+/**
+ * Cast.mergedSources
+ */
+export type Cast$mergedSourcesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Cast
+   */
+  select?: Prisma.CastSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Cast
+   */
+  omit?: Prisma.CastOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CastInclude<ExtArgs> | null
+  where?: Prisma.CastWhereInput
+  orderBy?: Prisma.CastOrderByWithRelationInput | Prisma.CastOrderByWithRelationInput[]
+  cursor?: Prisma.CastWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CastScalarFieldEnum | Prisma.CastScalarFieldEnum[]
+}
+
+/**
+ * Cast.mergesAsSource
+ */
+export type Cast$mergesAsSourceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CastMergeHistory
+   */
+  select?: Prisma.CastMergeHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CastMergeHistory
+   */
+  omit?: Prisma.CastMergeHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CastMergeHistoryInclude<ExtArgs> | null
+  where?: Prisma.CastMergeHistoryWhereInput
+  orderBy?: Prisma.CastMergeHistoryOrderByWithRelationInput | Prisma.CastMergeHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.CastMergeHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CastMergeHistoryScalarFieldEnum | Prisma.CastMergeHistoryScalarFieldEnum[]
+}
+
+/**
+ * Cast.mergesAsTarget
+ */
+export type Cast$mergesAsTargetArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CastMergeHistory
+   */
+  select?: Prisma.CastMergeHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CastMergeHistory
+   */
+  omit?: Prisma.CastMergeHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CastMergeHistoryInclude<ExtArgs> | null
+  where?: Prisma.CastMergeHistoryWhereInput
+  orderBy?: Prisma.CastMergeHistoryOrderByWithRelationInput | Prisma.CastMergeHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.CastMergeHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CastMergeHistoryScalarFieldEnum | Prisma.CastMergeHistoryScalarFieldEnum[]
 }
 
 /**

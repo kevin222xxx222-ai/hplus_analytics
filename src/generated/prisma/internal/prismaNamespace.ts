@@ -388,12 +388,19 @@ export const ModelName = {
   Session: 'Session',
   Store: 'Store',
   Cast: 'Cast',
+  CastNameHistory: 'CastNameHistory',
+  CastMergeHistory: 'CastMergeHistory',
+  CastStartDateBulkChangeHistory: 'CastStartDateBulkChangeHistory',
   CastAlias: 'CastAlias',
   MediaListing: 'MediaListing',
   ImportSource: 'ImportSource',
   ImportError: 'ImportError',
   ImportBatch: 'ImportBatch',
   CtiCastDaily: 'CtiCastDaily',
+  TownStoreDaily: 'TownStoreDaily',
+  TownCastDaily: 'TownCastDaily',
+  TownUrlDaily: 'TownUrlDaily',
+  TownLandingDaily: 'TownLandingDaily',
   ImprovementLog: 'ImprovementLog'
 } as const
 
@@ -410,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "store" | "cast" | "castAlias" | "mediaListing" | "importSource" | "importError" | "importBatch" | "ctiCastDaily" | "improvementLog"
+    modelProps: "user" | "session" | "store" | "cast" | "castNameHistory" | "castMergeHistory" | "castStartDateBulkChangeHistory" | "castAlias" | "mediaListing" | "importSource" | "importError" | "importBatch" | "ctiCastDaily" | "townStoreDaily" | "townCastDaily" | "townUrlDaily" | "townLandingDaily" | "improvementLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -707,6 +714,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CastCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CastCountAggregateOutputType> | number
+        }
+      }
+    }
+    CastNameHistory: {
+      payload: Prisma.$CastNameHistoryPayload<ExtArgs>
+      fields: Prisma.CastNameHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CastNameHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastNameHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CastNameHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastNameHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.CastNameHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastNameHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CastNameHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastNameHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.CastNameHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastNameHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.CastNameHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastNameHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.CastNameHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CastNameHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastNameHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.CastNameHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastNameHistoryPayload>
+        }
+        update: {
+          args: Prisma.CastNameHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastNameHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.CastNameHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CastNameHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CastNameHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastNameHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.CastNameHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastNameHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.CastNameHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCastNameHistory>
+        }
+        groupBy: {
+          args: Prisma.CastNameHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CastNameHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CastNameHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CastNameHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    CastMergeHistory: {
+      payload: Prisma.$CastMergeHistoryPayload<ExtArgs>
+      fields: Prisma.CastMergeHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CastMergeHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastMergeHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CastMergeHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastMergeHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.CastMergeHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastMergeHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CastMergeHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastMergeHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.CastMergeHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastMergeHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.CastMergeHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastMergeHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.CastMergeHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CastMergeHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastMergeHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.CastMergeHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastMergeHistoryPayload>
+        }
+        update: {
+          args: Prisma.CastMergeHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastMergeHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.CastMergeHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CastMergeHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CastMergeHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastMergeHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.CastMergeHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastMergeHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.CastMergeHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCastMergeHistory>
+        }
+        groupBy: {
+          args: Prisma.CastMergeHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CastMergeHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CastMergeHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CastMergeHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    CastStartDateBulkChangeHistory: {
+      payload: Prisma.$CastStartDateBulkChangeHistoryPayload<ExtArgs>
+      fields: Prisma.CastStartDateBulkChangeHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CastStartDateBulkChangeHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStartDateBulkChangeHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CastStartDateBulkChangeHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStartDateBulkChangeHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.CastStartDateBulkChangeHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStartDateBulkChangeHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CastStartDateBulkChangeHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStartDateBulkChangeHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.CastStartDateBulkChangeHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStartDateBulkChangeHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.CastStartDateBulkChangeHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStartDateBulkChangeHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.CastStartDateBulkChangeHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CastStartDateBulkChangeHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStartDateBulkChangeHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.CastStartDateBulkChangeHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStartDateBulkChangeHistoryPayload>
+        }
+        update: {
+          args: Prisma.CastStartDateBulkChangeHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStartDateBulkChangeHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.CastStartDateBulkChangeHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CastStartDateBulkChangeHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CastStartDateBulkChangeHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStartDateBulkChangeHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.CastStartDateBulkChangeHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStartDateBulkChangeHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.CastStartDateBulkChangeHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCastStartDateBulkChangeHistory>
+        }
+        groupBy: {
+          args: Prisma.CastStartDateBulkChangeHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CastStartDateBulkChangeHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CastStartDateBulkChangeHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CastStartDateBulkChangeHistoryCountAggregateOutputType> | number
         }
       }
     }
@@ -1154,6 +1383,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TownStoreDaily: {
+      payload: Prisma.$TownStoreDailyPayload<ExtArgs>
+      fields: Prisma.TownStoreDailyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TownStoreDailyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownStoreDailyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TownStoreDailyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownStoreDailyPayload>
+        }
+        findFirst: {
+          args: Prisma.TownStoreDailyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownStoreDailyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TownStoreDailyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownStoreDailyPayload>
+        }
+        findMany: {
+          args: Prisma.TownStoreDailyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownStoreDailyPayload>[]
+        }
+        create: {
+          args: Prisma.TownStoreDailyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownStoreDailyPayload>
+        }
+        createMany: {
+          args: Prisma.TownStoreDailyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TownStoreDailyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownStoreDailyPayload>[]
+        }
+        delete: {
+          args: Prisma.TownStoreDailyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownStoreDailyPayload>
+        }
+        update: {
+          args: Prisma.TownStoreDailyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownStoreDailyPayload>
+        }
+        deleteMany: {
+          args: Prisma.TownStoreDailyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TownStoreDailyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TownStoreDailyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownStoreDailyPayload>[]
+        }
+        upsert: {
+          args: Prisma.TownStoreDailyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownStoreDailyPayload>
+        }
+        aggregate: {
+          args: Prisma.TownStoreDailyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTownStoreDaily>
+        }
+        groupBy: {
+          args: Prisma.TownStoreDailyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TownStoreDailyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TownStoreDailyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TownStoreDailyCountAggregateOutputType> | number
+        }
+      }
+    }
+    TownCastDaily: {
+      payload: Prisma.$TownCastDailyPayload<ExtArgs>
+      fields: Prisma.TownCastDailyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TownCastDailyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownCastDailyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TownCastDailyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownCastDailyPayload>
+        }
+        findFirst: {
+          args: Prisma.TownCastDailyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownCastDailyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TownCastDailyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownCastDailyPayload>
+        }
+        findMany: {
+          args: Prisma.TownCastDailyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownCastDailyPayload>[]
+        }
+        create: {
+          args: Prisma.TownCastDailyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownCastDailyPayload>
+        }
+        createMany: {
+          args: Prisma.TownCastDailyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TownCastDailyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownCastDailyPayload>[]
+        }
+        delete: {
+          args: Prisma.TownCastDailyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownCastDailyPayload>
+        }
+        update: {
+          args: Prisma.TownCastDailyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownCastDailyPayload>
+        }
+        deleteMany: {
+          args: Prisma.TownCastDailyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TownCastDailyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TownCastDailyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownCastDailyPayload>[]
+        }
+        upsert: {
+          args: Prisma.TownCastDailyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownCastDailyPayload>
+        }
+        aggregate: {
+          args: Prisma.TownCastDailyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTownCastDaily>
+        }
+        groupBy: {
+          args: Prisma.TownCastDailyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TownCastDailyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TownCastDailyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TownCastDailyCountAggregateOutputType> | number
+        }
+      }
+    }
+    TownUrlDaily: {
+      payload: Prisma.$TownUrlDailyPayload<ExtArgs>
+      fields: Prisma.TownUrlDailyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TownUrlDailyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownUrlDailyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TownUrlDailyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownUrlDailyPayload>
+        }
+        findFirst: {
+          args: Prisma.TownUrlDailyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownUrlDailyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TownUrlDailyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownUrlDailyPayload>
+        }
+        findMany: {
+          args: Prisma.TownUrlDailyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownUrlDailyPayload>[]
+        }
+        create: {
+          args: Prisma.TownUrlDailyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownUrlDailyPayload>
+        }
+        createMany: {
+          args: Prisma.TownUrlDailyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TownUrlDailyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownUrlDailyPayload>[]
+        }
+        delete: {
+          args: Prisma.TownUrlDailyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownUrlDailyPayload>
+        }
+        update: {
+          args: Prisma.TownUrlDailyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownUrlDailyPayload>
+        }
+        deleteMany: {
+          args: Prisma.TownUrlDailyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TownUrlDailyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TownUrlDailyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownUrlDailyPayload>[]
+        }
+        upsert: {
+          args: Prisma.TownUrlDailyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownUrlDailyPayload>
+        }
+        aggregate: {
+          args: Prisma.TownUrlDailyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTownUrlDaily>
+        }
+        groupBy: {
+          args: Prisma.TownUrlDailyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TownUrlDailyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TownUrlDailyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TownUrlDailyCountAggregateOutputType> | number
+        }
+      }
+    }
+    TownLandingDaily: {
+      payload: Prisma.$TownLandingDailyPayload<ExtArgs>
+      fields: Prisma.TownLandingDailyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TownLandingDailyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownLandingDailyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TownLandingDailyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownLandingDailyPayload>
+        }
+        findFirst: {
+          args: Prisma.TownLandingDailyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownLandingDailyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TownLandingDailyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownLandingDailyPayload>
+        }
+        findMany: {
+          args: Prisma.TownLandingDailyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownLandingDailyPayload>[]
+        }
+        create: {
+          args: Prisma.TownLandingDailyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownLandingDailyPayload>
+        }
+        createMany: {
+          args: Prisma.TownLandingDailyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TownLandingDailyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownLandingDailyPayload>[]
+        }
+        delete: {
+          args: Prisma.TownLandingDailyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownLandingDailyPayload>
+        }
+        update: {
+          args: Prisma.TownLandingDailyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownLandingDailyPayload>
+        }
+        deleteMany: {
+          args: Prisma.TownLandingDailyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TownLandingDailyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TownLandingDailyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownLandingDailyPayload>[]
+        }
+        upsert: {
+          args: Prisma.TownLandingDailyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TownLandingDailyPayload>
+        }
+        aggregate: {
+          args: Prisma.TownLandingDailyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTownLandingDaily>
+        }
+        groupBy: {
+          args: Prisma.TownLandingDailyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TownLandingDailyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TownLandingDailyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TownLandingDailyCountAggregateOutputType> | number
+        }
+      }
+    }
     ImprovementLog: {
       payload: Prisma.$ImprovementLogPayload<ExtArgs>
       fields: Prisma.ImprovementLogFieldRefs
@@ -1322,10 +1847,57 @@ export const CastScalarFieldEnum = {
   primaryStoreId: 'primaryStoreId',
   notes: 'notes',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  mergedIntoCastId: 'mergedIntoCastId',
+  mergedAt: 'mergedAt'
 } as const
 
 export type CastScalarFieldEnum = (typeof CastScalarFieldEnum)[keyof typeof CastScalarFieldEnum]
+
+
+export const CastNameHistoryScalarFieldEnum = {
+  id: 'id',
+  castId: 'castId',
+  oldName: 'oldName',
+  newName: 'newName',
+  changedByUserId: 'changedByUserId',
+  changedAt: 'changedAt',
+  reason: 'reason'
+} as const
+
+export type CastNameHistoryScalarFieldEnum = (typeof CastNameHistoryScalarFieldEnum)[keyof typeof CastNameHistoryScalarFieldEnum]
+
+
+export const CastMergeHistoryScalarFieldEnum = {
+  id: 'id',
+  sourceCastId: 'sourceCastId',
+  targetCastId: 'targetCastId',
+  sourceSnapshot: 'sourceSnapshot',
+  targetSnapshotBefore: 'targetSnapshotBefore',
+  targetSnapshotAfter: 'targetSnapshotAfter',
+  conflictSummary: 'conflictSummary',
+  mergedByUserId: 'mergedByUserId',
+  mergedAt: 'mergedAt',
+  reason: 'reason'
+} as const
+
+export type CastMergeHistoryScalarFieldEnum = (typeof CastMergeHistoryScalarFieldEnum)[keyof typeof CastMergeHistoryScalarFieldEnum]
+
+
+export const CastStartDateBulkChangeHistoryScalarFieldEnum = {
+  id: 'id',
+  targetDate: 'targetDate',
+  mediaScope: 'mediaScope',
+  castChanges: 'castChanges',
+  aliasChanges: 'aliasChanges',
+  castCount: 'castCount',
+  aliasCount: 'aliasCount',
+  changedByUserId: 'changedByUserId',
+  changedAt: 'changedAt',
+  reason: 'reason'
+} as const
+
+export type CastStartDateBulkChangeHistoryScalarFieldEnum = (typeof CastStartDateBulkChangeHistoryScalarFieldEnum)[keyof typeof CastStartDateBulkChangeHistoryScalarFieldEnum]
 
 
 export const CastAliasScalarFieldEnum = {
@@ -1468,6 +2040,102 @@ export const CtiCastDailyScalarFieldEnum = {
 export type CtiCastDailyScalarFieldEnum = (typeof CtiCastDailyScalarFieldEnum)[keyof typeof CtiCastDailyScalarFieldEnum]
 
 
+export const TownStoreDailyScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  storeId: 'storeId',
+  importBatchId: 'importBatchId',
+  pv: 'pv',
+  uu: 'uu',
+  averagePv: 'averagePv',
+  sourceAveragePv: 'sourceAveragePv',
+  bounceRate: 'bounceRate',
+  telTapUu: 'telTapUu',
+  conversionRate: 'conversionRate',
+  sourceConversionRate: 'sourceConversionRate',
+  sourceRowNumber: 'sourceRowNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TownStoreDailyScalarFieldEnum = (typeof TownStoreDailyScalarFieldEnum)[keyof typeof TownStoreDailyScalarFieldEnum]
+
+
+export const TownCastDailyScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  storeId: 'storeId',
+  castId: 'castId',
+  importBatchId: 'importBatchId',
+  sourceCastName: 'sourceCastName',
+  pv: 'pv',
+  uu: 'uu',
+  averagePv: 'averagePv',
+  sourceAveragePv: 'sourceAveragePv',
+  telTapUu: 'telTapUu',
+  conversionRate: 'conversionRate',
+  sourceConversionRate: 'sourceConversionRate',
+  isListed: 'isListed',
+  sourceRowNumber: 'sourceRowNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TownCastDailyScalarFieldEnum = (typeof TownCastDailyScalarFieldEnum)[keyof typeof TownCastDailyScalarFieldEnum]
+
+
+export const TownUrlDailyScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  storeId: 'storeId',
+  importBatchId: 'importBatchId',
+  url: 'url',
+  normalizedUrl: 'normalizedUrl',
+  externalStoreId: 'externalStoreId',
+  externalCastId: 'externalCastId',
+  castId: 'castId',
+  sourceCastName: 'sourceCastName',
+  pageType: 'pageType',
+  pv: 'pv',
+  uu: 'uu',
+  averagePv: 'averagePv',
+  sourceAveragePv: 'sourceAveragePv',
+  telTapUu: 'telTapUu',
+  conversionRate: 'conversionRate',
+  sourceConversionRate: 'sourceConversionRate',
+  sourceRowNumber: 'sourceRowNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TownUrlDailyScalarFieldEnum = (typeof TownUrlDailyScalarFieldEnum)[keyof typeof TownUrlDailyScalarFieldEnum]
+
+
+export const TownLandingDailyScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  storeId: 'storeId',
+  importBatchId: 'importBatchId',
+  landingUrl: 'landingUrl',
+  normalizedUrl: 'normalizedUrl',
+  externalStoreId: 'externalStoreId',
+  externalCastId: 'externalCastId',
+  castId: 'castId',
+  sourceCastName: 'sourceCastName',
+  pageType: 'pageType',
+  uu: 'uu',
+  bounceRate: 'bounceRate',
+  telTapUu: 'telTapUu',
+  conversionRate: 'conversionRate',
+  sourceConversionRate: 'sourceConversionRate',
+  sourceRowNumber: 'sourceRowNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TownLandingDailyScalarFieldEnum = (typeof TownLandingDailyScalarFieldEnum)[keyof typeof TownLandingDailyScalarFieldEnum]
+
+
 export const ImprovementLogScalarFieldEnum = {
   id: 'id',
   castId: 'castId',
@@ -1496,6 +2164,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const NullableJsonNullValueInput = {
@@ -1629,6 +2304,20 @@ export type ListEnumCastStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'MediaType'
  */
 export type EnumMediaTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaType'>
@@ -1713,20 +2402,6 @@ export type ListEnumImportErrorStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
  * Reference to a field of type 'BigInt'
  */
 export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
@@ -1765,6 +2440,34 @@ export type EnumImportBatchStatusFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'ImportBatchStatus[]'
  */
 export type ListEnumImportBatchStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImportBatchStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TownPageType'
+ */
+export type EnumTownPageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TownPageType'>
+    
+
+
+/**
+ * Reference to a field of type 'TownPageType[]'
+ */
+export type ListEnumTownPageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TownPageType[]'>
     
 
 
@@ -1923,12 +2626,19 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   store?: Prisma.StoreOmit
   cast?: Prisma.CastOmit
+  castNameHistory?: Prisma.CastNameHistoryOmit
+  castMergeHistory?: Prisma.CastMergeHistoryOmit
+  castStartDateBulkChangeHistory?: Prisma.CastStartDateBulkChangeHistoryOmit
   castAlias?: Prisma.CastAliasOmit
   mediaListing?: Prisma.MediaListingOmit
   importSource?: Prisma.ImportSourceOmit
   importError?: Prisma.ImportErrorOmit
   importBatch?: Prisma.ImportBatchOmit
   ctiCastDaily?: Prisma.CtiCastDailyOmit
+  townStoreDaily?: Prisma.TownStoreDailyOmit
+  townCastDaily?: Prisma.TownCastDailyOmit
+  townUrlDaily?: Prisma.TownUrlDailyOmit
+  townLandingDaily?: Prisma.TownLandingDailyOmit
   improvementLog?: Prisma.ImprovementLogOmit
 }
 

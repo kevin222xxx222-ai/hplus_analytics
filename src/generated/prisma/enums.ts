@@ -20,7 +20,8 @@ export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 export const StoreCode = {
   KASUKABE: 'KASUKABE',
   KOSHIGAYA: 'KOSHIGAYA',
-  NODA: 'NODA'
+  NODA: 'NODA',
+  KUKI: 'KUKI'
 } as const
 
 export type StoreCode = (typeof StoreCode)[keyof typeof StoreCode]
@@ -65,12 +66,26 @@ export const ImportDataType = {
   TOWN_STORE: 'TOWN_STORE',
   TOWN_CAST: 'TOWN_CAST',
   TOWN_URL: 'TOWN_URL',
-  TOWN_LP: 'TOWN_LP',
+  TOWN_LANDING: 'TOWN_LANDING',
   HEAVEN_STORE: 'HEAVEN_STORE',
   HEAVEN_CAST: 'HEAVEN_CAST'
 } as const
 
 export type ImportDataType = (typeof ImportDataType)[keyof typeof ImportDataType]
+
+
+export const TownPageType = {
+  STORE_TOP: 'STORE_TOP',
+  SCHEDULE: 'SCHEDULE',
+  GIRL_LIST: 'GIRL_LIST',
+  SHOP_DIARY: 'SHOP_DIARY',
+  CAST_PROFILE: 'CAST_PROFILE',
+  CAST_DIARY: 'CAST_DIARY',
+  EVENT: 'EVENT',
+  OTHER: 'OTHER'
+} as const
+
+export type TownPageType = (typeof TownPageType)[keyof typeof TownPageType]
 
 
 export const ImportBatchStatus = {

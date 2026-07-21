@@ -28,8 +28,8 @@ function choose(candidates: Array<{ id: string; displayName: string }>) {
 
 export async function resolvePreviewRows(rows: CtiPreviewRow[], businessDate: Date) {
   const [aliases, casts] = await Promise.all([
-    prisma.castAlias.findMany({ where: { mediaType: MediaType.CTI, castId: { not: null } }, include: { cast: true } }),
-    prisma.cast.findMany({ where: { startedOn: { lte: businessDate }, OR: [{ endedOn: null }, { endedOn: { gte: businessDate } }] } }),
+    prisma.castAlias.findMany({ where: { mediaType: MediaType.CTI, castId: { not: null }, cast: { mergedIntoCastId: null } }, include: { cast: true } }),
+    prisma.cast.findMany({ where: { mergedIntoCastId: null, startedOn: { lte: businessDate }, OR: [{ endedOn: null }, { endedOn: { gte: businessDate } }] } }),
   ]);
 
   return rows.map((row) => resolvePreviewRow(row, businessDate, aliases, casts));

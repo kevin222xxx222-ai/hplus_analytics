@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 export default async function HomePage() {
   const user = await requireUser();
   const [stores, casts, aliases, sources] = await Promise.all([
-    prisma.store.count({ where: { isActive: true } }), prisma.cast.count({ where: { status: "ACTIVE" } }),
+    prisma.store.count({ where: { isActive: true } }), prisma.cast.count({ where: { status: "ACTIVE", mergedIntoCastId: null } }),
     prisma.castAlias.count({ where: { reviewStatus: "PENDING" } }), prisma.importSource.count({ where: { isActive: true } }),
   ]);
   const cards = [

@@ -10,9 +10,10 @@ const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) })
 
 async function main() {
   const stores = [
-    { code: StoreCode.KASUKABE, name: "若妻淫乱倶楽部春日部店", shortName: "春日部", displayOrder: 1, hasAcquisitionMetrics: true },
-    { code: StoreCode.KOSHIGAYA, name: "若妻淫乱倶楽部越谷店", shortName: "越谷", displayOrder: 2, hasAcquisitionMetrics: true },
-    { code: StoreCode.NODA, name: "若妻淫乱倶楽部野田店", shortName: "野田", displayOrder: 3, hasAcquisitionMetrics: false },
+    { code: StoreCode.KASUKABE, name: "若妻淫乱倶楽部春日部店", shortName: "春日部", displayOrder: 1, hasManagementMetrics: true, hasAcquisitionMetrics: true },
+    { code: StoreCode.KOSHIGAYA, name: "若妻淫乱倶楽部越谷店", shortName: "越谷", displayOrder: 2, hasManagementMetrics: true, hasAcquisitionMetrics: true },
+    { code: StoreCode.NODA, name: "若妻淫乱倶楽部野田店", shortName: "野田", displayOrder: 3, hasManagementMetrics: true, hasAcquisitionMetrics: false },
+    { code: StoreCode.KUKI, name: "久喜", shortName: "久喜", displayOrder: 4, hasManagementMetrics: false, hasAcquisitionMetrics: false },
   ];
 
   for (const store of stores) {
@@ -24,6 +25,32 @@ async function main() {
     update: { isActive: true, kind: ImportSourceKind.MANUAL_UPLOAD, mediaType: MediaType.CTI, dataType: ImportDataType.CTI_CAST_REPORT },
     create: { name: "CTI女子別レポート（3店舗）", kind: ImportSourceKind.MANUAL_UPLOAD, mediaType: MediaType.CTI, dataType: ImportDataType.CTI_CAST_REPORT },
   });
+
+  const acquisitionStores = await prisma.store.findMany({
+    where: { code: { in: [StoreCode.KASUKABE, StoreCode.KOSHIGAYA] } },
+    select: { id: true, code: true, shortName: true },
+  });
+  const townSourceTypes = [
+    { label: "店舗別", dataType: ImportDataType.TOWN_STORE, metricType: "STORE" },
+    { label: "女子別", dataType: ImportDataType.TOWN_CAST, metricType: "CAST" },
+    { label: "URL別", dataType: ImportDataType.TOWN_URL, metricType: "URL" },
+    { label: "LP別", dataType: ImportDataType.TOWN_LANDING, metricType: "LANDING" },
+  ];
+  for (const store of acquisitionStores) {
+    for (const sourceType of townSourceTypes) {
+      const name = `タウン${store.shortName}・${sourceType.label}`;
+      const data = {
+        name,
+        kind: ImportSourceKind.MANUAL_UPLOAD,
+        mediaType: MediaType.TOWN,
+        dataType: sourceType.dataType,
+        metricType: sourceType.metricType,
+        storeId: store.id,
+        isActive: true,
+      };
+      await prisma.importSource.upsert({ where: { name }, update: data, create: data });
+    }
+  }
 
   const loginId = process.env.INITIAL_ADMIN_LOGIN_ID;
   const password = process.env.INITIAL_ADMIN_PASSWORD;

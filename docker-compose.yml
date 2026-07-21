@@ -36,6 +36,9 @@ services:
       - "3000:3000"
     volumes:
       - hplus_analytics_uploads:/app/data/uploads
+      - ${TOWN_BULK_KASUKABE_DIR}:${TOWN_BULK_KASUKABE_DIR}:ro
+      - ${TOWN_BULK_KOSHIGAYA_DIR}:${TOWN_BULK_KOSHIGAYA_DIR}:ro
+      - ${CTI_BULK_DIR}:${CTI_BULK_DIR}:ro
     networks:
       - hplus_analytics
 

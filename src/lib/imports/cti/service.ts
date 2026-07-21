@@ -1,8 +1,9 @@
 import { createHash, randomUUID } from "node:crypto";
 import path from "node:path";
-import { ImportBatchStatus, ImportDataType, ImportMode, MediaType, type StoreCode } from "@/generated/prisma/client";
+import { ImportBatchStatus, ImportDataType, ImportMode, MediaType } from "@/generated/prisma/client";
 import { parseDateOnly } from "@/lib/date";
 import { parseCtiWorkbook } from "@/lib/imports/cti/parser";
+import { CTI_STORE_CODES, type CtiStoreCode } from "@/lib/imports/cti/constants";
 import { resolvePreviewRows } from "@/lib/imports/cti/resolver";
 import type { CtiPreview, CtiPreviewRow, RowIssue } from "@/lib/imports/cti/types";
 import { validateXlsxUpload } from "@/lib/imports/security";
@@ -16,6 +17,8 @@ type CreatePreviewInput = {
   targetFrom: string;
   targetTo: string;
   uploadedByUserId: string;
+  metadata?: Record<string, unknown>;
+  additionalGlobalIssues?: RowIssue[];
 };
 
 function countIssues(issues: RowIssue[], level: "WARNING" | "ERROR") {
@@ -40,6 +43,45 @@ export function summarizePreview(preview: CtiPreview) {
     errorCount: countIssues(issues, "ERROR"),
     skippedCount: preview.sheets.reduce((sum, sheet) => sum + sheet.excludedRows, 0) + rows.filter((row) => row.resolutionStatus === "SKIPPED").length,
   };
+}
+
+export async function analyzeCtiWorkbook(input: {
+  buffer: Buffer;
+  batchId: string;
+  runId: string;
+  importMode: ImportMode;
+  targetFrom: string;
+  targetTo: string;
+  duplicateCompletedBatchId?: string | null;
+  additionalGlobalIssues?: RowIssue[];
+}) {
+  const targetTo = parseDateOnly(input.targetTo);
+  const stores = await prisma.store.findMany({ where: { code: { in: CTI_STORE_CODES } }, select: { id: true, code: true } });
+  const storeIds = Object.fromEntries(stores.map((store) => [store.code, store.id])) as Record<CtiStoreCode, string>;
+  const parsed = await parseCtiWorkbook(input.buffer, storeIds);
+  const resolvedSheets = [];
+  for (const sheet of parsed.sheets) resolvedSheets.push({ ...sheet, rows: await resolvePreviewRows(sheet.rows, targetTo) });
+  const globalIssues: RowIssue[] = [...parsed.globalIssues, ...(input.additionalGlobalIssues || [])];
+  if (input.duplicateCompletedBatchId) globalIssues.push({ code: "DUPLICATE_COMPLETED_FILE", level: "WARNING", message: "同じハッシュの完了済みファイルがあります。確定には明示的な再処理指定が必要です。", rawData: { batchId: input.duplicateCompletedBatchId } });
+  if (input.importMode !== ImportMode.DAILY) globalIssues.push({ code: "AGGREGATE_PREVIEW_ONLY", level: "WARNING", message: "当月累計・月次確定は日別内訳を確認できないため、Phase 2ではプレビューのみです。" });
+
+  const preview: CtiPreview = {
+    version: 1, batchId: input.batchId, runId: input.runId, importMode: input.importMode, targetFrom: input.targetFrom, targetTo: input.targetTo,
+    workbookSheetNames: parsed.workbookSheetNames, missingTargetSheets: parsed.missingTargetSheets,
+    sheets: resolvedSheets, globalIssues, createdAt: new Date().toISOString(),
+  };
+  const summary = summarizePreview(preview);
+  const fatal = globalIssues.some((issue) => issue.code === "NO_TARGET_SHEETS") || resolvedSheets.every((sheet) => sheet.detectedHeaderRow === 0);
+  const status = fatal ? ImportBatchStatus.FAILED : summary.pendingCount ? ImportBatchStatus.WAITING_FOR_CAST_LINK : ImportBatchStatus.PREVIEW_READY;
+  const issueRecords = [
+    ...globalIssues.map((issue) => {
+      const raw = issue.rawData && typeof issue.rawData === "object" && !Array.isArray(issue.rawData) ? issue.rawData as Record<string, unknown> : null;
+      return { issue, sheetName: typeof raw?.sheetName === "string" ? raw.sheetName : null, rowNumber: typeof raw?.rowNumber === "number" ? raw.rowNumber : null };
+    }),
+    ...resolvedSheets.flatMap((sheet) => sheet.rows.flatMap((row) => row.issues.map((issue) => ({ issue, sheetName: sheet.sheetName, rowNumber: row.sourceRowNumber })))),
+  ];
+  const detectedColumns = resolvedSheets.map((sheet) => ({ sheet: sheet.sheetName, headerRow: sheet.detectedHeaderRow, columns: sheet.detectedColumns, unknown: sheet.unknownColumns, unknownDetails: sheet.unknownColumnDetails || [] }));
+  return { preview, summary, fatal, status, issueRecords, detectedColumns };
 }
 
 export async function createCtiPreview(input: CreatePreviewInput) {
@@ -72,41 +114,18 @@ export async function createCtiPreview(input: CreatePreviewInput) {
       id: batchId, runId, importSourceId: importSource.id, originalFilename, storedFilename, storagePath: storedFilename,
       fileHash, fileSizeBytes: BigInt(buffer.byteLength), dataType: ImportDataType.CTI_CAST_REPORT, importMode: input.importMode,
       targetFrom, targetTo, status: ImportBatchStatus.VALIDATING, uploadedByUserId: input.uploadedByUserId,
-      metadata: duplicate ? { duplicateCompletedBatchId: duplicate.id } : {},
+      metadata: { ...(input.metadata || {}), ...(duplicate ? { duplicateCompletedBatchId: duplicate.id } : {}) },
     },
   });
 
   try {
-    const stores = await prisma.store.findMany({ select: { id: true, code: true } });
-    const storeIds = Object.fromEntries(stores.map((store) => [store.code, store.id])) as Record<StoreCode, string>;
-    const parsed = await parseCtiWorkbook(buffer, storeIds);
-    const resolvedSheets = [];
-    for (const sheet of parsed.sheets) {
-      resolvedSheets.push({ ...sheet, rows: await resolvePreviewRows(sheet.rows, targetTo) });
-    }
-    const globalIssues: RowIssue[] = [...parsed.globalIssues];
-    if (duplicate) globalIssues.push({ code: "DUPLICATE_COMPLETED_FILE", level: "WARNING", message: "同じハッシュの完了済みファイルがあります。確定には明示的な再処理指定が必要です。", rawData: { batchId: duplicate.id } });
-    if (input.importMode !== ImportMode.DAILY) globalIssues.push({ code: "AGGREGATE_PREVIEW_ONLY", level: "WARNING", message: "当月累計・月次確定は日別内訳を確認できないため、Phase 2ではプレビューのみです。" });
-
-    const preview: CtiPreview = {
-      version: 1, batchId, runId, importMode: input.importMode, targetFrom: input.targetFrom, targetTo: input.targetTo,
-      workbookSheetNames: parsed.workbookSheetNames, missingTargetSheets: parsed.missingTargetSheets,
-      sheets: resolvedSheets, globalIssues, createdAt: new Date().toISOString(),
-    };
-    const summary = summarizePreview(preview);
-    const fatal = globalIssues.some((issue) => issue.code === "NO_TARGET_SHEETS") || resolvedSheets.every((sheet) => sheet.detectedHeaderRow === 0);
-    const status = fatal ? ImportBatchStatus.FAILED : summary.pendingCount ? ImportBatchStatus.WAITING_FOR_CAST_LINK : ImportBatchStatus.PREVIEW_READY;
-    await writePreview(batchId, preview);
-
-    const issueRecords = [
-      ...globalIssues.map((issue) => {
-        const raw = issue.rawData && typeof issue.rawData === "object" && !Array.isArray(issue.rawData) ? issue.rawData as Record<string, unknown> : null;
-        return { issue, sheetName: typeof raw?.sheetName === "string" ? raw.sheetName : null, rowNumber: typeof raw?.rowNumber === "number" ? raw.rowNumber : null };
-      }),
-      ...resolvedSheets.flatMap((sheet) => sheet.rows.flatMap((row) => row.issues.map((issue) => ({ issue, sheetName: sheet.sheetName, rowNumber: row.sourceRowNumber })))),
-    ];
-    if (issueRecords.length) {
-      await prisma.importError.createMany({ data: issueRecords.map(({ issue, sheetName, rowNumber }) => ({
+    const analysis = await analyzeCtiWorkbook({
+      buffer, batchId, runId, importMode: input.importMode, targetFrom: input.targetFrom, targetTo: input.targetTo,
+      duplicateCompletedBatchId: duplicate?.id, additionalGlobalIssues: input.additionalGlobalIssues,
+    });
+    await writePreview(batchId, analysis.preview);
+    if (analysis.issueRecords.length) {
+      await prisma.importError.createMany({ data: analysis.issueRecords.map(({ issue, sheetName, rowNumber }) => ({
         runId, importSourceId: importSource.id, importBatchId: batchId, fileName: originalFilename, fileHash,
         sheetName, rowNumber, columnName: issue.columnName, errorCode: issue.code, level: issue.level,
         message: issue.message, rawData: issue.rawData === undefined ? undefined : JSON.parse(JSON.stringify(issue.rawData)),
@@ -115,13 +134,13 @@ export async function createCtiPreview(input: CreatePreviewInput) {
     await prisma.importBatch.update({
       where: { id: batchId },
       data: {
-        status, failureMessage: fatal ? "対象シートまたは有効なヘッダーを検出できません。" : null,
-        sourceSheetNames: parsed.workbookSheetNames,
-        detectedColumns: resolvedSheets.map((sheet) => ({ sheet: sheet.sheetName, headerRow: sheet.detectedHeaderRow, columns: sheet.detectedColumns, unknown: sheet.unknownColumns, unknownDetails: sheet.unknownColumnDetails || [] })),
-        pendingCount: summary.pendingCount, warningCount: summary.warningCount, errorCount: summary.errorCount, skippedCount: summary.skippedCount,
+        status: analysis.status, failureMessage: analysis.fatal ? "対象シートまたは有効なヘッダーを検出できません。" : null,
+        sourceSheetNames: analysis.preview.workbookSheetNames,
+        detectedColumns: analysis.detectedColumns,
+        pendingCount: analysis.summary.pendingCount, warningCount: analysis.summary.warningCount, errorCount: analysis.summary.errorCount, skippedCount: analysis.summary.skippedCount,
       },
     });
-    return { batchId, status };
+    return { batchId, status: analysis.status };
   } catch {
     const message = "XLSX解析に失敗しました。ファイル形式、対象シート、列構成を確認してください。";
     await prisma.$transaction([

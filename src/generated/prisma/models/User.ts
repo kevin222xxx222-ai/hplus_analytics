@@ -216,6 +216,9 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   sessions?: Prisma.SessionListRelationFilter
   importBatches?: Prisma.ImportBatchListRelationFilter
+  castNameChanges?: Prisma.CastNameHistoryListRelationFilter
+  castMergeActions?: Prisma.CastMergeHistoryListRelationFilter
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -230,6 +233,9 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   importBatches?: Prisma.ImportBatchOrderByRelationAggregateInput
+  castNameChanges?: Prisma.CastNameHistoryOrderByRelationAggregateInput
+  castMergeActions?: Prisma.CastMergeHistoryOrderByRelationAggregateInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -247,6 +253,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   sessions?: Prisma.SessionListRelationFilter
   importBatches?: Prisma.ImportBatchListRelationFilter
+  castNameChanges?: Prisma.CastNameHistoryListRelationFilter
+  castMergeActions?: Prisma.CastMergeHistoryListRelationFilter
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryListRelationFilter
 }, "id" | "loginId" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -291,6 +300,9 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   importBatches?: Prisma.ImportBatchCreateNestedManyWithoutUploadedByUserInput
+  castNameChanges?: Prisma.CastNameHistoryCreateNestedManyWithoutChangedByInput
+  castMergeActions?: Prisma.CastMergeHistoryCreateNestedManyWithoutMergedByInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -305,6 +317,9 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   importBatches?: Prisma.ImportBatchUncheckedCreateNestedManyWithoutUploadedByUserInput
+  castNameChanges?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  castMergeActions?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutMergedByInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUpdateInput = {
@@ -319,6 +334,9 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   importBatches?: Prisma.ImportBatchUpdateManyWithoutUploadedByUserNestedInput
+  castNameChanges?: Prisma.CastNameHistoryUpdateManyWithoutChangedByNestedInput
+  castMergeActions?: Prisma.CastMergeHistoryUpdateManyWithoutMergedByNestedInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -333,6 +351,9 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   importBatches?: Prisma.ImportBatchUncheckedUpdateManyWithoutUploadedByUserNestedInput
+  castNameChanges?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  castMergeActions?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutMergedByNestedInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -451,6 +472,48 @@ export type UserUpdateOneRequiredWithoutSessionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSessionsInput, Prisma.UserUpdateWithoutSessionsInput>, Prisma.UserUncheckedUpdateWithoutSessionsInput>
 }
 
+export type UserCreateNestedOneWithoutCastNameChangesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCastNameChangesInput, Prisma.UserUncheckedCreateWithoutCastNameChangesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCastNameChangesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCastNameChangesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCastNameChangesInput, Prisma.UserUncheckedCreateWithoutCastNameChangesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCastNameChangesInput
+  upsert?: Prisma.UserUpsertWithoutCastNameChangesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCastNameChangesInput, Prisma.UserUpdateWithoutCastNameChangesInput>, Prisma.UserUncheckedUpdateWithoutCastNameChangesInput>
+}
+
+export type UserCreateNestedOneWithoutCastMergeActionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCastMergeActionsInput, Prisma.UserUncheckedCreateWithoutCastMergeActionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCastMergeActionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCastMergeActionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCastMergeActionsInput, Prisma.UserUncheckedCreateWithoutCastMergeActionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCastMergeActionsInput
+  upsert?: Prisma.UserUpsertWithoutCastMergeActionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCastMergeActionsInput, Prisma.UserUpdateWithoutCastMergeActionsInput>, Prisma.UserUncheckedUpdateWithoutCastMergeActionsInput>
+}
+
+export type UserCreateNestedOneWithoutCastStartDateBulkChangesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCastStartDateBulkChangesInput, Prisma.UserUncheckedCreateWithoutCastStartDateBulkChangesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCastStartDateBulkChangesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCastStartDateBulkChangesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCastStartDateBulkChangesInput, Prisma.UserUncheckedCreateWithoutCastStartDateBulkChangesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCastStartDateBulkChangesInput
+  upsert?: Prisma.UserUpsertWithoutCastStartDateBulkChangesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCastStartDateBulkChangesInput, Prisma.UserUpdateWithoutCastStartDateBulkChangesInput>, Prisma.UserUncheckedUpdateWithoutCastStartDateBulkChangesInput>
+}
+
 export type UserCreateNestedOneWithoutImportBatchesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutImportBatchesInput, Prisma.UserUncheckedCreateWithoutImportBatchesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutImportBatchesInput
@@ -478,6 +541,9 @@ export type UserCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   importBatches?: Prisma.ImportBatchCreateNestedManyWithoutUploadedByUserInput
+  castNameChanges?: Prisma.CastNameHistoryCreateNestedManyWithoutChangedByInput
+  castMergeActions?: Prisma.CastMergeHistoryCreateNestedManyWithoutMergedByInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -491,6 +557,9 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   importBatches?: Prisma.ImportBatchUncheckedCreateNestedManyWithoutUploadedByUserInput
+  castNameChanges?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  castMergeActions?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutMergedByInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -520,6 +589,9 @@ export type UserUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   importBatches?: Prisma.ImportBatchUpdateManyWithoutUploadedByUserNestedInput
+  castNameChanges?: Prisma.CastNameHistoryUpdateManyWithoutChangedByNestedInput
+  castMergeActions?: Prisma.CastMergeHistoryUpdateManyWithoutMergedByNestedInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -533,6 +605,249 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   importBatches?: Prisma.ImportBatchUncheckedUpdateManyWithoutUploadedByUserNestedInput
+  castNameChanges?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  castMergeActions?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutMergedByNestedInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+}
+
+export type UserCreateWithoutCastNameChangesInput = {
+  id?: string
+  loginId: string
+  email?: string | null
+  displayName: string
+  passwordHash: string
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  importBatches?: Prisma.ImportBatchCreateNestedManyWithoutUploadedByUserInput
+  castMergeActions?: Prisma.CastMergeHistoryCreateNestedManyWithoutMergedByInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
+}
+
+export type UserUncheckedCreateWithoutCastNameChangesInput = {
+  id?: string
+  loginId: string
+  email?: string | null
+  displayName: string
+  passwordHash: string
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  importBatches?: Prisma.ImportBatchUncheckedCreateNestedManyWithoutUploadedByUserInput
+  castMergeActions?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutMergedByInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
+}
+
+export type UserCreateOrConnectWithoutCastNameChangesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCastNameChangesInput, Prisma.UserUncheckedCreateWithoutCastNameChangesInput>
+}
+
+export type UserUpsertWithoutCastNameChangesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCastNameChangesInput, Prisma.UserUncheckedUpdateWithoutCastNameChangesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCastNameChangesInput, Prisma.UserUncheckedCreateWithoutCastNameChangesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCastNameChangesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCastNameChangesInput, Prisma.UserUncheckedUpdateWithoutCastNameChangesInput>
+}
+
+export type UserUpdateWithoutCastNameChangesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loginId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  importBatches?: Prisma.ImportBatchUpdateManyWithoutUploadedByUserNestedInput
+  castMergeActions?: Prisma.CastMergeHistoryUpdateManyWithoutMergedByNestedInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCastNameChangesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loginId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  importBatches?: Prisma.ImportBatchUncheckedUpdateManyWithoutUploadedByUserNestedInput
+  castMergeActions?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutMergedByNestedInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+}
+
+export type UserCreateWithoutCastMergeActionsInput = {
+  id?: string
+  loginId: string
+  email?: string | null
+  displayName: string
+  passwordHash: string
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  importBatches?: Prisma.ImportBatchCreateNestedManyWithoutUploadedByUserInput
+  castNameChanges?: Prisma.CastNameHistoryCreateNestedManyWithoutChangedByInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
+}
+
+export type UserUncheckedCreateWithoutCastMergeActionsInput = {
+  id?: string
+  loginId: string
+  email?: string | null
+  displayName: string
+  passwordHash: string
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  importBatches?: Prisma.ImportBatchUncheckedCreateNestedManyWithoutUploadedByUserInput
+  castNameChanges?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
+}
+
+export type UserCreateOrConnectWithoutCastMergeActionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCastMergeActionsInput, Prisma.UserUncheckedCreateWithoutCastMergeActionsInput>
+}
+
+export type UserUpsertWithoutCastMergeActionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCastMergeActionsInput, Prisma.UserUncheckedUpdateWithoutCastMergeActionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCastMergeActionsInput, Prisma.UserUncheckedCreateWithoutCastMergeActionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCastMergeActionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCastMergeActionsInput, Prisma.UserUncheckedUpdateWithoutCastMergeActionsInput>
+}
+
+export type UserUpdateWithoutCastMergeActionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loginId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  importBatches?: Prisma.ImportBatchUpdateManyWithoutUploadedByUserNestedInput
+  castNameChanges?: Prisma.CastNameHistoryUpdateManyWithoutChangedByNestedInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCastMergeActionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loginId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  importBatches?: Prisma.ImportBatchUncheckedUpdateManyWithoutUploadedByUserNestedInput
+  castNameChanges?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+}
+
+export type UserCreateWithoutCastStartDateBulkChangesInput = {
+  id?: string
+  loginId: string
+  email?: string | null
+  displayName: string
+  passwordHash: string
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  importBatches?: Prisma.ImportBatchCreateNestedManyWithoutUploadedByUserInput
+  castNameChanges?: Prisma.CastNameHistoryCreateNestedManyWithoutChangedByInput
+  castMergeActions?: Prisma.CastMergeHistoryCreateNestedManyWithoutMergedByInput
+}
+
+export type UserUncheckedCreateWithoutCastStartDateBulkChangesInput = {
+  id?: string
+  loginId: string
+  email?: string | null
+  displayName: string
+  passwordHash: string
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  importBatches?: Prisma.ImportBatchUncheckedCreateNestedManyWithoutUploadedByUserInput
+  castNameChanges?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  castMergeActions?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutMergedByInput
+}
+
+export type UserCreateOrConnectWithoutCastStartDateBulkChangesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCastStartDateBulkChangesInput, Prisma.UserUncheckedCreateWithoutCastStartDateBulkChangesInput>
+}
+
+export type UserUpsertWithoutCastStartDateBulkChangesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCastStartDateBulkChangesInput, Prisma.UserUncheckedUpdateWithoutCastStartDateBulkChangesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCastStartDateBulkChangesInput, Prisma.UserUncheckedCreateWithoutCastStartDateBulkChangesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCastStartDateBulkChangesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCastStartDateBulkChangesInput, Prisma.UserUncheckedUpdateWithoutCastStartDateBulkChangesInput>
+}
+
+export type UserUpdateWithoutCastStartDateBulkChangesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loginId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  importBatches?: Prisma.ImportBatchUpdateManyWithoutUploadedByUserNestedInput
+  castNameChanges?: Prisma.CastNameHistoryUpdateManyWithoutChangedByNestedInput
+  castMergeActions?: Prisma.CastMergeHistoryUpdateManyWithoutMergedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCastStartDateBulkChangesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loginId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  importBatches?: Prisma.ImportBatchUncheckedUpdateManyWithoutUploadedByUserNestedInput
+  castNameChanges?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  castMergeActions?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutMergedByNestedInput
 }
 
 export type UserCreateWithoutImportBatchesInput = {
@@ -546,6 +861,9 @@ export type UserCreateWithoutImportBatchesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  castNameChanges?: Prisma.CastNameHistoryCreateNestedManyWithoutChangedByInput
+  castMergeActions?: Prisma.CastMergeHistoryCreateNestedManyWithoutMergedByInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateWithoutImportBatchesInput = {
@@ -559,6 +877,9 @@ export type UserUncheckedCreateWithoutImportBatchesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  castNameChanges?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  castMergeActions?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutMergedByInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
 }
 
 export type UserCreateOrConnectWithoutImportBatchesInput = {
@@ -588,6 +909,9 @@ export type UserUpdateWithoutImportBatchesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  castNameChanges?: Prisma.CastNameHistoryUpdateManyWithoutChangedByNestedInput
+  castMergeActions?: Prisma.CastMergeHistoryUpdateManyWithoutMergedByNestedInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutImportBatchesInput = {
@@ -601,6 +925,9 @@ export type UserUncheckedUpdateWithoutImportBatchesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  castNameChanges?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  castMergeActions?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutMergedByNestedInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 
@@ -611,11 +938,17 @@ export type UserUncheckedUpdateWithoutImportBatchesInput = {
 export type UserCountOutputType = {
   sessions: number
   importBatches: number
+  castNameChanges: number
+  castMergeActions: number
+  castStartDateBulkChanges: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   importBatches?: boolean | UserCountOutputTypeCountImportBatchesArgs
+  castNameChanges?: boolean | UserCountOutputTypeCountCastNameChangesArgs
+  castMergeActions?: boolean | UserCountOutputTypeCountCastMergeActionsArgs
+  castStartDateBulkChanges?: boolean | UserCountOutputTypeCountCastStartDateBulkChangesArgs
 }
 
 /**
@@ -642,6 +975,27 @@ export type UserCountOutputTypeCountImportBatchesArgs<ExtArgs extends runtime.Ty
   where?: Prisma.ImportBatchWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCastNameChangesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CastNameHistoryWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCastMergeActionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CastMergeHistoryWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCastStartDateBulkChangesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CastStartDateBulkChangeHistoryWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -655,6 +1009,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   importBatches?: boolean | Prisma.User$importBatchesArgs<ExtArgs>
+  castNameChanges?: boolean | Prisma.User$castNameChangesArgs<ExtArgs>
+  castMergeActions?: boolean | Prisma.User$castMergeActionsArgs<ExtArgs>
+  castStartDateBulkChanges?: boolean | Prisma.User$castStartDateBulkChangesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -698,6 +1055,9 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   importBatches?: boolean | Prisma.User$importBatchesArgs<ExtArgs>
+  castNameChanges?: boolean | Prisma.User$castNameChangesArgs<ExtArgs>
+  castMergeActions?: boolean | Prisma.User$castMergeActionsArgs<ExtArgs>
+  castStartDateBulkChanges?: boolean | Prisma.User$castStartDateBulkChangesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -708,6 +1068,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     importBatches: Prisma.$ImportBatchPayload<ExtArgs>[]
+    castNameChanges: Prisma.$CastNameHistoryPayload<ExtArgs>[]
+    castMergeActions: Prisma.$CastMergeHistoryPayload<ExtArgs>[]
+    castStartDateBulkChanges: Prisma.$CastStartDateBulkChangeHistoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1115,6 +1478,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   importBatches<T extends Prisma.User$importBatchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$importBatchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImportBatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  castNameChanges<T extends Prisma.User$castNameChangesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$castNameChangesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastNameHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  castMergeActions<T extends Prisma.User$castMergeActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$castMergeActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastMergeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  castStartDateBulkChanges<T extends Prisma.User$castStartDateBulkChangesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$castStartDateBulkChangesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastStartDateBulkChangeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1591,6 +1957,78 @@ export type User$importBatchesArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.ImportBatchScalarFieldEnum | Prisma.ImportBatchScalarFieldEnum[]
+}
+
+/**
+ * User.castNameChanges
+ */
+export type User$castNameChangesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CastNameHistory
+   */
+  select?: Prisma.CastNameHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CastNameHistory
+   */
+  omit?: Prisma.CastNameHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CastNameHistoryInclude<ExtArgs> | null
+  where?: Prisma.CastNameHistoryWhereInput
+  orderBy?: Prisma.CastNameHistoryOrderByWithRelationInput | Prisma.CastNameHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.CastNameHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CastNameHistoryScalarFieldEnum | Prisma.CastNameHistoryScalarFieldEnum[]
+}
+
+/**
+ * User.castMergeActions
+ */
+export type User$castMergeActionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CastMergeHistory
+   */
+  select?: Prisma.CastMergeHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CastMergeHistory
+   */
+  omit?: Prisma.CastMergeHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CastMergeHistoryInclude<ExtArgs> | null
+  where?: Prisma.CastMergeHistoryWhereInput
+  orderBy?: Prisma.CastMergeHistoryOrderByWithRelationInput | Prisma.CastMergeHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.CastMergeHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CastMergeHistoryScalarFieldEnum | Prisma.CastMergeHistoryScalarFieldEnum[]
+}
+
+/**
+ * User.castStartDateBulkChanges
+ */
+export type User$castStartDateBulkChangesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CastStartDateBulkChangeHistory
+   */
+  select?: Prisma.CastStartDateBulkChangeHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CastStartDateBulkChangeHistory
+   */
+  omit?: Prisma.CastStartDateBulkChangeHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CastStartDateBulkChangeHistoryInclude<ExtArgs> | null
+  where?: Prisma.CastStartDateBulkChangeHistoryWhereInput
+  orderBy?: Prisma.CastStartDateBulkChangeHistoryOrderByWithRelationInput | Prisma.CastStartDateBulkChangeHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.CastStartDateBulkChangeHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CastStartDateBulkChangeHistoryScalarFieldEnum | Prisma.CastStartDateBulkChangeHistoryScalarFieldEnum[]
 }
 
 /**

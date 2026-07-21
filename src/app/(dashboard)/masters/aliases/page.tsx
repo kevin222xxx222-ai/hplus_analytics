@@ -9,7 +9,7 @@ export default async function AliasesPage() {
   await requireAdmin();
   const [aliases, casts, stores] = await Promise.all([
     prisma.castAlias.findMany({ include: { cast: true, store: true }, orderBy: [{ reviewStatus: "asc" }, { createdAt: "desc" }] }),
-    prisma.cast.findMany({ where: { status: "ACTIVE" }, orderBy: { displayName: "asc" } }), prisma.store.findMany({ orderBy: { displayOrder: "asc" } }),
+    prisma.cast.findMany({ where: { status: "ACTIVE", mergedIntoCastId: null }, orderBy: { displayName: "asc" } }), prisma.store.findMany({ orderBy: { displayOrder: "asc" } }),
   ]);
   return <><PageHeader title="エイリアス管理" description="CTI・タウン・ヘブン上の名前を内部キャストIDへ紐付けます。かな表記の違いは自動統合しません。" />
     <section className="panel mb-6 p-5"><h2 className="text-base font-semibold text-slate-900">エイリアスを追加</h2><form action={createAliasAction} className="mt-4 grid gap-4 lg:grid-cols-[140px_1fr_180px_1fr_auto] lg:items-end"><div><label className="form-label">媒体</label><select name="mediaType" className="form-input mt-2">{Object.values(MediaType).map((v) => <option key={v}>{v}</option>)}</select></div><div><label className="form-label">媒体上の名前</label><input name="aliasName" required className="form-input mt-2" /></div><div><label className="form-label">店舗</label><select name="storeId" className="form-input mt-2"><option value="">共通 / 未設定</option>{stores.map((s) => <option key={s.id} value={s.id}>{s.shortName}</option>)}</select></div><div><label className="form-label">紐付け先</label><select name="castId" className="form-input mt-2"><option value="">確認待ち</option>{casts.map((c) => <option key={c.id} value={c.id}>{c.displayName}</option>)}</select></div><button className="primary-button"><Plus className="size-4" />追加</button></form></section>

@@ -1,0 +1,10 @@
+import Link from "next/link";
+import { PageHeader } from "@/components/page-header";
+import { requireAdmin } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+
+export default async function CastMergeHistoriesPage({ searchParams }: { searchParams: Promise<{ completed?: string }> }) {
+  await requireAdmin(); const query = await searchParams;
+  const histories = await prisma.castMergeHistory.findMany({ include: { sourceCast: true, targetCast: true, mergedBy: { select: { displayName: true, loginId: true } } }, orderBy: { mergedAt: "desc" } });
+  return <><PageHeader eyebrow="AUDIT LOG" title="キャスト統合履歴" description="統合元・統合先の内部IDと実行者、日時、統合時スナップショットを監査できます。" />{query.completed && <p className="mb-4 rounded-xl bg-emerald-50 p-4 text-sm text-emerald-700">キャスト統合が完了しました。履歴ID: {query.completed}</p>}<div className="mb-4 flex gap-3"><Link href="/masters/casts" className="secondary-button">キャスト管理へ</Link><Link href="/masters/casts/duplicates" className="secondary-button">重複候補へ</Link></div><section className="panel overflow-hidden"><div className="table-wrap"><table><thead><tr><th>統合日時</th><th>統合元</th><th>統合先</th><th>実行者</th><th>理由</th><th>競合整理</th></tr></thead><tbody>{histories.map((history) => { const summary = history.conflictSummary as { exactDuplicates?: unknown[]; blockingConflicts?: unknown[] }; return <tr key={history.id}><td>{history.mergedAt.toLocaleString("ja-JP")}</td><td><div>{history.sourceCast.displayName}</div><div className="font-mono text-xs text-slate-400">{history.sourceCastId}</div></td><td><Link href={`/analytics/casts/${history.targetCastId}`} className="font-medium text-emerald-700">{history.targetCast.displayName}</Link><div className="font-mono text-xs text-slate-400">{history.targetCastId}</div></td><td>{history.mergedBy.displayName}<div className="text-xs text-slate-400">{history.mergedBy.loginId}</div></td><td>{history.reason || "—"}</td><td>完全一致整理 {summary.exactDuplicates?.length || 0} / 差分衝突 {summary.blockingConflicts?.length || 0}</td></tr>; })}</tbody></table>{histories.length === 0 && <p className="empty-state">統合履歴はありません。</p>}</div></section></>;
+}

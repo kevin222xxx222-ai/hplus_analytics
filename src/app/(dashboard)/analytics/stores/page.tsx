@@ -10,9 +10,9 @@ export default async function StoreAnalyticsPage({ searchParams }: { searchParam
   await requireUser();
   const query = await searchParams;
   const range = resolveDateRange(query.from, query.to);
-  const stores = await prisma.store.findMany({ orderBy: { displayOrder: "asc" } });
+  const stores = await prisma.store.findMany({ where: { hasManagementMetrics: true }, orderBy: { displayOrder: "asc" } });
   const selected = stores.find((store) => store.code === query.scope);
-  const records = await prisma.ctiCastDaily.findMany({ where: { businessDate: { gte: range.from, lte: range.to }, ...(selected ? { storeId: selected.id } : {}) }, include: { store: true } });
+  const records = await prisma.ctiCastDaily.findMany({ where: { businessDate: { gte: range.from, lte: range.to }, storeId: selected ? selected.id : { in: stores.map((store) => store.id) } }, include: { store: true } });
   const metrics = aggregateCti(records);
   const scopeName = selected?.shortName || "管轄全体";
   return <><PageHeader eyebrow="STORE PERFORMANCE" title="店舗実績" description="管轄全体は春日部・越谷・野田を合算し、同一日・同一キャストの出勤実人数を重複除外します。" /><DateRangeForm from={range.fromText} to={range.toText} extra={<div><label className="form-label">表示単位</label><select name="scope" defaultValue={selected?.code || "ALL"} className="form-input mt-2 w-[180px]"><option value="ALL">管轄全体</option>{stores.map((store) => <option key={store.id} value={store.code}>{store.shortName}</option>)}</select></div>} />

@@ -12,7 +12,7 @@ export default async function CastAnalyticsPage({ searchParams }: { searchParams
   await requireUser();
   const query = await searchParams;
   const range = resolveDateRange(query.from, query.to);
-  const records = await prisma.ctiCastDaily.findMany({ where: { businessDate: { gte: range.from, lte: range.to } }, include: { cast: true }, orderBy: [{ cast: { displayName: "asc" } }, { businessDate: "asc" }] });
+  const records = await prisma.ctiCastDaily.findMany({ where: { businessDate: { gte: range.from, lte: range.to }, cast: { mergedIntoCastId: null } }, include: { cast: true }, orderBy: [{ cast: { displayName: "asc" } }, { businessDate: "asc" }] });
   const grouped = new Map<string, typeof records>();
   for (const record of records) grouped.set(record.castId, [...(grouped.get(record.castId) || []), record]);
   const rows = [...grouped.values()].map((castRecords) => ({ cast: castRecords[0].cast, metrics: aggregateCti(castRecords) }));

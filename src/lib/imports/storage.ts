@@ -18,6 +18,10 @@ export function getStoredWorkbookPath(batchId: string) {
   return safePath(`${batchId}.xlsx`);
 }
 
+export function getStoredImportPath(storagePath: string) {
+  return safePath(storagePath);
+}
+
 export function getPreviewPath(batchId: string) {
   return safePath(`${batchId}.preview.json`);
 }
@@ -31,6 +35,14 @@ export async function saveWorkbook(batchId: string, buffer: Buffer) {
   const target = getStoredWorkbookPath(batchId);
   await writeFile(target, buffer, { flag: "wx", mode: 0o600 });
   return target;
+}
+
+export async function saveImportFile(batchId: string, extension: ".csv" | ".xlsx", buffer: Buffer) {
+  await ensureUploadRoot();
+  const storedFilename = `${batchId}${extension}`;
+  const target = safePath(storedFilename);
+  await writeFile(target, buffer, { flag: "wx", mode: 0o600 });
+  return { target, storedFilename };
 }
 
 export async function writePreview<T>(batchId: string, preview: T) {
@@ -47,4 +59,9 @@ export async function readPreview<T>(batchId: string): Promise<T> {
 
 export async function readWorkbook(batchId: string) {
   return readFile(getStoredWorkbookPath(batchId));
+}
+
+
+export async function readImportFile(storagePath: string) {
+  return readFile(getStoredImportPath(storagePath));
 }

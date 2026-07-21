@@ -16,6 +16,7 @@ enum StoreCode {
   KASUKABE
   KOSHIGAYA
   NODA
+  KUKI
 }
 
 enum CastStatus {
@@ -45,9 +46,20 @@ enum ImportDataType {
   TOWN_STORE
   TOWN_CAST
   TOWN_URL
-  TOWN_LP
+  TOWN_LANDING
   HEAVEN_STORE
   HEAVEN_CAST
+}
+
+enum TownPageType {
+  STORE_TOP
+  SCHEDULE
+  GIRL_LIST
+  SHOP_DIARY
+  CAST_PROFILE
+  CAST_DIARY
+  EVENT
+  OTHER
 }
 
 enum ImportBatchStatus {
@@ -96,17 +108,20 @@ enum ImprovementLogStatus {
 }
 
 model User {
-  id            String        @id @default(uuid()) @db.Uuid
-  loginId       String        @unique @map("login_id") @db.VarChar(100)
-  email         String?       @unique @db.VarChar(255)
-  displayName   String        @map("display_name") @db.VarChar(100)
-  passwordHash  String        @map("password_hash") @db.VarChar(255)
-  role          UserRole      @default(VIEWER)
-  isActive      Boolean       @default(true) @map("is_active")
-  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt     DateTime      @updatedAt @map("updated_at") @db.Timestamptz(3)
-  sessions      Session[]
-  importBatches ImportBatch[]
+  id               String             @id @default(uuid()) @db.Uuid
+  loginId          String             @unique @map("login_id") @db.VarChar(100)
+  email            String?            @unique @db.VarChar(255)
+  displayName      String             @map("display_name") @db.VarChar(100)
+  passwordHash     String             @map("password_hash") @db.VarChar(255)
+  role             UserRole           @default(VIEWER)
+  isActive         Boolean            @default(true) @map("is_active")
+  createdAt        DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
+  sessions         Session[]
+  importBatches    ImportBatch[]
+  castNameChanges  CastNameHistory[]  @relation("CastNameChangedBy")
+  castMergeActions CastMergeHistory[] @relation("CastMergePerformedBy")
+  castStartDateBulkChanges CastStartDateBulkChangeHistory[] @relation("CastStartDateBulkChangePerformedBy")
 
   @@map("users")
 }
@@ -128,46 +143,116 @@ model Session {
 }
 
 model Store {
-  id                    String           @id @default(uuid()) @db.Uuid
-  code                  StoreCode        @unique
-  name                  String           @db.VarChar(100)
-  shortName             String           @map("short_name") @db.VarChar(50)
-  displayOrder          Int              @default(0) @map("display_order")
-  isActive              Boolean          @default(true) @map("is_active")
-  hasManagementMetrics  Boolean          @default(true) @map("has_management_metrics")
-  hasAcquisitionMetrics Boolean          @default(false) @map("has_acquisition_metrics")
-  createdAt             DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt             DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
+  id                    String             @id @default(uuid()) @db.Uuid
+  code                  StoreCode          @unique
+  name                  String             @db.VarChar(100)
+  shortName             String             @map("short_name") @db.VarChar(50)
+  displayOrder          Int                @default(0) @map("display_order")
+  isActive              Boolean            @default(true) @map("is_active")
+  hasManagementMetrics  Boolean            @default(true) @map("has_management_metrics")
+  hasAcquisitionMetrics Boolean            @default(false) @map("has_acquisition_metrics")
+  createdAt             DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt             DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
   casts                 Cast[]
   aliases               CastAlias[]
   mediaListings         MediaListing[]
   importSources         ImportSource[]
   improvementLogs       ImprovementLog[]
   ctiCastDailies        CtiCastDaily[]
+  townStoreDailies      TownStoreDaily[]
+  townCastDailies       TownCastDaily[]
+  townUrlDailies        TownUrlDaily[]
+  townLandingDailies    TownLandingDaily[]
 
   @@map("stores")
 }
 
 model Cast {
-  id              String           @id @default(uuid()) @db.Uuid
-  displayName     String           @map("display_name") @db.VarChar(100)
-  normalizedName  String           @map("normalized_name") @db.VarChar(100)
-  status          CastStatus       @default(ACTIVE)
-  startedOn       DateTime         @map("started_on") @db.Date
-  endedOn         DateTime?        @map("ended_on") @db.Date
-  primaryStoreId  String?          @map("primary_store_id") @db.Uuid
-  notes           String?          @db.Text
-  createdAt       DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt       DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
-  primaryStore    Store?           @relation(fields: [primaryStoreId], references: [id], onDelete: SetNull)
-  aliases         CastAlias[]
-  mediaListings   MediaListing[]
-  improvementLogs ImprovementLog[]
-  ctiCastDailies  CtiCastDaily[]
+  id                 String             @id @default(uuid()) @db.Uuid
+  displayName        String             @map("display_name") @db.VarChar(100)
+  normalizedName     String             @map("normalized_name") @db.VarChar(100)
+  status             CastStatus         @default(ACTIVE)
+  startedOn          DateTime           @map("started_on") @db.Date
+  endedOn            DateTime?          @map("ended_on") @db.Date
+  primaryStoreId     String?            @map("primary_store_id") @db.Uuid
+  notes              String?            @db.Text
+  createdAt          DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
+  primaryStore       Store?             @relation(fields: [primaryStoreId], references: [id], onDelete: SetNull)
+  aliases            CastAlias[]
+  mediaListings      MediaListing[]
+  improvementLogs    ImprovementLog[]
+  ctiCastDailies     CtiCastDaily[]
+  townCastDailies    TownCastDaily[]
+  townUrlDailies     TownUrlDaily[]
+  townLandingDailies TownLandingDaily[]
+  nameHistories      CastNameHistory[]
+  mergedIntoCastId   String?            @map("merged_into_cast_id") @db.Uuid
+  mergedAt           DateTime?          @map("merged_at") @db.Timestamptz(3)
+  mergedInto         Cast?              @relation("CastMergeRedirect", fields: [mergedIntoCastId], references: [id], onDelete: Restrict)
+  mergedSources      Cast[]             @relation("CastMergeRedirect")
+  mergesAsSource     CastMergeHistory[] @relation("CastMergeSource")
+  mergesAsTarget     CastMergeHistory[] @relation("CastMergeTarget")
 
   @@index([normalizedName])
   @@index([primaryStoreId, status])
+  @@index([mergedIntoCastId])
   @@map("casts")
+}
+
+model CastNameHistory {
+  id              String   @id @default(uuid()) @db.Uuid
+  castId          String   @map("cast_id") @db.Uuid
+  oldName         String   @map("old_name") @db.VarChar(100)
+  newName         String   @map("new_name") @db.VarChar(100)
+  changedByUserId String   @map("changed_by_user_id") @db.Uuid
+  changedAt       DateTime @default(now()) @map("changed_at") @db.Timestamptz(3)
+  reason          String?  @db.Text
+  cast            Cast     @relation(fields: [castId], references: [id], onDelete: Cascade)
+  changedBy       User     @relation("CastNameChangedBy", fields: [changedByUserId], references: [id], onDelete: Restrict)
+
+  @@index([castId, changedAt])
+  @@index([changedByUserId])
+  @@map("cast_name_histories")
+}
+
+model CastMergeHistory {
+  id                   String   @id @default(uuid()) @db.Uuid
+  sourceCastId         String   @map("source_cast_id") @db.Uuid
+  targetCastId         String   @map("target_cast_id") @db.Uuid
+  sourceSnapshot       Json     @map("source_snapshot") @db.JsonB
+  targetSnapshotBefore Json     @map("target_snapshot_before") @db.JsonB
+  targetSnapshotAfter  Json     @map("target_snapshot_after") @db.JsonB
+  conflictSummary      Json     @map("conflict_summary") @db.JsonB
+  mergedByUserId       String   @map("merged_by_user_id") @db.Uuid
+  mergedAt             DateTime @default(now()) @map("merged_at") @db.Timestamptz(3)
+  reason               String?  @db.Text
+  sourceCast           Cast     @relation("CastMergeSource", fields: [sourceCastId], references: [id], onDelete: Restrict)
+  targetCast           Cast     @relation("CastMergeTarget", fields: [targetCastId], references: [id], onDelete: Restrict)
+  mergedBy             User     @relation("CastMergePerformedBy", fields: [mergedByUserId], references: [id], onDelete: Restrict)
+
+  @@index([sourceCastId, mergedAt])
+  @@index([targetCastId, mergedAt])
+  @@index([mergedByUserId, mergedAt])
+  @@map("cast_merge_histories")
+}
+
+model CastStartDateBulkChangeHistory {
+  id              String   @id @default(uuid()) @db.Uuid
+  targetDate      DateTime @map("target_date") @db.Date
+  mediaScope      String   @map("media_scope") @db.VarChar(20)
+  castChanges     Json     @map("cast_changes") @db.JsonB
+  aliasChanges    Json     @map("alias_changes") @db.JsonB
+  castCount       Int      @map("cast_count")
+  aliasCount      Int      @map("alias_count")
+  changedByUserId String   @map("changed_by_user_id") @db.Uuid
+  changedAt       DateTime @default(now()) @map("changed_at") @db.Timestamptz(3)
+  reason          String   @db.Text
+  changedBy       User     @relation("CastStartDateBulkChangePerformedBy", fields: [changedByUserId], references: [id], onDelete: Restrict)
+
+  @@index([changedAt])
+  @@index([changedByUserId, changedAt])
+  @@map("cast_start_date_bulk_change_histories")
 }
 
 model CastAlias {
@@ -259,38 +344,42 @@ model ImportError {
 }
 
 model ImportBatch {
-  id               String            @id @default(uuid()) @db.Uuid
-  runId            String            @unique @default(uuid()) @map("run_id") @db.Uuid
-  importSourceId   String            @map("import_source_id") @db.Uuid
-  originalFilename String            @map("original_filename") @db.VarChar(255)
-  storedFilename   String            @map("stored_filename") @db.VarChar(255)
-  storagePath      String            @map("storage_path") @db.VarChar(1000)
-  fileHash         String            @map("file_hash") @db.Char(64)
-  fileSizeBytes    BigInt            @map("file_size_bytes")
-  dataType         ImportDataType    @map("data_type")
-  importMode       ImportMode        @map("import_mode")
-  targetFrom       DateTime          @map("target_from") @db.Date
-  targetTo         DateTime          @map("target_to") @db.Date
-  status           ImportBatchStatus @default(UPLOADED)
-  startedAt        DateTime          @default(now()) @map("started_at") @db.Timestamptz(3)
-  completedAt      DateTime?         @map("completed_at") @db.Timestamptz(3)
-  uploadedByUserId String?           @map("uploaded_by_user_id") @db.Uuid
-  insertedCount    Int               @default(0) @map("inserted_count")
-  updatedCount     Int               @default(0) @map("updated_count")
-  skippedCount     Int               @default(0) @map("skipped_count")
-  pendingCount     Int               @default(0) @map("pending_count")
-  warningCount     Int               @default(0) @map("warning_count")
-  errorCount       Int               @default(0) @map("error_count")
-  sourceSheetNames Json?             @map("source_sheet_names") @db.JsonB
-  detectedColumns  Json?             @map("detected_columns") @db.JsonB
-  metadata         Json?             @db.JsonB
-  failureMessage   String?           @map("failure_message") @db.Text
-  createdAt        DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt        DateTime          @updatedAt @map("updated_at") @db.Timestamptz(3)
-  importSource     ImportSource      @relation(fields: [importSourceId], references: [id], onDelete: Restrict)
-  uploadedByUser   User?             @relation(fields: [uploadedByUserId], references: [id], onDelete: SetNull)
-  errors           ImportError[]
-  ctiCastDailies   CtiCastDaily[]
+  id                 String             @id @default(uuid()) @db.Uuid
+  runId              String             @unique @default(uuid()) @map("run_id") @db.Uuid
+  importSourceId     String             @map("import_source_id") @db.Uuid
+  originalFilename   String             @map("original_filename") @db.VarChar(255)
+  storedFilename     String             @map("stored_filename") @db.VarChar(255)
+  storagePath        String             @map("storage_path") @db.VarChar(1000)
+  fileHash           String             @map("file_hash") @db.Char(64)
+  fileSizeBytes      BigInt             @map("file_size_bytes")
+  dataType           ImportDataType     @map("data_type")
+  importMode         ImportMode         @map("import_mode")
+  targetFrom         DateTime           @map("target_from") @db.Date
+  targetTo           DateTime           @map("target_to") @db.Date
+  status             ImportBatchStatus  @default(UPLOADED)
+  startedAt          DateTime           @default(now()) @map("started_at") @db.Timestamptz(3)
+  completedAt        DateTime?          @map("completed_at") @db.Timestamptz(3)
+  uploadedByUserId   String?            @map("uploaded_by_user_id") @db.Uuid
+  insertedCount      Int                @default(0) @map("inserted_count")
+  updatedCount       Int                @default(0) @map("updated_count")
+  skippedCount       Int                @default(0) @map("skipped_count")
+  pendingCount       Int                @default(0) @map("pending_count")
+  warningCount       Int                @default(0) @map("warning_count")
+  errorCount         Int                @default(0) @map("error_count")
+  sourceSheetNames   Json?              @map("source_sheet_names") @db.JsonB
+  detectedColumns    Json?              @map("detected_columns") @db.JsonB
+  metadata           Json?              @db.JsonB
+  failureMessage     String?            @map("failure_message") @db.Text
+  createdAt          DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt          DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
+  importSource       ImportSource       @relation(fields: [importSourceId], references: [id], onDelete: Restrict)
+  uploadedByUser     User?              @relation(fields: [uploadedByUserId], references: [id], onDelete: SetNull)
+  errors             ImportError[]
+  ctiCastDailies     CtiCastDaily[]
+  townStoreDailies   TownStoreDaily[]
+  townCastDailies    TownCastDaily[]
+  townUrlDailies     TownUrlDaily[]
+  townLandingDailies TownLandingDaily[]
 
   @@index([fileHash, status])
   @@index([dataType, targetFrom, targetTo])
@@ -338,6 +427,124 @@ model CtiCastDaily {
   @@index([storeId, businessDate])
   @@index([importBatchId])
   @@map("cti_cast_daily")
+}
+
+model TownStoreDaily {
+  id                   String      @id @default(uuid()) @db.Uuid
+  date                 DateTime    @db.Date
+  storeId              String      @map("store_id") @db.Uuid
+  importBatchId        String      @map("import_batch_id") @db.Uuid
+  pv                   Int
+  uu                   Int
+  averagePv            Decimal?    @map("average_pv") @db.Decimal(12, 6)
+  sourceAveragePv      Decimal?    @map("source_average_pv") @db.Decimal(12, 6)
+  bounceRate           Decimal?    @map("bounce_rate") @db.Decimal(12, 8)
+  telTapUu             Int         @map("tel_tap_uu")
+  conversionRate       Decimal?    @map("conversion_rate") @db.Decimal(12, 8)
+  sourceConversionRate Decimal?    @map("source_conversion_rate") @db.Decimal(12, 8)
+  sourceRowNumber      Int         @map("source_row_number")
+  createdAt            DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt            DateTime    @updatedAt @map("updated_at") @db.Timestamptz(3)
+  store                Store       @relation(fields: [storeId], references: [id], onDelete: Restrict)
+  importBatch          ImportBatch @relation(fields: [importBatchId], references: [id], onDelete: Restrict)
+
+  @@unique([date, storeId])
+  @@index([storeId, date])
+  @@index([importBatchId])
+  @@map("town_store_daily")
+}
+
+model TownCastDaily {
+  id                   String      @id @default(uuid()) @db.Uuid
+  date                 DateTime    @db.Date
+  storeId              String      @map("store_id") @db.Uuid
+  castId               String      @map("cast_id") @db.Uuid
+  importBatchId        String      @map("import_batch_id") @db.Uuid
+  sourceCastName       String      @map("source_cast_name") @db.VarChar(100)
+  pv                   Int
+  uu                   Int
+  averagePv            Decimal?    @map("average_pv") @db.Decimal(12, 6)
+  sourceAveragePv      Decimal?    @map("source_average_pv") @db.Decimal(12, 6)
+  telTapUu             Int         @map("tel_tap_uu")
+  conversionRate       Decimal?    @map("conversion_rate") @db.Decimal(12, 8)
+  sourceConversionRate Decimal?    @map("source_conversion_rate") @db.Decimal(12, 8)
+  isListed             Boolean     @default(true) @map("is_listed")
+  sourceRowNumber      Int         @map("source_row_number")
+  createdAt            DateTime    @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt            DateTime    @updatedAt @map("updated_at") @db.Timestamptz(3)
+  store                Store       @relation(fields: [storeId], references: [id], onDelete: Restrict)
+  cast                 Cast        @relation(fields: [castId], references: [id], onDelete: Restrict)
+  importBatch          ImportBatch @relation(fields: [importBatchId], references: [id], onDelete: Restrict)
+
+  @@unique([date, storeId, castId])
+  @@index([castId, date])
+  @@index([storeId, date])
+  @@index([importBatchId])
+  @@map("town_cast_daily")
+}
+
+model TownUrlDaily {
+  id                   String       @id @default(uuid()) @db.Uuid
+  date                 DateTime     @db.Date
+  storeId              String       @map("store_id") @db.Uuid
+  importBatchId        String       @map("import_batch_id") @db.Uuid
+  url                  String       @db.Text
+  normalizedUrl        String       @map("normalized_url") @db.Text
+  externalStoreId      String?      @map("external_store_id") @db.VarChar(50)
+  externalCastId       String?      @map("external_cast_id") @db.VarChar(50)
+  castId               String?      @map("cast_id") @db.Uuid
+  sourceCastName       String?      @map("source_cast_name") @db.VarChar(100)
+  pageType             TownPageType @map("page_type")
+  pv                   Int
+  uu                   Int
+  averagePv            Decimal?     @map("average_pv") @db.Decimal(12, 6)
+  sourceAveragePv      Decimal?     @map("source_average_pv") @db.Decimal(12, 6)
+  telTapUu             Int          @map("tel_tap_uu")
+  conversionRate       Decimal?     @map("conversion_rate") @db.Decimal(12, 8)
+  sourceConversionRate Decimal?     @map("source_conversion_rate") @db.Decimal(12, 8)
+  sourceRowNumber      Int          @map("source_row_number")
+  createdAt            DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt            DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  store                Store        @relation(fields: [storeId], references: [id], onDelete: Restrict)
+  cast                 Cast?        @relation(fields: [castId], references: [id], onDelete: SetNull)
+  importBatch          ImportBatch  @relation(fields: [importBatchId], references: [id], onDelete: Restrict)
+
+  @@unique([date, storeId, normalizedUrl])
+  @@index([storeId, date, pageType])
+  @@index([castId, date])
+  @@index([importBatchId])
+  @@map("town_url_daily")
+}
+
+model TownLandingDaily {
+  id                   String       @id @default(uuid()) @db.Uuid
+  date                 DateTime     @db.Date
+  storeId              String       @map("store_id") @db.Uuid
+  importBatchId        String       @map("import_batch_id") @db.Uuid
+  landingUrl           String       @map("landing_url") @db.Text
+  normalizedUrl        String       @map("normalized_url") @db.Text
+  externalStoreId      String?      @map("external_store_id") @db.VarChar(50)
+  externalCastId       String?      @map("external_cast_id") @db.VarChar(50)
+  castId               String?      @map("cast_id") @db.Uuid
+  sourceCastName       String?      @map("source_cast_name") @db.VarChar(100)
+  pageType             TownPageType @map("page_type")
+  uu                   Int
+  bounceRate           Decimal?     @map("bounce_rate") @db.Decimal(12, 8)
+  telTapUu             Int          @map("tel_tap_uu")
+  conversionRate       Decimal?     @map("conversion_rate") @db.Decimal(12, 8)
+  sourceConversionRate Decimal?     @map("source_conversion_rate") @db.Decimal(12, 8)
+  sourceRowNumber      Int          @map("source_row_number")
+  createdAt            DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt            DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  store                Store        @relation(fields: [storeId], references: [id], onDelete: Restrict)
+  cast                 Cast?        @relation(fields: [castId], references: [id], onDelete: SetNull)
+  importBatch          ImportBatch  @relation(fields: [importBatchId], references: [id], onDelete: Restrict)
+
+  @@unique([date, storeId, normalizedUrl])
+  @@index([storeId, date, pageType])
+  @@index([castId, date])
+  @@index([importBatchId])
+  @@map("town_landing_daily")
 }
 
 model ImprovementLog {

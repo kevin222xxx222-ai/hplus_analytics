@@ -32,7 +32,7 @@ export async function resolveCtiPreviewRow(batchId: string, rowKey: string, inpu
     const cast = await prisma.$transaction(async (tx) => {
       let selected;
       if (input.action === "EXISTING") {
-        selected = await tx.cast.findFirst({ where: { id: input.castId, startedOn: { lte: businessDate }, OR: [{ endedOn: null }, { endedOn: { gte: businessDate } }] } });
+        selected = await tx.cast.findFirst({ where: { id: input.castId, mergedIntoCastId: null, startedOn: { lte: businessDate }, OR: [{ endedOn: null }, { endedOn: { gte: businessDate } }] } });
         if (!selected) throw new Error("対象日に在籍期間内のキャストを選択してください。");
       } else {
         const displayName = input.displayName.trim();

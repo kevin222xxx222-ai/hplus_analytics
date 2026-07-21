@@ -1,13 +1,18 @@
 import Link from "next/link";
-import { BarChart3, Building2, LayoutDashboard, LogOut, Store, Tags, UploadCloud, UserRoundCog, UsersRound } from "lucide-react";
+import { BarChart3, Building2, LayoutDashboard, Link2, LogOut, MousePointerClick, Store, Tags, UploadCloud, UserRoundCog, UsersRound } from "lucide-react";
 import { logoutAction } from "@/app/actions/auth";
 import type { CurrentUser } from "@/lib/auth";
 
 const nav = [
   { href: "/", label: "ホーム", icon: LayoutDashboard },
   { href: "/imports", label: "CTI取込", icon: UploadCloud, admin: true },
+  { href: "/imports/town", label: "タウン取込", icon: UploadCloud, admin: true },
   { href: "/analytics/stores", label: "店舗実績", icon: Building2 },
   { href: "/analytics/casts", label: "キャスト実績", icon: BarChart3 },
+  { href: "/analytics/town/stores", label: "タウン店舗分析", icon: Building2 },
+  { href: "/analytics/town/casts", label: "タウン女子分析", icon: UsersRound },
+  { href: "/analytics/town/urls", label: "タウンURL分析", icon: Link2 },
+  { href: "/analytics/town/landing", label: "タウンLP分析", icon: MousePointerClick },
   { href: "/masters/stores", label: "店舗マスタ", icon: Store, admin: true },
   { href: "/masters/casts", label: "キャスト管理", icon: UsersRound, admin: true },
   { href: "/masters/aliases", label: "エイリアス管理", icon: Tags, admin: true },

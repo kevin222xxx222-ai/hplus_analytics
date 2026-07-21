@@ -38,6 +38,21 @@ export type Store = Prisma.StoreModel
  */
 export type Cast = Prisma.CastModel
 /**
+ * Model CastNameHistory
+ * 
+ */
+export type CastNameHistory = Prisma.CastNameHistoryModel
+/**
+ * Model CastMergeHistory
+ * 
+ */
+export type CastMergeHistory = Prisma.CastMergeHistoryModel
+/**
+ * Model CastStartDateBulkChangeHistory
+ * 
+ */
+export type CastStartDateBulkChangeHistory = Prisma.CastStartDateBulkChangeHistoryModel
+/**
  * Model CastAlias
  * 
  */
@@ -67,6 +82,26 @@ export type ImportBatch = Prisma.ImportBatchModel
  * 
  */
 export type CtiCastDaily = Prisma.CtiCastDailyModel
+/**
+ * Model TownStoreDaily
+ * 
+ */
+export type TownStoreDaily = Prisma.TownStoreDailyModel
+/**
+ * Model TownCastDaily
+ * 
+ */
+export type TownCastDaily = Prisma.TownCastDailyModel
+/**
+ * Model TownUrlDaily
+ * 
+ */
+export type TownUrlDaily = Prisma.TownUrlDailyModel
+/**
+ * Model TownLandingDaily
+ * 
+ */
+export type TownLandingDaily = Prisma.TownLandingDailyModel
 /**
  * Model ImprovementLog
  * 

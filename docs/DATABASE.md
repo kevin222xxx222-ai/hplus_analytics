@@ -1,7 +1,7 @@
 # HPLUS Analytics データベース設計
 
-更新日: 2026-07-14  
-対象: Phase 2 CTI女子別レポート取込実装後
+更新日: 2026-07-15  
+対象: Phase 3 デリヘルタウン取込・分析実装後
 
 ## 基本方針
 
@@ -25,12 +25,18 @@
 | `Session` | `sessions` | ログインセッション、有効期限、端末情報 |
 | `Store` | `stores` | 春日部・越谷・野田の店舗マスタ |
 | `Cast` | `casts` | 内部UUIDを持つキャストマスタ |
+| `CastNameHistory` | `cast_name_histories` | 内部キャスト表示名の変更履歴と実行者・理由 |
+| `CastMergeHistory` | `cast_merge_histories` | キャスト統合のsource/target、前後スナップショット、実行者、衝突整理 |
 | `CastAlias` | `cast_aliases` | CTI/TOWN/HEAVEN上の名前と内部キャストの対応 |
 | `MediaListing` | `media_listings` | キャストの店舗・媒体別掲載状態 |
 | `ImportSource` | `import_sources` | 媒体、店舗、データ種別、取込元設定 |
 | `ImportBatch` | `import_batches` | 取込1回ごとのファイル、期間、状態、件数、実行結果 |
 | `ImportError` | `import_errors` | ファイル取込時の警告・エラー明細 |
 | `CtiCastDaily` | `cti_cast_daily` | キャスト・店舗・営業日単位のCTI実績 |
+| `TownStoreDaily` | `town_store_daily` | 日付・店舗単位のタウン店舗実績 |
+| `TownCastDaily` | `town_cast_daily` | 日付・店舗・キャスト単位のタウン女子実績 |
+| `TownUrlDaily` | `town_url_daily` | 日付・店舗・正規化URL単位のアクセス実績 |
+| `TownLandingDaily` | `town_landing_daily` | 日付・店舗・正規化LP単位の入口実績 |
 | `ImprovementLog` | `improvement_logs` | 自動判定の根拠・比較条件・解決状態の履歴 |
 
 ## モデル詳細
@@ -54,7 +60,7 @@
 ### Store / stores
 
 - UUID主キー
-- `KASUKABE`、`KOSHIGAYA`、`NODA` の店舗コードを一意に保持
+- `KASUKABE`、`KOSHIGAYA`、`NODA`、`KUKI` の店舗コードを一意に保持。`KUKI`はキャスト主所属専用で、経営実績・集客分析・媒体取込の対象外
 - 経営実績対象と集客分析対象を別フラグで保持
 - 集客対象は春日部・越谷、経営実績対象は3店舗
 
@@ -64,6 +70,22 @@
 - 表示名と正規化名を分離
 - 在籍開始日、終了日、在籍状態、主所属店舗を保持
 - 全角・半角スペース等は正規化するが、ひらがな・カタカナは自動変換しない
+- 表示名変更時もUUIDは変更せず、`display_name`と`normalized_name`だけを同一トランザクションで更新
+- `merged_into_cast_id`と`merged_at`は統合専用状態。統合済みsourceは常に未統合の最終targetを直接参照
+- 在籍状態`status`は統合状態と分離し、統合時に変更しない
+
+### CastNameHistory / cast_name_histories
+
+- 表示名変更ごとに変更前名、変更後名、実行ADMIN、変更日時、任意理由を保存
+- `cast_id`は変更対象の内部Cast UUIDを参照し、Alias・実績・掲載状態の外部キーは更新しない
+- ユーザー削除時も監査実行者を失わないよう`changed_by_user_id`は`RESTRICT`
+- キャスト削除時は対象キャスト専用の履歴を`CASCADE`で削除
+
+### CastMergeHistory / cast_merge_histories
+
+- source/target Cast ID、統合前後JSONスナップショット、衝突整理、実行ADMIN、日時、理由を保存
+- source/target Castは物理削除を`RESTRICT`し、監査IDを維持
+- 後続統合でも過去履歴のsource/target IDは変更しない
 
 ### CastAlias / cast_aliases
 
@@ -101,6 +123,18 @@
 - 手動アップロードとGoogle Driveの取込元を共通管理
 - 媒体、店舗、データ種別、metricType、フォルダパス、有効状態を保持
 - Phase 2のCTI取込では `CTI_CAST_REPORT` を使用
+- Phase 3では春日部・越谷それぞれに `TOWN_STORE` / `TOWN_CAST` / `TOWN_URL` / `TOWN_LANDING` の手動取込元をシードする
+
+### CastStartDateBulkChangeHistory / cast_start_date_bulk_change_histories
+
+CastとAliasの開始日を一括前倒しした1操作を監査保存します。
+
+- 対象日、CTI/TOWN/HEAVEN/全媒体の選択範囲
+- `cast_changes`: 対象Cast ID、表示名、主所属、変更前後`startedOn`、`endedOn`のJSONスナップショット
+- `alias_changes`: 対象Alias ID、Cast ID、媒体、店舗、原文名、変更前後`validFrom`、維持した`validTo`のJSONスナップショット
+- Cast件数、Alias件数、実行管理者、実行日時、必須理由
+- Cast統合等で後からAliasが整理されても当時のIDを維持するため、Cast/Alias本体とは外部キー接続しない。実行管理者だけを`users`へRestrict接続する
+- 一括更新と履歴作成はSerializableな単一トランザクションで行う
 
 ### ImportBatch / import_batches
 
@@ -114,7 +148,7 @@
 - 対象シート、検出列、差分等のメタデータ
 - 実行ユーザー、開始・完了日時
 
-元XLSXとプレビューJSONは公開ディレクトリへ置かず、`UPLOAD_DIR` 配下のバッチ別ディレクトリへ保存します。
+元XLSX/CSVとプレビューJSONは公開ディレクトリへ置かず、`UPLOAD_DIR` 直下へバッチIDをファイル名として保存します。
 
 ### ImportError / import_errors
 
@@ -142,6 +176,24 @@
 
 同一キーの再取込はupsertし、最終取込バッチへ参照を更新します。月途中累計・月次確定ファイルは差分化せず、現段階ではプレビューのみです。
 
+### TownStoreDaily / town_store_daily
+
+日付 × 店舗を一意キーとしてPV、UU、TELタップUU、直帰率を保持します。平均PVとCVRは再計算値を正式値とし、CSV原値を `source_average_pv` / `source_conversion_rate` に併存させます。
+
+### TownCastDaily / town_cast_daily
+
+日付 × 店舗 × 内部キャストを一意キーとして女子別PV、UU、TELタップUUを保持します。CSVに存在する行は `is_listed=true` ですが、CSVにないキャストを非掲載へ同期しません。掲載状態の正は `media_listings` です。
+
+### TownUrlDaily / town_url_daily
+
+日付 × 店舗 × `normalized_url` を一意キーとします。元URL、外部店舗ID、外部キャストID、nullableな内部キャスト、ページ種別、PV、UU、TELを保持します。クエリとフラグメントは正規化キーから除き、元URLは保持します。
+
+### TownLandingDaily / town_landing_daily
+
+日付 × 店舗 × `normalized_url` を一意キーとし、入口ページのUU、直帰率、TELをURL別とは別テーブルに保存します。
+
+タウン4モデルの比率は、分母0なら `null` です。`average_pv = PV / UU`、`conversion_rate = TELタップUU / UU` を正式値とし、CSV原値との差が表示丸め幅を超える場合は警告にします。
+
 ### ImprovementLog / improvement_logs
 
 画面なしで先行追加した自動判定履歴です。
@@ -156,12 +208,13 @@
 ## Enum一覧
 
 - `UserRole`: ADMIN / VIEWER
-- `StoreCode`: KASUKABE / KOSHIGAYA / NODA
+- `StoreCode`: KASUKABE / KOSHIGAYA / NODA / KUKI
 - `CastStatus`: ACTIVE / INACTIVE
 - `MediaType`: CTI / TOWN / HEAVEN
 - `AliasReviewStatus`: PENDING / MAPPED / IGNORED
 - `ImportSourceKind`: MANUAL_UPLOAD / GOOGLE_DRIVE
-- `ImportDataType`: CTI_CAST_REPORT / TOWN_STORE / TOWN_CAST / TOWN_URL / TOWN_LP / HEAVEN_STORE / HEAVEN_CAST
+- `ImportDataType`: CTI_CAST_REPORT / TOWN_STORE / TOWN_CAST / TOWN_URL / TOWN_LANDING / HEAVEN_STORE / HEAVEN_CAST
+- `TownPageType`: STORE_TOP / SCHEDULE / GIRL_LIST / SHOP_DIARY / CAST_PROFILE / CAST_DIARY / EVENT / OTHER
 - `ImportBatchStatus`: UPLOADED / VALIDATING / PREVIEW_READY / WAITING_FOR_CAST_LINK / IMPORTING / COMPLETED / COMPLETED_WITH_WARNINGS / FAILED / CANCELLED
 - `ImportMode`: DAILY / MONTH_TO_DATE / MONTHLY_FINAL / UNKNOWN
 - `ImportErrorLevel`: WARNING / ERROR

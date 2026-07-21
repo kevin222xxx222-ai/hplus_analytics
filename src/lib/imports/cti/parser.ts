@@ -1,7 +1,6 @@
 import ExcelJS, { type Row, type Worksheet } from "exceljs";
-import type { StoreCode } from "@/generated/prisma/client";
 import { CTI_COLUMN_CATALOG, type CtiColumnCatalogEntry } from "@/lib/imports/cti/column-catalog";
-import { COLUMN_DEFINITIONS, HEADER_REQUIRED_COLUMNS, HEADER_REQUIRED_MIN_MATCHES, OPTIONAL_BREAKDOWN_COLUMNS, REQUIRED_COLUMNS, TARGET_SHEETS, type CtiColumnKey } from "@/lib/imports/cti/constants";
+import { COLUMN_DEFINITIONS, HEADER_REQUIRED_COLUMNS, HEADER_REQUIRED_MIN_MATCHES, OPTIONAL_BREAKDOWN_COLUMNS, REQUIRED_COLUMNS, TARGET_SHEETS, type CtiColumnKey, type CtiStoreCode } from "@/lib/imports/cti/constants";
 import { getExclusionReason } from "@/lib/imports/cti/exclusions";
 import type { CtiMetrics, CtiPreviewRow, HeaderCandidateDiagnostic, RowIssue, SheetHeaderDiagnostics, SheetPreview, UnknownColumnDiagnostic } from "@/lib/imports/cti/types";
 import { normalizeCastName } from "@/lib/normalize";
@@ -19,9 +18,9 @@ const catalogByHeader = new Map(CTI_COLUMN_CATALOG.flatMap((definition) =>
 type ColumnMap = Partial<Record<CtiColumnKey, number>>;
 type KnownValidationColumn = { definition: CtiColumnCatalogEntry; columnNumber: number; originalName: string };
 type RawUnknownColumn = { originalName: string; columnNumber: number };
-type RowContext = { storeCode: StoreCode; sheetName: string; rowNumber: number; castName: string };
+type RowContext = { storeCode: CtiStoreCode; sheetName: string; rowNumber: number; castName: string };
 
-const STORE_NAMES: Record<StoreCode, string> = { KASUKABE: "春日部", KOSHIGAYA: "越谷", NODA: "野田" };
+const STORE_NAMES: Record<CtiStoreCode, string> = { KASUKABE: "春日部", KOSHIGAYA: "越谷", NODA: "野田" };
 
 function cellDisplayValue(row: Row, columnNumber: number) {
   const scalar = cellScalar(row.getCell(columnNumber).value);
@@ -250,7 +249,7 @@ function parseMetrics(row: Row, map: ColumnMap, issues: RowIssue[], context: Row
   };
 }
 
-function parseSheet(worksheet: Worksheet, storeCode: StoreCode, storeId: string): { preview: SheetPreview; issues: RowIssue[] } {
+function parseSheet(worksheet: Worksheet, storeCode: CtiStoreCode, storeId: string): { preview: SheetPreview; issues: RowIssue[] } {
   const { best: header, diagnostics } = inspectHeaderRows(worksheet);
   if (!header) {
     return { preview: { sheetName: worksheet.name, storeCode, detectedHeaderRow: 0, detectedColumns: [], unknownColumns: [], totalRows: 0, excludedRows: 0, rows: [], headerDiagnostics: diagnostics }, issues: [{ code: "HEADER_NOT_FOUND", level: "ERROR", message: `${worksheet.name}: ヘッダー行を検出できません。` }] };
@@ -308,7 +307,7 @@ export async function inspectCtiWorkbookHeaders(buffer: Buffer) {
   });
 }
 
-export async function parseCtiWorkbook(buffer: Buffer, storeIds: Record<StoreCode, string>) {
+export async function parseCtiWorkbook(buffer: Buffer, storeIds: Record<CtiStoreCode, string>) {
   const workbook = new ExcelJS.Workbook();
   const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength) as ArrayBuffer;
   await workbook.xlsx.load(arrayBuffer);

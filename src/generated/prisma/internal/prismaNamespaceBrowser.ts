@@ -55,12 +55,19 @@ export const ModelName = {
   Session: 'Session',
   Store: 'Store',
   Cast: 'Cast',
+  CastNameHistory: 'CastNameHistory',
+  CastMergeHistory: 'CastMergeHistory',
+  CastStartDateBulkChangeHistory: 'CastStartDateBulkChangeHistory',
   CastAlias: 'CastAlias',
   MediaListing: 'MediaListing',
   ImportSource: 'ImportSource',
   ImportError: 'ImportError',
   ImportBatch: 'ImportBatch',
   CtiCastDaily: 'CtiCastDaily',
+  TownStoreDaily: 'TownStoreDaily',
+  TownCastDaily: 'TownCastDaily',
+  TownUrlDaily: 'TownUrlDaily',
+  TownLandingDaily: 'TownLandingDaily',
   ImprovementLog: 'ImprovementLog'
 } as const
 
@@ -135,10 +142,57 @@ export const CastScalarFieldEnum = {
   primaryStoreId: 'primaryStoreId',
   notes: 'notes',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  mergedIntoCastId: 'mergedIntoCastId',
+  mergedAt: 'mergedAt'
 } as const
 
 export type CastScalarFieldEnum = (typeof CastScalarFieldEnum)[keyof typeof CastScalarFieldEnum]
+
+
+export const CastNameHistoryScalarFieldEnum = {
+  id: 'id',
+  castId: 'castId',
+  oldName: 'oldName',
+  newName: 'newName',
+  changedByUserId: 'changedByUserId',
+  changedAt: 'changedAt',
+  reason: 'reason'
+} as const
+
+export type CastNameHistoryScalarFieldEnum = (typeof CastNameHistoryScalarFieldEnum)[keyof typeof CastNameHistoryScalarFieldEnum]
+
+
+export const CastMergeHistoryScalarFieldEnum = {
+  id: 'id',
+  sourceCastId: 'sourceCastId',
+  targetCastId: 'targetCastId',
+  sourceSnapshot: 'sourceSnapshot',
+  targetSnapshotBefore: 'targetSnapshotBefore',
+  targetSnapshotAfter: 'targetSnapshotAfter',
+  conflictSummary: 'conflictSummary',
+  mergedByUserId: 'mergedByUserId',
+  mergedAt: 'mergedAt',
+  reason: 'reason'
+} as const
+
+export type CastMergeHistoryScalarFieldEnum = (typeof CastMergeHistoryScalarFieldEnum)[keyof typeof CastMergeHistoryScalarFieldEnum]
+
+
+export const CastStartDateBulkChangeHistoryScalarFieldEnum = {
+  id: 'id',
+  targetDate: 'targetDate',
+  mediaScope: 'mediaScope',
+  castChanges: 'castChanges',
+  aliasChanges: 'aliasChanges',
+  castCount: 'castCount',
+  aliasCount: 'aliasCount',
+  changedByUserId: 'changedByUserId',
+  changedAt: 'changedAt',
+  reason: 'reason'
+} as const
+
+export type CastStartDateBulkChangeHistoryScalarFieldEnum = (typeof CastStartDateBulkChangeHistoryScalarFieldEnum)[keyof typeof CastStartDateBulkChangeHistoryScalarFieldEnum]
 
 
 export const CastAliasScalarFieldEnum = {
@@ -281,6 +335,102 @@ export const CtiCastDailyScalarFieldEnum = {
 export type CtiCastDailyScalarFieldEnum = (typeof CtiCastDailyScalarFieldEnum)[keyof typeof CtiCastDailyScalarFieldEnum]
 
 
+export const TownStoreDailyScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  storeId: 'storeId',
+  importBatchId: 'importBatchId',
+  pv: 'pv',
+  uu: 'uu',
+  averagePv: 'averagePv',
+  sourceAveragePv: 'sourceAveragePv',
+  bounceRate: 'bounceRate',
+  telTapUu: 'telTapUu',
+  conversionRate: 'conversionRate',
+  sourceConversionRate: 'sourceConversionRate',
+  sourceRowNumber: 'sourceRowNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TownStoreDailyScalarFieldEnum = (typeof TownStoreDailyScalarFieldEnum)[keyof typeof TownStoreDailyScalarFieldEnum]
+
+
+export const TownCastDailyScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  storeId: 'storeId',
+  castId: 'castId',
+  importBatchId: 'importBatchId',
+  sourceCastName: 'sourceCastName',
+  pv: 'pv',
+  uu: 'uu',
+  averagePv: 'averagePv',
+  sourceAveragePv: 'sourceAveragePv',
+  telTapUu: 'telTapUu',
+  conversionRate: 'conversionRate',
+  sourceConversionRate: 'sourceConversionRate',
+  isListed: 'isListed',
+  sourceRowNumber: 'sourceRowNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TownCastDailyScalarFieldEnum = (typeof TownCastDailyScalarFieldEnum)[keyof typeof TownCastDailyScalarFieldEnum]
+
+
+export const TownUrlDailyScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  storeId: 'storeId',
+  importBatchId: 'importBatchId',
+  url: 'url',
+  normalizedUrl: 'normalizedUrl',
+  externalStoreId: 'externalStoreId',
+  externalCastId: 'externalCastId',
+  castId: 'castId',
+  sourceCastName: 'sourceCastName',
+  pageType: 'pageType',
+  pv: 'pv',
+  uu: 'uu',
+  averagePv: 'averagePv',
+  sourceAveragePv: 'sourceAveragePv',
+  telTapUu: 'telTapUu',
+  conversionRate: 'conversionRate',
+  sourceConversionRate: 'sourceConversionRate',
+  sourceRowNumber: 'sourceRowNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TownUrlDailyScalarFieldEnum = (typeof TownUrlDailyScalarFieldEnum)[keyof typeof TownUrlDailyScalarFieldEnum]
+
+
+export const TownLandingDailyScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  storeId: 'storeId',
+  importBatchId: 'importBatchId',
+  landingUrl: 'landingUrl',
+  normalizedUrl: 'normalizedUrl',
+  externalStoreId: 'externalStoreId',
+  externalCastId: 'externalCastId',
+  castId: 'castId',
+  sourceCastName: 'sourceCastName',
+  pageType: 'pageType',
+  uu: 'uu',
+  bounceRate: 'bounceRate',
+  telTapUu: 'telTapUu',
+  conversionRate: 'conversionRate',
+  sourceConversionRate: 'sourceConversionRate',
+  sourceRowNumber: 'sourceRowNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TownLandingDailyScalarFieldEnum = (typeof TownLandingDailyScalarFieldEnum)[keyof typeof TownLandingDailyScalarFieldEnum]
+
+
 export const ImprovementLogScalarFieldEnum = {
   id: 'id',
   castId: 'castId',
@@ -309,6 +459,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const NullableJsonNullValueInput = {

@@ -416,6 +416,10 @@ export type ImportBatchWhereInput = {
   uploadedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   errors?: Prisma.ImportErrorListRelationFilter
   ctiCastDailies?: Prisma.CtiCastDailyListRelationFilter
+  townStoreDailies?: Prisma.TownStoreDailyListRelationFilter
+  townCastDailies?: Prisma.TownCastDailyListRelationFilter
+  townUrlDailies?: Prisma.TownUrlDailyListRelationFilter
+  townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
 }
 
 export type ImportBatchOrderByWithRelationInput = {
@@ -451,6 +455,10 @@ export type ImportBatchOrderByWithRelationInput = {
   uploadedByUser?: Prisma.UserOrderByWithRelationInput
   errors?: Prisma.ImportErrorOrderByRelationAggregateInput
   ctiCastDailies?: Prisma.CtiCastDailyOrderByRelationAggregateInput
+  townStoreDailies?: Prisma.TownStoreDailyOrderByRelationAggregateInput
+  townCastDailies?: Prisma.TownCastDailyOrderByRelationAggregateInput
+  townUrlDailies?: Prisma.TownUrlDailyOrderByRelationAggregateInput
+  townLandingDailies?: Prisma.TownLandingDailyOrderByRelationAggregateInput
 }
 
 export type ImportBatchWhereUniqueInput = Prisma.AtLeast<{
@@ -489,6 +497,10 @@ export type ImportBatchWhereUniqueInput = Prisma.AtLeast<{
   uploadedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   errors?: Prisma.ImportErrorListRelationFilter
   ctiCastDailies?: Prisma.CtiCastDailyListRelationFilter
+  townStoreDailies?: Prisma.TownStoreDailyListRelationFilter
+  townCastDailies?: Prisma.TownCastDailyListRelationFilter
+  townUrlDailies?: Prisma.TownUrlDailyListRelationFilter
+  townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
 }, "id" | "runId">
 
 export type ImportBatchOrderByWithAggregationInput = {
@@ -592,6 +604,10 @@ export type ImportBatchCreateInput = {
   uploadedByUser?: Prisma.UserCreateNestedOneWithoutImportBatchesInput
   errors?: Prisma.ImportErrorCreateNestedManyWithoutImportBatchInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateInput = {
@@ -625,6 +641,10 @@ export type ImportBatchUncheckedCreateInput = {
   updatedAt?: Date | string
   errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportBatchInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUpdateInput = {
@@ -658,6 +678,10 @@ export type ImportBatchUpdateInput = {
   uploadedByUser?: Prisma.UserUpdateOneWithoutImportBatchesNestedInput
   errors?: Prisma.ImportErrorUpdateManyWithoutImportBatchNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateInput = {
@@ -691,6 +715,10 @@ export type ImportBatchUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportBatchNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchCreateManyInput = {
@@ -1041,6 +1069,62 @@ export type ImportBatchUpdateOneRequiredWithoutCtiCastDailiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ImportBatchUpdateToOneWithWhereWithoutCtiCastDailiesInput, Prisma.ImportBatchUpdateWithoutCtiCastDailiesInput>, Prisma.ImportBatchUncheckedUpdateWithoutCtiCastDailiesInput>
 }
 
+export type ImportBatchCreateNestedOneWithoutTownStoreDailiesInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownStoreDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownStoreDailiesInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutTownStoreDailiesInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+}
+
+export type ImportBatchUpdateOneRequiredWithoutTownStoreDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownStoreDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownStoreDailiesInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutTownStoreDailiesInput
+  upsert?: Prisma.ImportBatchUpsertWithoutTownStoreDailiesInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ImportBatchUpdateToOneWithWhereWithoutTownStoreDailiesInput, Prisma.ImportBatchUpdateWithoutTownStoreDailiesInput>, Prisma.ImportBatchUncheckedUpdateWithoutTownStoreDailiesInput>
+}
+
+export type ImportBatchCreateNestedOneWithoutTownCastDailiesInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownCastDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownCastDailiesInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutTownCastDailiesInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+}
+
+export type ImportBatchUpdateOneRequiredWithoutTownCastDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownCastDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownCastDailiesInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutTownCastDailiesInput
+  upsert?: Prisma.ImportBatchUpsertWithoutTownCastDailiesInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ImportBatchUpdateToOneWithWhereWithoutTownCastDailiesInput, Prisma.ImportBatchUpdateWithoutTownCastDailiesInput>, Prisma.ImportBatchUncheckedUpdateWithoutTownCastDailiesInput>
+}
+
+export type ImportBatchCreateNestedOneWithoutTownUrlDailiesInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownUrlDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownUrlDailiesInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutTownUrlDailiesInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+}
+
+export type ImportBatchUpdateOneRequiredWithoutTownUrlDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownUrlDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownUrlDailiesInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutTownUrlDailiesInput
+  upsert?: Prisma.ImportBatchUpsertWithoutTownUrlDailiesInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ImportBatchUpdateToOneWithWhereWithoutTownUrlDailiesInput, Prisma.ImportBatchUpdateWithoutTownUrlDailiesInput>, Prisma.ImportBatchUncheckedUpdateWithoutTownUrlDailiesInput>
+}
+
+export type ImportBatchCreateNestedOneWithoutTownLandingDailiesInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownLandingDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownLandingDailiesInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutTownLandingDailiesInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+}
+
+export type ImportBatchUpdateOneRequiredWithoutTownLandingDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownLandingDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownLandingDailiesInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutTownLandingDailiesInput
+  upsert?: Prisma.ImportBatchUpsertWithoutTownLandingDailiesInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ImportBatchUpdateToOneWithWhereWithoutTownLandingDailiesInput, Prisma.ImportBatchUpdateWithoutTownLandingDailiesInput>, Prisma.ImportBatchUncheckedUpdateWithoutTownLandingDailiesInput>
+}
+
 export type ImportBatchCreateWithoutUploadedByUserInput = {
   id?: string
   runId?: string
@@ -1071,6 +1155,10 @@ export type ImportBatchCreateWithoutUploadedByUserInput = {
   importSource: Prisma.ImportSourceCreateNestedOneWithoutBatchesInput
   errors?: Prisma.ImportErrorCreateNestedManyWithoutImportBatchInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutUploadedByUserInput = {
@@ -1103,6 +1191,10 @@ export type ImportBatchUncheckedCreateWithoutUploadedByUserInput = {
   updatedAt?: Date | string
   errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportBatchInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutUploadedByUserInput = {
@@ -1195,6 +1287,10 @@ export type ImportBatchCreateWithoutImportSourceInput = {
   uploadedByUser?: Prisma.UserCreateNestedOneWithoutImportBatchesInput
   errors?: Prisma.ImportErrorCreateNestedManyWithoutImportBatchInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutImportSourceInput = {
@@ -1227,6 +1323,10 @@ export type ImportBatchUncheckedCreateWithoutImportSourceInput = {
   updatedAt?: Date | string
   errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportBatchInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutImportSourceInput = {
@@ -1285,6 +1385,10 @@ export type ImportBatchCreateWithoutErrorsInput = {
   importSource: Prisma.ImportSourceCreateNestedOneWithoutBatchesInput
   uploadedByUser?: Prisma.UserCreateNestedOneWithoutImportBatchesInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutErrorsInput = {
@@ -1317,6 +1421,10 @@ export type ImportBatchUncheckedCreateWithoutErrorsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutErrorsInput = {
@@ -1365,6 +1473,10 @@ export type ImportBatchUpdateWithoutErrorsInput = {
   importSource?: Prisma.ImportSourceUpdateOneRequiredWithoutBatchesNestedInput
   uploadedByUser?: Prisma.UserUpdateOneWithoutImportBatchesNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutErrorsInput = {
@@ -1397,6 +1509,10 @@ export type ImportBatchUncheckedUpdateWithoutErrorsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchCreateWithoutCtiCastDailiesInput = {
@@ -1429,6 +1545,10 @@ export type ImportBatchCreateWithoutCtiCastDailiesInput = {
   importSource: Prisma.ImportSourceCreateNestedOneWithoutBatchesInput
   uploadedByUser?: Prisma.UserCreateNestedOneWithoutImportBatchesInput
   errors?: Prisma.ImportErrorCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutCtiCastDailiesInput = {
@@ -1461,6 +1581,10 @@ export type ImportBatchUncheckedCreateWithoutCtiCastDailiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutCtiCastDailiesInput = {
@@ -1509,6 +1633,10 @@ export type ImportBatchUpdateWithoutCtiCastDailiesInput = {
   importSource?: Prisma.ImportSourceUpdateOneRequiredWithoutBatchesNestedInput
   uploadedByUser?: Prisma.UserUpdateOneWithoutImportBatchesNestedInput
   errors?: Prisma.ImportErrorUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutCtiCastDailiesInput = {
@@ -1541,6 +1669,650 @@ export type ImportBatchUncheckedUpdateWithoutCtiCastDailiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+}
+
+export type ImportBatchCreateWithoutTownStoreDailiesInput = {
+  id?: string
+  runId?: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  importSource: Prisma.ImportSourceCreateNestedOneWithoutBatchesInput
+  uploadedByUser?: Prisma.UserCreateNestedOneWithoutImportBatchesInput
+  errors?: Prisma.ImportErrorCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+}
+
+export type ImportBatchUncheckedCreateWithoutTownStoreDailiesInput = {
+  id?: string
+  runId?: string
+  importSourceId: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  uploadedByUserId?: string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+}
+
+export type ImportBatchCreateOrConnectWithoutTownStoreDailiesInput = {
+  where: Prisma.ImportBatchWhereUniqueInput
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownStoreDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownStoreDailiesInput>
+}
+
+export type ImportBatchUpsertWithoutTownStoreDailiesInput = {
+  update: Prisma.XOR<Prisma.ImportBatchUpdateWithoutTownStoreDailiesInput, Prisma.ImportBatchUncheckedUpdateWithoutTownStoreDailiesInput>
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownStoreDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownStoreDailiesInput>
+  where?: Prisma.ImportBatchWhereInput
+}
+
+export type ImportBatchUpdateToOneWithWhereWithoutTownStoreDailiesInput = {
+  where?: Prisma.ImportBatchWhereInput
+  data: Prisma.XOR<Prisma.ImportBatchUpdateWithoutTownStoreDailiesInput, Prisma.ImportBatchUncheckedUpdateWithoutTownStoreDailiesInput>
+}
+
+export type ImportBatchUpdateWithoutTownStoreDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  importSource?: Prisma.ImportSourceUpdateOneRequiredWithoutBatchesNestedInput
+  uploadedByUser?: Prisma.UserUpdateOneWithoutImportBatchesNestedInput
+  errors?: Prisma.ImportErrorUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+}
+
+export type ImportBatchUncheckedUpdateWithoutTownStoreDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  importSourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+}
+
+export type ImportBatchCreateWithoutTownCastDailiesInput = {
+  id?: string
+  runId?: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  importSource: Prisma.ImportSourceCreateNestedOneWithoutBatchesInput
+  uploadedByUser?: Prisma.UserCreateNestedOneWithoutImportBatchesInput
+  errors?: Prisma.ImportErrorCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+}
+
+export type ImportBatchUncheckedCreateWithoutTownCastDailiesInput = {
+  id?: string
+  runId?: string
+  importSourceId: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  uploadedByUserId?: string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+}
+
+export type ImportBatchCreateOrConnectWithoutTownCastDailiesInput = {
+  where: Prisma.ImportBatchWhereUniqueInput
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownCastDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownCastDailiesInput>
+}
+
+export type ImportBatchUpsertWithoutTownCastDailiesInput = {
+  update: Prisma.XOR<Prisma.ImportBatchUpdateWithoutTownCastDailiesInput, Prisma.ImportBatchUncheckedUpdateWithoutTownCastDailiesInput>
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownCastDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownCastDailiesInput>
+  where?: Prisma.ImportBatchWhereInput
+}
+
+export type ImportBatchUpdateToOneWithWhereWithoutTownCastDailiesInput = {
+  where?: Prisma.ImportBatchWhereInput
+  data: Prisma.XOR<Prisma.ImportBatchUpdateWithoutTownCastDailiesInput, Prisma.ImportBatchUncheckedUpdateWithoutTownCastDailiesInput>
+}
+
+export type ImportBatchUpdateWithoutTownCastDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  importSource?: Prisma.ImportSourceUpdateOneRequiredWithoutBatchesNestedInput
+  uploadedByUser?: Prisma.UserUpdateOneWithoutImportBatchesNestedInput
+  errors?: Prisma.ImportErrorUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+}
+
+export type ImportBatchUncheckedUpdateWithoutTownCastDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  importSourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+}
+
+export type ImportBatchCreateWithoutTownUrlDailiesInput = {
+  id?: string
+  runId?: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  importSource: Prisma.ImportSourceCreateNestedOneWithoutBatchesInput
+  uploadedByUser?: Prisma.UserCreateNestedOneWithoutImportBatchesInput
+  errors?: Prisma.ImportErrorCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+}
+
+export type ImportBatchUncheckedCreateWithoutTownUrlDailiesInput = {
+  id?: string
+  runId?: string
+  importSourceId: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  uploadedByUserId?: string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+}
+
+export type ImportBatchCreateOrConnectWithoutTownUrlDailiesInput = {
+  where: Prisma.ImportBatchWhereUniqueInput
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownUrlDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownUrlDailiesInput>
+}
+
+export type ImportBatchUpsertWithoutTownUrlDailiesInput = {
+  update: Prisma.XOR<Prisma.ImportBatchUpdateWithoutTownUrlDailiesInput, Prisma.ImportBatchUncheckedUpdateWithoutTownUrlDailiesInput>
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownUrlDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownUrlDailiesInput>
+  where?: Prisma.ImportBatchWhereInput
+}
+
+export type ImportBatchUpdateToOneWithWhereWithoutTownUrlDailiesInput = {
+  where?: Prisma.ImportBatchWhereInput
+  data: Prisma.XOR<Prisma.ImportBatchUpdateWithoutTownUrlDailiesInput, Prisma.ImportBatchUncheckedUpdateWithoutTownUrlDailiesInput>
+}
+
+export type ImportBatchUpdateWithoutTownUrlDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  importSource?: Prisma.ImportSourceUpdateOneRequiredWithoutBatchesNestedInput
+  uploadedByUser?: Prisma.UserUpdateOneWithoutImportBatchesNestedInput
+  errors?: Prisma.ImportErrorUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+}
+
+export type ImportBatchUncheckedUpdateWithoutTownUrlDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  importSourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+}
+
+export type ImportBatchCreateWithoutTownLandingDailiesInput = {
+  id?: string
+  runId?: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  importSource: Prisma.ImportSourceCreateNestedOneWithoutBatchesInput
+  uploadedByUser?: Prisma.UserCreateNestedOneWithoutImportBatchesInput
+  errors?: Prisma.ImportErrorCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
+}
+
+export type ImportBatchUncheckedCreateWithoutTownLandingDailiesInput = {
+  id?: string
+  runId?: string
+  importSourceId: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  uploadedByUserId?: string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
+}
+
+export type ImportBatchCreateOrConnectWithoutTownLandingDailiesInput = {
+  where: Prisma.ImportBatchWhereUniqueInput
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownLandingDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownLandingDailiesInput>
+}
+
+export type ImportBatchUpsertWithoutTownLandingDailiesInput = {
+  update: Prisma.XOR<Prisma.ImportBatchUpdateWithoutTownLandingDailiesInput, Prisma.ImportBatchUncheckedUpdateWithoutTownLandingDailiesInput>
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutTownLandingDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutTownLandingDailiesInput>
+  where?: Prisma.ImportBatchWhereInput
+}
+
+export type ImportBatchUpdateToOneWithWhereWithoutTownLandingDailiesInput = {
+  where?: Prisma.ImportBatchWhereInput
+  data: Prisma.XOR<Prisma.ImportBatchUpdateWithoutTownLandingDailiesInput, Prisma.ImportBatchUncheckedUpdateWithoutTownLandingDailiesInput>
+}
+
+export type ImportBatchUpdateWithoutTownLandingDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  importSource?: Prisma.ImportSourceUpdateOneRequiredWithoutBatchesNestedInput
+  uploadedByUser?: Prisma.UserUpdateOneWithoutImportBatchesNestedInput
+  errors?: Prisma.ImportErrorUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
+}
+
+export type ImportBatchUncheckedUpdateWithoutTownLandingDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  importSourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchCreateManyUploadedByUserInput = {
@@ -1603,6 +2375,10 @@ export type ImportBatchUpdateWithoutUploadedByUserInput = {
   importSource?: Prisma.ImportSourceUpdateOneRequiredWithoutBatchesNestedInput
   errors?: Prisma.ImportErrorUpdateManyWithoutImportBatchNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutUploadedByUserInput = {
@@ -1635,6 +2411,10 @@ export type ImportBatchUncheckedUpdateWithoutUploadedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportBatchNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateManyWithoutUploadedByUserInput = {
@@ -1727,6 +2507,10 @@ export type ImportBatchUpdateWithoutImportSourceInput = {
   uploadedByUser?: Prisma.UserUpdateOneWithoutImportBatchesNestedInput
   errors?: Prisma.ImportErrorUpdateManyWithoutImportBatchNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutImportSourceInput = {
@@ -1759,6 +2543,10 @@ export type ImportBatchUncheckedUpdateWithoutImportSourceInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportBatchNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateManyWithoutImportSourceInput = {
@@ -1799,11 +2587,19 @@ export type ImportBatchUncheckedUpdateManyWithoutImportSourceInput = {
 export type ImportBatchCountOutputType = {
   errors: number
   ctiCastDailies: number
+  townStoreDailies: number
+  townCastDailies: number
+  townUrlDailies: number
+  townLandingDailies: number
 }
 
 export type ImportBatchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   errors?: boolean | ImportBatchCountOutputTypeCountErrorsArgs
   ctiCastDailies?: boolean | ImportBatchCountOutputTypeCountCtiCastDailiesArgs
+  townStoreDailies?: boolean | ImportBatchCountOutputTypeCountTownStoreDailiesArgs
+  townCastDailies?: boolean | ImportBatchCountOutputTypeCountTownCastDailiesArgs
+  townUrlDailies?: boolean | ImportBatchCountOutputTypeCountTownUrlDailiesArgs
+  townLandingDailies?: boolean | ImportBatchCountOutputTypeCountTownLandingDailiesArgs
 }
 
 /**
@@ -1828,6 +2624,34 @@ export type ImportBatchCountOutputTypeCountErrorsArgs<ExtArgs extends runtime.Ty
  */
 export type ImportBatchCountOutputTypeCountCtiCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CtiCastDailyWhereInput
+}
+
+/**
+ * ImportBatchCountOutputType without action
+ */
+export type ImportBatchCountOutputTypeCountTownStoreDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TownStoreDailyWhereInput
+}
+
+/**
+ * ImportBatchCountOutputType without action
+ */
+export type ImportBatchCountOutputTypeCountTownCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TownCastDailyWhereInput
+}
+
+/**
+ * ImportBatchCountOutputType without action
+ */
+export type ImportBatchCountOutputTypeCountTownUrlDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TownUrlDailyWhereInput
+}
+
+/**
+ * ImportBatchCountOutputType without action
+ */
+export type ImportBatchCountOutputTypeCountTownLandingDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TownLandingDailyWhereInput
 }
 
 
@@ -1864,6 +2688,10 @@ export type ImportBatchSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   uploadedByUser?: boolean | Prisma.ImportBatch$uploadedByUserArgs<ExtArgs>
   errors?: boolean | Prisma.ImportBatch$errorsArgs<ExtArgs>
   ctiCastDailies?: boolean | Prisma.ImportBatch$ctiCastDailiesArgs<ExtArgs>
+  townStoreDailies?: boolean | Prisma.ImportBatch$townStoreDailiesArgs<ExtArgs>
+  townCastDailies?: boolean | Prisma.ImportBatch$townCastDailiesArgs<ExtArgs>
+  townUrlDailies?: boolean | Prisma.ImportBatch$townUrlDailiesArgs<ExtArgs>
+  townLandingDailies?: boolean | Prisma.ImportBatch$townLandingDailiesArgs<ExtArgs>
   _count?: boolean | Prisma.ImportBatchCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["importBatch"]>
 
@@ -1970,6 +2798,10 @@ export type ImportBatchInclude<ExtArgs extends runtime.Types.Extensions.Internal
   uploadedByUser?: boolean | Prisma.ImportBatch$uploadedByUserArgs<ExtArgs>
   errors?: boolean | Prisma.ImportBatch$errorsArgs<ExtArgs>
   ctiCastDailies?: boolean | Prisma.ImportBatch$ctiCastDailiesArgs<ExtArgs>
+  townStoreDailies?: boolean | Prisma.ImportBatch$townStoreDailiesArgs<ExtArgs>
+  townCastDailies?: boolean | Prisma.ImportBatch$townCastDailiesArgs<ExtArgs>
+  townUrlDailies?: boolean | Prisma.ImportBatch$townUrlDailiesArgs<ExtArgs>
+  townLandingDailies?: boolean | Prisma.ImportBatch$townLandingDailiesArgs<ExtArgs>
   _count?: boolean | Prisma.ImportBatchCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ImportBatchIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1988,6 +2820,10 @@ export type $ImportBatchPayload<ExtArgs extends runtime.Types.Extensions.Interna
     uploadedByUser: Prisma.$UserPayload<ExtArgs> | null
     errors: Prisma.$ImportErrorPayload<ExtArgs>[]
     ctiCastDailies: Prisma.$CtiCastDailyPayload<ExtArgs>[]
+    townStoreDailies: Prisma.$TownStoreDailyPayload<ExtArgs>[]
+    townCastDailies: Prisma.$TownCastDailyPayload<ExtArgs>[]
+    townUrlDailies: Prisma.$TownUrlDailyPayload<ExtArgs>[]
+    townLandingDailies: Prisma.$TownLandingDailyPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2416,6 +3252,10 @@ export interface Prisma__ImportBatchClient<T, Null = never, ExtArgs extends runt
   uploadedByUser<T extends Prisma.ImportBatch$uploadedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$uploadedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   errors<T extends Prisma.ImportBatch$errorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$errorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImportErrorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ctiCastDailies<T extends Prisma.ImportBatch$ctiCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$ctiCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CtiCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  townStoreDailies<T extends Prisma.ImportBatch$townStoreDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$townStoreDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownStoreDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  townCastDailies<T extends Prisma.ImportBatch$townCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$townCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  townUrlDailies<T extends Prisma.ImportBatch$townUrlDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$townUrlDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownUrlDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  townLandingDailies<T extends Prisma.ImportBatch$townLandingDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$townLandingDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownLandingDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2938,6 +3778,102 @@ export type ImportBatch$ctiCastDailiesArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.CtiCastDailyScalarFieldEnum | Prisma.CtiCastDailyScalarFieldEnum[]
+}
+
+/**
+ * ImportBatch.townStoreDailies
+ */
+export type ImportBatch$townStoreDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TownStoreDaily
+   */
+  select?: Prisma.TownStoreDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TownStoreDaily
+   */
+  omit?: Prisma.TownStoreDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TownStoreDailyInclude<ExtArgs> | null
+  where?: Prisma.TownStoreDailyWhereInput
+  orderBy?: Prisma.TownStoreDailyOrderByWithRelationInput | Prisma.TownStoreDailyOrderByWithRelationInput[]
+  cursor?: Prisma.TownStoreDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TownStoreDailyScalarFieldEnum | Prisma.TownStoreDailyScalarFieldEnum[]
+}
+
+/**
+ * ImportBatch.townCastDailies
+ */
+export type ImportBatch$townCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TownCastDaily
+   */
+  select?: Prisma.TownCastDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TownCastDaily
+   */
+  omit?: Prisma.TownCastDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TownCastDailyInclude<ExtArgs> | null
+  where?: Prisma.TownCastDailyWhereInput
+  orderBy?: Prisma.TownCastDailyOrderByWithRelationInput | Prisma.TownCastDailyOrderByWithRelationInput[]
+  cursor?: Prisma.TownCastDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TownCastDailyScalarFieldEnum | Prisma.TownCastDailyScalarFieldEnum[]
+}
+
+/**
+ * ImportBatch.townUrlDailies
+ */
+export type ImportBatch$townUrlDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TownUrlDaily
+   */
+  select?: Prisma.TownUrlDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TownUrlDaily
+   */
+  omit?: Prisma.TownUrlDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TownUrlDailyInclude<ExtArgs> | null
+  where?: Prisma.TownUrlDailyWhereInput
+  orderBy?: Prisma.TownUrlDailyOrderByWithRelationInput | Prisma.TownUrlDailyOrderByWithRelationInput[]
+  cursor?: Prisma.TownUrlDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TownUrlDailyScalarFieldEnum | Prisma.TownUrlDailyScalarFieldEnum[]
+}
+
+/**
+ * ImportBatch.townLandingDailies
+ */
+export type ImportBatch$townLandingDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TownLandingDaily
+   */
+  select?: Prisma.TownLandingDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TownLandingDaily
+   */
+  omit?: Prisma.TownLandingDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TownLandingDailyInclude<ExtArgs> | null
+  where?: Prisma.TownLandingDailyWhereInput
+  orderBy?: Prisma.TownLandingDailyOrderByWithRelationInput | Prisma.TownLandingDailyOrderByWithRelationInput[]
+  cursor?: Prisma.TownLandingDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TownLandingDailyScalarFieldEnum | Prisma.TownLandingDailyScalarFieldEnum[]
 }
 
 /**

@@ -262,6 +262,10 @@ export type StoreWhereInput = {
   importSources?: Prisma.ImportSourceListRelationFilter
   improvementLogs?: Prisma.ImprovementLogListRelationFilter
   ctiCastDailies?: Prisma.CtiCastDailyListRelationFilter
+  townStoreDailies?: Prisma.TownStoreDailyListRelationFilter
+  townCastDailies?: Prisma.TownCastDailyListRelationFilter
+  townUrlDailies?: Prisma.TownUrlDailyListRelationFilter
+  townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
 }
 
 export type StoreOrderByWithRelationInput = {
@@ -281,6 +285,10 @@ export type StoreOrderByWithRelationInput = {
   importSources?: Prisma.ImportSourceOrderByRelationAggregateInput
   improvementLogs?: Prisma.ImprovementLogOrderByRelationAggregateInput
   ctiCastDailies?: Prisma.CtiCastDailyOrderByRelationAggregateInput
+  townStoreDailies?: Prisma.TownStoreDailyOrderByRelationAggregateInput
+  townCastDailies?: Prisma.TownCastDailyOrderByRelationAggregateInput
+  townUrlDailies?: Prisma.TownUrlDailyOrderByRelationAggregateInput
+  townLandingDailies?: Prisma.TownLandingDailyOrderByRelationAggregateInput
 }
 
 export type StoreWhereUniqueInput = Prisma.AtLeast<{
@@ -303,6 +311,10 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   importSources?: Prisma.ImportSourceListRelationFilter
   improvementLogs?: Prisma.ImprovementLogListRelationFilter
   ctiCastDailies?: Prisma.CtiCastDailyListRelationFilter
+  townStoreDailies?: Prisma.TownStoreDailyListRelationFilter
+  townCastDailies?: Prisma.TownCastDailyListRelationFilter
+  townUrlDailies?: Prisma.TownUrlDailyListRelationFilter
+  townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
 }, "id" | "code">
 
 export type StoreOrderByWithAggregationInput = {
@@ -356,6 +368,10 @@ export type StoreCreateInput = {
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateInput = {
@@ -375,6 +391,10 @@ export type StoreUncheckedCreateInput = {
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUpdateInput = {
@@ -394,6 +414,10 @@ export type StoreUpdateInput = {
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateInput = {
@@ -413,6 +437,10 @@ export type StoreUncheckedUpdateInput = {
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateManyInput = {
@@ -599,6 +627,62 @@ export type StoreUpdateOneRequiredWithoutCtiCastDailiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutCtiCastDailiesInput, Prisma.StoreUpdateWithoutCtiCastDailiesInput>, Prisma.StoreUncheckedUpdateWithoutCtiCastDailiesInput>
 }
 
+export type StoreCreateNestedOneWithoutTownStoreDailiesInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutTownStoreDailiesInput, Prisma.StoreUncheckedCreateWithoutTownStoreDailiesInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTownStoreDailiesInput
+  connect?: Prisma.StoreWhereUniqueInput
+}
+
+export type StoreUpdateOneRequiredWithoutTownStoreDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutTownStoreDailiesInput, Prisma.StoreUncheckedCreateWithoutTownStoreDailiesInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTownStoreDailiesInput
+  upsert?: Prisma.StoreUpsertWithoutTownStoreDailiesInput
+  connect?: Prisma.StoreWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutTownStoreDailiesInput, Prisma.StoreUpdateWithoutTownStoreDailiesInput>, Prisma.StoreUncheckedUpdateWithoutTownStoreDailiesInput>
+}
+
+export type StoreCreateNestedOneWithoutTownCastDailiesInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutTownCastDailiesInput, Prisma.StoreUncheckedCreateWithoutTownCastDailiesInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTownCastDailiesInput
+  connect?: Prisma.StoreWhereUniqueInput
+}
+
+export type StoreUpdateOneRequiredWithoutTownCastDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutTownCastDailiesInput, Prisma.StoreUncheckedCreateWithoutTownCastDailiesInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTownCastDailiesInput
+  upsert?: Prisma.StoreUpsertWithoutTownCastDailiesInput
+  connect?: Prisma.StoreWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutTownCastDailiesInput, Prisma.StoreUpdateWithoutTownCastDailiesInput>, Prisma.StoreUncheckedUpdateWithoutTownCastDailiesInput>
+}
+
+export type StoreCreateNestedOneWithoutTownUrlDailiesInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutTownUrlDailiesInput, Prisma.StoreUncheckedCreateWithoutTownUrlDailiesInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTownUrlDailiesInput
+  connect?: Prisma.StoreWhereUniqueInput
+}
+
+export type StoreUpdateOneRequiredWithoutTownUrlDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutTownUrlDailiesInput, Prisma.StoreUncheckedCreateWithoutTownUrlDailiesInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTownUrlDailiesInput
+  upsert?: Prisma.StoreUpsertWithoutTownUrlDailiesInput
+  connect?: Prisma.StoreWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutTownUrlDailiesInput, Prisma.StoreUpdateWithoutTownUrlDailiesInput>, Prisma.StoreUncheckedUpdateWithoutTownUrlDailiesInput>
+}
+
+export type StoreCreateNestedOneWithoutTownLandingDailiesInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutTownLandingDailiesInput, Prisma.StoreUncheckedCreateWithoutTownLandingDailiesInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTownLandingDailiesInput
+  connect?: Prisma.StoreWhereUniqueInput
+}
+
+export type StoreUpdateOneRequiredWithoutTownLandingDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutTownLandingDailiesInput, Prisma.StoreUncheckedCreateWithoutTownLandingDailiesInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTownLandingDailiesInput
+  upsert?: Prisma.StoreUpsertWithoutTownLandingDailiesInput
+  connect?: Prisma.StoreWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutTownLandingDailiesInput, Prisma.StoreUpdateWithoutTownLandingDailiesInput>, Prisma.StoreUncheckedUpdateWithoutTownLandingDailiesInput>
+}
+
 export type StoreCreateNestedOneWithoutImprovementLogsInput = {
   create?: Prisma.XOR<Prisma.StoreCreateWithoutImprovementLogsInput, Prisma.StoreUncheckedCreateWithoutImprovementLogsInput>
   connectOrCreate?: Prisma.StoreCreateOrConnectWithoutImprovementLogsInput
@@ -631,6 +715,10 @@ export type StoreCreateWithoutCastsInput = {
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutCastsInput = {
@@ -649,6 +737,10 @@ export type StoreUncheckedCreateWithoutCastsInput = {
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutCastsInput = {
@@ -683,6 +775,10 @@ export type StoreUpdateWithoutCastsInput = {
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutCastsInput = {
@@ -701,6 +797,10 @@ export type StoreUncheckedUpdateWithoutCastsInput = {
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutAliasesInput = {
@@ -719,6 +819,10 @@ export type StoreCreateWithoutAliasesInput = {
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutAliasesInput = {
@@ -737,6 +841,10 @@ export type StoreUncheckedCreateWithoutAliasesInput = {
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutAliasesInput = {
@@ -771,6 +879,10 @@ export type StoreUpdateWithoutAliasesInput = {
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutAliasesInput = {
@@ -789,6 +901,10 @@ export type StoreUncheckedUpdateWithoutAliasesInput = {
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutMediaListingsInput = {
@@ -807,6 +923,10 @@ export type StoreCreateWithoutMediaListingsInput = {
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutMediaListingsInput = {
@@ -825,6 +945,10 @@ export type StoreUncheckedCreateWithoutMediaListingsInput = {
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutMediaListingsInput = {
@@ -859,6 +983,10 @@ export type StoreUpdateWithoutMediaListingsInput = {
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutMediaListingsInput = {
@@ -877,6 +1005,10 @@ export type StoreUncheckedUpdateWithoutMediaListingsInput = {
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutImportSourcesInput = {
@@ -895,6 +1027,10 @@ export type StoreCreateWithoutImportSourcesInput = {
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutImportSourcesInput = {
@@ -913,6 +1049,10 @@ export type StoreUncheckedCreateWithoutImportSourcesInput = {
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutImportSourcesInput = {
@@ -947,6 +1087,10 @@ export type StoreUpdateWithoutImportSourcesInput = {
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutImportSourcesInput = {
@@ -965,6 +1109,10 @@ export type StoreUncheckedUpdateWithoutImportSourcesInput = {
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutCtiCastDailiesInput = {
@@ -983,6 +1131,10 @@ export type StoreCreateWithoutCtiCastDailiesInput = {
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutCtiCastDailiesInput = {
@@ -1001,6 +1153,10 @@ export type StoreUncheckedCreateWithoutCtiCastDailiesInput = {
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutCtiCastDailiesInput = {
@@ -1035,6 +1191,10 @@ export type StoreUpdateWithoutCtiCastDailiesInput = {
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutCtiCastDailiesInput = {
@@ -1053,6 +1213,426 @@ export type StoreUncheckedUpdateWithoutCtiCastDailiesInput = {
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreCreateWithoutTownStoreDailiesInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+}
+
+export type StoreUncheckedCreateWithoutTownStoreDailiesInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastUncheckedCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+}
+
+export type StoreCreateOrConnectWithoutTownStoreDailiesInput = {
+  where: Prisma.StoreWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreCreateWithoutTownStoreDailiesInput, Prisma.StoreUncheckedCreateWithoutTownStoreDailiesInput>
+}
+
+export type StoreUpsertWithoutTownStoreDailiesInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutTownStoreDailiesInput, Prisma.StoreUncheckedUpdateWithoutTownStoreDailiesInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutTownStoreDailiesInput, Prisma.StoreUncheckedCreateWithoutTownStoreDailiesInput>
+  where?: Prisma.StoreWhereInput
+}
+
+export type StoreUpdateToOneWithWhereWithoutTownStoreDailiesInput = {
+  where?: Prisma.StoreWhereInput
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutTownStoreDailiesInput, Prisma.StoreUncheckedUpdateWithoutTownStoreDailiesInput>
+}
+
+export type StoreUpdateWithoutTownStoreDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreUncheckedUpdateWithoutTownStoreDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUncheckedUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreCreateWithoutTownCastDailiesInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+}
+
+export type StoreUncheckedCreateWithoutTownCastDailiesInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastUncheckedCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+}
+
+export type StoreCreateOrConnectWithoutTownCastDailiesInput = {
+  where: Prisma.StoreWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreCreateWithoutTownCastDailiesInput, Prisma.StoreUncheckedCreateWithoutTownCastDailiesInput>
+}
+
+export type StoreUpsertWithoutTownCastDailiesInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutTownCastDailiesInput, Prisma.StoreUncheckedUpdateWithoutTownCastDailiesInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutTownCastDailiesInput, Prisma.StoreUncheckedCreateWithoutTownCastDailiesInput>
+  where?: Prisma.StoreWhereInput
+}
+
+export type StoreUpdateToOneWithWhereWithoutTownCastDailiesInput = {
+  where?: Prisma.StoreWhereInput
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutTownCastDailiesInput, Prisma.StoreUncheckedUpdateWithoutTownCastDailiesInput>
+}
+
+export type StoreUpdateWithoutTownCastDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreUncheckedUpdateWithoutTownCastDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUncheckedUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreCreateWithoutTownUrlDailiesInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+}
+
+export type StoreUncheckedCreateWithoutTownUrlDailiesInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastUncheckedCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+}
+
+export type StoreCreateOrConnectWithoutTownUrlDailiesInput = {
+  where: Prisma.StoreWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreCreateWithoutTownUrlDailiesInput, Prisma.StoreUncheckedCreateWithoutTownUrlDailiesInput>
+}
+
+export type StoreUpsertWithoutTownUrlDailiesInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutTownUrlDailiesInput, Prisma.StoreUncheckedUpdateWithoutTownUrlDailiesInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutTownUrlDailiesInput, Prisma.StoreUncheckedCreateWithoutTownUrlDailiesInput>
+  where?: Prisma.StoreWhereInput
+}
+
+export type StoreUpdateToOneWithWhereWithoutTownUrlDailiesInput = {
+  where?: Prisma.StoreWhereInput
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutTownUrlDailiesInput, Prisma.StoreUncheckedUpdateWithoutTownUrlDailiesInput>
+}
+
+export type StoreUpdateWithoutTownUrlDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreUncheckedUpdateWithoutTownUrlDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUncheckedUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreCreateWithoutTownLandingDailiesInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+}
+
+export type StoreUncheckedCreateWithoutTownLandingDailiesInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastUncheckedCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+}
+
+export type StoreCreateOrConnectWithoutTownLandingDailiesInput = {
+  where: Prisma.StoreWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreCreateWithoutTownLandingDailiesInput, Prisma.StoreUncheckedCreateWithoutTownLandingDailiesInput>
+}
+
+export type StoreUpsertWithoutTownLandingDailiesInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutTownLandingDailiesInput, Prisma.StoreUncheckedUpdateWithoutTownLandingDailiesInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutTownLandingDailiesInput, Prisma.StoreUncheckedCreateWithoutTownLandingDailiesInput>
+  where?: Prisma.StoreWhereInput
+}
+
+export type StoreUpdateToOneWithWhereWithoutTownLandingDailiesInput = {
+  where?: Prisma.StoreWhereInput
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutTownLandingDailiesInput, Prisma.StoreUncheckedUpdateWithoutTownLandingDailiesInput>
+}
+
+export type StoreUpdateWithoutTownLandingDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreUncheckedUpdateWithoutTownLandingDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUncheckedUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutImprovementLogsInput = {
@@ -1071,6 +1651,10 @@ export type StoreCreateWithoutImprovementLogsInput = {
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutImprovementLogsInput = {
@@ -1089,6 +1673,10 @@ export type StoreUncheckedCreateWithoutImprovementLogsInput = {
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutImprovementLogsInput = {
@@ -1123,6 +1711,10 @@ export type StoreUpdateWithoutImprovementLogsInput = {
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutImprovementLogsInput = {
@@ -1141,6 +1733,10 @@ export type StoreUncheckedUpdateWithoutImprovementLogsInput = {
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 
@@ -1155,6 +1751,10 @@ export type StoreCountOutputType = {
   importSources: number
   improvementLogs: number
   ctiCastDailies: number
+  townStoreDailies: number
+  townCastDailies: number
+  townUrlDailies: number
+  townLandingDailies: number
 }
 
 export type StoreCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1164,6 +1764,10 @@ export type StoreCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   importSources?: boolean | StoreCountOutputTypeCountImportSourcesArgs
   improvementLogs?: boolean | StoreCountOutputTypeCountImprovementLogsArgs
   ctiCastDailies?: boolean | StoreCountOutputTypeCountCtiCastDailiesArgs
+  townStoreDailies?: boolean | StoreCountOutputTypeCountTownStoreDailiesArgs
+  townCastDailies?: boolean | StoreCountOutputTypeCountTownCastDailiesArgs
+  townUrlDailies?: boolean | StoreCountOutputTypeCountTownUrlDailiesArgs
+  townLandingDailies?: boolean | StoreCountOutputTypeCountTownLandingDailiesArgs
 }
 
 /**
@@ -1218,6 +1822,34 @@ export type StoreCountOutputTypeCountCtiCastDailiesArgs<ExtArgs extends runtime.
   where?: Prisma.CtiCastDailyWhereInput
 }
 
+/**
+ * StoreCountOutputType without action
+ */
+export type StoreCountOutputTypeCountTownStoreDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TownStoreDailyWhereInput
+}
+
+/**
+ * StoreCountOutputType without action
+ */
+export type StoreCountOutputTypeCountTownCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TownCastDailyWhereInput
+}
+
+/**
+ * StoreCountOutputType without action
+ */
+export type StoreCountOutputTypeCountTownUrlDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TownUrlDailyWhereInput
+}
+
+/**
+ * StoreCountOutputType without action
+ */
+export type StoreCountOutputTypeCountTownLandingDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TownLandingDailyWhereInput
+}
+
 
 export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1236,6 +1868,10 @@ export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   importSources?: boolean | Prisma.Store$importSourcesArgs<ExtArgs>
   improvementLogs?: boolean | Prisma.Store$improvementLogsArgs<ExtArgs>
   ctiCastDailies?: boolean | Prisma.Store$ctiCastDailiesArgs<ExtArgs>
+  townStoreDailies?: boolean | Prisma.Store$townStoreDailiesArgs<ExtArgs>
+  townCastDailies?: boolean | Prisma.Store$townCastDailiesArgs<ExtArgs>
+  townUrlDailies?: boolean | Prisma.Store$townUrlDailiesArgs<ExtArgs>
+  townLandingDailies?: boolean | Prisma.Store$townLandingDailiesArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["store"]>
 
@@ -1286,6 +1922,10 @@ export type StoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   importSources?: boolean | Prisma.Store$importSourcesArgs<ExtArgs>
   improvementLogs?: boolean | Prisma.Store$improvementLogsArgs<ExtArgs>
   ctiCastDailies?: boolean | Prisma.Store$ctiCastDailiesArgs<ExtArgs>
+  townStoreDailies?: boolean | Prisma.Store$townStoreDailiesArgs<ExtArgs>
+  townCastDailies?: boolean | Prisma.Store$townCastDailiesArgs<ExtArgs>
+  townUrlDailies?: boolean | Prisma.Store$townUrlDailiesArgs<ExtArgs>
+  townLandingDailies?: boolean | Prisma.Store$townLandingDailiesArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StoreIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1300,6 +1940,10 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     importSources: Prisma.$ImportSourcePayload<ExtArgs>[]
     improvementLogs: Prisma.$ImprovementLogPayload<ExtArgs>[]
     ctiCastDailies: Prisma.$CtiCastDailyPayload<ExtArgs>[]
+    townStoreDailies: Prisma.$TownStoreDailyPayload<ExtArgs>[]
+    townCastDailies: Prisma.$TownCastDailyPayload<ExtArgs>[]
+    townUrlDailies: Prisma.$TownUrlDailyPayload<ExtArgs>[]
+    townLandingDailies: Prisma.$TownLandingDailyPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1712,6 +2356,10 @@ export interface Prisma__StoreClient<T, Null = never, ExtArgs extends runtime.Ty
   importSources<T extends Prisma.Store$importSourcesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$importSourcesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImportSourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   improvementLogs<T extends Prisma.Store$improvementLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$improvementLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImprovementLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ctiCastDailies<T extends Prisma.Store$ctiCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$ctiCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CtiCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  townStoreDailies<T extends Prisma.Store$townStoreDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$townStoreDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownStoreDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  townCastDailies<T extends Prisma.Store$townCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$townCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  townUrlDailies<T extends Prisma.Store$townUrlDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$townUrlDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownUrlDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  townLandingDailies<T extends Prisma.Store$townLandingDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$townLandingDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownLandingDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2285,6 +2933,102 @@ export type Store$ctiCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.CtiCastDailyScalarFieldEnum | Prisma.CtiCastDailyScalarFieldEnum[]
+}
+
+/**
+ * Store.townStoreDailies
+ */
+export type Store$townStoreDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TownStoreDaily
+   */
+  select?: Prisma.TownStoreDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TownStoreDaily
+   */
+  omit?: Prisma.TownStoreDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TownStoreDailyInclude<ExtArgs> | null
+  where?: Prisma.TownStoreDailyWhereInput
+  orderBy?: Prisma.TownStoreDailyOrderByWithRelationInput | Prisma.TownStoreDailyOrderByWithRelationInput[]
+  cursor?: Prisma.TownStoreDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TownStoreDailyScalarFieldEnum | Prisma.TownStoreDailyScalarFieldEnum[]
+}
+
+/**
+ * Store.townCastDailies
+ */
+export type Store$townCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TownCastDaily
+   */
+  select?: Prisma.TownCastDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TownCastDaily
+   */
+  omit?: Prisma.TownCastDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TownCastDailyInclude<ExtArgs> | null
+  where?: Prisma.TownCastDailyWhereInput
+  orderBy?: Prisma.TownCastDailyOrderByWithRelationInput | Prisma.TownCastDailyOrderByWithRelationInput[]
+  cursor?: Prisma.TownCastDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TownCastDailyScalarFieldEnum | Prisma.TownCastDailyScalarFieldEnum[]
+}
+
+/**
+ * Store.townUrlDailies
+ */
+export type Store$townUrlDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TownUrlDaily
+   */
+  select?: Prisma.TownUrlDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TownUrlDaily
+   */
+  omit?: Prisma.TownUrlDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TownUrlDailyInclude<ExtArgs> | null
+  where?: Prisma.TownUrlDailyWhereInput
+  orderBy?: Prisma.TownUrlDailyOrderByWithRelationInput | Prisma.TownUrlDailyOrderByWithRelationInput[]
+  cursor?: Prisma.TownUrlDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TownUrlDailyScalarFieldEnum | Prisma.TownUrlDailyScalarFieldEnum[]
+}
+
+/**
+ * Store.townLandingDailies
+ */
+export type Store$townLandingDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TownLandingDaily
+   */
+  select?: Prisma.TownLandingDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TownLandingDaily
+   */
+  omit?: Prisma.TownLandingDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TownLandingDailyInclude<ExtArgs> | null
+  where?: Prisma.TownLandingDailyWhereInput
+  orderBy?: Prisma.TownLandingDailyOrderByWithRelationInput | Prisma.TownLandingDailyOrderByWithRelationInput[]
+  cursor?: Prisma.TownLandingDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TownLandingDailyScalarFieldEnum | Prisma.TownLandingDailyScalarFieldEnum[]
 }
 
 /**

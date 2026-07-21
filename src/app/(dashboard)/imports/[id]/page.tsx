@@ -34,14 +34,15 @@ export default async function ImportPreviewPage({ params }: { params: Promise<{ 
     try { headerDiagnostics = await inspectCtiWorkbookHeaders(await readWorkbook(id)); } catch { headerDiagnostics = []; }
   }
   const editable = batch.status === ImportBatchStatus.PREVIEW_READY || batch.status === ImportBatchStatus.WAITING_FOR_CAST_LINK;
+  const reparseable = batch.status === ImportBatchStatus.FAILED || batch.status === ImportBatchStatus.WAITING_FOR_CAST_LINK || batch.status === ImportBatchStatus.COMPLETED_WITH_WARNINGS || batch.status === ImportBatchStatus.COMPLETED;
   const casts = await prisma.cast.findMany({
-    where: { startedOn: { lte: batch.targetTo }, OR: [{ endedOn: null }, { endedOn: { gte: batch.targetTo } }] },
+    where: { mergedIntoCastId: null, startedOn: { lte: batch.targetTo }, OR: [{ endedOn: null }, { endedOn: { gte: batch.targetTo } }] },
     select: { id: true, displayName: true, startedOn: true, endedOn: true }, orderBy: { displayName: "asc" },
   });
   const castOptions = casts.map((cast) => ({ id: cast.id, displayName: cast.displayName, startedOn: formatDateOnly(cast.startedOn), endedOn: cast.endedOn ? formatDateOnly(cast.endedOn) : null }));
   return <>
     <Link href="/imports" className="mb-5 inline-flex items-center gap-2 text-sm text-slate-500 hover:text-emerald-700"><ArrowLeft className="size-4" />取込一覧へ</Link>
-    <div className="mb-7 flex flex-wrap items-start justify-between gap-4"><PageHeader eyebrow="CTI PREVIEW" title={batch.originalFilename} description={`${formatDateOnly(batch.targetFrom)}〜${formatDateOnly(batch.targetTo)} / ${batch.importMode}`} /><div className="flex flex-wrap items-start gap-3"><span className="status-badge bg-slate-100 text-slate-700">{batch.status}</span><a href={`/api/imports/${id}/file`} className="secondary-button"><Download className="size-4" />元ファイル</a>{batch.status === ImportBatchStatus.FAILED && <CtiReparseButton batchId={id} />}</div></div>
+    <div className="mb-7 flex flex-wrap items-start justify-between gap-4"><PageHeader eyebrow="CTI PREVIEW" title={batch.originalFilename} description={`${formatDateOnly(batch.targetFrom)}〜${formatDateOnly(batch.targetTo)} / ${batch.importMode}`} /><div className="flex flex-wrap items-start gap-3"><span className="status-badge bg-slate-100 text-slate-700">{batch.status}</span><a href={`/api/imports/${id}/file`} className="secondary-button"><Download className="size-4" />元ファイル</a>{reparseable && <CtiReparseButton batchId={id} />}</div></div>
     <section className="mb-6 grid gap-3 sm:grid-cols-3 lg:grid-cols-6">{[
       ["新規", batch.insertedCount], ["更新", batch.updatedCount], ["保留", batch.pendingCount], ["除外", batch.skippedCount], ["警告", batch.warningCount], ["エラー", batch.errorCount],
     ].map(([label, value]) => <div className="panel p-4" key={String(label)}><p className="text-xs text-slate-500">{label}</p><p className="mt-1 text-2xl font-semibold text-slate-900">{value}</p></div>)}</section>

@@ -1,6 +1,10 @@
 import { StoreCode } from "@/generated/prisma/client";
 
-export const TARGET_SHEETS: Record<string, StoreCode> = {
+export type CtiStoreCode = typeof StoreCode.KASUKABE | typeof StoreCode.KOSHIGAYA | typeof StoreCode.NODA;
+
+export const CTI_STORE_CODES: CtiStoreCode[] = [StoreCode.KASUKABE, StoreCode.KOSHIGAYA, StoreCode.NODA];
+
+export const TARGET_SHEETS: Record<string, CtiStoreCode> = {
   "若妻淫乱倶楽部春日部店": StoreCode.KASUKABE,
   "若妻淫乱倶楽部越谷店": StoreCode.KOSHIGAYA,
   "若妻淫乱倶楽部野田店": StoreCode.NODA,
