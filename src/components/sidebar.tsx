@@ -12,6 +12,7 @@ const nav = [
   { href: "/imports/heaven", label: "Heaven取込", icon: UploadCloud, admin: true },
   { href: "/analytics/stores", label: "店舗実績", icon: Building2 },
   { href: "/analytics/casts", label: "キャスト実績", icon: BarChart3 },
+  { href: "/analytics/casts/overview", label: "キャスト統合分析", icon: UsersRound },
   { href: "/analytics/town/stores", label: "タウン店舗分析", icon: Building2 },
   { href: "/analytics/town/casts", label: "タウン女子分析", icon: UsersRound },
   { href: "/analytics/heaven/store", label: "Heaven店舗分析", icon: Building2 },
