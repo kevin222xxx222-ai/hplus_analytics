@@ -113,6 +113,23 @@ export const ImportMode = {
 export type ImportMode = (typeof ImportMode)[keyof typeof ImportMode]
 
 
+export const HeavenMetricValueKind = {
+  DAILY_EVENT: 'DAILY_EVENT',
+  SNAPSHOT: 'SNAPSHOT'
+} as const
+
+export type HeavenMetricValueKind = (typeof HeavenMetricValueKind)[keyof typeof HeavenMetricValueKind]
+
+
+export const HeavenRawValueStatus = {
+  VALUE: 'VALUE',
+  BLANK: 'BLANK',
+  NOT_APPLICABLE: 'NOT_APPLICABLE'
+} as const
+
+export type HeavenRawValueStatus = (typeof HeavenRawValueStatus)[keyof typeof HeavenRawValueStatus]
+
+
 export const ImportErrorLevel = {
   WARNING: 'WARNING',
   ERROR: 'ERROR'

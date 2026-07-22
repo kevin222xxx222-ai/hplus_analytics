@@ -420,6 +420,8 @@ export type ImportBatchWhereInput = {
   townCastDailies?: Prisma.TownCastDailyListRelationFilter
   townUrlDailies?: Prisma.TownUrlDailyListRelationFilter
   townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
+  heavenShopDailies?: Prisma.HeavenShopDailyListRelationFilter
+  heavenCastDailies?: Prisma.HeavenCastDailyListRelationFilter
 }
 
 export type ImportBatchOrderByWithRelationInput = {
@@ -459,6 +461,8 @@ export type ImportBatchOrderByWithRelationInput = {
   townCastDailies?: Prisma.TownCastDailyOrderByRelationAggregateInput
   townUrlDailies?: Prisma.TownUrlDailyOrderByRelationAggregateInput
   townLandingDailies?: Prisma.TownLandingDailyOrderByRelationAggregateInput
+  heavenShopDailies?: Prisma.HeavenShopDailyOrderByRelationAggregateInput
+  heavenCastDailies?: Prisma.HeavenCastDailyOrderByRelationAggregateInput
 }
 
 export type ImportBatchWhereUniqueInput = Prisma.AtLeast<{
@@ -501,6 +505,8 @@ export type ImportBatchWhereUniqueInput = Prisma.AtLeast<{
   townCastDailies?: Prisma.TownCastDailyListRelationFilter
   townUrlDailies?: Prisma.TownUrlDailyListRelationFilter
   townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
+  heavenShopDailies?: Prisma.HeavenShopDailyListRelationFilter
+  heavenCastDailies?: Prisma.HeavenCastDailyListRelationFilter
 }, "id" | "runId">
 
 export type ImportBatchOrderByWithAggregationInput = {
@@ -608,6 +614,8 @@ export type ImportBatchCreateInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateInput = {
@@ -645,6 +653,8 @@ export type ImportBatchUncheckedCreateInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUpdateInput = {
@@ -682,6 +692,8 @@ export type ImportBatchUpdateInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateInput = {
@@ -719,6 +731,8 @@ export type ImportBatchUncheckedUpdateInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchCreateManyInput = {
@@ -1125,6 +1139,34 @@ export type ImportBatchUpdateOneRequiredWithoutTownLandingDailiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ImportBatchUpdateToOneWithWhereWithoutTownLandingDailiesInput, Prisma.ImportBatchUpdateWithoutTownLandingDailiesInput>, Prisma.ImportBatchUncheckedUpdateWithoutTownLandingDailiesInput>
 }
 
+export type ImportBatchCreateNestedOneWithoutHeavenShopDailiesInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutHeavenShopDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutHeavenShopDailiesInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutHeavenShopDailiesInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+}
+
+export type ImportBatchUpdateOneRequiredWithoutHeavenShopDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutHeavenShopDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutHeavenShopDailiesInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutHeavenShopDailiesInput
+  upsert?: Prisma.ImportBatchUpsertWithoutHeavenShopDailiesInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ImportBatchUpdateToOneWithWhereWithoutHeavenShopDailiesInput, Prisma.ImportBatchUpdateWithoutHeavenShopDailiesInput>, Prisma.ImportBatchUncheckedUpdateWithoutHeavenShopDailiesInput>
+}
+
+export type ImportBatchCreateNestedOneWithoutHeavenCastDailiesInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutHeavenCastDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutHeavenCastDailiesInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutHeavenCastDailiesInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+}
+
+export type ImportBatchUpdateOneRequiredWithoutHeavenCastDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutHeavenCastDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutHeavenCastDailiesInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutHeavenCastDailiesInput
+  upsert?: Prisma.ImportBatchUpsertWithoutHeavenCastDailiesInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ImportBatchUpdateToOneWithWhereWithoutHeavenCastDailiesInput, Prisma.ImportBatchUpdateWithoutHeavenCastDailiesInput>, Prisma.ImportBatchUncheckedUpdateWithoutHeavenCastDailiesInput>
+}
+
 export type ImportBatchCreateWithoutUploadedByUserInput = {
   id?: string
   runId?: string
@@ -1159,6 +1201,8 @@ export type ImportBatchCreateWithoutUploadedByUserInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutUploadedByUserInput = {
@@ -1195,6 +1239,8 @@ export type ImportBatchUncheckedCreateWithoutUploadedByUserInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutUploadedByUserInput = {
@@ -1291,6 +1337,8 @@ export type ImportBatchCreateWithoutImportSourceInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutImportSourceInput = {
@@ -1327,6 +1375,8 @@ export type ImportBatchUncheckedCreateWithoutImportSourceInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutImportSourceInput = {
@@ -1389,6 +1439,8 @@ export type ImportBatchCreateWithoutErrorsInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutErrorsInput = {
@@ -1425,6 +1477,8 @@ export type ImportBatchUncheckedCreateWithoutErrorsInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutErrorsInput = {
@@ -1477,6 +1531,8 @@ export type ImportBatchUpdateWithoutErrorsInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutErrorsInput = {
@@ -1513,6 +1569,8 @@ export type ImportBatchUncheckedUpdateWithoutErrorsInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchCreateWithoutCtiCastDailiesInput = {
@@ -1549,6 +1607,8 @@ export type ImportBatchCreateWithoutCtiCastDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutCtiCastDailiesInput = {
@@ -1585,6 +1645,8 @@ export type ImportBatchUncheckedCreateWithoutCtiCastDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutCtiCastDailiesInput = {
@@ -1637,6 +1699,8 @@ export type ImportBatchUpdateWithoutCtiCastDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutCtiCastDailiesInput = {
@@ -1673,6 +1737,8 @@ export type ImportBatchUncheckedUpdateWithoutCtiCastDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchCreateWithoutTownStoreDailiesInput = {
@@ -1709,6 +1775,8 @@ export type ImportBatchCreateWithoutTownStoreDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutTownStoreDailiesInput = {
@@ -1745,6 +1813,8 @@ export type ImportBatchUncheckedCreateWithoutTownStoreDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutTownStoreDailiesInput = {
@@ -1797,6 +1867,8 @@ export type ImportBatchUpdateWithoutTownStoreDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutTownStoreDailiesInput = {
@@ -1833,6 +1905,8 @@ export type ImportBatchUncheckedUpdateWithoutTownStoreDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchCreateWithoutTownCastDailiesInput = {
@@ -1869,6 +1943,8 @@ export type ImportBatchCreateWithoutTownCastDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutTownCastDailiesInput = {
@@ -1905,6 +1981,8 @@ export type ImportBatchUncheckedCreateWithoutTownCastDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutTownCastDailiesInput = {
@@ -1957,6 +2035,8 @@ export type ImportBatchUpdateWithoutTownCastDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutTownCastDailiesInput = {
@@ -1993,6 +2073,8 @@ export type ImportBatchUncheckedUpdateWithoutTownCastDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchCreateWithoutTownUrlDailiesInput = {
@@ -2029,6 +2111,8 @@ export type ImportBatchCreateWithoutTownUrlDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutTownUrlDailiesInput = {
@@ -2065,6 +2149,8 @@ export type ImportBatchUncheckedCreateWithoutTownUrlDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutTownUrlDailiesInput = {
@@ -2117,6 +2203,8 @@ export type ImportBatchUpdateWithoutTownUrlDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutTownUrlDailiesInput = {
@@ -2153,6 +2241,8 @@ export type ImportBatchUncheckedUpdateWithoutTownUrlDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchCreateWithoutTownLandingDailiesInput = {
@@ -2189,6 +2279,8 @@ export type ImportBatchCreateWithoutTownLandingDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutTownLandingDailiesInput = {
@@ -2225,6 +2317,8 @@ export type ImportBatchUncheckedCreateWithoutTownLandingDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutTownLandingDailiesInput = {
@@ -2277,6 +2371,8 @@ export type ImportBatchUpdateWithoutTownLandingDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutTownLandingDailiesInput = {
@@ -2313,6 +2409,344 @@ export type ImportBatchUncheckedUpdateWithoutTownLandingDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+}
+
+export type ImportBatchCreateWithoutHeavenShopDailiesInput = {
+  id?: string
+  runId?: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  importSource: Prisma.ImportSourceCreateNestedOneWithoutBatchesInput
+  uploadedByUser?: Prisma.UserCreateNestedOneWithoutImportBatchesInput
+  errors?: Prisma.ImportErrorCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
+}
+
+export type ImportBatchUncheckedCreateWithoutHeavenShopDailiesInput = {
+  id?: string
+  runId?: string
+  importSourceId: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  uploadedByUserId?: string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+}
+
+export type ImportBatchCreateOrConnectWithoutHeavenShopDailiesInput = {
+  where: Prisma.ImportBatchWhereUniqueInput
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutHeavenShopDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutHeavenShopDailiesInput>
+}
+
+export type ImportBatchUpsertWithoutHeavenShopDailiesInput = {
+  update: Prisma.XOR<Prisma.ImportBatchUpdateWithoutHeavenShopDailiesInput, Prisma.ImportBatchUncheckedUpdateWithoutHeavenShopDailiesInput>
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutHeavenShopDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutHeavenShopDailiesInput>
+  where?: Prisma.ImportBatchWhereInput
+}
+
+export type ImportBatchUpdateToOneWithWhereWithoutHeavenShopDailiesInput = {
+  where?: Prisma.ImportBatchWhereInput
+  data: Prisma.XOR<Prisma.ImportBatchUpdateWithoutHeavenShopDailiesInput, Prisma.ImportBatchUncheckedUpdateWithoutHeavenShopDailiesInput>
+}
+
+export type ImportBatchUpdateWithoutHeavenShopDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  importSource?: Prisma.ImportSourceUpdateOneRequiredWithoutBatchesNestedInput
+  uploadedByUser?: Prisma.UserUpdateOneWithoutImportBatchesNestedInput
+  errors?: Prisma.ImportErrorUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
+}
+
+export type ImportBatchUncheckedUpdateWithoutHeavenShopDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  importSourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+}
+
+export type ImportBatchCreateWithoutHeavenCastDailiesInput = {
+  id?: string
+  runId?: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  importSource: Prisma.ImportSourceCreateNestedOneWithoutBatchesInput
+  uploadedByUser?: Prisma.UserCreateNestedOneWithoutImportBatchesInput
+  errors?: Prisma.ImportErrorCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
+}
+
+export type ImportBatchUncheckedCreateWithoutHeavenCastDailiesInput = {
+  id?: string
+  runId?: string
+  importSourceId: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  uploadedByUserId?: string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
+}
+
+export type ImportBatchCreateOrConnectWithoutHeavenCastDailiesInput = {
+  where: Prisma.ImportBatchWhereUniqueInput
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutHeavenCastDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutHeavenCastDailiesInput>
+}
+
+export type ImportBatchUpsertWithoutHeavenCastDailiesInput = {
+  update: Prisma.XOR<Prisma.ImportBatchUpdateWithoutHeavenCastDailiesInput, Prisma.ImportBatchUncheckedUpdateWithoutHeavenCastDailiesInput>
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutHeavenCastDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutHeavenCastDailiesInput>
+  where?: Prisma.ImportBatchWhereInput
+}
+
+export type ImportBatchUpdateToOneWithWhereWithoutHeavenCastDailiesInput = {
+  where?: Prisma.ImportBatchWhereInput
+  data: Prisma.XOR<Prisma.ImportBatchUpdateWithoutHeavenCastDailiesInput, Prisma.ImportBatchUncheckedUpdateWithoutHeavenCastDailiesInput>
+}
+
+export type ImportBatchUpdateWithoutHeavenCastDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  importSource?: Prisma.ImportSourceUpdateOneRequiredWithoutBatchesNestedInput
+  uploadedByUser?: Prisma.UserUpdateOneWithoutImportBatchesNestedInput
+  errors?: Prisma.ImportErrorUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
+}
+
+export type ImportBatchUncheckedUpdateWithoutHeavenCastDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  importSourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchCreateManyUploadedByUserInput = {
@@ -2379,6 +2813,8 @@ export type ImportBatchUpdateWithoutUploadedByUserInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutUploadedByUserInput = {
@@ -2415,6 +2851,8 @@ export type ImportBatchUncheckedUpdateWithoutUploadedByUserInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateManyWithoutUploadedByUserInput = {
@@ -2511,6 +2949,8 @@ export type ImportBatchUpdateWithoutImportSourceInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutImportSourceInput = {
@@ -2547,6 +2987,8 @@ export type ImportBatchUncheckedUpdateWithoutImportSourceInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateManyWithoutImportSourceInput = {
@@ -2591,6 +3033,8 @@ export type ImportBatchCountOutputType = {
   townCastDailies: number
   townUrlDailies: number
   townLandingDailies: number
+  heavenShopDailies: number
+  heavenCastDailies: number
 }
 
 export type ImportBatchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2600,6 +3044,8 @@ export type ImportBatchCountOutputTypeSelect<ExtArgs extends runtime.Types.Exten
   townCastDailies?: boolean | ImportBatchCountOutputTypeCountTownCastDailiesArgs
   townUrlDailies?: boolean | ImportBatchCountOutputTypeCountTownUrlDailiesArgs
   townLandingDailies?: boolean | ImportBatchCountOutputTypeCountTownLandingDailiesArgs
+  heavenShopDailies?: boolean | ImportBatchCountOutputTypeCountHeavenShopDailiesArgs
+  heavenCastDailies?: boolean | ImportBatchCountOutputTypeCountHeavenCastDailiesArgs
 }
 
 /**
@@ -2654,6 +3100,20 @@ export type ImportBatchCountOutputTypeCountTownLandingDailiesArgs<ExtArgs extend
   where?: Prisma.TownLandingDailyWhereInput
 }
 
+/**
+ * ImportBatchCountOutputType without action
+ */
+export type ImportBatchCountOutputTypeCountHeavenShopDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HeavenShopDailyWhereInput
+}
+
+/**
+ * ImportBatchCountOutputType without action
+ */
+export type ImportBatchCountOutputTypeCountHeavenCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HeavenCastDailyWhereInput
+}
+
 
 export type ImportBatchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2692,6 +3152,8 @@ export type ImportBatchSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   townCastDailies?: boolean | Prisma.ImportBatch$townCastDailiesArgs<ExtArgs>
   townUrlDailies?: boolean | Prisma.ImportBatch$townUrlDailiesArgs<ExtArgs>
   townLandingDailies?: boolean | Prisma.ImportBatch$townLandingDailiesArgs<ExtArgs>
+  heavenShopDailies?: boolean | Prisma.ImportBatch$heavenShopDailiesArgs<ExtArgs>
+  heavenCastDailies?: boolean | Prisma.ImportBatch$heavenCastDailiesArgs<ExtArgs>
   _count?: boolean | Prisma.ImportBatchCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["importBatch"]>
 
@@ -2802,6 +3264,8 @@ export type ImportBatchInclude<ExtArgs extends runtime.Types.Extensions.Internal
   townCastDailies?: boolean | Prisma.ImportBatch$townCastDailiesArgs<ExtArgs>
   townUrlDailies?: boolean | Prisma.ImportBatch$townUrlDailiesArgs<ExtArgs>
   townLandingDailies?: boolean | Prisma.ImportBatch$townLandingDailiesArgs<ExtArgs>
+  heavenShopDailies?: boolean | Prisma.ImportBatch$heavenShopDailiesArgs<ExtArgs>
+  heavenCastDailies?: boolean | Prisma.ImportBatch$heavenCastDailiesArgs<ExtArgs>
   _count?: boolean | Prisma.ImportBatchCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ImportBatchIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2824,6 +3288,8 @@ export type $ImportBatchPayload<ExtArgs extends runtime.Types.Extensions.Interna
     townCastDailies: Prisma.$TownCastDailyPayload<ExtArgs>[]
     townUrlDailies: Prisma.$TownUrlDailyPayload<ExtArgs>[]
     townLandingDailies: Prisma.$TownLandingDailyPayload<ExtArgs>[]
+    heavenShopDailies: Prisma.$HeavenShopDailyPayload<ExtArgs>[]
+    heavenCastDailies: Prisma.$HeavenCastDailyPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3256,6 +3722,8 @@ export interface Prisma__ImportBatchClient<T, Null = never, ExtArgs extends runt
   townCastDailies<T extends Prisma.ImportBatch$townCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$townCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   townUrlDailies<T extends Prisma.ImportBatch$townUrlDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$townUrlDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownUrlDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   townLandingDailies<T extends Prisma.ImportBatch$townLandingDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$townLandingDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownLandingDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  heavenShopDailies<T extends Prisma.ImportBatch$heavenShopDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$heavenShopDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HeavenShopDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  heavenCastDailies<T extends Prisma.ImportBatch$heavenCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$heavenCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HeavenCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3874,6 +4342,54 @@ export type ImportBatch$townLandingDailiesArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.TownLandingDailyScalarFieldEnum | Prisma.TownLandingDailyScalarFieldEnum[]
+}
+
+/**
+ * ImportBatch.heavenShopDailies
+ */
+export type ImportBatch$heavenShopDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HeavenShopDaily
+   */
+  select?: Prisma.HeavenShopDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HeavenShopDaily
+   */
+  omit?: Prisma.HeavenShopDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HeavenShopDailyInclude<ExtArgs> | null
+  where?: Prisma.HeavenShopDailyWhereInput
+  orderBy?: Prisma.HeavenShopDailyOrderByWithRelationInput | Prisma.HeavenShopDailyOrderByWithRelationInput[]
+  cursor?: Prisma.HeavenShopDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HeavenShopDailyScalarFieldEnum | Prisma.HeavenShopDailyScalarFieldEnum[]
+}
+
+/**
+ * ImportBatch.heavenCastDailies
+ */
+export type ImportBatch$heavenCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HeavenCastDaily
+   */
+  select?: Prisma.HeavenCastDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HeavenCastDaily
+   */
+  omit?: Prisma.HeavenCastDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HeavenCastDailyInclude<ExtArgs> | null
+  where?: Prisma.HeavenCastDailyWhereInput
+  orderBy?: Prisma.HeavenCastDailyOrderByWithRelationInput | Prisma.HeavenCastDailyOrderByWithRelationInput[]
+  cursor?: Prisma.HeavenCastDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HeavenCastDailyScalarFieldEnum | Prisma.HeavenCastDailyScalarFieldEnum[]
 }
 
 /**

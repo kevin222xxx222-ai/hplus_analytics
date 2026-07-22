@@ -1,4 +1,6 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BarChart3, Building2, LayoutDashboard, Link2, LogOut, MousePointerClick, Store, Tags, UploadCloud, UserRoundCog, UsersRound } from "lucide-react";
 import { logoutAction } from "@/app/actions/auth";
 import type { CurrentUser } from "@/lib/auth";
@@ -7,10 +9,13 @@ const nav = [
   { href: "/", label: "ホーム", icon: LayoutDashboard },
   { href: "/imports", label: "CTI取込", icon: UploadCloud, admin: true },
   { href: "/imports/town", label: "タウン取込", icon: UploadCloud, admin: true },
+  { href: "/imports/heaven", label: "Heaven取込", icon: UploadCloud, admin: true },
   { href: "/analytics/stores", label: "店舗実績", icon: Building2 },
   { href: "/analytics/casts", label: "キャスト実績", icon: BarChart3 },
   { href: "/analytics/town/stores", label: "タウン店舗分析", icon: Building2 },
   { href: "/analytics/town/casts", label: "タウン女子分析", icon: UsersRound },
+  { href: "/analytics/heaven/store", label: "Heaven店舗分析", icon: Building2 },
+  { href: "/analytics/heaven/casts", label: "Heaven女子分析", icon: UsersRound },
   { href: "/analytics/town/urls", label: "タウンURL分析", icon: Link2 },
   { href: "/analytics/town/landing", label: "タウンLP分析", icon: MousePointerClick },
   { href: "/masters/stores", label: "店舗マスタ", icon: Store, admin: true },
@@ -21,6 +26,7 @@ const nav = [
 ];
 
 export function Sidebar({ user }: { user: CurrentUser }) {
+  const pathname = usePathname();
   return (
     <aside className="flex min-h-screen w-[264px] shrink-0 flex-col bg-[#10241f] px-4 py-5 text-slate-200">
       <Link href="/" className="mb-8 flex items-center gap-3 px-2">
@@ -30,7 +36,7 @@ export function Sidebar({ user }: { user: CurrentUser }) {
       <p className="mb-2 px-3 text-[10px] font-bold tracking-[0.18em] text-slate-500">NAVIGATION</p>
       <nav className="space-y-1">
         {nav.filter((item) => !item.admin || user.role === "ADMIN").map(({ href, label, icon: Icon }) => (
-          <Link key={href} href={href} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-300 transition hover:bg-white/8 hover:text-white">
+          <Link key={href} href={href} aria-current={pathname === href || pathname.startsWith(`${href}/`) ? "page" : undefined} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition hover:bg-white/8 hover:text-white ${pathname === href || pathname.startsWith(`${href}/`) ? "bg-white/12 text-white" : "text-slate-300"}`}>
             <Icon className="size-[18px]" />{label}
           </Link>
         ))}

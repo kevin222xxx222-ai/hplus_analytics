@@ -81,6 +81,17 @@ enum ImportMode {
   UNKNOWN
 }
 
+enum HeavenMetricValueKind {
+  DAILY_EVENT
+  SNAPSHOT
+}
+
+enum HeavenRawValueStatus {
+  VALUE
+  BLANK
+  NOT_APPLICABLE
+}
+
 enum ImportErrorLevel {
   WARNING
   ERROR
@@ -163,6 +174,8 @@ model Store {
   townCastDailies       TownCastDaily[]
   townUrlDailies        TownUrlDaily[]
   townLandingDailies    TownLandingDaily[]
+  heavenShopDailies     HeavenShopDaily[]
+  heavenCastDailies     HeavenCastDaily[]
 
   @@map("stores")
 }
@@ -186,6 +199,7 @@ model Cast {
   townCastDailies    TownCastDaily[]
   townUrlDailies     TownUrlDaily[]
   townLandingDailies TownLandingDaily[]
+  heavenCastDailies   HeavenCastDaily[]
   nameHistories      CastNameHistory[]
   mergedIntoCastId   String?            @map("merged_into_cast_id") @db.Uuid
   mergedAt           DateTime?          @map("merged_at") @db.Timestamptz(3)
@@ -380,6 +394,8 @@ model ImportBatch {
   townCastDailies    TownCastDaily[]
   townUrlDailies     TownUrlDaily[]
   townLandingDailies TownLandingDaily[]
+  heavenShopDailies  HeavenShopDaily[]
+  heavenCastDailies  HeavenCastDaily[]
 
   @@index([fileHash, status])
   @@index([dataType, targetFrom, targetTo])
@@ -545,6 +561,60 @@ model TownLandingDaily {
   @@index([castId, date])
   @@index([importBatchId])
   @@map("town_landing_daily")
+}
+
+model HeavenShopDaily {
+  id              String                @id @default(uuid()) @db.Uuid
+  businessDate    DateTime              @map("business_date") @db.Date
+  storeId         String                @map("store_id") @db.Uuid
+  importBatchId   String                @map("import_batch_id") @db.Uuid
+  metricKey       String                @map("metric_key") @db.VarChar(100)
+  rawValue        Decimal?              @map("raw_value") @db.Decimal(18, 6)
+  valueKind       HeavenMetricValueKind @map("value_kind")
+  rawValueStatus  HeavenRawValueStatus  @map("raw_value_status")
+  deltaValue      Decimal?              @map("delta_value") @db.Decimal(18, 6)
+  sourceColumn    String                @map("source_column") @db.VarChar(255)
+  sourceRowNumber Int                   @map("source_row_number")
+  createdAt       DateTime              @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime              @updatedAt @map("updated_at") @db.Timestamptz(3)
+  store           Store                 @relation(fields: [storeId], references: [id], onDelete: Restrict)
+  importBatch     ImportBatch           @relation(fields: [importBatchId], references: [id], onDelete: Restrict)
+
+  @@unique([businessDate, storeId, metricKey])
+  @@index([storeId, businessDate])
+  @@index([importBatchId])
+  @@index([metricKey, businessDate])
+  @@map("heaven_shop_daily")
+}
+
+model HeavenCastDaily {
+  id                       String                @id @default(uuid()) @db.Uuid
+  businessDate             DateTime              @map("business_date") @db.Date
+  storeId                  String                @map("store_id") @db.Uuid
+  castId                   String?               @map("cast_id") @db.Uuid
+  sourceCastName           String                @map("source_cast_name") @db.VarChar(100)
+  normalizedSourceCastName String                @map("normalized_source_cast_name") @db.VarChar(100)
+  resolutionKey            String                @map("resolution_key") @db.VarChar(180)
+  importBatchId            String                @map("import_batch_id") @db.Uuid
+  metricKey                String                @map("metric_key") @db.VarChar(100)
+  rawValue                 Decimal?              @map("raw_value") @db.Decimal(18, 6)
+  valueKind                HeavenMetricValueKind @map("value_kind")
+  rawValueStatus           HeavenRawValueStatus  @map("raw_value_status")
+  deltaValue               Decimal?              @map("delta_value") @db.Decimal(18, 6)
+  sourceColumn             String                @map("source_column") @db.VarChar(255)
+  sourceRowNumber          Int                   @map("source_row_number")
+  createdAt                DateTime              @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt                DateTime              @updatedAt @map("updated_at") @db.Timestamptz(3)
+  store                    Store                 @relation(fields: [storeId], references: [id], onDelete: Restrict)
+  cast                     Cast?                 @relation(fields: [castId], references: [id], onDelete: SetNull)
+  importBatch              ImportBatch           @relation(fields: [importBatchId], references: [id], onDelete: Restrict)
+
+  @@unique([businessDate, storeId, metricKey, resolutionKey])
+  @@index([castId, businessDate])
+  @@index([storeId, businessDate])
+  @@index([importBatchId])
+  @@index([normalizedSourceCastName, storeId, businessDate])
+  @@map("heaven_cast_daily")
 }
 
 model ImprovementLog {

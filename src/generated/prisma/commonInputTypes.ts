@@ -616,6 +616,40 @@ export type EnumTownPageTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumTownPageTypeFilter<$PrismaModel>
 }
 
+export type EnumHeavenMetricValueKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.HeavenMetricValueKind | Prisma.EnumHeavenMetricValueKindFieldRefInput<$PrismaModel>
+  in?: $Enums.HeavenMetricValueKind[] | Prisma.ListEnumHeavenMetricValueKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HeavenMetricValueKind[] | Prisma.ListEnumHeavenMetricValueKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHeavenMetricValueKindFilter<$PrismaModel> | $Enums.HeavenMetricValueKind
+}
+
+export type EnumHeavenRawValueStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.HeavenRawValueStatus | Prisma.EnumHeavenRawValueStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.HeavenRawValueStatus[] | Prisma.ListEnumHeavenRawValueStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HeavenRawValueStatus[] | Prisma.ListEnumHeavenRawValueStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHeavenRawValueStatusFilter<$PrismaModel> | $Enums.HeavenRawValueStatus
+}
+
+export type EnumHeavenMetricValueKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.HeavenMetricValueKind | Prisma.EnumHeavenMetricValueKindFieldRefInput<$PrismaModel>
+  in?: $Enums.HeavenMetricValueKind[] | Prisma.ListEnumHeavenMetricValueKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HeavenMetricValueKind[] | Prisma.ListEnumHeavenMetricValueKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHeavenMetricValueKindWithAggregatesFilter<$PrismaModel> | $Enums.HeavenMetricValueKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumHeavenMetricValueKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumHeavenMetricValueKindFilter<$PrismaModel>
+}
+
+export type EnumHeavenRawValueStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.HeavenRawValueStatus | Prisma.EnumHeavenRawValueStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.HeavenRawValueStatus[] | Prisma.ListEnumHeavenRawValueStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HeavenRawValueStatus[] | Prisma.ListEnumHeavenRawValueStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHeavenRawValueStatusWithAggregatesFilter<$PrismaModel> | $Enums.HeavenRawValueStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumHeavenRawValueStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumHeavenRawValueStatusFilter<$PrismaModel>
+}
+
 export type EnumImprovementTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.ImprovementType | Prisma.EnumImprovementTypeFieldRefInput<$PrismaModel>
   in?: $Enums.ImprovementType[] | Prisma.ListEnumImprovementTypeFieldRefInput<$PrismaModel>
@@ -1205,6 +1239,40 @@ export type NestedEnumTownPageTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumTownPageTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumTownPageTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumHeavenMetricValueKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.HeavenMetricValueKind | Prisma.EnumHeavenMetricValueKindFieldRefInput<$PrismaModel>
+  in?: $Enums.HeavenMetricValueKind[] | Prisma.ListEnumHeavenMetricValueKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HeavenMetricValueKind[] | Prisma.ListEnumHeavenMetricValueKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHeavenMetricValueKindFilter<$PrismaModel> | $Enums.HeavenMetricValueKind
+}
+
+export type NestedEnumHeavenRawValueStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.HeavenRawValueStatus | Prisma.EnumHeavenRawValueStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.HeavenRawValueStatus[] | Prisma.ListEnumHeavenRawValueStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HeavenRawValueStatus[] | Prisma.ListEnumHeavenRawValueStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHeavenRawValueStatusFilter<$PrismaModel> | $Enums.HeavenRawValueStatus
+}
+
+export type NestedEnumHeavenMetricValueKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.HeavenMetricValueKind | Prisma.EnumHeavenMetricValueKindFieldRefInput<$PrismaModel>
+  in?: $Enums.HeavenMetricValueKind[] | Prisma.ListEnumHeavenMetricValueKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HeavenMetricValueKind[] | Prisma.ListEnumHeavenMetricValueKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHeavenMetricValueKindWithAggregatesFilter<$PrismaModel> | $Enums.HeavenMetricValueKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumHeavenMetricValueKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumHeavenMetricValueKindFilter<$PrismaModel>
+}
+
+export type NestedEnumHeavenRawValueStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.HeavenRawValueStatus | Prisma.EnumHeavenRawValueStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.HeavenRawValueStatus[] | Prisma.ListEnumHeavenRawValueStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HeavenRawValueStatus[] | Prisma.ListEnumHeavenRawValueStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHeavenRawValueStatusWithAggregatesFilter<$PrismaModel> | $Enums.HeavenRawValueStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumHeavenRawValueStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumHeavenRawValueStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumImprovementTypeFilter<$PrismaModel = never> = {

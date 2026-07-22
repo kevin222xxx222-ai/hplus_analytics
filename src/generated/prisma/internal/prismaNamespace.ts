@@ -401,6 +401,8 @@ export const ModelName = {
   TownCastDaily: 'TownCastDaily',
   TownUrlDaily: 'TownUrlDaily',
   TownLandingDaily: 'TownLandingDaily',
+  HeavenShopDaily: 'HeavenShopDaily',
+  HeavenCastDaily: 'HeavenCastDaily',
   ImprovementLog: 'ImprovementLog'
 } as const
 
@@ -417,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "store" | "cast" | "castNameHistory" | "castMergeHistory" | "castStartDateBulkChangeHistory" | "castAlias" | "mediaListing" | "importSource" | "importError" | "importBatch" | "ctiCastDaily" | "townStoreDaily" | "townCastDaily" | "townUrlDaily" | "townLandingDaily" | "improvementLog"
+    modelProps: "user" | "session" | "store" | "cast" | "castNameHistory" | "castMergeHistory" | "castStartDateBulkChangeHistory" | "castAlias" | "mediaListing" | "importSource" | "importError" | "importBatch" | "ctiCastDaily" | "townStoreDaily" | "townCastDaily" | "townUrlDaily" | "townLandingDaily" | "heavenShopDaily" | "heavenCastDaily" | "improvementLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1679,6 +1681,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    HeavenShopDaily: {
+      payload: Prisma.$HeavenShopDailyPayload<ExtArgs>
+      fields: Prisma.HeavenShopDailyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HeavenShopDailyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenShopDailyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HeavenShopDailyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenShopDailyPayload>
+        }
+        findFirst: {
+          args: Prisma.HeavenShopDailyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenShopDailyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HeavenShopDailyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenShopDailyPayload>
+        }
+        findMany: {
+          args: Prisma.HeavenShopDailyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenShopDailyPayload>[]
+        }
+        create: {
+          args: Prisma.HeavenShopDailyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenShopDailyPayload>
+        }
+        createMany: {
+          args: Prisma.HeavenShopDailyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HeavenShopDailyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenShopDailyPayload>[]
+        }
+        delete: {
+          args: Prisma.HeavenShopDailyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenShopDailyPayload>
+        }
+        update: {
+          args: Prisma.HeavenShopDailyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenShopDailyPayload>
+        }
+        deleteMany: {
+          args: Prisma.HeavenShopDailyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HeavenShopDailyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HeavenShopDailyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenShopDailyPayload>[]
+        }
+        upsert: {
+          args: Prisma.HeavenShopDailyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenShopDailyPayload>
+        }
+        aggregate: {
+          args: Prisma.HeavenShopDailyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHeavenShopDaily>
+        }
+        groupBy: {
+          args: Prisma.HeavenShopDailyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HeavenShopDailyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HeavenShopDailyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HeavenShopDailyCountAggregateOutputType> | number
+        }
+      }
+    }
+    HeavenCastDaily: {
+      payload: Prisma.$HeavenCastDailyPayload<ExtArgs>
+      fields: Prisma.HeavenCastDailyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HeavenCastDailyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenCastDailyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HeavenCastDailyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenCastDailyPayload>
+        }
+        findFirst: {
+          args: Prisma.HeavenCastDailyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenCastDailyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HeavenCastDailyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenCastDailyPayload>
+        }
+        findMany: {
+          args: Prisma.HeavenCastDailyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenCastDailyPayload>[]
+        }
+        create: {
+          args: Prisma.HeavenCastDailyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenCastDailyPayload>
+        }
+        createMany: {
+          args: Prisma.HeavenCastDailyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HeavenCastDailyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenCastDailyPayload>[]
+        }
+        delete: {
+          args: Prisma.HeavenCastDailyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenCastDailyPayload>
+        }
+        update: {
+          args: Prisma.HeavenCastDailyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenCastDailyPayload>
+        }
+        deleteMany: {
+          args: Prisma.HeavenCastDailyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HeavenCastDailyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HeavenCastDailyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenCastDailyPayload>[]
+        }
+        upsert: {
+          args: Prisma.HeavenCastDailyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HeavenCastDailyPayload>
+        }
+        aggregate: {
+          args: Prisma.HeavenCastDailyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHeavenCastDaily>
+        }
+        groupBy: {
+          args: Prisma.HeavenCastDailyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HeavenCastDailyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HeavenCastDailyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HeavenCastDailyCountAggregateOutputType> | number
+        }
+      }
+    }
     ImprovementLog: {
       payload: Prisma.$ImprovementLogPayload<ExtArgs>
       fields: Prisma.ImprovementLogFieldRefs
@@ -2136,6 +2286,48 @@ export const TownLandingDailyScalarFieldEnum = {
 export type TownLandingDailyScalarFieldEnum = (typeof TownLandingDailyScalarFieldEnum)[keyof typeof TownLandingDailyScalarFieldEnum]
 
 
+export const HeavenShopDailyScalarFieldEnum = {
+  id: 'id',
+  businessDate: 'businessDate',
+  storeId: 'storeId',
+  importBatchId: 'importBatchId',
+  metricKey: 'metricKey',
+  rawValue: 'rawValue',
+  valueKind: 'valueKind',
+  rawValueStatus: 'rawValueStatus',
+  deltaValue: 'deltaValue',
+  sourceColumn: 'sourceColumn',
+  sourceRowNumber: 'sourceRowNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HeavenShopDailyScalarFieldEnum = (typeof HeavenShopDailyScalarFieldEnum)[keyof typeof HeavenShopDailyScalarFieldEnum]
+
+
+export const HeavenCastDailyScalarFieldEnum = {
+  id: 'id',
+  businessDate: 'businessDate',
+  storeId: 'storeId',
+  castId: 'castId',
+  sourceCastName: 'sourceCastName',
+  normalizedSourceCastName: 'normalizedSourceCastName',
+  resolutionKey: 'resolutionKey',
+  importBatchId: 'importBatchId',
+  metricKey: 'metricKey',
+  rawValue: 'rawValue',
+  valueKind: 'valueKind',
+  rawValueStatus: 'rawValueStatus',
+  deltaValue: 'deltaValue',
+  sourceColumn: 'sourceColumn',
+  sourceRowNumber: 'sourceRowNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HeavenCastDailyScalarFieldEnum = (typeof HeavenCastDailyScalarFieldEnum)[keyof typeof HeavenCastDailyScalarFieldEnum]
+
+
 export const ImprovementLogScalarFieldEnum = {
   id: 'id',
   castId: 'castId',
@@ -2472,6 +2664,34 @@ export type ListEnumTownPageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'HeavenMetricValueKind'
+ */
+export type EnumHeavenMetricValueKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HeavenMetricValueKind'>
+    
+
+
+/**
+ * Reference to a field of type 'HeavenMetricValueKind[]'
+ */
+export type ListEnumHeavenMetricValueKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HeavenMetricValueKind[]'>
+    
+
+
+/**
+ * Reference to a field of type 'HeavenRawValueStatus'
+ */
+export type EnumHeavenRawValueStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HeavenRawValueStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'HeavenRawValueStatus[]'
+ */
+export type ListEnumHeavenRawValueStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HeavenRawValueStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'ImprovementType'
  */
 export type EnumImprovementTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImprovementType'>
@@ -2639,6 +2859,8 @@ export type GlobalOmitConfig = {
   townCastDaily?: Prisma.TownCastDailyOmit
   townUrlDaily?: Prisma.TownUrlDailyOmit
   townLandingDaily?: Prisma.TownLandingDailyOmit
+  heavenShopDaily?: Prisma.HeavenShopDailyOmit
+  heavenCastDaily?: Prisma.HeavenCastDailyOmit
   improvementLog?: Prisma.ImprovementLogOmit
 }
 

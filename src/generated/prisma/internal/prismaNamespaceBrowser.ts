@@ -68,6 +68,8 @@ export const ModelName = {
   TownCastDaily: 'TownCastDaily',
   TownUrlDaily: 'TownUrlDaily',
   TownLandingDaily: 'TownLandingDaily',
+  HeavenShopDaily: 'HeavenShopDaily',
+  HeavenCastDaily: 'HeavenCastDaily',
   ImprovementLog: 'ImprovementLog'
 } as const
 
@@ -429,6 +431,48 @@ export const TownLandingDailyScalarFieldEnum = {
 } as const
 
 export type TownLandingDailyScalarFieldEnum = (typeof TownLandingDailyScalarFieldEnum)[keyof typeof TownLandingDailyScalarFieldEnum]
+
+
+export const HeavenShopDailyScalarFieldEnum = {
+  id: 'id',
+  businessDate: 'businessDate',
+  storeId: 'storeId',
+  importBatchId: 'importBatchId',
+  metricKey: 'metricKey',
+  rawValue: 'rawValue',
+  valueKind: 'valueKind',
+  rawValueStatus: 'rawValueStatus',
+  deltaValue: 'deltaValue',
+  sourceColumn: 'sourceColumn',
+  sourceRowNumber: 'sourceRowNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HeavenShopDailyScalarFieldEnum = (typeof HeavenShopDailyScalarFieldEnum)[keyof typeof HeavenShopDailyScalarFieldEnum]
+
+
+export const HeavenCastDailyScalarFieldEnum = {
+  id: 'id',
+  businessDate: 'businessDate',
+  storeId: 'storeId',
+  castId: 'castId',
+  sourceCastName: 'sourceCastName',
+  normalizedSourceCastName: 'normalizedSourceCastName',
+  resolutionKey: 'resolutionKey',
+  importBatchId: 'importBatchId',
+  metricKey: 'metricKey',
+  rawValue: 'rawValue',
+  valueKind: 'valueKind',
+  rawValueStatus: 'rawValueStatus',
+  deltaValue: 'deltaValue',
+  sourceColumn: 'sourceColumn',
+  sourceRowNumber: 'sourceRowNumber',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HeavenCastDailyScalarFieldEnum = (typeof HeavenCastDailyScalarFieldEnum)[keyof typeof HeavenCastDailyScalarFieldEnum]
 
 
 export const ImprovementLogScalarFieldEnum = {

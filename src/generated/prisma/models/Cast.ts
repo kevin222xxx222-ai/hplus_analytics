@@ -246,6 +246,7 @@ export type CastWhereInput = {
   townCastDailies?: Prisma.TownCastDailyListRelationFilter
   townUrlDailies?: Prisma.TownUrlDailyListRelationFilter
   townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
+  heavenCastDailies?: Prisma.HeavenCastDailyListRelationFilter
   nameHistories?: Prisma.CastNameHistoryListRelationFilter
   mergedInto?: Prisma.XOR<Prisma.CastNullableScalarRelationFilter, Prisma.CastWhereInput> | null
   mergedSources?: Prisma.CastListRelationFilter
@@ -274,6 +275,7 @@ export type CastOrderByWithRelationInput = {
   townCastDailies?: Prisma.TownCastDailyOrderByRelationAggregateInput
   townUrlDailies?: Prisma.TownUrlDailyOrderByRelationAggregateInput
   townLandingDailies?: Prisma.TownLandingDailyOrderByRelationAggregateInput
+  heavenCastDailies?: Prisma.HeavenCastDailyOrderByRelationAggregateInput
   nameHistories?: Prisma.CastNameHistoryOrderByRelationAggregateInput
   mergedInto?: Prisma.CastOrderByWithRelationInput
   mergedSources?: Prisma.CastOrderByRelationAggregateInput
@@ -305,6 +307,7 @@ export type CastWhereUniqueInput = Prisma.AtLeast<{
   townCastDailies?: Prisma.TownCastDailyListRelationFilter
   townUrlDailies?: Prisma.TownUrlDailyListRelationFilter
   townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
+  heavenCastDailies?: Prisma.HeavenCastDailyListRelationFilter
   nameHistories?: Prisma.CastNameHistoryListRelationFilter
   mergedInto?: Prisma.XOR<Prisma.CastNullableScalarRelationFilter, Prisma.CastWhereInput> | null
   mergedSources?: Prisma.CastListRelationFilter
@@ -367,6 +370,7 @@ export type CastCreateInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
   mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
@@ -394,6 +398,7 @@ export type CastUncheckedCreateInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
@@ -419,6 +424,7 @@ export type CastUpdateInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
   mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
@@ -446,6 +452,7 @@ export type CastUncheckedUpdateInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
@@ -800,6 +807,22 @@ export type CastUpdateOneWithoutTownLandingDailiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CastUpdateToOneWithWhereWithoutTownLandingDailiesInput, Prisma.CastUpdateWithoutTownLandingDailiesInput>, Prisma.CastUncheckedUpdateWithoutTownLandingDailiesInput>
 }
 
+export type CastCreateNestedOneWithoutHeavenCastDailiesInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutHeavenCastDailiesInput, Prisma.CastUncheckedCreateWithoutHeavenCastDailiesInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutHeavenCastDailiesInput
+  connect?: Prisma.CastWhereUniqueInput
+}
+
+export type CastUpdateOneWithoutHeavenCastDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutHeavenCastDailiesInput, Prisma.CastUncheckedCreateWithoutHeavenCastDailiesInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutHeavenCastDailiesInput
+  upsert?: Prisma.CastUpsertWithoutHeavenCastDailiesInput
+  disconnect?: Prisma.CastWhereInput | boolean
+  delete?: Prisma.CastWhereInput | boolean
+  connect?: Prisma.CastWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CastUpdateToOneWithWhereWithoutHeavenCastDailiesInput, Prisma.CastUpdateWithoutHeavenCastDailiesInput>, Prisma.CastUncheckedUpdateWithoutHeavenCastDailiesInput>
+}
+
 export type CastCreateNestedOneWithoutImprovementLogsInput = {
   create?: Prisma.XOR<Prisma.CastCreateWithoutImprovementLogsInput, Prisma.CastUncheckedCreateWithoutImprovementLogsInput>
   connectOrCreate?: Prisma.CastCreateOrConnectWithoutImprovementLogsInput
@@ -834,6 +857,7 @@ export type CastCreateWithoutPrimaryStoreInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
   mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
@@ -860,6 +884,7 @@ export type CastUncheckedCreateWithoutPrimaryStoreInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
@@ -929,6 +954,7 @@ export type CastCreateWithoutMergedSourcesInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
   mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
@@ -955,6 +981,7 @@ export type CastUncheckedCreateWithoutMergedSourcesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
@@ -984,6 +1011,7 @@ export type CastCreateWithoutMergedIntoInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
@@ -1009,6 +1037,7 @@ export type CastUncheckedCreateWithoutMergedIntoInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
@@ -1055,6 +1084,7 @@ export type CastUpdateWithoutMergedSourcesInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
   mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
@@ -1081,6 +1111,7 @@ export type CastUncheckedUpdateWithoutMergedSourcesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
@@ -1121,6 +1152,7 @@ export type CastCreateWithoutNameHistoriesInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
@@ -1147,6 +1179,7 @@ export type CastUncheckedCreateWithoutNameHistoriesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
@@ -1187,6 +1220,7 @@ export type CastUpdateWithoutNameHistoriesInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
@@ -1213,6 +1247,7 @@ export type CastUncheckedUpdateWithoutNameHistoriesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
@@ -1237,6 +1272,7 @@ export type CastCreateWithoutMergesAsSourceInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
   mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
@@ -1263,6 +1299,7 @@ export type CastUncheckedCreateWithoutMergesAsSourceInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
@@ -1292,6 +1329,7 @@ export type CastCreateWithoutMergesAsTargetInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
   mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
@@ -1318,6 +1356,7 @@ export type CastUncheckedCreateWithoutMergesAsTargetInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
@@ -1358,6 +1397,7 @@ export type CastUpdateWithoutMergesAsSourceInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
   mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
@@ -1384,6 +1424,7 @@ export type CastUncheckedUpdateWithoutMergesAsSourceInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
@@ -1419,6 +1460,7 @@ export type CastUpdateWithoutMergesAsTargetInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
   mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
@@ -1445,6 +1487,7 @@ export type CastUncheckedUpdateWithoutMergesAsTargetInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
@@ -1468,6 +1511,7 @@ export type CastCreateWithoutAliasesInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
   mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
@@ -1494,6 +1538,7 @@ export type CastUncheckedCreateWithoutAliasesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
@@ -1534,6 +1579,7 @@ export type CastUpdateWithoutAliasesInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
   mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
@@ -1560,6 +1606,7 @@ export type CastUncheckedUpdateWithoutAliasesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
@@ -1584,6 +1631,7 @@ export type CastCreateWithoutMediaListingsInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
   mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
@@ -1610,6 +1658,7 @@ export type CastUncheckedCreateWithoutMediaListingsInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
@@ -1650,6 +1699,7 @@ export type CastUpdateWithoutMediaListingsInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
   mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
@@ -1676,6 +1726,7 @@ export type CastUncheckedUpdateWithoutMediaListingsInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
@@ -1700,6 +1751,7 @@ export type CastCreateWithoutCtiCastDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
   mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
@@ -1726,6 +1778,7 @@ export type CastUncheckedCreateWithoutCtiCastDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
@@ -1766,6 +1819,7 @@ export type CastUpdateWithoutCtiCastDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
   mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
@@ -1792,6 +1846,7 @@ export type CastUncheckedUpdateWithoutCtiCastDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
@@ -1816,6 +1871,7 @@ export type CastCreateWithoutTownCastDailiesInput = {
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
   mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
@@ -1842,6 +1898,7 @@ export type CastUncheckedCreateWithoutTownCastDailiesInput = {
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
@@ -1882,6 +1939,7 @@ export type CastUpdateWithoutTownCastDailiesInput = {
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
   mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
@@ -1908,6 +1966,7 @@ export type CastUncheckedUpdateWithoutTownCastDailiesInput = {
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
@@ -1932,6 +1991,7 @@ export type CastCreateWithoutTownUrlDailiesInput = {
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
   mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
@@ -1958,6 +2018,7 @@ export type CastUncheckedCreateWithoutTownUrlDailiesInput = {
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
@@ -1998,6 +2059,7 @@ export type CastUpdateWithoutTownUrlDailiesInput = {
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
   mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
@@ -2024,6 +2086,7 @@ export type CastUncheckedUpdateWithoutTownUrlDailiesInput = {
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
@@ -2048,6 +2111,7 @@ export type CastCreateWithoutTownLandingDailiesInput = {
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
   mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
@@ -2074,6 +2138,7 @@ export type CastUncheckedCreateWithoutTownLandingDailiesInput = {
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
@@ -2114,6 +2179,7 @@ export type CastUpdateWithoutTownLandingDailiesInput = {
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
   mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
@@ -2140,6 +2206,127 @@ export type CastUncheckedUpdateWithoutTownLandingDailiesInput = {
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastCreateWithoutHeavenCastDailiesInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedAt?: Date | string | null
+  primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastUncheckedCreateWithoutHeavenCastDailiesInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  primaryStoreId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
+}
+
+export type CastCreateOrConnectWithoutHeavenCastDailiesInput = {
+  where: Prisma.CastWhereUniqueInput
+  create: Prisma.XOR<Prisma.CastCreateWithoutHeavenCastDailiesInput, Prisma.CastUncheckedCreateWithoutHeavenCastDailiesInput>
+}
+
+export type CastUpsertWithoutHeavenCastDailiesInput = {
+  update: Prisma.XOR<Prisma.CastUpdateWithoutHeavenCastDailiesInput, Prisma.CastUncheckedUpdateWithoutHeavenCastDailiesInput>
+  create: Prisma.XOR<Prisma.CastCreateWithoutHeavenCastDailiesInput, Prisma.CastUncheckedCreateWithoutHeavenCastDailiesInput>
+  where?: Prisma.CastWhereInput
+}
+
+export type CastUpdateToOneWithWhereWithoutHeavenCastDailiesInput = {
+  where?: Prisma.CastWhereInput
+  data: Prisma.XOR<Prisma.CastUpdateWithoutHeavenCastDailiesInput, Prisma.CastUncheckedUpdateWithoutHeavenCastDailiesInput>
+}
+
+export type CastUpdateWithoutHeavenCastDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
+}
+
+export type CastUncheckedUpdateWithoutHeavenCastDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStoreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
@@ -2164,6 +2351,7 @@ export type CastCreateWithoutImprovementLogsInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
   mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
@@ -2190,6 +2378,7 @@ export type CastUncheckedCreateWithoutImprovementLogsInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
   nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
@@ -2230,6 +2419,7 @@ export type CastUpdateWithoutImprovementLogsInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
   mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
@@ -2256,6 +2446,7 @@ export type CastUncheckedUpdateWithoutImprovementLogsInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
@@ -2294,6 +2485,7 @@ export type CastUpdateWithoutPrimaryStoreInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
   mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
@@ -2320,6 +2512,7 @@ export type CastUncheckedUpdateWithoutPrimaryStoreInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
@@ -2373,6 +2566,7 @@ export type CastUpdateWithoutMergedIntoInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
@@ -2398,6 +2592,7 @@ export type CastUncheckedUpdateWithoutMergedIntoInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
   nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
@@ -2431,6 +2626,7 @@ export type CastCountOutputType = {
   townCastDailies: number
   townUrlDailies: number
   townLandingDailies: number
+  heavenCastDailies: number
   nameHistories: number
   mergedSources: number
   mergesAsSource: number
@@ -2445,6 +2641,7 @@ export type CastCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   townCastDailies?: boolean | CastCountOutputTypeCountTownCastDailiesArgs
   townUrlDailies?: boolean | CastCountOutputTypeCountTownUrlDailiesArgs
   townLandingDailies?: boolean | CastCountOutputTypeCountTownLandingDailiesArgs
+  heavenCastDailies?: boolean | CastCountOutputTypeCountHeavenCastDailiesArgs
   nameHistories?: boolean | CastCountOutputTypeCountNameHistoriesArgs
   mergedSources?: boolean | CastCountOutputTypeCountMergedSourcesArgs
   mergesAsSource?: boolean | CastCountOutputTypeCountMergesAsSourceArgs
@@ -2513,6 +2710,13 @@ export type CastCountOutputTypeCountTownLandingDailiesArgs<ExtArgs extends runti
 /**
  * CastCountOutputType without action
  */
+export type CastCountOutputTypeCountHeavenCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HeavenCastDailyWhereInput
+}
+
+/**
+ * CastCountOutputType without action
+ */
 export type CastCountOutputTypeCountNameHistoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CastNameHistoryWhereInput
 }
@@ -2560,6 +2764,7 @@ export type CastSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   townCastDailies?: boolean | Prisma.Cast$townCastDailiesArgs<ExtArgs>
   townUrlDailies?: boolean | Prisma.Cast$townUrlDailiesArgs<ExtArgs>
   townLandingDailies?: boolean | Prisma.Cast$townLandingDailiesArgs<ExtArgs>
+  heavenCastDailies?: boolean | Prisma.Cast$heavenCastDailiesArgs<ExtArgs>
   nameHistories?: boolean | Prisma.Cast$nameHistoriesArgs<ExtArgs>
   mergedInto?: boolean | Prisma.Cast$mergedIntoArgs<ExtArgs>
   mergedSources?: boolean | Prisma.Cast$mergedSourcesArgs<ExtArgs>
@@ -2627,6 +2832,7 @@ export type CastInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   townCastDailies?: boolean | Prisma.Cast$townCastDailiesArgs<ExtArgs>
   townUrlDailies?: boolean | Prisma.Cast$townUrlDailiesArgs<ExtArgs>
   townLandingDailies?: boolean | Prisma.Cast$townLandingDailiesArgs<ExtArgs>
+  heavenCastDailies?: boolean | Prisma.Cast$heavenCastDailiesArgs<ExtArgs>
   nameHistories?: boolean | Prisma.Cast$nameHistoriesArgs<ExtArgs>
   mergedInto?: boolean | Prisma.Cast$mergedIntoArgs<ExtArgs>
   mergedSources?: boolean | Prisma.Cast$mergedSourcesArgs<ExtArgs>
@@ -2654,6 +2860,7 @@ export type $CastPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     townCastDailies: Prisma.$TownCastDailyPayload<ExtArgs>[]
     townUrlDailies: Prisma.$TownUrlDailyPayload<ExtArgs>[]
     townLandingDailies: Prisma.$TownLandingDailyPayload<ExtArgs>[]
+    heavenCastDailies: Prisma.$HeavenCastDailyPayload<ExtArgs>[]
     nameHistories: Prisma.$CastNameHistoryPayload<ExtArgs>[]
     mergedInto: Prisma.$CastPayload<ExtArgs> | null
     mergedSources: Prisma.$CastPayload<ExtArgs>[]
@@ -3075,6 +3282,7 @@ export interface Prisma__CastClient<T, Null = never, ExtArgs extends runtime.Typ
   townCastDailies<T extends Prisma.Cast$townCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$townCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   townUrlDailies<T extends Prisma.Cast$townUrlDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$townUrlDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownUrlDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   townLandingDailies<T extends Prisma.Cast$townLandingDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$townLandingDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownLandingDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  heavenCastDailies<T extends Prisma.Cast$heavenCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$heavenCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HeavenCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   nameHistories<T extends Prisma.Cast$nameHistoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$nameHistoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastNameHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   mergedInto<T extends Prisma.Cast$mergedIntoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$mergedIntoArgs<ExtArgs>>): Prisma.Prisma__CastClient<runtime.Types.Result.GetResult<Prisma.$CastPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   mergedSources<T extends Prisma.Cast$mergedSourcesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$mergedSourcesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3706,6 +3914,30 @@ export type Cast$townLandingDailiesArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.TownLandingDailyScalarFieldEnum | Prisma.TownLandingDailyScalarFieldEnum[]
+}
+
+/**
+ * Cast.heavenCastDailies
+ */
+export type Cast$heavenCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HeavenCastDaily
+   */
+  select?: Prisma.HeavenCastDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HeavenCastDaily
+   */
+  omit?: Prisma.HeavenCastDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HeavenCastDailyInclude<ExtArgs> | null
+  where?: Prisma.HeavenCastDailyWhereInput
+  orderBy?: Prisma.HeavenCastDailyOrderByWithRelationInput | Prisma.HeavenCastDailyOrderByWithRelationInput[]
+  cursor?: Prisma.HeavenCastDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HeavenCastDailyScalarFieldEnum | Prisma.HeavenCastDailyScalarFieldEnum[]
 }
 
 /**

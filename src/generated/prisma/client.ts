@@ -127,6 +127,16 @@ export type TownUrlDaily = Prisma.TownUrlDailyModel
  */
 export type TownLandingDaily = Prisma.TownLandingDailyModel
 /**
+ * Model HeavenShopDaily
+ * 
+ */
+export type HeavenShopDaily = Prisma.HeavenShopDailyModel
+/**
+ * Model HeavenCastDaily
+ * 
+ */
+export type HeavenCastDaily = Prisma.HeavenCastDailyModel
+/**
  * Model ImprovementLog
  * 
  */

@@ -266,6 +266,8 @@ export type StoreWhereInput = {
   townCastDailies?: Prisma.TownCastDailyListRelationFilter
   townUrlDailies?: Prisma.TownUrlDailyListRelationFilter
   townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
+  heavenShopDailies?: Prisma.HeavenShopDailyListRelationFilter
+  heavenCastDailies?: Prisma.HeavenCastDailyListRelationFilter
 }
 
 export type StoreOrderByWithRelationInput = {
@@ -289,6 +291,8 @@ export type StoreOrderByWithRelationInput = {
   townCastDailies?: Prisma.TownCastDailyOrderByRelationAggregateInput
   townUrlDailies?: Prisma.TownUrlDailyOrderByRelationAggregateInput
   townLandingDailies?: Prisma.TownLandingDailyOrderByRelationAggregateInput
+  heavenShopDailies?: Prisma.HeavenShopDailyOrderByRelationAggregateInput
+  heavenCastDailies?: Prisma.HeavenCastDailyOrderByRelationAggregateInput
 }
 
 export type StoreWhereUniqueInput = Prisma.AtLeast<{
@@ -315,6 +319,8 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   townCastDailies?: Prisma.TownCastDailyListRelationFilter
   townUrlDailies?: Prisma.TownUrlDailyListRelationFilter
   townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
+  heavenShopDailies?: Prisma.HeavenShopDailyListRelationFilter
+  heavenCastDailies?: Prisma.HeavenCastDailyListRelationFilter
 }, "id" | "code">
 
 export type StoreOrderByWithAggregationInput = {
@@ -372,6 +378,8 @@ export type StoreCreateInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateInput = {
@@ -395,6 +403,8 @@ export type StoreUncheckedCreateInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUpdateInput = {
@@ -418,6 +428,8 @@ export type StoreUpdateInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateInput = {
@@ -441,6 +453,8 @@ export type StoreUncheckedUpdateInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateManyInput = {
@@ -683,6 +697,34 @@ export type StoreUpdateOneRequiredWithoutTownLandingDailiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutTownLandingDailiesInput, Prisma.StoreUpdateWithoutTownLandingDailiesInput>, Prisma.StoreUncheckedUpdateWithoutTownLandingDailiesInput>
 }
 
+export type StoreCreateNestedOneWithoutHeavenShopDailiesInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutHeavenShopDailiesInput, Prisma.StoreUncheckedCreateWithoutHeavenShopDailiesInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutHeavenShopDailiesInput
+  connect?: Prisma.StoreWhereUniqueInput
+}
+
+export type StoreUpdateOneRequiredWithoutHeavenShopDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutHeavenShopDailiesInput, Prisma.StoreUncheckedCreateWithoutHeavenShopDailiesInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutHeavenShopDailiesInput
+  upsert?: Prisma.StoreUpsertWithoutHeavenShopDailiesInput
+  connect?: Prisma.StoreWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutHeavenShopDailiesInput, Prisma.StoreUpdateWithoutHeavenShopDailiesInput>, Prisma.StoreUncheckedUpdateWithoutHeavenShopDailiesInput>
+}
+
+export type StoreCreateNestedOneWithoutHeavenCastDailiesInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutHeavenCastDailiesInput, Prisma.StoreUncheckedCreateWithoutHeavenCastDailiesInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutHeavenCastDailiesInput
+  connect?: Prisma.StoreWhereUniqueInput
+}
+
+export type StoreUpdateOneRequiredWithoutHeavenCastDailiesNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutHeavenCastDailiesInput, Prisma.StoreUncheckedCreateWithoutHeavenCastDailiesInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutHeavenCastDailiesInput
+  upsert?: Prisma.StoreUpsertWithoutHeavenCastDailiesInput
+  connect?: Prisma.StoreWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutHeavenCastDailiesInput, Prisma.StoreUpdateWithoutHeavenCastDailiesInput>, Prisma.StoreUncheckedUpdateWithoutHeavenCastDailiesInput>
+}
+
 export type StoreCreateNestedOneWithoutImprovementLogsInput = {
   create?: Prisma.XOR<Prisma.StoreCreateWithoutImprovementLogsInput, Prisma.StoreUncheckedCreateWithoutImprovementLogsInput>
   connectOrCreate?: Prisma.StoreCreateOrConnectWithoutImprovementLogsInput
@@ -719,6 +761,8 @@ export type StoreCreateWithoutCastsInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutCastsInput = {
@@ -741,6 +785,8 @@ export type StoreUncheckedCreateWithoutCastsInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutCastsInput = {
@@ -779,6 +825,8 @@ export type StoreUpdateWithoutCastsInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutCastsInput = {
@@ -801,6 +849,8 @@ export type StoreUncheckedUpdateWithoutCastsInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutAliasesInput = {
@@ -823,6 +873,8 @@ export type StoreCreateWithoutAliasesInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutAliasesInput = {
@@ -845,6 +897,8 @@ export type StoreUncheckedCreateWithoutAliasesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutAliasesInput = {
@@ -883,6 +937,8 @@ export type StoreUpdateWithoutAliasesInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutAliasesInput = {
@@ -905,6 +961,8 @@ export type StoreUncheckedUpdateWithoutAliasesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutMediaListingsInput = {
@@ -927,6 +985,8 @@ export type StoreCreateWithoutMediaListingsInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutMediaListingsInput = {
@@ -949,6 +1009,8 @@ export type StoreUncheckedCreateWithoutMediaListingsInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutMediaListingsInput = {
@@ -987,6 +1049,8 @@ export type StoreUpdateWithoutMediaListingsInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutMediaListingsInput = {
@@ -1009,6 +1073,8 @@ export type StoreUncheckedUpdateWithoutMediaListingsInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutImportSourcesInput = {
@@ -1031,6 +1097,8 @@ export type StoreCreateWithoutImportSourcesInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutImportSourcesInput = {
@@ -1053,6 +1121,8 @@ export type StoreUncheckedCreateWithoutImportSourcesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutImportSourcesInput = {
@@ -1091,6 +1161,8 @@ export type StoreUpdateWithoutImportSourcesInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutImportSourcesInput = {
@@ -1113,6 +1185,8 @@ export type StoreUncheckedUpdateWithoutImportSourcesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutCtiCastDailiesInput = {
@@ -1135,6 +1209,8 @@ export type StoreCreateWithoutCtiCastDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutCtiCastDailiesInput = {
@@ -1157,6 +1233,8 @@ export type StoreUncheckedCreateWithoutCtiCastDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutCtiCastDailiesInput = {
@@ -1195,6 +1273,8 @@ export type StoreUpdateWithoutCtiCastDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutCtiCastDailiesInput = {
@@ -1217,6 +1297,8 @@ export type StoreUncheckedUpdateWithoutCtiCastDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutTownStoreDailiesInput = {
@@ -1239,6 +1321,8 @@ export type StoreCreateWithoutTownStoreDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutTownStoreDailiesInput = {
@@ -1261,6 +1345,8 @@ export type StoreUncheckedCreateWithoutTownStoreDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutTownStoreDailiesInput = {
@@ -1299,6 +1385,8 @@ export type StoreUpdateWithoutTownStoreDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutTownStoreDailiesInput = {
@@ -1321,6 +1409,8 @@ export type StoreUncheckedUpdateWithoutTownStoreDailiesInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutTownCastDailiesInput = {
@@ -1343,6 +1433,8 @@ export type StoreCreateWithoutTownCastDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutTownCastDailiesInput = {
@@ -1365,6 +1457,8 @@ export type StoreUncheckedCreateWithoutTownCastDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutTownCastDailiesInput = {
@@ -1403,6 +1497,8 @@ export type StoreUpdateWithoutTownCastDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutTownCastDailiesInput = {
@@ -1425,6 +1521,8 @@ export type StoreUncheckedUpdateWithoutTownCastDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutTownUrlDailiesInput = {
@@ -1447,6 +1545,8 @@ export type StoreCreateWithoutTownUrlDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutTownUrlDailiesInput = {
@@ -1469,6 +1569,8 @@ export type StoreUncheckedCreateWithoutTownUrlDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutTownUrlDailiesInput = {
@@ -1507,6 +1609,8 @@ export type StoreUpdateWithoutTownUrlDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutTownUrlDailiesInput = {
@@ -1529,6 +1633,8 @@ export type StoreUncheckedUpdateWithoutTownUrlDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutTownLandingDailiesInput = {
@@ -1551,6 +1657,8 @@ export type StoreCreateWithoutTownLandingDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutTownLandingDailiesInput = {
@@ -1573,6 +1681,8 @@ export type StoreUncheckedCreateWithoutTownLandingDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutTownLandingDailiesInput = {
@@ -1611,6 +1721,8 @@ export type StoreUpdateWithoutTownLandingDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutTownLandingDailiesInput = {
@@ -1633,6 +1745,232 @@ export type StoreUncheckedUpdateWithoutTownLandingDailiesInput = {
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreCreateWithoutHeavenShopDailiesInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutStoreInput
+}
+
+export type StoreUncheckedCreateWithoutHeavenShopDailiesInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastUncheckedCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutStoreInput
+}
+
+export type StoreCreateOrConnectWithoutHeavenShopDailiesInput = {
+  where: Prisma.StoreWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreCreateWithoutHeavenShopDailiesInput, Prisma.StoreUncheckedCreateWithoutHeavenShopDailiesInput>
+}
+
+export type StoreUpsertWithoutHeavenShopDailiesInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutHeavenShopDailiesInput, Prisma.StoreUncheckedUpdateWithoutHeavenShopDailiesInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutHeavenShopDailiesInput, Prisma.StoreUncheckedCreateWithoutHeavenShopDailiesInput>
+  where?: Prisma.StoreWhereInput
+}
+
+export type StoreUpdateToOneWithWhereWithoutHeavenShopDailiesInput = {
+  where?: Prisma.StoreWhereInput
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutHeavenShopDailiesInput, Prisma.StoreUncheckedUpdateWithoutHeavenShopDailiesInput>
+}
+
+export type StoreUpdateWithoutHeavenShopDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreUncheckedUpdateWithoutHeavenShopDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUncheckedUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreCreateWithoutHeavenCastDailiesInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutStoreInput
+}
+
+export type StoreUncheckedCreateWithoutHeavenCastDailiesInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastUncheckedCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutStoreInput
+}
+
+export type StoreCreateOrConnectWithoutHeavenCastDailiesInput = {
+  where: Prisma.StoreWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreCreateWithoutHeavenCastDailiesInput, Prisma.StoreUncheckedCreateWithoutHeavenCastDailiesInput>
+}
+
+export type StoreUpsertWithoutHeavenCastDailiesInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutHeavenCastDailiesInput, Prisma.StoreUncheckedUpdateWithoutHeavenCastDailiesInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutHeavenCastDailiesInput, Prisma.StoreUncheckedCreateWithoutHeavenCastDailiesInput>
+  where?: Prisma.StoreWhereInput
+}
+
+export type StoreUpdateToOneWithWhereWithoutHeavenCastDailiesInput = {
+  where?: Prisma.StoreWhereInput
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutHeavenCastDailiesInput, Prisma.StoreUncheckedUpdateWithoutHeavenCastDailiesInput>
+}
+
+export type StoreUpdateWithoutHeavenCastDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreUncheckedUpdateWithoutHeavenCastDailiesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUncheckedUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutImprovementLogsInput = {
@@ -1655,6 +1993,8 @@ export type StoreCreateWithoutImprovementLogsInput = {
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutImprovementLogsInput = {
@@ -1677,6 +2017,8 @@ export type StoreUncheckedCreateWithoutImprovementLogsInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutImprovementLogsInput = {
@@ -1715,6 +2057,8 @@ export type StoreUpdateWithoutImprovementLogsInput = {
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutImprovementLogsInput = {
@@ -1737,6 +2081,8 @@ export type StoreUncheckedUpdateWithoutImprovementLogsInput = {
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 
@@ -1755,6 +2101,8 @@ export type StoreCountOutputType = {
   townCastDailies: number
   townUrlDailies: number
   townLandingDailies: number
+  heavenShopDailies: number
+  heavenCastDailies: number
 }
 
 export type StoreCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1768,6 +2116,8 @@ export type StoreCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   townCastDailies?: boolean | StoreCountOutputTypeCountTownCastDailiesArgs
   townUrlDailies?: boolean | StoreCountOutputTypeCountTownUrlDailiesArgs
   townLandingDailies?: boolean | StoreCountOutputTypeCountTownLandingDailiesArgs
+  heavenShopDailies?: boolean | StoreCountOutputTypeCountHeavenShopDailiesArgs
+  heavenCastDailies?: boolean | StoreCountOutputTypeCountHeavenCastDailiesArgs
 }
 
 /**
@@ -1850,6 +2200,20 @@ export type StoreCountOutputTypeCountTownLandingDailiesArgs<ExtArgs extends runt
   where?: Prisma.TownLandingDailyWhereInput
 }
 
+/**
+ * StoreCountOutputType without action
+ */
+export type StoreCountOutputTypeCountHeavenShopDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HeavenShopDailyWhereInput
+}
+
+/**
+ * StoreCountOutputType without action
+ */
+export type StoreCountOutputTypeCountHeavenCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HeavenCastDailyWhereInput
+}
+
 
 export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1872,6 +2236,8 @@ export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   townCastDailies?: boolean | Prisma.Store$townCastDailiesArgs<ExtArgs>
   townUrlDailies?: boolean | Prisma.Store$townUrlDailiesArgs<ExtArgs>
   townLandingDailies?: boolean | Prisma.Store$townLandingDailiesArgs<ExtArgs>
+  heavenShopDailies?: boolean | Prisma.Store$heavenShopDailiesArgs<ExtArgs>
+  heavenCastDailies?: boolean | Prisma.Store$heavenCastDailiesArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["store"]>
 
@@ -1926,6 +2292,8 @@ export type StoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   townCastDailies?: boolean | Prisma.Store$townCastDailiesArgs<ExtArgs>
   townUrlDailies?: boolean | Prisma.Store$townUrlDailiesArgs<ExtArgs>
   townLandingDailies?: boolean | Prisma.Store$townLandingDailiesArgs<ExtArgs>
+  heavenShopDailies?: boolean | Prisma.Store$heavenShopDailiesArgs<ExtArgs>
+  heavenCastDailies?: boolean | Prisma.Store$heavenCastDailiesArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StoreIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1944,6 +2312,8 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     townCastDailies: Prisma.$TownCastDailyPayload<ExtArgs>[]
     townUrlDailies: Prisma.$TownUrlDailyPayload<ExtArgs>[]
     townLandingDailies: Prisma.$TownLandingDailyPayload<ExtArgs>[]
+    heavenShopDailies: Prisma.$HeavenShopDailyPayload<ExtArgs>[]
+    heavenCastDailies: Prisma.$HeavenCastDailyPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2360,6 +2730,8 @@ export interface Prisma__StoreClient<T, Null = never, ExtArgs extends runtime.Ty
   townCastDailies<T extends Prisma.Store$townCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$townCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   townUrlDailies<T extends Prisma.Store$townUrlDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$townUrlDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownUrlDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   townLandingDailies<T extends Prisma.Store$townLandingDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$townLandingDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownLandingDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  heavenShopDailies<T extends Prisma.Store$heavenShopDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$heavenShopDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HeavenShopDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  heavenCastDailies<T extends Prisma.Store$heavenCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$heavenCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HeavenCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3029,6 +3401,54 @@ export type Store$townLandingDailiesArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.TownLandingDailyScalarFieldEnum | Prisma.TownLandingDailyScalarFieldEnum[]
+}
+
+/**
+ * Store.heavenShopDailies
+ */
+export type Store$heavenShopDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HeavenShopDaily
+   */
+  select?: Prisma.HeavenShopDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HeavenShopDaily
+   */
+  omit?: Prisma.HeavenShopDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HeavenShopDailyInclude<ExtArgs> | null
+  where?: Prisma.HeavenShopDailyWhereInput
+  orderBy?: Prisma.HeavenShopDailyOrderByWithRelationInput | Prisma.HeavenShopDailyOrderByWithRelationInput[]
+  cursor?: Prisma.HeavenShopDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HeavenShopDailyScalarFieldEnum | Prisma.HeavenShopDailyScalarFieldEnum[]
+}
+
+/**
+ * Store.heavenCastDailies
+ */
+export type Store$heavenCastDailiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HeavenCastDaily
+   */
+  select?: Prisma.HeavenCastDailySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HeavenCastDaily
+   */
+  omit?: Prisma.HeavenCastDailyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HeavenCastDailyInclude<ExtArgs> | null
+  where?: Prisma.HeavenCastDailyWhereInput
+  orderBy?: Prisma.HeavenCastDailyOrderByWithRelationInput | Prisma.HeavenCastDailyOrderByWithRelationInput[]
+  cursor?: Prisma.HeavenCastDailyWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HeavenCastDailyScalarFieldEnum | Prisma.HeavenCastDailyScalarFieldEnum[]
 }
 
 /**
