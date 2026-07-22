@@ -29,6 +29,15 @@ export type TownBulkFile = {
   unmatchedCount: number;
   autoConfirmSafe: boolean;
   correctionBatchIds: string[];
+  partialConfirmEligible?: boolean;
+  partialUnmatchedUrlCount?: number;
+  partialUnmatchedLandingCount?: number;
+  partialSaveRowCount?: number;
+  idNoSourceUrlPartialConfirmEligible?: boolean;
+  idNoSourceUrlPartialSaveRowCount?: number;
+  idNoSourceUrlPartialHeldRowCount?: number;
+  idNoSourceUrlPartialNewRowCount?: number;
+  idNoSourceUrlPartialUpdatedRowCount?: number;
   error: string | null;
   canProcess: boolean;
 };
@@ -37,6 +46,20 @@ export type TownBulkScan = {
   scannedAt: string;
   folders: Array<{ folderKey: TownBulkStoreKey; storeName: string; configured: boolean; fileCount: number; error: string | null }>;
   files: TownBulkFile[];
+  partialConfirmSummary?: {
+    fileCount: number;
+    unmatchedRows: number;
+    urlRows: number;
+    landingRows: number;
+    saveRows: number;
+  };
+  idNoSourceUrlPartialSummary?: {
+    fileCount: number;
+    saveRows: number;
+    newRows: number;
+    updatedRows: number;
+    heldRows: number;
+  };
 };
 
 export type TownBulkProcessResult = {

@@ -19,7 +19,7 @@ export function sortTownBulkFiles<T extends Pick<TownBulkFile, "targetFrom" | "d
 
 export function selectTownBulkReparseCandidates(files: TownBulkFile[]) {
   return files.filter((file) => file.batchId && file.state !== "SKIPPED_DUPLICATE"
-    && ["FAILED", "PREVIEW_READY", "WAITING_FOR_CAST_LINK"].includes(file.processStatus));
+    && ["FAILED", "PREVIEW_READY", "WAITING_FOR_CAST_LINK", "COMPLETED_WITH_WARNINGS"].includes(file.processStatus));
 }
 
 export async function runTownBulkSequentially<T, R>(items: T[], process: (item: T, index: number) => Promise<R>) {

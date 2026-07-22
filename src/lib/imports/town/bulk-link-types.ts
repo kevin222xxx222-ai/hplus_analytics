@@ -1,4 +1,4 @@
-export type TownBulkLinkCategory = "A" | "B" | "C";
+export type TownBulkLinkCategory = "A" | "B" | "C" | "D";
 
 export type TownBulkLinkCandidate = {
   key: string;
@@ -63,6 +63,7 @@ export type TownBulkLinkImpactPreview = {
   executable: boolean;
   stopReasons: string[];
   notes: string[];
+  skipReason?: string | null;
 };
 
 export type TownBulkLinkCategorySummary = {
@@ -79,6 +80,7 @@ export type TownBulkLinkPreview = {
   multipleCandidates: TownBulkLinkCategorySummary;
   outsideEnrollment: TownBulkLinkCategorySummary;
   correctionCandidates: TownBulkLinkCategorySummary;
+  idNoSourceUrl: TownBulkLinkCategorySummary;
   estimatedWaitingBatchCountAfterA: number;
   estimatedAutoConfirmableFileCountAfterA: number;
   estimatedWaitingBatchCountAfterApprovedB: number;
@@ -98,7 +100,7 @@ export type TownBulkLinkExecuteInput = {
 export type TownBulkLinkCandidateExecuteInput = {
   candidateKey: string;
   fingerprint: string;
-  operation: "EXISTING" | "NEW";
+  operation: "EXISTING" | "NEW" | "SKIP";
   targetCastId?: string;
   newCastName?: string;
   primaryStoreId?: string;
@@ -106,5 +108,6 @@ export type TownBulkLinkCandidateExecuteInput = {
   note?: string;
   creationReason?: string;
   confirmationText?: string;
+  skipReason?: string;
   userId: string;
 };

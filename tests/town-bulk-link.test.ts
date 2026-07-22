@@ -37,7 +37,8 @@ describe("Town C candidate Phase 1 workspace helpers", () => {
   it("exposes safe actions by reason", () => {
     expect(townCActionSet({ reasonCodes: ["ID_FORMAT"] })).toContain("SOURCE_URL");
     expect(townCActionSet({ reasonCodes: ["MULTIPLE_CANDIDATES"] })).toContain("COMPARE");
-    expect(townCActionSet({ reasonCodes: ["NO_CANDIDATE"] })).toEqual(expect.arrayContaining(["EXISTING", "NEW", "SKIP", "PENDING"]));
+    expect(townCActionSet({ reasonCodes: ["NO_CANDIDATE"] })).toEqual(expect.arrayContaining(["EXISTING", "NEW", "PENDING"]));
+    expect(townCActionSet({ reasonCodes: ["NO_CANDIDATE"] })).not.toContain("SKIP");
     expect(townCActionSet({ reasonCodes: ["CORRECTION_CANDIDATE"] })).not.toContain("EXISTING");
   });
 

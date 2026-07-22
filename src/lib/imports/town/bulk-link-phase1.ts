@@ -15,7 +15,11 @@ export function townCActionSet(candidate: Pick<TownBulkLinkCandidate, "reasonCod
   if (reason === "ID_FORMAT") return ["SOURCE_URL", "EXISTING", "SKIP", "PENDING"] as const;
   if (reason === "MULTIPLE_CANDIDATES") return ["COMPARE", "EXISTING", "PENDING"] as const;
   if (reason === "OUTSIDE_ENROLLMENT") return ["EXISTING", "BACKDATE", "PENDING"] as const;
-  if (reason === "NO_CANDIDATE" || reason === "UNKNOWN_SOURCE_NAME") return ["EXISTING", "NEW", "SKIP", "PENDING"] as const;
+  // NO_CANDIDATE is a Phase 2 linking/creation candidate.  SKIP is
+  // intentionally restricted to ID_FORMAT candidates with a source URL;
+  // exposing it here caused NO_CANDIDATE to be sent through the SKIP
+  // impact-preview branch and produced the misleading "ID形式候補だけ" stop.
+  if (reason === "NO_CANDIDATE" || reason === "UNKNOWN_SOURCE_NAME") return ["EXISTING", "NEW", "PENDING"] as const;
   return ["EXISTING", "SKIP", "PENDING"] as const;
 }
 

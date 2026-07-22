@@ -19,12 +19,13 @@ const impactPreviewSchema = z.object({
   targetCastId: z.string().uuid().optional(),
   newCastName: z.string().trim().min(1).max(100).optional(),
   newStartedOn: z.string().date().optional(),
+  skipReason: z.string().trim().min(1).max(1000).optional(),
 });
 const candidateExecuteSchema = z.object({
   action: z.literal("EXECUTE_CANDIDATE"),
   candidateKey: z.string().min(1),
   fingerprint: z.string().regex(/^[a-f0-9]{64}$/),
-  operation: z.enum(["EXISTING", "NEW"]),
+  operation: z.enum(["EXISTING", "NEW", "SKIP"]),
   targetCastId: z.string().uuid().optional(),
   newCastName: z.string().trim().min(1).max(100).optional(),
   primaryStoreId: z.string().uuid().optional(),
@@ -32,6 +33,7 @@ const candidateExecuteSchema = z.object({
   note: z.string().max(1000).optional(),
   creationReason: z.string().trim().min(1).max(1000).optional(),
   confirmationText: z.string().max(100).optional(),
+  skipReason: z.string().trim().min(1).max(1000).optional(),
 });
 
 export async function POST(request: Request) {

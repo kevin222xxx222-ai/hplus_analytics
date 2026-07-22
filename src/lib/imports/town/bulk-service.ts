@@ -100,6 +100,126 @@ export function inspectTownBulkPreviewSafety(preview: TownPreview, correctionBat
   };
 }
 
+export type TownBulkPartialCandidate = {
+  eligible: boolean;
+  unmatchedRows: number;
+  unmatchedUrlRows: number;
+  unmatchedLandingRows: number;
+  saveRows: number;
+};
+
+export type TownIdNoSourceUrlPartialCandidate = {
+  eligible: boolean;
+  saveRows: number;
+  heldRows: number;
+  newRows: number;
+  updatedRows: number;
+  unmatchedRows: number;
+  nonDUnmatchedRows: number;
+  errorRows: number;
+  skippedRows: number;
+  correctionBatchIds: string[];
+};
+
+function isIdFormatName(value: string | null | undefined) {
+  return /^ID:\s*\d+$/.test(value || "");
+}
+
+/** Read-only eligibility check for ID_NO_SOURCE_URL_HOLD_PARTIAL. */
+export function inspectTownIdNoSourceUrlPartial(preview: TownPreview, batch: {
+  status: ImportBatchStatus;
+  errorCount: number;
+  metadata: unknown;
+}, existingKeys: Set<string> = new Set()): TownIdNoSourceUrlPartialCandidate {
+  const metadata = metadataObject(batch.metadata);
+  const townBulk = metadata.townBulk && typeof metadata.townBulk === "object" && !Array.isArray(metadata.townBulk)
+    ? metadata.townBulk as Record<string, unknown> : {};
+  const correctionBatchIds = Array.isArray(townBulk.correctionBatchIds) ? townBulk.correctionBatchIds.map(String) : [];
+  let saveRows = 0;
+  let heldRows = 0;
+  let errorRows = batch.errorCount;
+  let skippedRows = 0;
+  let nonDUnmatchedRows = 0;
+  for (const row of preview.rows) {
+    const rowError = row.issues.some((issue) => issue.level === "ERROR");
+    if (rowError) errorRows += 1;
+    if (row.resolutionStatus === "SKIPPED") { skippedRows += 1; continue; }
+    if (row.kind !== "CAST") {
+      if (row.resolutionStatus === "UNMATCHED" || row.resolutionStatus === "AMBIGUOUS") nonDUnmatchedRows += 1;
+      continue;
+    }
+    if (row.resolutionStatus === "UNMATCHED" || row.resolutionStatus === "AMBIGUOUS") {
+      if (!row.castId && isIdFormatName(row.normalizedCastName)) heldRows += 1;
+      else nonDUnmatchedRows += 1;
+      continue;
+    }
+    if (!rowError && row.castId) saveRows += 1;
+  }
+  const saveRowsInBatch = preview.rows.filter((row) => row.kind === "CAST" && row.castId && row.resolutionStatus !== "SKIPPED" && !row.issues.some((issue) => issue.level === "ERROR"));
+  const newRows = saveRowsInBatch.filter((row) => !existingKeys.has(`${row.date}:${row.castId}`)).length;
+  const updatedRows = saveRowsInBatch.length - newRows;
+  return {
+    eligible: preview.dataType === "TOWN_CAST"
+      && batch.status === ImportBatchStatus.WAITING_FOR_CAST_LINK
+      && batch.errorCount === 0
+      && errorRows === 0
+      && correctionBatchIds.length === 0
+      && heldRows > 0
+      && saveRows > 0
+      && nonDUnmatchedRows === 0,
+    saveRows, heldRows, newRows, updatedRows,
+    unmatchedRows: heldRows + nonDUnmatchedRows,
+    nonDUnmatchedRows, errorRows, skippedRows, correctionBatchIds,
+  };
+}
+
+/** Read-only eligibility check for CAST_ONLY_HOLD_PARTIAL. */
+export function inspectTownCastOnlyHoldPartial(preview: TownPreview, batch: {
+  status: ImportBatchStatus;
+  errorCount: number;
+  metadata: unknown;
+}): TownBulkPartialCandidate {
+  const metadata = metadataObject(batch.metadata);
+  const townBulk = metadata.townBulk && typeof metadata.townBulk === "object" && !Array.isArray(metadata.townBulk)
+    ? metadata.townBulk as Record<string, unknown>
+    : {};
+  const correctionBatchIds = Array.isArray(townBulk.correctionBatchIds) ? townBulk.correctionBatchIds : [];
+  let unmatchedRows = 0;
+  let unmatchedUrlRows = 0;
+  let unmatchedLandingRows = 0;
+  let saveRows = 0;
+  let castUnmatched = 0;
+  let storeProblem = false;
+  let hasError = batch.errorCount > 0;
+  for (const row of preview.rows) {
+    const rowError = row.issues.some((issue) => issue.level === "ERROR");
+    if (rowError) hasError = true;
+    if (row.kind === "STORE") {
+      if (rowError) storeProblem = true;
+      if (!rowError) saveRows += 1;
+      continue;
+    }
+    if (row.resolutionStatus === "UNMATCHED") {
+      unmatchedRows += 1;
+      if (row.kind === "CAST") castUnmatched += 1;
+      if (row.kind === "URL") unmatchedUrlRows += 1;
+      if (row.kind === "LANDING") unmatchedLandingRows += 1;
+    }
+    if (!rowError && row.resolutionStatus !== "SKIPPED" && (row.kind !== "CAST" || Boolean(row.castId))) saveRows += 1;
+  }
+  return {
+    eligible: batch.status === ImportBatchStatus.PREVIEW_READY
+      && batch.errorCount === 0
+      && !hasError
+      && !storeProblem
+      && castUnmatched === 0
+      && unmatchedRows > 0
+      && unmatchedRows === unmatchedUrlRows + unmatchedLandingRows
+      && correctionBatchIds.length === 0,
+    unmatchedRows, unmatchedUrlRows, unmatchedLandingRows, saveRows,
+  };
+}
+
 function batchBulkCounts(batch: { metadata: unknown; pendingCount: number; warningCount: number; errorCount: number }) {
   const bulk = metadataObject(metadataObject(batch.metadata).townBulk);
   return {
@@ -158,7 +278,7 @@ export async function scanTownBulkFolders(configs: FolderConfig[] = townBulkFold
   ]);
   const sourceKeys = new Set(sources.flatMap((source) => source.store ? [`${source.store.code}:${source.dataType}`] : []));
 
-  const files: TownBulkFile[] = inspected.map(({ config, entry, classification }) => {
+  const files: TownBulkFile[] = await Promise.all(inspected.map(async ({ config, entry, classification }) => {
     const sameHash = entry.sha256 ? batches.filter((batch) => batch.fileHash === entry.sha256) : [];
     const { completedDuplicate, existingBatch } = selectTownBulkExistingBatch(sameHash);
     const correctionBatches = classification.dataType && classification.targetFrom && classification.targetTo
@@ -178,19 +298,64 @@ export async function scanTownBulkFolders(configs: FolderConfig[] = townBulkFold
       : existingBatch ? "EXISTING_BATCH"
       : correctionBatches.length ? "CORRECTION_CANDIDATE"
       : "NEW";
+    const partial = batch && batch.status === ImportBatchStatus.PREVIEW_READY
+      ? await (async () => {
+        try {
+          const preview = await readPreview<TownPreview>(batch.id);
+          return inspectTownCastOnlyHoldPartial(preview, { status: batch.status, errorCount: batch.errorCount, metadata: batch.metadata });
+        } catch { return null; }
+      })()
+      : null;
+    const idNoSourceUrlPartial = batch && batch.status === ImportBatchStatus.WAITING_FOR_CAST_LINK && batch.dataType === ImportDataType.TOWN_CAST
+      ? await (async () => {
+        try {
+          const preview = await readPreview<TownPreview>(batch.id);
+          const existing = await prisma.townCastDaily.findMany({ where: { storeId: preview.storeId, date: { gte: batch.targetFrom, lte: batch.targetTo } }, select: { date: true, castId: true } });
+          const keys = new Set(existing.map((record) => `${record.date.toISOString().slice(0, 10)}:${record.castId}`));
+          return inspectTownIdNoSourceUrlPartial(preview, { status: batch.status, errorCount: batch.errorCount, metadata: batch.metadata }, keys);
+        } catch { return null; }
+      })()
+      : null;
     return {
       key: fileKey(config.folderKey, entry.filename), folderKey: config.folderKey, storeName: config.storeName,
       filename: entry.filename, dataType: classification.dataType, targetFrom: classification.targetFrom, targetTo: classification.targetTo,
       size: entry.size, sha256: entry.sha256, state, processStatus: batch?.status || "未処理", batchId: batch?.id || null,
       ...counts, correctionBatchIds: correctionBatches.map((candidate) => candidate.id), error: invalidError,
+      partialConfirmEligible: partial?.eligible || false,
+      partialUnmatchedUrlCount: partial?.unmatchedUrlRows || 0,
+      partialUnmatchedLandingCount: partial?.unmatchedLandingRows || 0,
+      partialSaveRowCount: partial?.saveRows || 0,
+      idNoSourceUrlPartialConfirmEligible: idNoSourceUrlPartial?.eligible || false,
+      idNoSourceUrlPartialSaveRowCount: idNoSourceUrlPartial?.saveRows || 0,
+      idNoSourceUrlPartialHeldRowCount: idNoSourceUrlPartial?.heldRows || 0,
+      idNoSourceUrlPartialNewRowCount: idNoSourceUrlPartial?.newRows || 0,
+      idNoSourceUrlPartialUpdatedRowCount: idNoSourceUrlPartial?.updatedRows || 0,
       canProcess: !unsupported && !invalidError && !completedDuplicate && (!existingBatch || existingBatch.status === ImportBatchStatus.FAILED),
     };
-  });
+  }));
 
   return {
     scannedAt: new Date().toISOString(),
     folders: folders.map(({ config, entries, error }) => ({ folderKey: config.folderKey, storeName: config.storeName, configured: Boolean(config.directory), fileCount: entries.length, error })),
     files: sortTownBulkFiles(files),
+    partialConfirmSummary: files.reduce((summary, file) => {
+      if (!file.partialConfirmEligible) return summary;
+      summary.fileCount += 1;
+      summary.urlRows += file.partialUnmatchedUrlCount || 0;
+      summary.landingRows += file.partialUnmatchedLandingCount || 0;
+      summary.unmatchedRows += (file.partialUnmatchedUrlCount || 0) + (file.partialUnmatchedLandingCount || 0);
+      summary.saveRows += file.partialSaveRowCount || 0;
+      return summary;
+    }, { fileCount: 0, unmatchedRows: 0, urlRows: 0, landingRows: 0, saveRows: 0 }),
+    idNoSourceUrlPartialSummary: files.reduce((summary, file) => {
+      if (!file.idNoSourceUrlPartialConfirmEligible) return summary;
+      summary.fileCount += 1;
+      summary.saveRows += file.idNoSourceUrlPartialSaveRowCount || 0;
+      summary.newRows += file.idNoSourceUrlPartialNewRowCount || 0;
+      summary.updatedRows += file.idNoSourceUrlPartialUpdatedRowCount || 0;
+      summary.heldRows += file.idNoSourceUrlPartialHeldRowCount || 0;
+      return summary;
+    }, { fileCount: 0, saveRows: 0, newRows: 0, updatedRows: 0, heldRows: 0 }),
   };
 }
 
@@ -218,7 +383,7 @@ async function getProcessContext(key: string) {
   return { key, filename: parsed.filename, config, classification, inspected, source, completedDuplicate, existingBatch, correctionBatchIds: correctionBatches.map((batch) => batch.id) };
 }
 
-export async function processTownBulkFile(input: { key: string; uploadedByUserId: string; action: "VALIDATE" | "CONFIRM_SAFE"; retryFailed?: boolean }): Promise<TownBulkProcessResult> {
+export async function processTownBulkFile(input: { key: string; uploadedByUserId: string; action: "VALIDATE" | "CONFIRM_SAFE" | "CONFIRM_PARTIAL" | "CONFIRM_ID_NO_SOURCE_URL_PARTIAL"; retryFailed?: boolean }): Promise<TownBulkProcessResult> {
   const context = await getProcessContext(input.key);
   if (context.completedDuplicate) return {
     key: input.key, outcome: "SKIPPED_DUPLICATE", batchId: context.completedDuplicate.id, status: context.completedDuplicate.status,
@@ -234,8 +399,30 @@ export async function processTownBulkFile(input: { key: string; uploadedByUserId
       const confirmed = await prisma.importBatch.findUniqueOrThrow({ where: { id: context.existingBatch.id }, select: { status: true } });
       return { key: input.key, outcome: "CONFIRMED", batchId: context.existingBatch.id, status: confirmed.status, ...counts, message: "安全条件を満たした既存プレビューを確定しました。" };
     }
+    if (input.action === "CONFIRM_PARTIAL") {
+      if (context.existingBatch.status !== ImportBatchStatus.PREVIEW_READY) throw new Error("部分確定の対象はPREVIEW_READYだけです。");
+      const preview = await readPreview<TownPreview>(context.existingBatch.id);
+      const partial = inspectTownCastOnlyHoldPartial(preview, { status: context.existingBatch.status, errorCount: context.existingBatch.errorCount, metadata: context.existingBatch.metadata });
+      if (!partial.eligible) throw new Error("URL/LP未紐付けのみの部分確定条件を満たしていません。再走査して確認してください。");
+      await confirmTownImport(context.existingBatch.id, false, { mode: "CAST_ONLY_HOLD_PARTIAL", executedBy: input.uploadedByUserId });
+      const confirmed = await prisma.importBatch.findUniqueOrThrow({ where: { id: context.existingBatch.id }, select: { status: true } });
+      return { key: input.key, outcome: "CONFIRMED", batchId: context.existingBatch.id, status: confirmed.status, ...counts, message: "URL/LP未紐付けを保留した部分確定を実行しました。" };
+    }
+    if (input.action === "CONFIRM_ID_NO_SOURCE_URL_PARTIAL") {
+      if (context.existingBatch.status !== ImportBatchStatus.WAITING_FOR_CAST_LINK) throw new Error("ID不明CAST部分確定の対象はWAITING_FOR_CAST_LINKだけです。");
+      const preview = await readPreview<TownPreview>(context.existingBatch.id);
+      const existing = await prisma.townCastDaily.findMany({ where: { storeId: preview.storeId, date: { gte: context.existingBatch.targetFrom, lte: context.existingBatch.targetTo } }, select: { date: true, castId: true } });
+      const keys = new Set(existing.map((record) => `${record.date.toISOString().slice(0, 10)}:${record.castId}`));
+      const partial = inspectTownIdNoSourceUrlPartial(preview, { status: context.existingBatch.status, errorCount: context.existingBatch.errorCount, metadata: context.existingBatch.metadata }, keys);
+      if (!partial.eligible) throw new Error("ID_NO_SOURCE_URL専用の部分確定条件を満たしていません。D以外の未紐付け・エラー・修正版候補が混在していないか確認してください。");
+      await confirmTownImport(context.existingBatch.id, false, { mode: "ID_NO_SOURCE_URL_HOLD_PARTIAL", executedBy: input.uploadedByUserId });
+      const confirmed = await prisma.importBatch.findUniqueOrThrow({ where: { id: context.existingBatch.id }, select: { status: true } });
+      return { key: input.key, outcome: "CONFIRMED", batchId: context.existingBatch.id, status: confirmed.status, ...counts, message: "ID不明CASTを保留した部分確定を実行しました。" };
+    }
     return { key: input.key, outcome: counts.autoConfirmSafe ? "EXISTING_BATCH" : "NEEDS_REVIEW", batchId, status: context.existingBatch.status, ...counts, message: "同一SHA-256の既存バッチを使用します。" };
   }
+
+  if (input.action === "CONFIRM_PARTIAL" || input.action === "CONFIRM_ID_NO_SOURCE_URL_PARTIAL") throw new Error("部分確定には既存の対象バッチが必要です。先に検証してください。");
 
   const bytes = new Uint8Array(context.inspected.buffer);
   const file = new File([bytes], context.filename, { type: "text/csv" });

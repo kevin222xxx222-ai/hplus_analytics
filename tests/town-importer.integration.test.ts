@@ -66,4 +66,17 @@ describe("Town importer integration", () => {
     const partial = await createBatch([row(5, castId), row(6, null)], "town-partial");
     await expect(confirmTownImport(partial, false)).resolves.toMatchObject({ pendingCount: 1 });
   });
+
+  it("confirms ID_NO_SOURCE_URL partial batches without saving the D row", async () => {
+    const dRow = row(7, null, 30, "ID:5297063");
+    dRow.normalizedCastName = "ID:5297063";
+    const savedRow = row(8, castId, 70, "Town統合試験");
+    const batch = await createBatch([dRow, savedRow], "town-id-no-source-url", { townBulk: { correctionBatchIds: [] } });
+    await expect(confirmTownImport(batch, false, { mode: "ID_NO_SOURCE_URL_HOLD_PARTIAL", executedBy: userId })).resolves.toMatchObject({ insertedCount: 0, updatedCount: 1, pendingCount: 1 });
+    const stored = await prisma.importBatch.findUniqueOrThrow({ where: { id: batch } });
+    expect(stored.status).toBe(ImportBatchStatus.COMPLETED_WITH_WARNINGS);
+    expect(await prisma.townCastDaily.count({ where: { importBatchId: batch } })).toBe(1);
+    expect(await prisma.importError.count({ where: { importBatchId: batch, errorCode: "UNMATCHED_CAST" } })).toBe(1);
+    expect(stored.metadata).toEqual(expect.objectContaining({ importEvents: expect.arrayContaining([expect.objectContaining({ type: "TOWN_ID_NO_SOURCE_URL_HOLD_PARTIAL_CONFIRM", heldRows: 1 })]) }));
+  });
 });

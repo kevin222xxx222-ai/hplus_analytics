@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { ImportBatchStatus, ImportDataType, StoreCode } from "@/generated/prisma/client";
 import { formatScanTimestamp } from "@/components/town-bulk-import";
 import { runTownBulkSequentially, selectTownBulkReparseCandidates, sortTownBulkFiles } from "@/lib/imports/town/bulk-order";
-import { classifyTownBulkFilename, inspectConfiguredFile, inspectTownBulkPreviewSafety, selectTownBulkExistingBatch } from "@/lib/imports/town/bulk-service";
+import { classifyTownBulkFilename, inspectConfiguredFile, inspectTownBulkPreviewSafety, inspectTownCastOnlyHoldPartial, inspectTownIdNoSourceUrlPartial, selectTownBulkExistingBatch } from "@/lib/imports/town/bulk-service";
 import type { TownPreview } from "@/lib/imports/town/types";
 
 const temporaryDirectories: string[] = [];
@@ -67,6 +67,34 @@ describe("Town local bulk import", () => {
     expect(inspectTownBulkPreviewSafety(preview, ["different-hash"]).autoConfirmSafe).toBe(false);
   });
 
+  it("allows partial confirmation only when unmatched rows are URL/LP", () => {
+    const preview = {
+      rows: [
+        { kind: "URL", resolutionStatus: "UNMATCHED", castId: null, issues: [{ code: "UNMATCHED_CAST", level: "WARNING" }] },
+        { kind: "LANDING", resolutionStatus: "UNMATCHED", castId: null, issues: [{ code: "UNMATCHED_CAST", level: "WARNING" }] },
+        { kind: "CAST", resolutionStatus: "NORMALIZED_CAST", castId: "cast-1", issues: [] },
+      ],
+    } as unknown as TownPreview;
+    const eligible = inspectTownCastOnlyHoldPartial(preview, { status: ImportBatchStatus.PREVIEW_READY, errorCount: 0, metadata: { townBulk: { correctionBatchIds: [] } } });
+    expect(eligible).toMatchObject({ eligible: true, unmatchedRows: 2, unmatchedUrlRows: 1, unmatchedLandingRows: 1, saveRows: 3 });
+    preview.rows[2].resolutionStatus = "UNMATCHED";
+    expect(inspectTownCastOnlyHoldPartial(preview, { status: ImportBatchStatus.PREVIEW_READY, errorCount: 0, metadata: { townBulk: { correctionBatchIds: [] } } }).eligible).toBe(false);
+  });
+
+  it("allows ID_NO_SOURCE_URL partial confirmation only for D-only TOWN_CAST batches", () => {
+    const preview = {
+      dataType: ImportDataType.TOWN_CAST,
+      rows: [
+        { kind: "CAST", date: "2026-07-01", normalizedCastName: "ID:5297063", castId: null, resolutionStatus: "UNMATCHED", issues: [{ code: "UNMATCHED_CAST", level: "WARNING" }] },
+        { kind: "CAST", date: "2026-07-01", normalizedCastName: "あずさ", castId: "cast-1", resolutionStatus: "NORMALIZED_ALIAS", issues: [] },
+      ],
+    } as unknown as TownPreview;
+    const eligible = inspectTownIdNoSourceUrlPartial(preview, { status: ImportBatchStatus.WAITING_FOR_CAST_LINK, errorCount: 0, metadata: { townBulk: { correctionBatchIds: [] } } }, new Set());
+    expect(eligible).toMatchObject({ eligible: true, saveRows: 1, heldRows: 1, newRows: 1, updatedRows: 0 });
+    preview.rows.push({ kind: "CAST", date: "2026-07-01", normalizedCastName: "いぶき", castId: null, resolutionStatus: "UNMATCHED", issues: [{ code: "UNMATCHED_CAST", level: "WARNING" }] } as never);
+    expect(inspectTownIdNoSourceUrlPartial(preview, { status: ImportBatchStatus.WAITING_FOR_CAST_LINK, errorCount: 0, metadata: { townBulk: { correctionBatchIds: [] } } }).eligible).toBe(false);
+  });
+
   it("continues after one file fails", async () => {
     const visited: number[] = [];
     const results = await runTownBulkSequentially([1, 2, 3], async (value) => {
@@ -88,8 +116,9 @@ describe("Town local bulk import", () => {
     const eligible = [ImportDataType.TOWN_STORE, ImportDataType.TOWN_CAST, ImportDataType.TOWN_URL, ImportDataType.TOWN_LANDING]
       .map((dataType, index) => ({ ...base, key: String(index), batchId: `batch-${index}`, dataType }));
     const completed = { ...base, key: "done", dataType: ImportDataType.TOWN_CAST, processStatus: "COMPLETED" };
+    const completedWithWarnings = { ...base, key: "warnings", dataType: ImportDataType.TOWN_CAST, processStatus: "COMPLETED_WITH_WARNINGS" };
     const duplicate = { ...base, key: "duplicate", dataType: ImportDataType.TOWN_URL, state: "SKIPPED_DUPLICATE" as const };
-    expect(selectTownBulkReparseCandidates([...eligible, completed, duplicate])).toEqual(eligible);
+    expect(selectTownBulkReparseCandidates([...eligible, completed, completedWithWarnings, duplicate])).toEqual([...eligible, completedWithWarnings]);
   });
 
   it("rejects symbolic links even when their target is a CSV", async () => {

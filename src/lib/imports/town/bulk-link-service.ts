@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { AliasReviewStatus, CastStatus, ImportBatchStatus, MediaType, StoreCode, type Prisma } from "@/generated/prisma/client";
+import { AliasReviewStatus, ImportBatchStatus, MediaType, StoreCode, type Prisma } from "@/generated/prisma/client";
 import { formatDateOnly, parseDateOnly } from "@/lib/date";
 import { readPreview, writePreview } from "@/lib/imports/storage";
 import { persistTownRow, townRowKey } from "@/lib/imports/town/persistence";
@@ -56,8 +56,8 @@ function inRange(date: Date, from: Date | null, to: Date | null) {
   return (!from || from <= date) && (!to || to >= date);
 }
 
-function activeOn(cast: { status: CastStatus; startedOn: Date; endedOn: Date | null }, date: Date) {
-  return cast.status === CastStatus.ACTIVE && cast.startedOn <= date && (!cast.endedOn || cast.endedOn >= date);
+function activeOn(cast: { startedOn: Date; endedOn: Date | null }, date: Date) {
+  return cast.startedOn <= date && (!cast.endedOn || cast.endedOn >= date);
 }
 
 function withoutKukiPrefix(value: string) {
@@ -246,10 +246,12 @@ async function analyzeInternal(db: AnalysisDb): Promise<AnalysisInternal> {
       townAliasConflict, outsideEnrollmentCandidateCount: outOfRangeMatches.size,
       sourceNameKnown: townNames.length > 0,
     });
-    const reasonCodes: string[] = [classification.reasonCode];
-    const category: TownBulkLinkCategory = classification.category;
+    const noSourceUrl = classification.reasonCode === "ID_FORMAT" && group.sourceUrls.size === 0;
+    const reasonCodes: string[] = noSourceUrl ? ["ID_NO_SOURCE_URL", "ID_FORMAT"] : [classification.reasonCode];
+    const category: TownBulkLinkCategory = noSourceUrl ? "D" : classification.category;
     let reason = "候補となる内部キャストがありません";
-    if (classification.reasonCode === "ID_FORMAT") reason = "ID:数字形式のため人物を安全に特定できません";
+    if (noSourceUrl) reason = "ID:数字形式かつ元URLを取得できないため再解析待ちです";
+    else if (classification.reasonCode === "ID_FORMAT") reason = "ID:数字形式のため人物を安全に特定できません";
     else if (classification.reasonCode === "CORRECTION_CANDIDATE") reason = "同日・店舗・種別の修正版候補です";
     else if (classification.reasonCode === "MULTIPLE_CANDIDATES") reason = `候補が${Math.max(allMatches.size, 2)}名あります`;
     else if (classification.reasonCode === "TOWN_ALIAS_CONFLICT") reason = "別Castを指す同名Town Aliasがあります";
@@ -302,11 +304,13 @@ async function analyzeInternal(db: AnalysisDb): Promise<AnalysisInternal> {
       A: summary(candidates, (candidate) => candidate.category === "A"),
       B: summary(candidates, (candidate) => candidate.category === "B"),
       C: summary(candidates, (candidate) => candidate.category === "C"),
+      D: summary(candidates, (candidate) => candidate.category === "D"),
     },
     idFormat: summary(candidates, (candidate) => candidate.reasonCodes.includes("ID_FORMAT")),
     multipleCandidates: summary(candidates, (candidate) => candidate.reasonCodes.includes("MULTIPLE_CANDIDATES")),
     outsideEnrollment: summary(candidates, (candidate) => candidate.reasonCodes.includes("OUTSIDE_ENROLLMENT")),
     correctionCandidates: summary(candidates, (candidate) => candidate.reasonCodes.includes("CORRECTION_CANDIDATE")),
+    idNoSourceUrl: summary(candidates, (candidate) => candidate.reasonCodes.includes("ID_NO_SOURCE_URL")),
     estimatedWaitingBatchCountAfterA,
     estimatedAutoConfirmableFileCountAfterA,
     estimatedWaitingBatchCountAfterApprovedB,
@@ -330,7 +334,7 @@ export async function analyzeTownBulkLinkCandidates(): Promise<TownBulkLinkPrevi
   return {
     generatedAt: result.generatedAt, fingerprint: result.fingerprint, categories: result.categories,
     idFormat: result.idFormat, multipleCandidates: result.multipleCandidates,
-    outsideEnrollment: result.outsideEnrollment, correctionCandidates: result.correctionCandidates,
+    outsideEnrollment: result.outsideEnrollment, correctionCandidates: result.correctionCandidates, idNoSourceUrl: result.idNoSourceUrl,
     estimatedWaitingBatchCountAfterA: result.estimatedWaitingBatchCountAfterA,
     estimatedAutoConfirmableFileCountAfterA: result.estimatedAutoConfirmableFileCountAfterA,
     estimatedWaitingBatchCountAfterApprovedB: result.estimatedWaitingBatchCountAfterApprovedB,
@@ -346,6 +350,7 @@ export async function inspectTownBulkLinkImpact(input: {
   targetCastId?: string;
   newCastName?: string;
   newStartedOn?: string;
+  skipReason?: string;
 }) : Promise<TownBulkLinkImpactPreview> {
   const current = await analyzeInternal(prisma);
   if (current.fingerprint !== input.fingerprint) throw new Error("候補情報が更新されています。再度候補解析を実行してください。");
@@ -353,6 +358,9 @@ export async function inspectTownBulkLinkImpact(input: {
   if (!candidate) throw new Error("C候補が見つかりません。");
   const target = input.targetCastId ? current.castOptions.find((cast) => cast.id === input.targetCastId) : null;
   const stopReasons: string[] = [];
+  if (input.operation === "SKIP" && !candidate.reasonCodes.includes("ID_FORMAT")) stopReasons.push("今回除外の対象はID形式候補だけです。");
+  if (input.operation === "SKIP" && !input.skipReason?.trim()) stopReasons.push("除外理由を入力してください。");
+  if (input.operation === "SKIP" && candidate.sourceUrls.length === 0) stopReasons.push("元URLを確認できないID候補は除外できません。");
   if (candidate.reasonCodes.includes("CORRECTION_CANDIDATE") && input.operation !== "PENDING" && input.operation !== "CORRECTION_REVIEW") stopReasons.push("修正版候補は通常のAlias処理へ流せません。");
   if (candidate.reasonCodes.includes("ID_FORMAT") && input.operation === "NEW") stopReasons.push("ID形式から新規Castは作成できません。");
   if (input.operation === "EXISTING" && !target) stopReasons.push("既存Castを選択してください。");
@@ -388,7 +396,7 @@ export async function inspectTownBulkLinkImpact(input: {
     }
   }
   const startedOnAfter = target && target.startedOn > candidate.firstDate ? candidate.firstDate : target?.startedOn || input.newStartedOn || candidate.firstDate;
-  const executable = stopReasons.length === 0 && !candidate.reasonCodes.includes("CORRECTION_CANDIDATE");
+  const executable = stopReasons.length === 0 && (input.operation === "SKIP" ? candidate.reasonCodes.includes("ID_FORMAT") : !candidate.reasonCodes.includes("CORRECTION_CANDIDATE"));
   return {
     candidateKey: candidate.key, operation: input.operation, storeName: candidate.storeName, townName: candidate.townName,
     targetCastId: target?.id || null, targetCastName: target?.displayName || (input.operation === "NEW" ? input.newCastName?.trim() || null : null),
@@ -400,6 +408,7 @@ export async function inspectTownBulkLinkImpact(input: {
     validFromAfter: input.operation === "EXISTING" || input.operation === "NEW" ? candidate.firstDate : null,
     additionalFactCount, existingFactCount, conflictCount: conflictingAliases.length,
     canProceedInPhase2: executable, executable, stopReasons,
+    skipReason: input.operation === "SKIP" ? input.skipReason?.trim() || null : null,
     notes: input.operation === "SKIP"
       ? ["除外すると対象行のPV・UU・TELは実績へ入りません。Phase 2の実行対象外です。"]
       : input.operation === "PENDING" ? ["保留はデータを変更しません。画面上の計画状態だけを保持します。"]
@@ -445,7 +454,7 @@ export async function executeTownBulkLinks(input: TownBulkLinkExecuteInput) {
       let insertedFacts = 0;
       for (const candidate of selected) {
         if (!candidate.targetCastId) throw new Error("紐付け先Castがありません。");
-        const cast = await tx.cast.findFirst({ where: { id: candidate.targetCastId, mergedIntoCastId: null, status: CastStatus.ACTIVE } });
+        const cast = await tx.cast.findFirst({ where: { id: candidate.targetCastId, mergedIntoCastId: null } });
         if (!cast) throw new Error(`${candidate.townName}の紐付け先Castが無効です。`);
         const minDate = parseDateOnly(candidate.firstDate);
         const conflictingAlias = await tx.castAlias.findFirst({ where: {
@@ -539,7 +548,61 @@ export async function executeTownBulkLinkCandidate(input: TownBulkLinkCandidateE
       const current = await analyzeInternal(tx);
       if (current.fingerprint !== input.fingerprint) throw new Error("候補情報が更新されています。再度影響範囲を確認してください。");
       const candidate = current.internalCandidates.find((value) => value.key === input.candidateKey);
-      if (!candidate || candidate.category !== "C" || !candidate.reasonCodes.includes("NO_CANDIDATE")) throw new Error("この候補はPhase 2の実行対象ではありません。候補を再解析してください。");
+      if (!candidate || candidate.category !== "C" || (input.operation === "SKIP" ? !candidate.reasonCodes.includes("ID_FORMAT") : !candidate.reasonCodes.includes("NO_CANDIDATE"))) throw new Error("この候補は実行対象ではありません。候補を再解析してください。");
+      if (input.operation === "SKIP") {
+        if (!candidate.reasonCodes.includes("ID_FORMAT")) throw new Error("今回除外の対象はID形式候補だけです。候補を再解析してください。");
+        const skipReason = input.skipReason?.trim();
+        if (!skipReason) throw new Error("除外理由は必須です。");
+        if (!candidate.sourceUrls.length) throw new Error("元URLを確認できないID候補は除外できません。");
+        const batchIds = [...new Set(candidate.rows.map((row) => row.batchId))];
+        const batches = await tx.importBatch.findMany({ where: { id: { in: batchIds } }, include: { errors: { select: { rowNumber: true, errorCode: true, status: true } } } });
+        const batchMap = new Map(batches.map((batch) => [batch.id, batch]));
+        const previews = new Map<string, TownPreview>();
+        const originalsForSkip = new Map<string, TownPreview>();
+        const kindCounts = { cast: 0, url: 0, landing: 0 };
+        let resolvedImportErrors = 0;
+        for (const batchId of batchIds) {
+          const batch = batchMap.get(batchId);
+          if (!batch) throw new Error("対象Townバッチを再読込できません。");
+          const preview = await readPreview<TownPreview>(batchId);
+          originalsForSkip.set(batchId, JSON.parse(JSON.stringify(preview)) as TownPreview);
+          previews.set(batchId, preview);
+        }
+        for (const reference of candidate.rows) {
+          const preview = previews.get(reference.batchId); const batch = batchMap.get(reference.batchId);
+          const row = preview?.rows.find((value) => value.rowKey === reference.rowKey && value.sourceRowNumber === reference.rowNumber);
+          if (!preview || !batch || !row || row.kind === "STORE" || row.castId !== null || row.resolutionStatus !== "UNMATCHED") throw new Error("対象行の状態が変化しています。再度候補解析してください。");
+          const openError = batch.errors.some((error) => error.rowNumber === row.sourceRowNumber && error.errorCode === "UNMATCHED_CAST" && error.status === "OPEN");
+          if (!openError) throw new Error("対象行のUNMATCHED_CASTがOPENではありません。再度候補解析してください。");
+          row.castId = null; row.castDisplayName = null; row.resolutionStatus = "SKIPPED";
+          row.issues = row.issues.filter((issue) => issue.code !== "UNMATCHED_CAST");
+          if (row.kind === "CAST") kindCounts.cast += 1;
+          if (row.kind === "URL") kindCounts.url += 1;
+          if (row.kind === "LANDING") kindCounts.landing += 1;
+          const updated = await tx.importError.updateMany({ where: { importBatchId: batch.id, rowNumber: row.sourceRowNumber, errorCode: "UNMATCHED_CAST", status: "OPEN" }, data: { status: "RESOLVED", resolvedAt: new Date() } });
+          resolvedImportErrors += updated.count;
+        }
+        try {
+          for (const [batchId, preview] of previews) {
+            const batch = batchMap.get(batchId); if (!batch) continue;
+            const remaining = await tx.importError.findMany({ where: { importBatchId: batchId, status: "OPEN" }, select: { level: true, errorCode: true, rowNumber: true } });
+            const openUnmatched = new Set(remaining.flatMap((error) => error.errorCode === "UNMATCHED_CAST" && error.rowNumber !== null ? [error.rowNumber] : []));
+            const pendingCount = preview.rows.filter((row) => row.kind !== "STORE" && row.castId === null && row.resolutionStatus !== "SKIPPED" && openUnmatched.has(row.sourceRowNumber)).length;
+            const skippedCount = preview.rows.filter((row) => row.resolutionStatus === "SKIPPED").length;
+            const warningCount = remaining.filter((error) => error.level === "WARNING").length;
+            const errorCount = remaining.filter((error) => error.level === "ERROR").length;
+            const completed = batch.status === ImportBatchStatus.COMPLETED || batch.status === ImportBatchStatus.COMPLETED_WITH_WARNINGS;
+            const status = completed ? (pendingCount || warningCount || errorCount ? ImportBatchStatus.COMPLETED_WITH_WARNINGS : ImportBatchStatus.COMPLETED) : (pendingCount ? ImportBatchStatus.WAITING_FOR_CAST_LINK : ImportBatchStatus.PREVIEW_READY);
+            const metadata = objectValue(batch.metadata); const events = Array.isArray(metadata.importEvents) ? metadata.importEvents : [];
+            await tx.importBatch.update({ where: { id: batchId }, data: { status, pendingCount, skippedCount, warningCount, errorCount, metadata: { ...metadata, importEvents: [...events, { type: "BULK_TOWN_SKIP", executedBy: input.userId, executedAt: new Date().toISOString(), candidateReason: "ID_FORMAT", operation: "SKIP", externalProfileId: candidate.townName, townName: candidate.townName, storeName: candidate.storeName, skipReason, rowCount: candidate.rowCount, batchCount: candidate.batchCount, kindCounts, firstDate: candidate.firstDate, lastDate: candidate.lastDate, resolvedImportErrors, fingerprint: input.fingerprint }] } } });
+            await writePreview(batchId, preview);
+          }
+        } catch (error) {
+          for (const [batchId, preview] of originalsForSkip) { try { await writePreview(batchId, preview); } catch { /* best effort restore */ } }
+          throw error;
+        }
+        return { candidateKey: candidate.key, resolvedRows: 0, skippedRows: candidate.rows.length, affectedBatchCount: batchIds.length, createdCastId: null, aliasId: null, insertedFacts: 0, kindCounts, remainingIdCandidates: Math.max(0, current.internalCandidates.filter((value) => value.category === "C" && value.reasonCodes.includes("ID_FORMAT")).length - 1) };
+      }
       if (candidate.reasonCodes.some((code) => ["ID_FORMAT", "CORRECTION_CANDIDATE", "MULTIPLE_CANDIDATES", "OUTSIDE_ENROLLMENT"].includes(code))) throw new Error("安全条件外の候補は実行できません。");
 
       const targetDate = parseDateOnly(candidate.firstDate);
@@ -547,7 +610,7 @@ export async function executeTownBulkLinkCandidate(input: TownBulkLinkCandidateE
       let createdCastId: string | null = null;
       if (input.operation === "EXISTING") {
         if (!castId) throw new Error("紐付け先Castを選択してください。");
-        const cast = await tx.cast.findFirst({ where: { id: castId, mergedIntoCastId: null, status: CastStatus.ACTIVE } });
+        const cast = await tx.cast.findFirst({ where: { id: castId, mergedIntoCastId: null } });
         if (!cast) throw new Error("統合済みまたは無効なCastは選択できません。");
         if (cast.startedOn > targetDate || (cast.endedOn && cast.endedOn < parseDateOnly(candidate.lastDate))) throw new Error("対象期間がCast在籍期間外です。Phase 2では開始日を前倒ししません。");
       } else {

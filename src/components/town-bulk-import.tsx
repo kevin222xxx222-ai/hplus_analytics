@@ -33,24 +33,37 @@ export function TownBulkImport({ initialScan }: { initialScan: TownBulkScan }) {
   const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set());
   const [progress, setProgress] = useState<Progress | null>(null);
   const [running, setRunning] = useState(false);
+  const [scanPending, setScanPending] = useState(false);
+  const [scanMessage, setScanMessage] = useState<string | null>(null);
   const [failures, setFailures] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const runningRef = useRef(false);
+  const scanRef = useRef(false);
   const processable = useMemo(() => scan.files.filter((file) => file.canProcess), [scan.files]);
   const validationCandidates = useMemo(() => scan.files.filter((file) => file.canProcess || file.state === "SKIPPED_DUPLICATE"), [scan.files]);
   const confirmCandidates = useMemo(() => scan.files.filter((file) => file.canProcess || (file.autoConfirmSafe && file.processStatus === "PREVIEW_READY")), [scan.files]);
   const reparseCandidates = useMemo(() => selectTownBulkReparseCandidates(scan.files), [scan.files]);
 
   async function rescan() {
-    if (runningRef.current) return;
+    if (runningRef.current || scanRef.current) return;
+    scanRef.current = true;
+    setScanPending(true);
     setError(null);
-    const response = await fetch("/api/imports/town/bulk/scan", { cache: "no-store" });
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.error || "フォルダ再走査に失敗しました。");
-    setScan(result as TownBulkScan);
+    setScanMessage("再走査中");
+    try {
+      const apiUrl = "/api/imports/town/bulk/scan";
+      const response = await fetch(apiUrl, { cache: "no-store" });
+      const result = await response.json().catch(() => ({})) as Partial<TownBulkScan> & { error?: string };
+      if (!response.ok) throw new Error(`${apiUrl} / HTTP ${response.status}: ${result.error || "フォルダ再走査に失敗しました。"}`);
+      setScan(result as TownBulkScan);
+      setScanMessage(`再走査完了：${result.files?.length ?? 0}ファイル`);
+    } finally {
+      scanRef.current = false;
+      setScanPending(false);
+    }
   }
 
-  async function run(files: TownBulkFile[], action: "VALIDATE" | "CONFIRM_SAFE", retryFailed = false) {
+  async function run(files: TownBulkFile[], action: "VALIDATE" | "CONFIRM_SAFE" | "CONFIRM_PARTIAL" | "CONFIRM_ID_NO_SOURCE_URL_PARTIAL", retryFailed = false) {
     if (runningRef.current || files.length === 0) return;
     runningRef.current = true;
     setRunning(true);
@@ -129,21 +142,35 @@ export function TownBulkImport({ initialScan }: { initialScan: TownBulkScan }) {
   }
 
   const selectedFiles = scan.files.filter((file) => selectedKeys.has(file.key) && file.canProcess);
+  const partialConfirmCandidates = useMemo(() => scan.files.filter((file) => file.partialConfirmEligible), [scan.files]);
+  const partialSummary = scan.partialConfirmSummary || { fileCount: partialConfirmCandidates.length, unmatchedRows: partialConfirmCandidates.reduce((n, file) => n + (file.partialUnmatchedUrlCount || 0) + (file.partialUnmatchedLandingCount || 0), 0), urlRows: partialConfirmCandidates.reduce((n, file) => n + (file.partialUnmatchedUrlCount || 0), 0), landingRows: partialConfirmCandidates.reduce((n, file) => n + (file.partialUnmatchedLandingCount || 0), 0), saveRows: partialConfirmCandidates.reduce((n, file) => n + (file.partialSaveRowCount || 0), 0) };
+  const idNoSourceUrlPartialCandidates = useMemo(() => scan.files.filter((file) => file.idNoSourceUrlPartialConfirmEligible), [scan.files]);
+  const idNoSourceUrlPartialSummary = scan.idNoSourceUrlPartialSummary || {
+    fileCount: idNoSourceUrlPartialCandidates.length,
+    saveRows: idNoSourceUrlPartialCandidates.reduce((n, file) => n + (file.idNoSourceUrlPartialSaveRowCount || 0), 0),
+    newRows: idNoSourceUrlPartialCandidates.reduce((n, file) => n + (file.idNoSourceUrlPartialNewRowCount || 0), 0),
+    updatedRows: idNoSourceUrlPartialCandidates.reduce((n, file) => n + (file.idNoSourceUrlPartialUpdatedRowCount || 0), 0),
+    heldRows: idNoSourceUrlPartialCandidates.reduce((n, file) => n + (file.idNoSourceUrlPartialHeldRowCount || 0), 0),
+  };
   const failedFiles = scan.files.filter((file) => failures[file.key]);
   const percent = progress?.total ? Math.round(((progress.completed + progress.duplicates + progress.review + progress.failed) / progress.total) * 100) : 0;
 
   return <div className="space-y-6">
-    <TownBulkLinkPreviewPanel />
+    <TownBulkLinkPreviewPanel onBatchChanged={rescan} />
     <section className="panel p-5">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div><h2 className="font-semibold text-slate-900">許可フォルダ</h2><p className="mt-1 text-xs text-slate-500">環境変数で固定された春日部・越谷フォルダだけを読み取ります。画面からパスは変更できません。</p></div>
-        <button type="button" className="secondary-button" disabled={Boolean(progress?.current)} onClick={() => void rescan().catch((caught) => setError(caught instanceof Error ? caught.message : "再走査に失敗しました。"))}><RefreshCw className="size-4" />フォルダ再走査</button>
+        <button type="button" className="secondary-button" disabled={running || scanPending} onClick={() => void rescan().catch((caught) => setError(caught instanceof Error ? caught.message : "再走査に失敗しました。"))}><RefreshCw className={`size-4 ${scanPending ? "animate-spin" : ""}`} />{scanPending ? "再走査中" : "フォルダ再走査"}</button>
       </div>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">{scan.folders.map((folder) => { const csvCount = scan.files.filter((file) => file.folderKey === folder.folderKey && file.dataType).length; return <div key={folder.folderKey} className="rounded-xl border border-slate-200 p-4"><div className="flex justify-between"><strong>{folder.storeName}</strong><span>{csvCount} CSV / 全{folder.fileCount}ファイル</span></div>{folder.error && <p className="mt-2 text-xs text-red-700">{folder.error}</p>}</div>; })}</div>
       <div className="mt-4 flex flex-wrap gap-2">
         <button type="button" className="primary-button" disabled={running || validationCandidates.length === 0} onClick={() => void run(validationCandidates, "VALIDATE")}><ShieldCheck className="size-4" />全件検証</button>
         <button type="button" className="secondary-button" disabled={running || reparseCandidates.length === 0} onClick={() => void reparseAll()}><RefreshCw className="size-4" />未確定Townバッチを全再解析</button>
         <button type="button" className="secondary-button" disabled={running || confirmCandidates.length === 0} onClick={() => void run(confirmCandidates, "CONFIRM_SAFE")}><CheckCircle2 className="size-4" />安全なファイルだけ一括確定</button>
+        <button type="button" className="secondary-button" disabled={running || partialConfirmCandidates.length === 0} onClick={() => { if (window.confirm(`URL/LP未紐付け${partialSummary.unmatchedRows}行を含む${partialSummary.fileCount}ファイルを部分確定します。\n未紐付けURL/LPはcastIdなしで保存され、現時点ではキャスト別分析に入りません。実行しますか？`)) void run(partialConfirmCandidates, "CONFIRM_PARTIAL"); }}><CheckCircle2 className="size-4" />URL/LP未紐付けを含めて部分確定</button>
+        {partialConfirmCandidates.length > 0 && <span className="self-center text-xs text-amber-700">対象{partialSummary.fileCount}ファイル / 未紐付け{partialSummary.unmatchedRows}行（URL {partialSummary.urlRows}・LP {partialSummary.landingRows}）</span>}
+        <button type="button" className="secondary-button" disabled={running || idNoSourceUrlPartialCandidates.length === 0} onClick={() => { if (window.confirm(`ID不明CAST${idNoSourceUrlPartialSummary.heldRows}行を保留したまま、${idNoSourceUrlPartialSummary.fileCount}ファイルの紐付け済みCAST${idNoSourceUrlPartialSummary.saveRows}行を部分確定します。\nキャスト名を特定できない行は保存されません。実行しますか？`)) void run(idNoSourceUrlPartialCandidates, "CONFIRM_ID_NO_SOURCE_URL_PARTIAL"); }}><CheckCircle2 className="size-4" />ID不明CASTを保留して部分確定</button>
+        {idNoSourceUrlPartialCandidates.length > 0 && <span className="self-center text-xs text-amber-700">対象{idNoSourceUrlPartialSummary.fileCount}ファイル / 保存見込み{idNoSourceUrlPartialSummary.saveRows}行（新規{idNoSourceUrlPartialSummary.newRows}・更新{idNoSourceUrlPartialSummary.updatedRows}） / D保留{idNoSourceUrlPartialSummary.heldRows}行</span>}
         <button type="button" className="secondary-button" disabled={running || selectedFiles.length === 0} onClick={() => void run(selectedFiles, "VALIDATE")}>選択ファイルだけ検証</button>
         <button type="button" className="secondary-button" disabled={running || failedFiles.length === 0} onClick={() => void run(failedFiles, "VALIDATE", true)}>失敗ファイルだけ再試行</button>
         <button type="button" className="secondary-button" onClick={() => setSelectedKeys(new Set(processable.map((file) => file.key)))}>処理可能を全選択</button>
@@ -156,6 +183,7 @@ export function TownBulkImport({ initialScan }: { initialScan: TownBulkScan }) {
         <p className="mt-2 text-xs text-slate-500">{progress.current ? <><LoaderCircle className="mr-1 inline size-3 animate-spin" />処理中：{progress.current}</> : "待機中"}</p>
       </div>}
       {error && <p role="alert" className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700">{error}</p>}
+      {scanMessage && <p role="status" className="mt-3 text-sm text-slate-600" aria-live="polite">{scanMessage}</p>}
     </section>
 
     <section className="panel overflow-hidden">

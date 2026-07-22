@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-07-21 — URLなしID候補のD分類
+
+- ID_FORMATかつpreview.jsonの元URL取得不可の候補を`D：再解析待ち`へ分類
+- C一覧・SKIP実行対象から除外し、人数・行数・店舗別内訳を表示
+- ImportError OPEN、実績・Alias・Cast・MediaListing不変のまま再解析待ちとし、URL取得後にCへ復帰する方針を追加
+
 ## 2026-07-21 — CTIを正としたTown未紐付け一括候補
 
 - Town一括画面へ読み取り専用の候補解析とA/B/C分類、A全件実行、B選択承認、C個別確認表示を追加
@@ -196,3 +202,18 @@
 ## 2026-07-14 — Phase 1
 
 - プロジェクト基盤、独自認証、ADMIN/VIEWER、基本マスタを追加
+## 2026-07-21 — Town ID形式候補の今回除外
+
+- ID形式候補だけを対象に、元URL確認・理由入力・影響範囲プレビュー後のSKIP実行を追加
+- CAST/URL/LPのpreview行をSKIPPED、OPEN `UNMATCHED_CAST`をRESOLVEDとして横断処理
+- Serializableトランザクション、候補fingerprint再検証、advisory lock、ImportBatch再集計を適用
+- Cast、Alias、MediaListing、既存Town実績は変更せず、`metadata.importEvents`へ`BULK_TOWN_SKIP`を記録
+
+## 2026-07-22 — Town ID_NO_SOURCE_URL 部分確定設計・実装
+
+- D（ID_NO_SOURCE_URL）だけが未紐付けのTOWN_CASTバッチを対象に、紐付け済みCASTのみを部分確定するモードを追加
+- D行はTownCastDailyへ保存せず、UNMATCHED_CASTと警告をOPEN維持
+- 対象条件、既存自然キー衝突、保存見込み件数をBulk画面に表示
+- `COMPLETED_WITH_WARNINGS`の明示再解析で、Alias解決済みの未保存CAST実績だけを追加upsert
+- advisory lock、Serializable transaction、監査イベント`TOWN_ID_NO_SOURCE_URL_HOLD_PARTIAL_CONFIRM`を適用
+- 実データの部分確定は未実行

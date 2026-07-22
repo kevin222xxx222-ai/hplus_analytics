@@ -7,7 +7,7 @@ export const runtime = "nodejs";
 
 const inputSchema = z.object({
   key: z.string().min(1).max(500),
-  action: z.enum(["VALIDATE", "CONFIRM_SAFE"]),
+  action: z.enum(["VALIDATE", "CONFIRM_SAFE", "CONFIRM_PARTIAL", "CONFIRM_ID_NO_SOURCE_URL_PARTIAL"]),
   retryFailed: z.boolean().optional(),
 });
 
