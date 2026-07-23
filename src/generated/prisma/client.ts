@@ -141,3 +141,13 @@ export type HeavenCastDaily = Prisma.HeavenCastDailyModel
  * 
  */
 export type ImprovementLog = Prisma.ImprovementLogModel
+/**
+ * Model MonthlyGoal
+ * 
+ */
+export type MonthlyGoal = Prisma.MonthlyGoalModel
+/**
+ * Model MonthlyGoalChangeHistory
+ * 
+ */
+export type MonthlyGoalChangeHistory = Prisma.MonthlyGoalChangeHistoryModel

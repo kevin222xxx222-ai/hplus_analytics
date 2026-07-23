@@ -166,3 +166,11 @@ export const ImprovementLogStatus = {
 } as const
 
 export type ImprovementLogStatus = (typeof ImprovementLogStatus)[keyof typeof ImprovementLogStatus]
+
+
+export const GoalScopeType = {
+  OVERALL: 'OVERALL',
+  STORE: 'STORE'
+} as const
+
+export type GoalScopeType = (typeof GoalScopeType)[keyof typeof GoalScopeType]

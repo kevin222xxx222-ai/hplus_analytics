@@ -1,22 +1,29 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, Building2, LayoutDashboard, Link2, LogOut, MousePointerClick, Store, Tags, UploadCloud, UserRoundCog, UsersRound } from "lucide-react";
+import { BarChart3, Building2, CircleCheck, LayoutDashboard, Link2, LogOut, MousePointerClick, Store, Tags, Target, UploadCloud, UserRoundCog, UsersRound } from "lucide-react";
 import { logoutAction } from "@/app/actions/auth";
 import type { CurrentUser } from "@/lib/auth";
 
 const nav = [
   { href: "/", label: "ホーム", icon: LayoutDashboard },
+  { href: "/data-health", label: "DATA HEALTH", icon: CircleCheck },
   { href: "/imports", label: "CTI取込", icon: UploadCloud, admin: true },
   { href: "/imports/town", label: "タウン取込", icon: UploadCloud, admin: true },
   { href: "/imports/heaven", label: "Heaven取込", icon: UploadCloud, admin: true },
   { href: "/analytics/stores", label: "店舗実績", icon: Building2 },
   { href: "/analytics/casts", label: "キャスト実績", icon: BarChart3 },
   { href: "/analytics/casts/overview", label: "キャスト統合分析", icon: UsersRound },
+  { href: "/analytics/casts/discovery", label: "CAST DISCOVERY", icon: UsersRound },
+  { href: "/analytics/marketing-lab", label: "MARKETING LAB", icon: BarChart3 },
+  { href: "/analytics/navigator", label: "分析ナビゲーター", icon: LayoutDashboard },
   { href: "/analytics/town/stores", label: "タウン店舗分析", icon: Building2 },
   { href: "/analytics/town/casts", label: "タウン女子分析", icon: UsersRound },
   { href: "/analytics/heaven/store", label: "Heaven店舗分析", icon: Building2 },
   { href: "/analytics/heaven/casts", label: "Heaven女子分析", icon: UsersRound },
+  { href: "/settings/goals", label: "目標管理", icon: Target },
+  { href: "/help/metrics", label: "指標ガイド", icon: Tags },
+  { href: "/help/analytics-guide", label: "分析ガイド", icon: Link2 },
   { href: "/analytics/town/urls", label: "タウンURL分析", icon: Link2 },
   { href: "/analytics/town/landing", label: "タウンLP分析", icon: MousePointerClick },
   { href: "/masters/stores", label: "店舗マスタ", icon: Store, admin: true },

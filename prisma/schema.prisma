@@ -118,6 +118,11 @@ enum ImprovementLogStatus {
   DISMISSED
 }
 
+enum GoalScopeType {
+  OVERALL
+  STORE
+}
+
 model User {
   id               String             @id @default(uuid()) @db.Uuid
   loginId          String             @unique @map("login_id") @db.VarChar(100)
@@ -133,6 +138,9 @@ model User {
   castNameChanges  CastNameHistory[]  @relation("CastNameChangedBy")
   castMergeActions CastMergeHistory[] @relation("CastMergePerformedBy")
   castStartDateBulkChanges CastStartDateBulkChangeHistory[] @relation("CastStartDateBulkChangePerformedBy")
+  goalsCreated       MonthlyGoal[] @relation("MonthlyGoalCreatedBy")
+  goalsUpdated       MonthlyGoal[] @relation("MonthlyGoalUpdatedBy")
+  goalChangeHistory  MonthlyGoalChangeHistory[]
 
   @@map("users")
 }
@@ -176,6 +184,7 @@ model Store {
   townLandingDailies    TownLandingDaily[]
   heavenShopDailies     HeavenShopDaily[]
   heavenCastDailies     HeavenCastDaily[]
+  monthlyGoals          MonthlyGoal[]
 
   @@map("stores")
 }
@@ -641,4 +650,53 @@ model ImprovementLog {
   @@index([storeId, type, status])
   @@index([observedFrom, observedTo])
   @@map("improvement_logs")
+}
+
+model MonthlyGoal {
+  id                         String       @id @default(uuid()) @db.Uuid
+  targetMonth                DateTime     @map("target_month") @db.Date
+  scopeType                  GoalScopeType @map("scope_type")
+  scopeKey                   String       @map("scope_key") @db.VarChar(120)
+  storeId                    String?      @map("store_id") @db.Uuid
+  salesTarget                Decimal?     @map("sales_target") @db.Decimal(16, 2)
+  contractsTarget            Int?         @map("contracts_target")
+  averageActiveCastsTarget   Decimal?     @map("average_active_casts_target") @db.Decimal(10, 2)
+  nominationRateTarget       Decimal?     @map("nomination_rate_target") @db.Decimal(8, 5)
+  castPayoutTarget           Decimal?     @map("cast_payout_target") @db.Decimal(16, 2)
+  averageUnitPriceTarget     Decimal?     @map("average_unit_price_target") @db.Decimal(16, 2)
+  workingHoursTarget         Decimal?     @map("working_hours_target") @db.Decimal(12, 2)
+  townPvTarget               Int?         @map("town_pv_target")
+  townUuTarget               Int?         @map("town_uu_target")
+  townTelTarget              Int?         @map("town_tel_target")
+  heavenPageAccessTarget     Int?         @map("heaven_page_access_target")
+  note                       String?      @db.Text
+  createdByUserId            String       @map("created_by_user_id") @db.Uuid
+  updatedByUserId            String       @map("updated_by_user_id") @db.Uuid
+  createdAt                  DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt                  DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  store                      Store?       @relation(fields: [storeId], references: [id], onDelete: Restrict)
+  createdBy                  User         @relation("MonthlyGoalCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  updatedBy                  User         @relation("MonthlyGoalUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: Restrict)
+  history                    MonthlyGoalChangeHistory[]
+
+  @@unique([targetMonth, scopeKey])
+  @@index([targetMonth, scopeType])
+  @@index([storeId, targetMonth])
+  @@map("monthly_goals")
+}
+
+model MonthlyGoalChangeHistory {
+  id            String      @id @default(uuid()) @db.Uuid
+  monthlyGoalId String      @map("monthly_goal_id") @db.Uuid
+  beforeValues  Json?       @map("before_values") @db.JsonB
+  afterValues   Json        @map("after_values") @db.JsonB
+  changedByUserId String    @map("changed_by_user_id") @db.Uuid
+  reason        String?     @db.Text
+  changedAt     DateTime    @default(now()) @map("changed_at") @db.Timestamptz(3)
+  monthlyGoal   MonthlyGoal @relation(fields: [monthlyGoalId], references: [id], onDelete: Cascade)
+  changedBy     User        @relation(fields: [changedByUserId], references: [id], onDelete: Restrict)
+
+  @@index([monthlyGoalId, changedAt])
+  @@index([changedByUserId, changedAt])
+  @@map("monthly_goal_change_history")
 }

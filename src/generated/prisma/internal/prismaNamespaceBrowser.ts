@@ -70,7 +70,9 @@ export const ModelName = {
   TownLandingDaily: 'TownLandingDaily',
   HeavenShopDaily: 'HeavenShopDaily',
   HeavenCastDaily: 'HeavenCastDaily',
-  ImprovementLog: 'ImprovementLog'
+  ImprovementLog: 'ImprovementLog',
+  MonthlyGoal: 'MonthlyGoal',
+  MonthlyGoalChangeHistory: 'MonthlyGoalChangeHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -495,6 +497,46 @@ export const ImprovementLogScalarFieldEnum = {
 } as const
 
 export type ImprovementLogScalarFieldEnum = (typeof ImprovementLogScalarFieldEnum)[keyof typeof ImprovementLogScalarFieldEnum]
+
+
+export const MonthlyGoalScalarFieldEnum = {
+  id: 'id',
+  targetMonth: 'targetMonth',
+  scopeType: 'scopeType',
+  scopeKey: 'scopeKey',
+  storeId: 'storeId',
+  salesTarget: 'salesTarget',
+  contractsTarget: 'contractsTarget',
+  averageActiveCastsTarget: 'averageActiveCastsTarget',
+  nominationRateTarget: 'nominationRateTarget',
+  castPayoutTarget: 'castPayoutTarget',
+  averageUnitPriceTarget: 'averageUnitPriceTarget',
+  workingHoursTarget: 'workingHoursTarget',
+  townPvTarget: 'townPvTarget',
+  townUuTarget: 'townUuTarget',
+  townTelTarget: 'townTelTarget',
+  heavenPageAccessTarget: 'heavenPageAccessTarget',
+  note: 'note',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MonthlyGoalScalarFieldEnum = (typeof MonthlyGoalScalarFieldEnum)[keyof typeof MonthlyGoalScalarFieldEnum]
+
+
+export const MonthlyGoalChangeHistoryScalarFieldEnum = {
+  id: 'id',
+  monthlyGoalId: 'monthlyGoalId',
+  beforeValues: 'beforeValues',
+  afterValues: 'afterValues',
+  changedByUserId: 'changedByUserId',
+  reason: 'reason',
+  changedAt: 'changedAt'
+} as const
+
+export type MonthlyGoalChangeHistoryScalarFieldEnum = (typeof MonthlyGoalChangeHistoryScalarFieldEnum)[keyof typeof MonthlyGoalChangeHistoryScalarFieldEnum]
 
 
 export const SortOrder = {

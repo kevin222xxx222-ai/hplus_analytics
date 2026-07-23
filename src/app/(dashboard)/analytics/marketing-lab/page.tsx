@@ -1,0 +1,51 @@
+import Link from "next/link";
+import { PageHeader } from "@/components/page-header";
+import { aggregateDashboardCast, analyzeMarketingLab, type DashboardCtiRow, type DashboardHeavenRow, type DashboardTownRow } from "@/lib/analytics/marketing-dashboard";
+import { parseDateOnly, formatDateOnly } from "@/lib/date";
+import { requireUser } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+
+type Query = { tab?: string; from?: string; to?: string; scope?: string };
+type Row = ReturnType<typeof aggregateDashboardCast>;
+
+function rangeFor(q: Query) {
+  const now = new Date();
+  const from = q.from ? parseDateOnly(q.from) : new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
+  const to = q.to ? parseDateOnly(q.to) : now;
+  return { from, to, fromText: formatDateOnly(from), toText: formatDateOnly(to) };
+}
+
+export default async function MarketingLabPage({ searchParams }: { searchParams: Promise<Query> }) {
+  await requireUser();
+  const q = await searchParams;
+  const range = rangeFor(q);
+  const scope = ["ALL", "KASUKABE", "KOSHIGAYA", "NODA"].includes(q.scope ?? "") ? q.scope! : "ALL";
+  const stores = await prisma.store.findMany({ where: { code: { in: ["KASUKABE", "KOSHIGAYA", "NODA"] } }, orderBy: { displayOrder: "asc" } });
+  const byCode = new Map(stores.map((s) => [s.code, s]));
+  const ctiStores = scope === "ALL" ? stores : stores.filter((s) => s.code === scope);
+  const townStores = scope === "ALL" ? stores.filter((s) => s.code !== "NODA") : scope === "NODA" ? [] : stores.filter((s) => s.code === scope);
+  const heavenStores = scope === "ALL" || scope === "KASUKABE" ? [byCode.get("KASUKABE")].filter(Boolean) : [];
+  const [cti, town, heaven, casts] = await Promise.all([
+    prisma.ctiCastDaily.findMany({ where: { businessDate: { gte: range.from, lte: range.to }, storeId: { in: ctiStores.map((s) => s.id) }, cast: { mergedIntoCastId: null } }, select: { castId: true, storeId: true, businessDate: true, attendanceCount: true, attendanceMinutes: true, salesAmount: true, castRewardAmount: true, reservationCount: true, serviceCount: true, contractCount: true, regularNominationCount: true, diaryCountCti: true } }),
+    townStores.length ? prisma.townCastDaily.findMany({ where: { date: { gte: range.from, lte: range.to }, storeId: { in: townStores.map((s) => s.id) }, cast: { mergedIntoCastId: null } }, select: { castId: true, storeId: true, date: true, pv: true, uu: true, telTapUu: true } }) : Promise.resolve([]),
+    heavenStores.length ? prisma.heavenCastDaily.findMany({ where: { businessDate: { gte: range.from, lte: range.to }, storeId: { in: heavenStores.map((s) => s!.id) }, castId: { not: null }, cast: { mergedIntoCastId: null } }, select: { castId: true, storeId: true, businessDate: true, metricKey: true, rawValue: true, rawValueStatus: true, valueKind: true } }) : Promise.resolve([]),
+    prisma.cast.findMany({ where: { mergedIntoCastId: null }, select: { id: true, displayName: true, startedOn: true, endedOn: true, primaryStore: { select: { shortName: true } } } }),
+  ]);
+  const cr: DashboardCtiRow[] = cti.map((x) => ({ castId: x.castId, storeId: x.storeId, date: x.businessDate, attendanceCount: x.attendanceCount, attendanceMinutes: x.attendanceMinutes, sales: x.salesAmount, reward: x.castRewardAmount, reservations: x.reservationCount, services: x.serviceCount, contracts: x.contractCount, regular: x.regularNominationCount, diaryCount: x.diaryCountCti }));
+  const tr: DashboardTownRow[] = town.map((x) => ({ castId: x.castId, storeId: x.storeId, date: x.date, pv: x.pv, uu: x.uu, tel: x.telTapUu }));
+  const hr: DashboardHeavenRow[] = heaven.map((x) => ({ castId: x.castId!, storeId: x.storeId, date: x.businessDate, metricKey: x.metricKey, value: x.rawValue === null ? null : Number(x.rawValue), status: x.rawValueStatus, kind: x.valueKind }));
+  const castMap = new Map(casts.map((x) => [x.id, x]));
+  const ids = new Set([...casts.map((x) => x.id), ...cr.map((x) => x.castId), ...tr.map((x) => x.castId), ...hr.map((x) => x.castId)]);
+  const rows = [...ids].map((id) => { const c = castMap.get(id); if (!c) return null; return aggregateDashboardCast({ id, name: c.displayName, primaryStore: c.primaryStore?.shortName ?? null, startedOn: c.startedOn, endedOn: c.endedOn }, cr.filter((x) => x.castId === id), tr.filter((x) => x.castId === id), hr.filter((x) => x.castId === id)); }).filter((x): x is Row => Boolean(x));
+  const lab = analyzeMarketingLab(rows);
+  const targetRows = rows.filter((x) => x.source.cti || x.source.town || x.source.heaven);
+  const townAnalyzable = lab.active.filter((x) => x.source.town && (x.townPv > 0 || x.townUu > 0)).length;
+  const heavenAnalyzable = lab.active.filter((x) => x.source.heaven && x.heavenPageAccess !== null && x.heavenPageAccess > 0).length;
+  const classes = (["HIGH_ONLY", "LOW_ONLY", "MIXED", "NEUTRAL"] as const).map((classification) => ({ classification, count: lab.efficiencyClasses.filter((x) => x.classification === classification).length }));
+  const priorities = (["最優先", "優先", "経過観察", "データ不足"] as const).map((label) => ({ label, count: lab.hypotheses.filter((x) => x.priorityLabel === label).length }));
+  const top = [...lab.hypotheses].sort((a, b) => (b.priorityScore ?? 0) - (a.priorityScore ?? 0)).slice(0, 10);
+  const tab = q.tab ?? "overview";
+  const tabHref = (name: string) => `?from=${range.fromText}&to=${range.toText}&scope=${scope}&tab=${name}`;
+  const scopeName = scope === "ALL" ? "全体" : scope === "KASUKABE" ? "春日部" : scope === "KOSHIGAYA" ? "越谷" : "野田（CTI補助）";
+  return <><PageHeader eyebrow="MARKETING LAB" title="マーケティング分析・施策検証" description="実績・媒体データから施策仮説を整理します。因果関係は断定しません。"/><form className="panel mb-6 grid gap-3 p-4 sm:grid-cols-2 xl:grid-cols-4"><label className="form-label">開始日<input className="form-input mt-1" type="date" name="from" defaultValue={range.fromText}/></label><label className="form-label">終了日<input className="form-input mt-1" type="date" name="to" defaultValue={range.toText}/></label><label className="form-label">店舗<select name="scope" defaultValue={scope} className="form-input mt-1"><option value="ALL">全体</option><option value="KASUKABE">春日部</option><option value="KOSHIGAYA">越谷</option><option value="NODA">野田（CTI補助）</option></select></label><button className="primary-button">表示</button></form><div className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-6">{[["全社登録", rows.length], ["対象店舗在籍・実績", targetRows.length], ["CTI分析可能", lab.active.length], ["Town分析可能", townAnalyzable], ["Heaven分析可能", heavenAnalyzable], ["施策仮説", lab.hypotheses.length]].map(([label, value]) => <div className="panel p-4" key={label as string}><p className="text-xs text-slate-500">{label}</p><p className="mt-1 text-2xl font-semibold">{value}</p></div>)}</div><section className="panel mb-5 p-5"><h2 className="mb-3 text-lg font-semibold">{scopeName}の母集団と効率分類</h2><p className="mb-3 text-sm text-slate-600">全社登録数と分析対象人数を分離。高効率・低効率の両方に該当するMIXEDは強み・弱みを同時表示します。</p><div className="table-wrap"><table><thead><tr><th>範囲</th><th>全社登録</th><th>在籍・実績あり</th><th>CTI</th><th>Town</th><th>Heaven</th></tr></thead><tbody><tr><td>{scopeName}</td><td>{rows.length}</td><td>{targetRows.length}</td><td>{lab.active.length}</td><td>{townAnalyzable}</td><td>{heavenAnalyzable}</td></tr></tbody></table></div><div className="mt-4 flex flex-wrap gap-2">{classes.map((x) => <span key={x.classification} className="rounded-full bg-slate-100 px-3 py-1 text-sm">{x.classification}：{x.count}名</span>)}</div>{lab.efficiencyClasses.some((x) => x.classification === "MIXED") && <div className="mt-4 table-wrap"><table><thead><tr><th>キャスト</th><th>店舗</th><th>強い指標</th><th>弱い指標</th></tr></thead><tbody>{lab.efficiencyClasses.filter((x) => x.classification === "MIXED").map((x) => <tr key={x.row.cast.id}><td>{x.row.cast.name}</td><td>{x.row.cast.primaryStore ?? "—"}</td><td>{x.strong.join("、")}</td><td>{x.weak.join("、")}</td></tr>)}</tbody></table></div>}</section><section className="panel mb-5 p-5"><h2 className="mb-3 text-lg font-semibold">今月優先して検討する施策 TOP10</h2><div className="mb-3 flex flex-wrap gap-2">{priorities.map((x) => <span key={x.label} className="rounded-full bg-emerald-50 px-3 py-1 text-sm">{x.label}：{x.count}件</span>)}</div><div className="table-wrap"><table><thead><tr><th>#</th><th>キャスト</th><th>店舗</th><th>仮説</th><th>priorityScore</th><th>優先度</th><th>根拠</th></tr></thead><tbody>{top.map((h, i) => <tr key={`${h.row.cast.id}-${h.type}-${i}`}><td>{i + 1}</td><td>{h.row.cast.name}</td><td>{h.row.cast.primaryStore ?? "—"}</td><td>{h.type}</td><td>{h.priorityScore ?? "—"}</td><td>{h.priorityLabel ?? h.priority}</td><td>{h.evidence}</td></tr>)}</tbody></table>{top.length === 0 && <p className="empty-state">優先施策候補はありません。</p>}</div></section><nav className="mb-5 flex flex-wrap gap-2">{[["overview", "概要"], ["hypotheses", "施策仮説一覧"], ["mixed", "MIXED詳細"]].map(([key, label]) => <Link key={key} href={tabHref(key)} className={`rounded-xl px-4 py-2 text-sm ${tab === key ? "bg-emerald-700 text-white" : "border border-slate-200 text-slate-700"}`}>{label}</Link>)}</nav>{tab === "hypotheses" && <section className="panel overflow-hidden p-6"><h2 className="mb-4 text-lg font-semibold">施策仮説一覧（同系統は統合表示）</h2><div className="table-wrap"><table><thead><tr><th>キャスト</th><th>店舗</th><th>仮説</th><th>根拠</th><th>priorityScore</th><th>優先度</th><th>推奨施策</th></tr></thead><tbody>{lab.hypotheses.map((h, i) => <tr key={`${h.row.cast.id}-${h.type}-${i}`}><td><Link className="text-emerald-700 underline" href={`/analytics/casts/${h.row.cast.id}?from=${range.fromText}&to=${range.toText}`}>{h.row.cast.name}</Link></td><td>{h.row.cast.primaryStore ?? "—"}</td><td>{h.type}</td><td>{h.evidence}</td><td>{h.priorityScore ?? "—"}</td><td>{h.priorityLabel ?? h.priority}</td><td>{h.recommendation}</td></tr>)}</tbody></table></div></section>}{tab === "mixed" && <section className="panel p-6"><h2 className="mb-4 text-lg font-semibold">MIXED：強みと弱み</h2><div className="table-wrap"><table><thead><tr><th>キャスト</th><th>店舗</th><th>強い指標</th><th>弱い指標</th></tr></thead><tbody>{lab.efficiencyClasses.filter((x) => x.classification === "MIXED").map((x) => <tr key={x.row.cast.id}><td>{x.row.cast.name}</td><td>{x.row.cast.primaryStore ?? "—"}</td><td>{x.strong.join("、")}</td><td>{x.weak.join("、")}</td></tr>)}</tbody></table></div></section>}</>;
+}

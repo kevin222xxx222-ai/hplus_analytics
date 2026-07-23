@@ -217,3 +217,15 @@
 - `COMPLETED_WITH_WARNINGS`の明示再解析で、Alias解決済みの未保存CAST実績だけを追加upsert
 - advisory lock、Serializable transaction、監査イベント`TOWN_ID_NO_SOURCE_URL_HOLD_PARTIAL_CONFIRM`を適用
 - 実データの部分確定は未実行
+# 2026-07-23
+
+- Analytics Navigator、指標ガイド、分析ガイドを追加。
+- 月次目標（全体・店舗）と変更履歴の基盤を追加。
+- HOMEの売上目標をDB保存のMonthlyGoalから取得するよう変更。
+- HOMEへ累積売上、日別売上・出勤人数、店舗比較、キャスト効率分布のSVGグラフを追加。
+- 2026-07-23: 指標辞書を拡張し、共通ヘルプ、検索・カテゴリ付き指標ガイド、6つの運用シナリオ、分析ページ共通の利用導線を追加。未掲載・分母0・LOW_SAMPLE・参考指標の注記を統一。
+# 2026-07-23 DATA HEALTH
+
+- 読み取り専用の`/data-health`を追加
+- HOMEへ未確定Batchと推定売上影響の警告を追加
+- 品質スコア、日付カバレッジ、媒体別健全性、整合性チェックを追加

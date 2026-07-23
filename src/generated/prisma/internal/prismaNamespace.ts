@@ -403,7 +403,9 @@ export const ModelName = {
   TownLandingDaily: 'TownLandingDaily',
   HeavenShopDaily: 'HeavenShopDaily',
   HeavenCastDaily: 'HeavenCastDaily',
-  ImprovementLog: 'ImprovementLog'
+  ImprovementLog: 'ImprovementLog',
+  MonthlyGoal: 'MonthlyGoal',
+  MonthlyGoalChangeHistory: 'MonthlyGoalChangeHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -419,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "store" | "cast" | "castNameHistory" | "castMergeHistory" | "castStartDateBulkChangeHistory" | "castAlias" | "mediaListing" | "importSource" | "importError" | "importBatch" | "ctiCastDaily" | "townStoreDaily" | "townCastDaily" | "townUrlDaily" | "townLandingDaily" | "heavenShopDaily" | "heavenCastDaily" | "improvementLog"
+    modelProps: "user" | "session" | "store" | "cast" | "castNameHistory" | "castMergeHistory" | "castStartDateBulkChangeHistory" | "castAlias" | "mediaListing" | "importSource" | "importError" | "importBatch" | "ctiCastDaily" | "townStoreDaily" | "townCastDaily" | "townUrlDaily" | "townLandingDaily" | "heavenShopDaily" | "heavenCastDaily" | "improvementLog" | "monthlyGoal" | "monthlyGoalChangeHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1903,6 +1905,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    MonthlyGoal: {
+      payload: Prisma.$MonthlyGoalPayload<ExtArgs>
+      fields: Prisma.MonthlyGoalFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MonthlyGoalFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MonthlyGoalFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalPayload>
+        }
+        findFirst: {
+          args: Prisma.MonthlyGoalFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MonthlyGoalFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalPayload>
+        }
+        findMany: {
+          args: Prisma.MonthlyGoalFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalPayload>[]
+        }
+        create: {
+          args: Prisma.MonthlyGoalCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalPayload>
+        }
+        createMany: {
+          args: Prisma.MonthlyGoalCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MonthlyGoalCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalPayload>[]
+        }
+        delete: {
+          args: Prisma.MonthlyGoalDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalPayload>
+        }
+        update: {
+          args: Prisma.MonthlyGoalUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalPayload>
+        }
+        deleteMany: {
+          args: Prisma.MonthlyGoalDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MonthlyGoalUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MonthlyGoalUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalPayload>[]
+        }
+        upsert: {
+          args: Prisma.MonthlyGoalUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalPayload>
+        }
+        aggregate: {
+          args: Prisma.MonthlyGoalAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMonthlyGoal>
+        }
+        groupBy: {
+          args: Prisma.MonthlyGoalGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MonthlyGoalGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MonthlyGoalCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MonthlyGoalCountAggregateOutputType> | number
+        }
+      }
+    }
+    MonthlyGoalChangeHistory: {
+      payload: Prisma.$MonthlyGoalChangeHistoryPayload<ExtArgs>
+      fields: Prisma.MonthlyGoalChangeHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MonthlyGoalChangeHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalChangeHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MonthlyGoalChangeHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalChangeHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.MonthlyGoalChangeHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalChangeHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MonthlyGoalChangeHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalChangeHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.MonthlyGoalChangeHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalChangeHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.MonthlyGoalChangeHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalChangeHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.MonthlyGoalChangeHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MonthlyGoalChangeHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalChangeHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.MonthlyGoalChangeHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalChangeHistoryPayload>
+        }
+        update: {
+          args: Prisma.MonthlyGoalChangeHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalChangeHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.MonthlyGoalChangeHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MonthlyGoalChangeHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MonthlyGoalChangeHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalChangeHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.MonthlyGoalChangeHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyGoalChangeHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.MonthlyGoalChangeHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMonthlyGoalChangeHistory>
+        }
+        groupBy: {
+          args: Prisma.MonthlyGoalChangeHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MonthlyGoalChangeHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MonthlyGoalChangeHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MonthlyGoalChangeHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2350,6 +2500,46 @@ export const ImprovementLogScalarFieldEnum = {
 export type ImprovementLogScalarFieldEnum = (typeof ImprovementLogScalarFieldEnum)[keyof typeof ImprovementLogScalarFieldEnum]
 
 
+export const MonthlyGoalScalarFieldEnum = {
+  id: 'id',
+  targetMonth: 'targetMonth',
+  scopeType: 'scopeType',
+  scopeKey: 'scopeKey',
+  storeId: 'storeId',
+  salesTarget: 'salesTarget',
+  contractsTarget: 'contractsTarget',
+  averageActiveCastsTarget: 'averageActiveCastsTarget',
+  nominationRateTarget: 'nominationRateTarget',
+  castPayoutTarget: 'castPayoutTarget',
+  averageUnitPriceTarget: 'averageUnitPriceTarget',
+  workingHoursTarget: 'workingHoursTarget',
+  townPvTarget: 'townPvTarget',
+  townUuTarget: 'townUuTarget',
+  townTelTarget: 'townTelTarget',
+  heavenPageAccessTarget: 'heavenPageAccessTarget',
+  note: 'note',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MonthlyGoalScalarFieldEnum = (typeof MonthlyGoalScalarFieldEnum)[keyof typeof MonthlyGoalScalarFieldEnum]
+
+
+export const MonthlyGoalChangeHistoryScalarFieldEnum = {
+  id: 'id',
+  monthlyGoalId: 'monthlyGoalId',
+  beforeValues: 'beforeValues',
+  afterValues: 'afterValues',
+  changedByUserId: 'changedByUserId',
+  reason: 'reason',
+  changedAt: 'changedAt'
+} as const
+
+export type MonthlyGoalChangeHistoryScalarFieldEnum = (typeof MonthlyGoalChangeHistoryScalarFieldEnum)[keyof typeof MonthlyGoalChangeHistoryScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2720,6 +2910,20 @@ export type ListEnumImprovementLogStatusFieldRefInput<$PrismaModel> = FieldRefIn
 
 
 /**
+ * Reference to a field of type 'GoalScopeType'
+ */
+export type EnumGoalScopeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoalScopeType'>
+    
+
+
+/**
+ * Reference to a field of type 'GoalScopeType[]'
+ */
+export type ListEnumGoalScopeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GoalScopeType[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2862,6 +3066,8 @@ export type GlobalOmitConfig = {
   heavenShopDaily?: Prisma.HeavenShopDailyOmit
   heavenCastDaily?: Prisma.HeavenCastDailyOmit
   improvementLog?: Prisma.ImprovementLogOmit
+  monthlyGoal?: Prisma.MonthlyGoalOmit
+  monthlyGoalChangeHistory?: Prisma.MonthlyGoalChangeHistoryOmit
 }
 
 /* Types for Logging */
