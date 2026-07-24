@@ -1,0 +1,1 @@
+export function AnalyticsEmptyState({ title = "対象データがありません", description = "指定期間に利用できる実績がありません。" }: { title?: string; description?: string }) { return <div className="rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center" role="status"><p className="font-semibold text-slate-700">{title}</p><p className="mt-1 text-sm text-slate-500">{description}</p></div>; }

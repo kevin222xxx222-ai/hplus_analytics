@@ -1,0 +1,1 @@
+export function AnalyticsUnavailableState({ title = "この分析は利用できません", description = "入力元または機能が未接続のため表示できません。" }: { title?: string; description?: string }) { return <div className="rounded-xl border border-slate-200 bg-slate-50 p-8 text-center" role="status"><p className="font-semibold text-slate-700">{title}</p><p className="mt-1 text-sm text-slate-500">{description}</p></div>; }

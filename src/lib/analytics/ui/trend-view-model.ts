@@ -1,0 +1,25 @@
+import type { AnalyticsSummaryDto, ComparisonDto, StoreSummaryDto } from "@/lib/analytics/integration/dto";
+import type { MetricFormat, UiAvailability, UiConfidence } from "./types";
+
+export const comparisonLabels = { previousDay: "前日", previousWeek: "前週", previousWeekday: "前週同曜日", previousMonth: "前月", previousMonthToDate: "前月同期間" } as const;
+export type ComparisonKey = keyof typeof comparisonLabels;
+export type TrendResponseDto = { period: { from: string; to: string }; stores: Array<{ id: string; code: string; name: string; shortName: string }>; overall?: AnalyticsSummaryDto; summary: AnalyticsSummaryDto; comparison?: ComparisonDto; comparisons?: ComparisonDto[]; storeSummaries?: StoreSummaryDto[]; daily: Array<{ date: string; volume: unknown; efficiency: unknown }> };
+export type TrendMetricViewModel = { key: string; label: string; value: number | null; baseline: number | null; difference: number | null; differenceRate: number | null; format: MetricFormat; availability: UiAvailability; confidence?: UiConfidence; period: { from: string; to: string }; direction?: ComparisonDto["direction"]; positiveIsBetter: boolean | null; description: string };
+export type TrendViewModel = { period: TrendResponseDto["period"]; stores: TrendResponseDto["stores"]; comparisonOptions: Array<{ key: ComparisonKey; label: string; comparison: ComparisonDto | null }>; selectedComparison: ComparisonDto | null; sample: AnalyticsSummaryDto["sample"] | null; efficiency: TrendMetricViewModel[]; volume: TrendMetricViewModel[]; storeSummaries: StoreSummaryDto[]; castAvailable: false };
+
+const efficiency = [
+  ["salesPerHour", "売上／時間", "hourly", true, "売上効率"], ["salesPerPerson", "売上／人", "currency", true, "1人あたり売上"], ["rewardPerHour", "女子報酬／時間", "hourly", true, "報酬効率"], ["rewardPerPerson", "女子報酬／人", "currency", true, "1人あたり報酬"], ["reservationsPerHour", "予約／時間", "decimal", true, "予約効率"], ["reservationsPerPerson", "予約／人", "decimal", true, "予約効率"], ["averageUnitPrice", "平均単価", "currency", true, "平均単価"], ["regularNominationRate", "本指名率", "percent", true, "本指名率"], ["utilizationRate", "稼働率", "percent", null, "入力未接続の場合があります"], ["theoreticalMaxAchievementRate", "理論最大時給達成率", "percent", null, "Rank未接続の場合があります"],
+] as const;
+const volume = [
+  ["sales", "売上", "currency", true, "売上実績"], ["castReward", "女子報酬", "currency", true, "売上実績"], ["profit", "利益", "currency", true, "売上実績"], ["reservations", "予約", "count", true, "接客実績"], ["services", "接客", "count", true, "接客実績"], ["regularNominations", "本指名", "count", true, "接客実績"], ["free", "フリー", "count", true, "顧客構成"], ["new", "新規", "count", true, "顧客構成"], ["repeat", "リピート", "count", true, "顧客構成"], ["paidOptions", "有料OP", "count", true, "顧客構成"], ["diaryPosts", "写メ日記", "count", true, "活動量"], ["townPv", "Town PV", "pv", null, "媒体露出。予約経路とは結び付きません"], ["townUu", "Town UU", "uu", null, "媒体露出。予約経路とは結び付きません"], ["heavenAccess", "Heavenアクセス", "pv", null, "媒体露出。予約経路とは結び付きません"], ["attendancePeople", "出勤人数", "people", true, "Sample"], ["attendanceMinutes", "出勤時間", "hours", null, "活動量"],
+] as const;
+
+function metric(summary: AnalyticsSummaryDto, key: string, group: "efficiency" | "volume") { return group === "efficiency" ? summary.efficiency[key as never] as number | null : summary.volume.metrics[key as never] as number | null; }
+function toMetrics(summary: AnalyticsSummaryDto, comparison: ComparisonDto | null, specs: readonly (readonly [string, string, MetricFormat, boolean | null, string])[]) { return specs.map(([key, label, format, positiveIsBetter, description]) => ({ key, label, value: metric(summary, key, specs === efficiency ? "efficiency" : "volume"), baseline: comparison?.baseline ?? null, difference: comparison?.difference ?? null, differenceRate: comparison?.differenceRate ?? null, format, availability: (summary.efficiency.metricAvailability?.[key as never] ?? summary.volume.metricAvailability?.[key as never] ?? (metric(summary, key, specs === efficiency ? "efficiency" : "volume") === null ? "MISSING" : "VALUE")) as UiAvailability, confidence: comparison?.confidence, period: comparison?.period ?? { from: "", to: "" }, direction: comparison?.direction, positiveIsBetter, description })); }
+export function toTrendViewModel(response: TrendResponseDto, selected: ComparisonKey = "previousMonthToDate"): TrendViewModel {
+  const all = response.comparisons ?? (response.comparison ? [response.comparison] : []);
+  const options = (Object.keys(comparisonLabels) as ComparisonKey[]).map((key) => ({ key, label: comparisonLabels[key], comparison: all.find((item) => item.baselineKind === key) ?? null }));
+  const chosen = options.find((item) => item.key === selected)?.comparison ?? response.comparison ?? null;
+  const summary = response.overall ?? response.summary;
+  return { period: response.period, stores: response.stores, comparisonOptions: options, selectedComparison: chosen, sample: summary?.sample ?? null, efficiency: toMetrics(summary, chosen, efficiency), volume: toMetrics(summary, chosen, volume), storeSummaries: response.storeSummaries ?? [], castAvailable: false };
+}

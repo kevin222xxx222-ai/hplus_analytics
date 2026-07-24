@@ -1,0 +1,1 @@
+export function AnalyticsErrorState({ message = "分析データを取得できませんでした。" }: { message?: string }) { return <div className="rounded-xl border border-red-200 bg-red-50 p-8 text-center text-red-800" role="alert"><p className="font-semibold">分析データを取得できませんでした</p><p className="mt-1 text-sm">{message}</p></div>; }

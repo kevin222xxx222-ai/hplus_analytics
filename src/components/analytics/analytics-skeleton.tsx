@@ -1,0 +1,1 @@
+export function AnalyticsSkeleton({ count = 3 }: { count?: number }) { return <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-busy="true" aria-label="分析データを読み込み中">{Array.from({ length: count }, (_, index) => <div key={index} className="h-32 animate-pulse rounded-2xl border border-slate-200 bg-slate-100" />)}</div>; }

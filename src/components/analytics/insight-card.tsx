@@ -1,0 +1,7 @@
+import type { UiConfidence, UiAvailability } from "@/lib/analytics/ui";
+import { AvailabilityBadge } from "./availability-badge";
+import { ConfidenceBadge } from "./confidence-badge";
+
+export function InsightCard({ cause, evidence, action, comparison, sample, confidence, availability }: { cause: string; evidence: string[]; action?: string | null; comparison?: string; sample?: string; confidence?: UiConfidence; availability?: UiAvailability }) {
+  return <article className="panel min-w-0 p-4" aria-label="分析インサイト"><div className="grid gap-4 sm:grid-cols-3"><div><p className="text-xs font-bold uppercase tracking-wide text-slate-500">原因</p><p className="mt-1 text-sm text-slate-800">{cause}</p></div><div><p className="text-xs font-bold uppercase tracking-wide text-slate-500">根拠</p><ul className="mt-1 list-disc space-y-1 pl-4 text-sm text-slate-700">{evidence.map((item, index) => <li key={`${item}-${index}`}>{item}</li>)}</ul>{comparison && <p className="mt-2 text-xs text-slate-500">比較: {comparison}</p>}{sample && <p className="text-xs text-slate-500">Sample: {sample}</p>}</div><div><p className="text-xs font-bold uppercase tracking-wide text-slate-500">提案</p><p className="mt-1 text-sm text-slate-800">{action || "提案なし"}</p></div></div><div className="mt-4 flex flex-wrap gap-2">{availability && <AvailabilityBadge value={availability} />}{confidence && <ConfidenceBadge value={confidence} />}</div></article>;
+}

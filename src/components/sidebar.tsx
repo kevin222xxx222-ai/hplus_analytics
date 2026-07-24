@@ -17,6 +17,8 @@ const nav = [
   { href: "/analytics/casts/discovery", label: "CAST DISCOVERY", icon: UsersRound },
   { href: "/analytics/marketing-lab", label: "MARKETING LAB", icon: BarChart3 },
   { href: "/analytics/navigator", label: "分析ナビゲーター", icon: LayoutDashboard },
+  { href: "/analytics/performance", label: "Performance Funnel", icon: BarChart3 },
+  { href: "/analytics/trend", label: "Trend Analytics", icon: BarChart3 },
   { href: "/analytics/town/stores", label: "タウン店舗分析", icon: Building2 },
   { href: "/analytics/town/casts", label: "タウン女子分析", icon: UsersRound },
   { href: "/analytics/heaven/store", label: "Heaven店舗分析", icon: Building2 },
