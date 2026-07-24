@@ -1,6 +1,6 @@
 import type { AnalyticsFilterState } from "./types";
 
-const filterKeys: (keyof AnalyticsFilterState)[] = ["period", "from", "to", "store", "comparison", "metric", "metricGroup", "growth", "confidence", "castSearch", "sort"];
+const filterKeys: (keyof AnalyticsFilterState)[] = ["period", "from", "to", "store", "castId", "dimension", "category", "comparison", "metric", "metricGroup", "growth", "confidence", "castSearch", "sort", "order"];
 
 export function readAnalyticsFilters(params: URLSearchParams, defaults: AnalyticsFilterState): AnalyticsFilterState {
   const next = { ...defaults };
