@@ -83,7 +83,7 @@ button:disabled {
   }
 
   .table-wrap {
-    @apply overflow-x-auto;
+    @apply max-h-[36rem] overflow-auto;
   }
 
   .table-wrap table {
@@ -91,8 +91,16 @@ button:disabled {
   }
 
   .table-wrap th {
-    @apply whitespace-nowrap border-b border-slate-200 bg-slate-50/80 px-5 py-3 text-[11px] font-bold tracking-wide text-slate-500;
+    @apply sticky top-0 z-10 whitespace-nowrap border-b border-slate-200 bg-slate-50 px-5 py-3 text-[11px] font-bold tracking-wide text-slate-500 shadow-[0_1px_0_rgba(15,23,42,0.06)];
   }
+
+  .dark .table-wrap th { @apply border-slate-700 bg-slate-900 text-slate-300; }
+
+  .sidebar-scroll { scrollbar-width: thin; scrollbar-color: rgba(148, 163, 184, .42) transparent; }
+  .sidebar-scroll::-webkit-scrollbar { width: 6px; }
+  .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+  .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, .38); border-radius: 9999px; }
+  .sidebar-scroll::-webkit-scrollbar-thumb:hover { background: rgba(167, 243, 208, .65); }
 
   .table-wrap td {
     @apply whitespace-nowrap border-b border-slate-100 px-5 py-4 text-slate-600;

@@ -48,4 +48,4 @@ export function toTrendDto(input: AnalyticsInputDto, summary: AnalyticsSummaryDt
   return serialise({ period: { from: input.from, to: input.to }, stores: input.stores, storeSummaries, overall: summary, summary, comparison, comparisons, daily });
 }
 
-export function toTimeDto(input: AnalyticsInputDto, weekdays: WeekdayAnalysis[], overall?: AnalyticsSummaryDto, storeSummaries: StoreSummaryDto[] = [], comparison?: ComparisonDto) { return serialise({ period: { from: input.from, to: input.to }, stores: input.stores, storeSummaries, overall, comparison, weekdays }); }
+export function toTimeDto(input: AnalyticsInputDto, weekdays: WeekdayAnalysis[], overall?: AnalyticsSummaryDto, storeSummaries: StoreSummaryDto[] = [], comparison?: ComparisonDto, crossAnalysis?: unknown) { return serialise({ period: { from: input.from, to: input.to }, stores: input.stores, storeSummaries, overall, comparison, weekdays, crossAnalysis, weekdayDetails: crossAnalysis }); }

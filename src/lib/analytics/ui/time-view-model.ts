@@ -7,6 +7,8 @@ export type TimeResponseDto = {
   overall?: { volume: { metrics: Record<string, number | null>; metricAvailability?: Record<string, string>; sample: Record<string, unknown>; efficiency: Record<string, unknown> }; efficiency: Record<string, unknown>; sample: Record<string, unknown>; growth?: unknown; nextBestAction?: unknown };
   storeSummaries?: Array<{ store: { id: string; code: string; name: string; shortName: string }; summary: TimeResponseDto["overall"] }>;
   weekdays?: Array<{ weekday: number; label: string; volume: { metrics: Record<string, number | null>; metricAvailability?: Record<string, string>; sample: Record<string, unknown> }; efficiency: Record<string, number | null> & { metricAvailability?: Record<string, string> }; sample: Record<string, unknown> }>;
+  crossAnalysis?: Array<{ weekday: number; label: string; sampleDays: number; sales: { value: number | null; availability: string }; compensation: { value: number | null; availability: string }; reservations: { value: number | null; availability: string }; contracts: { value: number | null; availability: string }; townStorePv: { value: number | null; availability: string }; townStoreUu: { value: number | null; availability: string }; townDiaryPv: { value: number | null; availability: string }; townDiaryUu: { value: number | null; availability: string }; townCastPagePv: { value: number | null; availability: string }; townCastPageUu: { value: number | null; availability: string }; ctiDiaryPostCount: { value: number | null; availability: string }; heavenDiaryPostCount: { value: number | null; availability: string }; diaryPostActivityReference: { value: number | null; availability: string }; attendanceCount: { value: number | null; availability: string }; workHours: { value: number | null; availability: string }; efficiencies: Record<string, { value: number | null; availability: string }>; confidence: string; primaryCause: string; causeCandidates: Array<{ code: string; label: string; priority: number; score: number; evidence: string[]; isPrimary: boolean }>; recommendedActions: Array<{ code: string; title: string; priority: number; score: number; evidence: string[] }>; primaryAction: { code: string; title: string; score: number; evidence: string[] } | null; comparisonContext?: Record<string, { value: number | null; availability: string }> }>;
+  weekdayDetails?: TimeResponseDto["crossAnalysis"];
 };
 
 export const TIME_METRICS: Record<TimeMetricCategory, Array<{ key: string; label: string; format: "number" | "currency" | "hours" | "percent" }>> = {
@@ -25,9 +27,9 @@ export const TIME_METRICS: Record<TimeMetricCategory, Array<{ key: string; label
     { key: "services", label: "接客数", format: "number" },
     { key: "attendancePeople", label: "出勤人数", format: "number" },
     { key: "attendanceMinutes", label: "出勤時間", format: "hours" },
-    { key: "townPv", label: "Town PV", format: "number" },
-    { key: "townUu", label: "Town UU", format: "number" },
-    { key: "heavenAccess", label: "Heavenアクセス", format: "number" },
+    { key: "townPv", label: "TownキャストページPV", format: "number" },
+    { key: "townUu", label: "TownキャストページUU", format: "number" },
+    { key: "heavenAccess", label: "Heaven女の子ページアクセス", format: "number" },
   ],
   sample: [
     { key: "targetDays", label: "対象日数", format: "number" },

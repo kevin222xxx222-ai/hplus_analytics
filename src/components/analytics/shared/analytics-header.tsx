@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { localizeAnalyticsLabel } from "./analytics-labels";
 
 type AnalyticsHeaderProps = {
   eyebrow?: string;
@@ -17,7 +18,7 @@ export function AnalyticsHeader({ eyebrow, title, description, period, storeLabe
     <header className="analytics-header" aria-busy={loading}>
       <div>
         {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-        <h1>{title}</h1>
+        <h1>{localizeAnalyticsLabel(title)}</h1>
         {description ? <p className="muted">{description}</p> : null}
         <div className="analytics-header-meta">
           {storeLabel ? <span>{storeLabel}</span> : null}
@@ -29,7 +30,7 @@ export function AnalyticsHeader({ eyebrow, title, description, period, storeLabe
         {actions}
         {onRefresh ? <button type="button" className="secondary-button" onClick={onRefresh} disabled={loading}>{loading ? "更新中…" : "再読み込み"}</button> : null}
       </div>
-      {loading ? <span className="sr-only" role="status">分析データを取得中</span> : null}
+      {loading ? <span className="sr-only" role="status">データを集計しています。CTI・Town・Heavenのデータを統合しています。</span> : null}
     </header>
   );
 }

@@ -3,6 +3,7 @@ import { parseDateOnly } from "@/lib/date";
 import { adaptSnapshot } from "./adapter";
 import { ANALYTICS_STORE_CODES, fetchAnalyticsSnapshot, type AnalyticsQuery } from "./query";
 import { toComparisonDto, toPerformanceDto, toTimeDto, toTrendDto, type AnalyticsSummaryDto, type StoreSummaryDto } from "./dto";
+import { getDiaryAnalytics } from "@/lib/analytics/diary";
 
 export type AnalyticsRequest = { from: string; to: string; storeCodes?: AnalyticsQuery["storeCodes"]; comparison?: (typeof comparisonKinds)[number] };
 const comparisonKinds = ["previousDay", "previousWeek", "previousWeekday", "previousMonth", "previousMonthToDate"] as const;
@@ -103,7 +104,8 @@ export async function getTime(input: AnalyticsRequest) {
   const adapted = adaptSnapshot(await fetchAnalyticsSnapshot(queryInput(input)));
   const overallVolume = aggregateVolume(adapted.rows)[0];
   const storeSummaries: StoreSummaryDto[] = adapted.stores.map((store) => { const rows = adapted.rows.filter((row) => row.storeId === store.id); return { store, summary: buildSummary(rows, adapted.casts.filter((cast) => rows.some((row) => row.castId === cast.id))) }; });
-  return toTimeDto(adapted, analyzeWeekdays(adapted.rows), { volume: overallVolume, efficiency: calculateEfficiency(overallVolume), sample: overallVolume.sample }, storeSummaries);
+  const diary = await getDiaryAnalytics({ from: input.from, to: input.to, storeCodes: input.storeCodes });
+  return toTimeDto(adapted, analyzeWeekdays(adapted.rows), { volume: overallVolume, efficiency: calculateEfficiency(overallVolume), sample: overallVolume.sample }, storeSummaries, undefined, diary.weekday);
 }
 
 export { comparisonRange, summarizeSample };

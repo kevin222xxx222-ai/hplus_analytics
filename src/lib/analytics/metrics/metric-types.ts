@@ -1,0 +1,20 @@
+export type MetricValueKind = "DAILY_EVENT" | "SNAPSHOT" | "DERIVED";
+export type MetricGrain = "day" | "store" | "cast" | "url" | "weekday" | "period";
+export type MetricDefinition = {
+  metricKey: string;
+  label: string;
+  shortLabel: string;
+  description: string;
+  source: string;
+  dbModel: string;
+  dbColumn: string;
+  grain: MetricGrain[];
+  unit: string;
+  valueKind: MetricValueKind;
+  availability: string[];
+  aggregation: "sum" | "snapshot" | "ratio" | "reference";
+  additive: boolean;
+  crossMediaAdditive: boolean;
+  display: "integer" | "currency" | "percent" | "decimal";
+  notes: string;
+};

@@ -6,5 +6,6 @@ export * from "./sample";
 export * from "./baseline";
 export * from "./trend";
 export * from "./weekday";
+export * from "./diary";
 export * from "./growth";
 export * from "./action";

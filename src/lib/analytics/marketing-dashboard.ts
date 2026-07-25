@@ -171,17 +171,17 @@ export function analyzeMarketingLab(rows: ReturnType<typeof aggregateDashboardCa
   const heavenActive = active.filter((x) => x.source.heaven && x.heavenPageAccess !== null && x.heavenPageAccess > 0);
   const townPvLow = quartile(townActive.map((x) => x.pvPerDay ?? NaN), .25);
   const heavenAccessLow = quartile(heavenActive.map((x) => ratio(x.heavenPageAccess ?? 0, x.attendanceDays) ?? NaN), .25);
-  const diaryValue = (x: ReturnType<typeof aggregateDashboardCast>) => x.diaryCountCti === null && x.heavenDiaryPosts === null ? null : (x.diaryCountCti ?? 0) + (x.heavenDiaryPosts ?? 0);
+  const diaryPostActivityReference = (x: ReturnType<typeof aggregateDashboardCast>) => x.diaryCountCti === null && x.heavenDiaryPosts === null ? null : (x.diaryCountCti ?? 0) + (x.heavenDiaryPosts ?? 0);
   const activityValue = (x: ReturnType<typeof aggregateDashboardCast>) => x.miteneSent === null && x.okiniTalkSent === null && x.heavenDiaryPosts === null ? null : (x.miteneSent ?? 0) + (x.okiniTalkSent ?? 0) + (x.heavenDiaryPosts ?? 0);
-  const diaryValues = active.map(diaryValue).filter((value): value is number => value !== null);
+  const diaryValues = active.map(diaryPostActivityReference).filter((value): value is number => value !== null);
   const diaryHigh = quartile(diaryValues, .75) ?? 0;
   const diaryLow = quartile(diaryValues, .25) ?? 0;
   const diaryGroups = [
-    { key: "0", label: "0件", rows: active.filter((x) => diaryValue(x) === 0) },
-    { key: "1_5", label: "1〜5件", rows: active.filter((x) => { const n = diaryValue(x); return n !== null && n >= 1 && n <= 5; }) },
-    { key: "6_10", label: "6〜10件", rows: active.filter((x) => { const n = diaryValue(x); return n !== null && n >= 6 && n <= 10; }) },
-    { key: "11_20", label: "11〜20件", rows: active.filter((x) => { const n = diaryValue(x); return n !== null && n >= 11 && n <= 20; }) },
-    { key: "21_plus", label: "21件以上", rows: active.filter((x) => { const n = diaryValue(x); return n !== null && n >= 21; }) },
+    { key: "0", label: "0件", rows: active.filter((x) => diaryPostActivityReference(x) === 0) },
+    { key: "1_5", label: "1〜5件", rows: active.filter((x) => { const n = diaryPostActivityReference(x); return n !== null && n >= 1 && n <= 5; }) },
+    { key: "6_10", label: "6〜10件", rows: active.filter((x) => { const n = diaryPostActivityReference(x); return n !== null && n >= 6 && n <= 10; }) },
+    { key: "11_20", label: "11〜20件", rows: active.filter((x) => { const n = diaryPostActivityReference(x); return n !== null && n >= 11 && n <= 20; }) },
+    { key: "21_plus", label: "21件以上", rows: active.filter((x) => { const n = diaryPostActivityReference(x); return n !== null && n >= 21; }) },
   ].map((group) => ({ ...group, stats: averageRows(group.rows), warning: group.rows.length < 5 }));
   const activityGroups = [
     { key: "low", label: "活動量低", rows: active.filter((x) => { const n = activityValue(x); return n !== null && n < diaryLow; }) },
@@ -193,7 +193,7 @@ export function analyzeMarketingLab(rows: ReturnType<typeof aggregateDashboardCa
   const hypotheses: MarketingLabHypothesis[] = [];
   const activeAverage = averageRows(active);
   for (const row of active) {
-    const diaryCount = diaryValue(row);
+    const diaryCount = diaryPostActivityReference(row);
     const diaryPerDay = diaryCount === null ? null : ratio(diaryCount, row.attendanceDays);
     const pvPerDay = row.pvPerDay;
     if (diaryPerDay !== null && pvPerDay !== null && diaryPerDay <= diaryLow && townPvLow !== null && pvPerDay <= townPvLow) hypotheses.push({ row, type: "日記量不足候補", evidence: `日記/出勤日 ${diaryPerDay.toFixed(1)}、PV/出勤日 ${pvPerDay.toFixed(1)}`, priority: "MEDIUM", recommendation: "日記更新頻度の強化を検討" });
@@ -205,7 +205,7 @@ export function analyzeMarketingLab(rows: ReturnType<typeof aggregateDashboardCa
     if (medianDays !== null && row.attendanceDays <= medianDays && salesTop !== null && (row.salesPerDay ?? -1) >= salesTop) hypotheses.push({ row, type: "出勤増加候補", evidence: `出勤日 ${row.attendanceDays}、売上/日 ${numberValue(row.salesPerDay)}`, priority: "HIGH", recommendation: "出勤増加を相談" });
   }
   const average = averageRows(active); const comparison = { high: averageRows(high), median: averageRows(highBase.filter((x) => medianDays !== null && x.attendanceDays <= medianDays)), low: averageRows(low) };
-  const correlations = { diaryPv: pearson(active.map((x) => { const value = diaryValue(x); return value === null ? null : ratio(value, x.attendanceDays); }), active.map((x) => x.pvPerDay)), miteneAccess: pearson(active.map((x) => x.miteneSent === null ? null : ratio(x.miteneSent, x.attendanceDays)), active.map((x) => x.heavenPageAccess === null ? null : ratio(x.heavenPageAccess, x.attendanceDays))), pvSales: pearson(active.map((x) => x.pvPerDay), active.map((x) => x.salesPerDay)), attendanceSales: pearson(active.map((x) => x.attendanceDays), active.map((x) => x.sales)), regularReward: pearson(active.map((x) => x.regularRate), active.map((x) => x.rewardPerHour)) };
+  const correlations = { diaryPostActivityReferencePv: pearson(active.map((x) => { const value = diaryPostActivityReference(x); return value === null ? null : ratio(value, x.attendanceDays); }), active.map((x) => x.pvPerDay)), miteneAccess: pearson(active.map((x) => x.miteneSent === null ? null : ratio(x.miteneSent, x.attendanceDays)), active.map((x) => x.heavenPageAccess === null ? null : ratio(x.heavenPageAccess, x.attendanceDays))), pvSales: pearson(active.map((x) => x.pvPerDay), active.map((x) => x.salesPerDay)), attendanceSales: pearson(active.map((x) => x.attendanceDays), active.map((x) => x.sales)), regularReward: pearson(active.map((x) => x.regularRate), active.map((x) => x.rewardPerHour)) };
   const efficiencyClasses: MarketingEfficiencyClass[] = highBase.map((row) => {
     const strong = [(salesTop !== null && (row.salesPerDay ?? -1) >= salesTop) ? "売上/出勤日" : null, (rewardTop !== null && (row.rewardPerHour ?? -1) >= rewardTop) ? "女子報酬/出勤時間" : null, (contractTop !== null && (row.contractsPerDay ?? -1) >= contractTop) ? "成約/出勤日" : null, (regularTop !== null && (row.regularRate ?? -1) >= regularTop) ? "本指名率" : null].filter((x): x is string => Boolean(x));
     const weak = [(salesLow !== null && (row.salesPerDay ?? Infinity) <= salesLow) ? "売上/出勤日" : null, (rewardLow !== null && (row.rewardPerHour ?? Infinity) <= rewardLow) ? "女子報酬/出勤時間" : null, (contractLow !== null && (row.contractsPerDay ?? Infinity) <= contractLow) ? "成約/出勤日" : null, (regularLow !== null && (row.regularRate ?? Infinity) <= regularLow) ? "本指名率" : null].filter((x): x is string => Boolean(x));

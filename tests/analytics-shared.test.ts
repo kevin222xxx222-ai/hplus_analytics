@@ -7,9 +7,9 @@ import { AnalyticsFetchError, fetchAnalyticsJson, readAnalyticsFilters, writeAna
 describe("analytics shared presentation infrastructure", () => {
   it("renders an accessible header and loading state", () => {
     const html = renderToStaticMarkup(createElement("div", null, createElement(AnalyticsHeader, { title: "Performance", loading: true, description: "説明" }), createElement(AnalyticsPageLayout, { title: "Performance", loading: true }, createElement("div", null, "content"))));
-    expect(html).toContain("Performance");
+    expect(html).toContain("実績");
     expect(html).toContain("aria-busy=\"true\"");
-    expect(html).toContain("分析データを読み込み中");
+    expect(html).toContain("データを集計しています");
   });
 
   it("keeps filter controls labelled and comparison options reusable", () => {
@@ -28,7 +28,7 @@ describe("analytics shared presentation infrastructure", () => {
 
   it("renders metric groups through the existing KPI primitive", () => {
     const html = renderToStaticMarkup(createElement(AnalyticsMetricGroup, { title: "Volume", metrics: [{ key: "sales", label: "売上", value: 0, hint: "実績" }] }));
-    expect(html).toContain("Volume");
+    expect(html).toContain("実績データ");
     expect(html).toContain("売上");
     expect(html).toContain(">0</p>");
   });

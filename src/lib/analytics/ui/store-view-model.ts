@@ -7,7 +7,7 @@ export const STORE_METRICS = [
   ["sales", "売上", "currency"], ["castReward", "女子報酬", "currency"], ["attendancePeople", "出勤人数", "count"],
   ["reservations", "予約", "count"], ["services", "接客", "count"], ["regularNominations", "本指名", "count"],
   ["attendanceMinutes", "出勤時間", "hours"], ["salesPerHour", "売上／時間", "currency"], ["rewardPerHour", "女子報酬／時間", "currency"],
-  ["townPv", "Town PV", "count"], ["townUu", "Town UU", "count"], ["heavenAccess", "Heavenアクセス", "count"], ["diaryPosts", "写メ日記", "count"],
+  ["townPv", "TownキャストページPV", "count"], ["townUu", "TownキャストページUU", "count"], ["heavenAccess", "Heaven女の子ページアクセス", "count"], ["diaryPosts", "写メ日記投稿数", "count"],
 ] as const;
 export type StoreMetricKey = typeof STORE_METRICS[number][0];
 export function storeMetric(summary: AnalyticsSummaryDto | undefined, key: string) {
