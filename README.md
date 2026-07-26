@@ -16,6 +16,14 @@ CTI・デリヘルタウン・シティヘブンのデータを統合する、�
 
 詳細は [docs/SPECIFICATION.md](docs/SPECIFICATION.md)、DB設計は [docs/DATABASE.md](docs/DATABASE.md)、運用は [docs/IMPORT_CTI.md](docs/IMPORT_CTI.md)、列対応は [docs/CTI_COLUMN_MAPPING.md](docs/CTI_COLUMN_MAPPING.md) を参照してください。
 
+## HOME v1.0
+
+- [HOME Architecture](docs/HOME_ARCHITECTURE.md)
+- [HOME Design Principles](docs/HOME_DESIGN_PRINCIPLES.md)
+- [HOME Metric Definitions](docs/HOME_METRIC_DEFINITIONS.md)
+- [HOME Change Policy](docs/HOME_CHANGE_POLICY.md)
+- [HOME v1.0 Release Notes](docs/HOME_V1_RELEASE_NOTES.md)
+
 ## ローカル起動
 
 1. `.env.example` を `.env` へコピーし、パスワードを変更します。

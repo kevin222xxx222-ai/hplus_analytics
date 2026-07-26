@@ -5,6 +5,38 @@
   --foreground: #17201e;
 }
 
+/* The primary KPI strip is CTI-focused; media cards are presented in 前日媒体活動. */
+section[aria-labelledby="daily-brief-title"] > div:has(> h2) [data-metric="予約数"],
+section[aria-labelledby="daily-brief-title"] > div:has(> h2) [data-metric="Town PV"],
+section[aria-labelledby="daily-brief-title"] > div:has(> h2) [data-metric="Town UU"],
+section[aria-labelledby="daily-brief-title"] > div:has(> h2) [data-metric="Heaven女子ページアクセス"],
+section[aria-labelledby="daily-brief-title"] > div:has(> h2) [data-metric="Heaven写メ日記投稿"] {
+  display: none;
+}
+
+/* HOME comparison overrides must be in the unlayered cascade so they win over
+   generated responsive utilities such as md:grid-cols-2. */
+@container home-dashboard (min-width: 640px) {
+  .mb-6.space-y-5 > section[aria-labelledby="comparison-title"] div[class*="grid"][class*="gap-4"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container home-dashboard (min-width: 920px) {
+  .mb-6.space-y-5 > section[aria-labelledby="comparison-title"] div[class*="grid"][class*="gap-4"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@container home-dashboard (max-width: 639px) {
+  .mb-6.space-y-5 > section[aria-labelledby="comparison-title"] div[class*="grid"][class*="gap-4"] {
+    grid-template-columns: 1fr;
+  }
+}
+@media (min-width: 1200px) {
+  .mb-6.space-y-5 > section[aria-labelledby="comparison-title"] div[class*="grid"][class*="gap-4"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -84,6 +116,36 @@ button:disabled {
 
   .table-wrap {
     @apply max-h-[36rem] overflow-auto;
+  }
+
+  .home-table-wrap {
+    @apply max-h-none overflow-x-auto overflow-y-visible;
+  }
+
+/* HOME cards are sized from the available content width, not only the viewport. */
+.mb-6.space-y-5 {
+  container: home-dashboard / inline-size;
+}
+.home-three-column-grid {
+  grid-template-columns: 1fr;
+}
+@container home-dashboard (min-width: 800px) {
+  .home-three-column-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container home-dashboard (min-width: 1200px) {
+  .home-three-column-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.home-compact-card {
+  min-height: 0;
+}
+
+  .mb-6.space-y-5 [class*="rounded-2xl"][class*="bg-white"] {
+    padding: 1rem;
   }
 
   .table-wrap table {
