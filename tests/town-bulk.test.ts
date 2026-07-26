@@ -108,11 +108,11 @@ describe("Town local bulk import", () => {
 
   it("selects all four Town types only while unconfirmed", () => {
     const base = {
-      key: "x", folderKey: "KASUKABE", storeName: "春日部", filename: "x.csv", targetFrom: "2026-06-01", targetTo: "2026-06-01",
-      size: 1, sha256: "sha", state: "EXISTING_BATCH", processStatus: "PREVIEW_READY", batchId: "batch",
+      key: "x", folderKey: "KASUKABE" as const, storeName: "春日部", filename: "x.csv", targetFrom: "2026-06-01", targetTo: "2026-06-01",
+      size: 1, sha256: "sha", state: "EXISTING_BATCH" as const, processStatus: "PREVIEW_READY" as const, batchId: "batch",
       pendingCount: 0, warningCount: 0, errorCount: 0, ambiguousCount: 0, unmatchedCount: 0, autoConfirmSafe: true,
-      correctionBatchIds: [], error: null, canProcess: false,
-    } as const;
+      correctionBatchIds: [] as string[], error: null, canProcess: false,
+    };
     const eligible = [ImportDataType.TOWN_STORE, ImportDataType.TOWN_CAST, ImportDataType.TOWN_URL, ImportDataType.TOWN_LANDING]
       .map((dataType, index) => ({ ...base, key: String(index), batchId: `batch-${index}`, dataType }));
     const completed = { ...base, key: "done", dataType: ImportDataType.TOWN_CAST, processStatus: "COMPLETED" };

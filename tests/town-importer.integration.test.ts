@@ -46,7 +46,7 @@ describe("Town importer integration", () => {
     const batch = await createBatch([row(5, null, 100, "Town別名"), row(6, null, 80, "Town別名")], "town-alias");
     const result = await resolveTownPreviewRow(batch, "CAST:5", { action: "EXISTING", castId });
     expect(result.row).toMatchObject({ castId, resolutionStatus: "EXACT_ALIAS" });
-    expect(result.summary.pendingCount).toBe(0);
+    expect(result.summary?.pendingCount).toBe(0);
     expect((await readPreview<TownPreview>(batch)).rows).toEqual(expect.arrayContaining([
       expect.objectContaining({ rowKey: "CAST:5", castId }),
       expect.objectContaining({ rowKey: "CAST:6", castId }),

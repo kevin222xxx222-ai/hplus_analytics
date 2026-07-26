@@ -4,7 +4,7 @@ import { ImportDataType, StoreCode } from "@/generated/prisma/client";
 import { parseTownCsv } from "@/lib/imports/town/parser";
 import type { TownImportDataType } from "@/lib/imports/town/types";
 
-async function fixture(name: string, dataType: TownImportDataType, storeCode = StoreCode.KASUKABE, externalStoreId = "11111") {
+async function fixture(name: string, dataType: TownImportDataType, storeCode: StoreCode = StoreCode.KASUKABE, externalStoreId = "11111") {
   return parseTownCsv({
     buffer: await readFile(new URL(`./fixtures/${name}`, import.meta.url)), batchId: "batch", runId: "run",
     dataType, storeId: storeCode, storeCode, storeName: storeCode,

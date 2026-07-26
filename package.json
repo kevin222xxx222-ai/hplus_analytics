@@ -11,6 +11,11 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
+    "qa:e2e": "playwright test",
+    "qa:a11y": "playwright test tests/e2e/accessibility.spec.ts",
+    "qa:visual": "playwright test tests/e2e/visual.spec.ts",
+    "qa:visual:update": "playwright test tests/e2e/visual.spec.ts --update-snapshots",
+    "qa:gate": "tsx scripts/qa-release-gate.ts",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
@@ -35,6 +40,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@playwright/test": "^1.62.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/pg": "^8.20.0",

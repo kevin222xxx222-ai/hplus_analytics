@@ -8,6 +8,8 @@ import type { TownImportDataType } from "@/lib/imports/town/types";
 const roots = {
   KASUKABE: "/Users/matsu/Documents/Codex/kasukabe",
   KOSHIGAYA: "/Users/matsu/Documents/Codex/koshigaya",
+  NODA: "/Users/matsu/Documents/Codex/noda",
+  KUKI: "/Users/matsu/Documents/Codex/kuki",
 };
 const cases: Array<{ storeCode: StoreCode; file: string; dataType: TownImportDataType; rows: number; externalStoreId: string }> = [
   { storeCode: StoreCode.KASUKABE, file: "dto.jp-shop-20260713_to_20260713.csv", dataType: ImportDataType.TOWN_STORE, rows: 1, externalStoreId: "16829" },
@@ -36,4 +38,3 @@ describe("Town operational CSV files", () => {
     }
   });
 });
-

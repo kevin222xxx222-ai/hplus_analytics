@@ -15,7 +15,7 @@ describe("Analytics API completion DTOs", () => {
   });
 
   it("returns overall, store summary, and cast summary in one performance DTO", () => {
-    const dto = toPerformanceDto({ from: "2026-06-01", to: "2026-06-30", stores: [{ id: "store", code: "KASUKABE", name: "春日部", shortName: "春日部" }], rows: [], casts: [{ id: "cast", displayName: "あゆみ", normalizedName: "あゆみ", startedOn: null, endedOn: null, primaryStoreId: "store", status: "ACTIVE" }] }, [{ castId: "cast", summary: emptySummary() }], emptySummary(), [{ store: { id: "store", code: "KASUKABE", name: "春日部", shortName: "春日部" }, summary: emptySummary() }]);
+    const dto = toPerformanceDto({ from: "2026-06-01", to: "2026-06-30", stores: [{ id: "store", code: "KASUKABE", name: "春日部", shortName: "春日部" }], rows: [], casts: [{ id: "cast", displayName: "あゆみ", normalizedName: "あゆみ", startedOn: "2026-01-01", endedOn: null, primaryStoreId: "store", status: "ACTIVE" }] }, [{ castId: "cast", summary: emptySummary() }], emptySummary(), [{ store: { id: "store", code: "KASUKABE", name: "春日部", shortName: "春日部" }, summary: emptySummary() }]);
     expect(dto.overall).toBeDefined();
     expect(dto.storeSummaries).toHaveLength(1);
     expect(dto.casts[0].summary.sample.confidence).toBe("High");

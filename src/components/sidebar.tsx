@@ -7,6 +7,7 @@ import type { CurrentUser } from "@/lib/auth";
 
 const nav = [
   { href: "/", label: "ホーム", icon: LayoutDashboard },
+  { href: "/analytics/management", label: "全店舗ダッシュボード", icon: Building2 },
   { href: "/data-health", label: "DATA HEALTH", icon: CircleCheck },
   { href: "/imports", label: "CTI取込", icon: UploadCloud, admin: true },
   { href: "/imports/town", label: "タウン取込", icon: UploadCloud, admin: true },

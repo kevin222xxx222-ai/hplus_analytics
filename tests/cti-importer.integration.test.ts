@@ -34,7 +34,7 @@ async function createBatch(date: string, rows: CtiPreviewRow[], hash: string, me
     fileHash: hash.padEnd(64, "0").slice(0, 64), fileSizeBytes: 100n, dataType: ImportDataType.CTI_CAST_REPORT,
     importMode: ImportMode.DAILY, targetFrom: new Date(`${date}T00:00:00Z`), targetTo: new Date(`${date}T00:00:00Z`),
     status: rows.some((row) => !row.castId) ? ImportBatchStatus.WAITING_FOR_CAST_LINK : ImportBatchStatus.PREVIEW_READY,
-    uploadedByUserId: userId, pendingCount: rows.filter((row) => !row.castId).length, metadata,
+    uploadedByUserId: userId, pendingCount: rows.filter((row) => !row.castId).length, metadata: metadata as never,
   } });
   const preview: CtiPreview = { version: 1, batchId: id, runId, importMode: "DAILY", targetFrom: date, targetTo: date, workbookSheetNames: ["若妻淫乱倶楽部春日部店"], missingTargetSheets: ["若妻淫乱倶楽部越谷店", "若妻淫乱倶楽部野田店"], sheets: [{ sheetName: "若妻淫乱倶楽部春日部店", storeCode: StoreCode.KASUKABE, detectedHeaderRow: 2, detectedColumns: [], unknownColumns: [], totalRows: rows.length, excludedRows: 0, rows }], globalIssues: [], createdAt: new Date().toISOString() };
   await writePreview(id, preview);

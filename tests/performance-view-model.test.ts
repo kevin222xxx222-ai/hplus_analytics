@@ -5,7 +5,7 @@ const summary = (growth?: string, availability = "VALUE") => ({ volume: { metric
 
 describe("Performance view model", () => {
   it("maps API DTO without recomputing metrics and preserves missing availability", () => {
-    const result = toPerformanceViewModel({ period: { from: "2026-06-01", to: "2026-06-30" }, stores: [], overall: { ...summary() }, casts: [{ castId: "cast", cast: { id: "cast", displayName: "あゆみ" }, summary: summary("Exposure不足") }] });
+    const result = toPerformanceViewModel({ period: { from: "2026-06-01", to: "2026-06-30" }, stores: [], overall: summary(), casts: [{ castId: "cast", cast: { id: "cast", displayName: "あゆみ" }, summary: summary("Exposure不足") }] });
     expect(result.casts[0].name).toBe("あゆみ");
     expect(result.casts[0].growthLabel).toBe("Exposure不足");
     expect(result.casts[0].metrics.find((metric) => metric.key === "townPv")?.availability).toBe("MISSING");
