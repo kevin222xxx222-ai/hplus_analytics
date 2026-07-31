@@ -1,3 +1,13 @@
+## Current Status
+
+✅ HOME v1 Feature Freeze
+
+✅ Management Dashboard v2 Feature Freeze
+
+⏳ Next:
+Store Analytics v2
+
+
 # HPLUS Analytics
 
 CTI・デリヘルタウン・シティヘブンのデータを統合する、店舗・キャスト・媒体分析専用システムです。既存のドライバー管理システムとは、DB・認証・環境変数・セッション・コンテナ・Prismaスキーマ・デプロイ・ドメインを共有しません。

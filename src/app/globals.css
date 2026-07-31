@@ -51,6 +51,48 @@ body {
   margin: 0;
 }
 
+/* C-4C: the legacy inline feature block is retained for compatibility but the
+   ordered decision-support panel is the visible source of truth. */
+#feature-analysis {
+  display: none !important;
+}
+#feature-analysis + section,
+#feature-analysis + section + section {
+  display: none !important;
+}
+section[aria-labelledby="analytics-section-今月の特徴"] {
+  display: none !important;
+}
+
+/* Store Analytics D-1.1: center the day detail over the viewport. */
+[role="dialog"][aria-label="店舗日次詳細"] {
+  z-index: 100 !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+[role="dialog"][aria-label="店舗日次詳細"] > aside {
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+}
+[role="dialog"][aria-label="店舗日次詳細"] > aside > main {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+@media (min-width: 768px) {
+  [role="dialog"][aria-label="店舗日次詳細"] { padding: 1.5rem; }
+  [role="dialog"][aria-label="店舗日次詳細"] > aside {
+    width: 92vw !important;
+    height: 92vh !important;
+    max-width: 1600px !important;
+    border-radius: 1rem;
+  }
+}
+
 button, input, select, textarea {
   font: inherit;
 }
