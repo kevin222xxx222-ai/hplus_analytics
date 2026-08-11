@@ -6,7 +6,7 @@ import { useState } from "react";
 import { logoutAction } from "@/app/actions/auth";
 import type { CurrentUser } from "@/lib/auth";
 
-type SidebarItem = { href: string; label: string; admin?: boolean };
+type SidebarItem = { href: string; label: string; admin?: boolean; disabled?: boolean };
 type SidebarSection = { label: string; items: SidebarItem[] };
 type SidebarGroup = { id: string; label: string; items?: SidebarItem[]; sections?: SidebarSection[] };
 
@@ -14,10 +14,9 @@ const primaryItems: SidebarItem[] = [
   { href: "/", label: "ホーム" },
   { href: "/analytics/management", label: "全店舗ダッシュボード" },
   { href: "/analytics/store", label: "店舗分析" },
-  { href: "/analytics/trend", label: "推移分析" },
+  { href: "/analytics/trend", label: "推移分析", disabled: true },
   { href: "/analytics/time", label: "曜日分析" },
   { href: "/analytics/cast", label: "キャスト分析" },
-  { href: "/analytics/diary", label: "写メ日記分析" },
 ];
 
 const groups: SidebarGroup[] = [
@@ -49,8 +48,12 @@ function visible(item: SidebarItem, user: CurrentUser) {
 }
 
 function SidebarLink({ item, pathname, indented = false }: { item: SidebarItem; pathname: string; indented?: boolean }) {
-  const active = isActive(pathname, item.href);
-  return <Link href={item.href} aria-current={active ? "page" : undefined} className={`block min-w-0 truncate rounded-xl py-2.5 text-sm transition hover:bg-white/8 hover:text-white ${indented ? "pl-7 pr-3" : "px-3"} ${active ? "bg-white/12 text-white" : "text-slate-300"}`}>{item.label}</Link>;
+  const active = !item.disabled && isActive(pathname, item.href);
+  const className = `flex min-w-0 items-center justify-between gap-2 rounded-xl py-2.5 text-sm ${indented ? "pl-7 pr-3" : "px-3"} ${item.disabled ? "text-slate-400" : `transition hover:bg-white/8 hover:text-white ${active ? "bg-white/12 text-white" : "text-slate-300"}`}`;
+  if (item.disabled) {
+    return <div aria-disabled="true" className={className}><span className="min-w-0 truncate">{item.label}</span><span className="shrink-0 rounded bg-slate-700/60 px-2 py-0.5 text-[10px] font-medium text-slate-300">未実装</span></div>;
+  }
+  return <Link href={item.href} aria-current={active ? "page" : undefined} className={className}><span className="min-w-0 truncate">{item.label}</span></Link>;
 }
 
 export function Sidebar({ user }: { user: CurrentUser }) {

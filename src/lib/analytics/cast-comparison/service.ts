@@ -84,7 +84,7 @@ export function buildCastComparisonAudit(input: CastComparisonInput): CastCompar
   const newAcquisitionExclusions = input.facts.filter((fact) => (fact.attendanceDays.value ?? 0) >= 2).map(matureEvidence).filter((evidence) => evidence.excludedAsMatureMainNominationCast);
   const comparisons = input.facts.flatMap((subject) => (Object.keys({
     femaleReward: true, hourlyReward: true, contracts: true, workingHours: true, contractsPerDay: true, contractsPerHour: true,
-    townPv: true, townUu: true, heavenPageAccess: true, heavenDiaryPosts: true,
+    townPv: true, townUu: true, heavenPageAccess: true, heavenDiaryPosts: true, heavenMyGirlAdds: true, heavenFavoriteTalks: true, heavenMyGirlAddsPer100Access: true, heavenMyGirlAddsPer100TownUu: true, heavenFavoriteTalksPerAttendanceDay: true, heavenFavoriteTalksPer100Access: true,
     photoNominations: true, photoNominationsPerDay: true, photoNominationsPerHour: true, photoNominationsPer100Uu: true, photoNominationShare: true,
     mainNominations: true, mainNominationRate: true, repeatCount: true, repeatShare: true,
   }) as CastMetricKey[]).map((key) => buildComparison(input, subject, key)));

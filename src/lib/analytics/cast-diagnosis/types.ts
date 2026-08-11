@@ -2,7 +2,7 @@ import type { Availability } from "@/lib/analytics/engine/types";
 import type { CastComparisonAxis, CastMetricPeerComparison } from "@/lib/analytics/cast-comparison/types";
 import type { CastComparisonProviderMode } from "@/lib/analytics/cast-comparison/types";
 
-export type CastMetric<T = number> = { value: T | null; availability: Availability };
+export type CastMetric<T = number> = { value: T | null; availability: Availability; isPartial?: boolean; reason?: string; source?: "HEAVEN" | "HEAVEN_TOWN" };
 export type CastDiagnosisType = "STABLE_HIGH_EFFICIENCY" | "LIMITED_BY_AVAILABILITY" | "LOW_PAGE_TRAFFIC" | "LOW_PROFILE_CONVERSION" | "LOW_REPEAT_CONVERSION" | "LOW_NEW_CUSTOMER_ACQUISITION" | "OTHER_REVIEW" | "INSUFFICIENT_DATA";
 export type CastReviewTarget = "LISTING_PHOTO" | "LISTING_COPY" | "MEDIA_EXPOSURE" | "DIARY_POSTING" | "PROFILE_PHOTOS" | "PROFILE_COPY" | "PROFILE_TEXT" | "DIARY_CONTENT" | "REPEAT_STATUS" | "STAFF_REVIEW" | "CANCELLATIONS" | "DATA_INTEGRITY" | "NONE";
 export type CastReviewPriority = "PRIORITY" | "REVIEW" | "WATCH" | "HEALTHY" | "INSUFFICIENT";
@@ -15,6 +15,9 @@ export type CastMonthlyFact = {
   mainNominations: CastMetric; photoNominations: CastMetric; freeCount: CastMetric; newCount: CastMetric; repeatCount: CastMetric; cancelCount: CastMetric;
   femaleReward: CastMetric; chargeAmount: CastMetric; profit: CastMetric; paidOptionCount: CastMetric;
   townPv: CastMetric; townUu: CastMetric; heavenPageAccess: CastMetric; heavenDiaryPosts: CastMetric;
+  heavenMyGirlAdds: CastMetric; heavenFavoriteTalks: CastMetric;
+  heavenMyGirlAddsPer100Access: CastMetric; heavenMyGirlAddsPer100TownUu: CastMetric;
+  heavenFavoriteTalksPerAttendanceDay: CastMetric; heavenFavoriteTalksPer100Access: CastMetric;
   hourlyReward: CastMetric; contractsPerDay: CastMetric; contractsPerHour: CastMetric; photoNominationsPerDay: CastMetric; photoNominationsPerHour: CastMetric; photoNominationsPer100Uu: CastMetric;
   mainNominationRate: CastMetric; photoNominationShare: CastMetric; repeatShare: CastMetric;
 };

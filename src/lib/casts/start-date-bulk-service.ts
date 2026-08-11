@@ -14,11 +14,24 @@ export type StartDateBulkInput = {
 type DbClient = Prisma.TransactionClient | typeof prisma;
 
 type Conflict = {
-  code: "MERGED_CAST" | "CAST_NOT_FOUND" | "AFTER_ENDED_ON" | "UNIQUE_KEY_COLLISION" | "DIFFERENT_CAST_PERIOD_OVERLAP";
+  code: "MERGED_CAST" | "CAST_NOT_FOUND" | "AFTER_ENDED_ON" | "UNIQUE_KEY_COLLISION" | "DIFFERENT_CAST_PERIOD_OVERLAP" | "ALIAS_PERIOD_CONFLICT";
   message: string;
   castId?: string;
   aliasId?: string;
   conflictingAliasId?: string;
+};
+
+export type SafeAliasMerge = {
+  key: string;
+  castId: string;
+  castName: string;
+  mediaType: MediaType;
+  storeId: string | null;
+  normalizedAlias: string;
+  representativeAliasId: string;
+  mergedAliasIds: string[];
+  representativeValidFrom: string;
+  mergedValidFrom: string[];
 };
 
 function aliasKey(alias: { mediaType: MediaType; storeId: string | null; normalizedAlias: string }, validFrom: Date) {
@@ -59,7 +72,7 @@ export async function buildCastStartDateBulkPreview(input: StartDateBulkInput, d
     }),
     db.castAlias.findMany({
       where: { mediaType: { in: mediaTypes } },
-      select: { id: true, mediaType: true, storeId: true, normalizedAlias: true, aliasName: true, castId: true, validFrom: true, validTo: true },
+      select: { id: true, mediaType: true, storeId: true, normalizedAlias: true, aliasName: true, castId: true, validFrom: true, validTo: true, createdAt: true },
     }),
   ]);
 
@@ -111,8 +124,44 @@ export async function buildCastStartDateBulkPreview(input: StartDateBulkInput, d
     const key = aliasKey(change, targetDate);
     proposedKeys.set(key, [...(proposedKeys.get(key) || []), change.aliasId]);
   }
+  for (const alias of allAliases) {
+    if (alias.validFrom?.getTime() !== targetDate.getTime()) continue;
+    const key = aliasKey(alias, targetDate);
+    const ids = proposedKeys.get(key) || [];
+    if (!ids.includes(alias.id)) proposedKeys.set(key, [...ids, alias.id]);
+  }
+  const safeAliasMerges: SafeAliasMerge[] = [];
+  const aliasById = new Map(allAliases.map((alias) => [alias.id, alias]));
   for (const [key, ids] of proposedKeys) {
-    if (ids.length > 1) conflicts.push({ code: "UNIQUE_KEY_COLLISION", aliasId: ids[0], conflictingAliasId: ids[1], message: `変更対象Alias同士で一意キーが衝突します（${key}）。` });
+    if (ids.length < 2) continue;
+    const rows = ids.map((id) => aliasById.get(id)).filter((row): row is NonNullable<typeof row> => Boolean(row));
+    const sameCast = rows.length === ids.length && new Set(rows.map((row) => row.castId)).size === 1;
+    const validTo = new Set(rows.map((row) => row.validTo?.getTime() ?? null));
+    if (sameCast && validTo.size === 1) {
+      const ordered = [...rows].sort((left, right) => {
+        const fromDifference = (left.validFrom?.getTime() ?? Number.MAX_SAFE_INTEGER) - (right.validFrom?.getTime() ?? Number.MAX_SAFE_INTEGER);
+        if (fromDifference !== 0) return fromDifference;
+        const createdDifference = left.createdAt.getTime() - right.createdAt.getTime();
+        return createdDifference !== 0 ? createdDifference : left.id.localeCompare(right.id);
+      });
+      const representative = ordered[0];
+      safeAliasMerges.push({
+        key,
+        castId: representative.castId!,
+        castName: casts.find((cast) => cast.id === representative.castId)?.displayName || "不明",
+        mediaType: representative.mediaType,
+        storeId: representative.storeId,
+        normalizedAlias: representative.normalizedAlias,
+        representativeAliasId: representative.id,
+        mergedAliasIds: ordered.slice(1).map((row) => row.id),
+        representativeValidFrom: representative.validFrom ? formatDateOnly(representative.validFrom) : "未設定",
+        mergedValidFrom: ordered.slice(1).map((row) => row.validFrom ? formatDateOnly(row.validFrom) : "未設定"),
+      });
+    } else if (sameCast) {
+      conflicts.push({ code: "ALIAS_PERIOD_CONFLICT", aliasId: ids[0], conflictingAliasId: ids[1], message: `同一CastのAliasですが有効終了日が異なるため自動統合を停止しました（${key}）。` });
+    } else {
+      conflicts.push({ code: "UNIQUE_KEY_COLLISION", aliasId: ids[0], conflictingAliasId: ids[1], message: `変更対象Alias同士で一意キーが衝突します（${key}）。` });
+    }
   }
 
   for (const change of aliasChanges) {
@@ -122,9 +171,6 @@ export async function buildCastStartDateBulkPreview(input: StartDateBulkInput, d
     for (const other of allAliases) {
       if (other.id === current.id || changingAliasIds.has(other.id)) continue;
       if (other.mediaType !== current.mediaType || !sameStore(other.storeId, current.storeId) || other.normalizedAlias !== current.normalizedAlias) continue;
-      if (other.validFrom && other.validFrom.getTime() === targetDate.getTime()) {
-        conflicts.push({ code: "UNIQUE_KEY_COLLISION", aliasId: current.id, conflictingAliasId: other.id, message: `${change.castName}「${change.aliasName}」は変更後の開始日で既存Aliasと一意キーが衝突します。` });
-      }
       if (other.castId !== current.castId && overlaps(targetDate, extensionEnd, other.validFrom, other.validTo)) {
         conflicts.push({ code: "DIFFERENT_CAST_PERIOD_OVERLAP", aliasId: current.id, conflictingAliasId: other.id, message: `${change.castName}「${change.aliasName}」の前倒し区間に、別キャストを指す同名Aliasがあります。` });
       }
@@ -144,6 +190,7 @@ export async function buildCastStartDateBulkPreview(input: StartDateBulkInput, d
       endedOn: change.endedOn,
     })),
     aliasChanges,
+    safeAliasMerges,
     conflicts: conflicts.map((conflict) => ({ code: conflict.code, castId: conflict.castId, aliasId: conflict.aliasId, conflictingAliasId: conflict.conflictingAliasId })),
   };
   const fingerprint = createHash("sha256").update(JSON.stringify(stable)).digest("hex");
@@ -153,6 +200,7 @@ export async function buildCastStartDateBulkPreview(input: StartDateBulkInput, d
     fingerprint,
     canExecute: conflicts.length === 0 && (castChanges.length > 0 || aliasChanges.length > 0),
     conflicts,
+    safeAliasMerges,
     casts: casts.map((cast) => ({
       castId: cast.id,
       displayName: cast.displayName,
@@ -190,14 +238,24 @@ export async function executeCastStartDateBulkChange(input: StartDateBulkInput &
     for (const change of preview.castChanges) {
       await tx.cast.update({ where: { id: change.castId }, data: { startedOn: targetDate } });
     }
-    for (const change of preview.aliasChanges) {
-      await tx.castAlias.update({ where: { id: change.aliasId }, data: { validFrom: targetDate } });
+    const mergedAliasIds = new Set(preview.safeAliasMerges.flatMap((merge) => merge.mergedAliasIds));
+    for (const merge of preview.safeAliasMerges) {
+      // CastAlias has no dependent FK other than Cast/Store in the current schema.
+      // Delete duplicates before moving the representative to the unique target key.
+      await tx.castAlias.deleteMany({ where: { id: { in: merge.mergedAliasIds } } });
     }
+    for (const change of preview.aliasChanges) {
+      if (!mergedAliasIds.has(change.aliasId)) await tx.castAlias.update({ where: { id: change.aliasId }, data: { validFrom: targetDate } });
+    }
+    const auditAliasChanges = [
+      ...preview.aliasChanges,
+      ...preview.safeAliasMerges.map((merge) => ({ operation: "SAFE_MERGE", ...merge })),
+    ];
     const history = await tx.castStartDateBulkChangeHistory.create({ data: {
       targetDate,
       mediaScope: input.mediaScope,
       castChanges: preview.castChanges,
-      aliasChanges: preview.aliasChanges,
+      aliasChanges: auditAliasChanges,
       castCount: preview.castChanges.length,
       aliasCount: preview.aliasChanges.length,
       changedByUserId: input.changedByUserId,

@@ -22,6 +22,25 @@ export const warningMessage = (code: string) => ({
   MEDIA_DATA_MISSING: "媒体データが一部欠けているため、参考値を含みます。",
   BOOKING_TIME_NOT_AVAILABLE: "CTIでは実際の予約可能時間帯や空き時間を確認できません。",
   RESULT_METRICS_MIXED: "結果の補助指標が主指標と異なる状態です。主指標だけで判定を変更しません。",
+  MY_GIRL_SNAPSHOT_RESET: "マイガール累計値の減少が確認されたため、一部期間を除外した暫定値です。",
+  HEAVEN_PERIOD_PARTIAL: "対象期間のHeavenデータが一部欠けているため暫定値です。",
 }[code] ?? "追加確認が必要なデータがあります。");
 
 export const uniqueWarningMessages = (codes: string[]) => [...new Set(codes)].map((code) => warningMessage(code));
+
+export type CastMediaFunnelMetricKey = "heavenMyGirlAdds" | "heavenMyGirlAddsPer100Access" | "heavenFavoriteTalks" | "heavenFavoriteTalksPerAttendanceDay";
+export const CAST_MEDIA_FUNNEL_PRESENTATION: Record<CastMediaFunnelMetricKey, { label: string; unit: string }> = {
+  heavenMyGirlAdds: { label: "マイガール増加数", unit: "件" },
+  heavenMyGirlAddsPer100Access: { label: "100アクセスあたりマイガール増加", unit: "件" },
+  heavenFavoriteTalks: { label: "オキニトーク送信数", unit: "件" },
+  heavenFavoriteTalksPerAttendanceDay: { label: "1出勤日あたりオキニトーク", unit: "件" },
+};
+export const mediaFunnelMetricLabel = (key: CastMediaFunnelMetricKey) => CAST_MEDIA_FUNNEL_PRESENTATION[key].label;
+export const mediaFunnelAvailabilityLabel = (availability: string, isPartial = false) => availability === "UNAVAILABLE" ? "掲載対象外" : availability === "UNCOMPUTABLE" ? "算出不可" : availability === "MISSING" ? "データなし" : `${isPartial ? "暫定" : ""}`;
+export const formatMediaFunnelMetric = (key: CastMediaFunnelMetricKey, value: number | null, availability: string, isPartial = false) => {
+  if (availability === "UNAVAILABLE") return "掲載対象外";
+  if (availability === "UNCOMPUTABLE") return "算出不可";
+  if (availability === "MISSING" || value === null) return "データなし";
+  const digits = key.includes("Per100") || key.includes("PerAttendance") ? 2 : 0;
+  return `${value.toLocaleString("ja-JP", { maximumFractionDigits: digits, minimumFractionDigits: digits })}件${isPartial ? "（暫定）" : ""}`;
+};

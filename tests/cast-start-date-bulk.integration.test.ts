@@ -74,6 +74,39 @@ describe("cast/Alias start date bulk change", () => {
     expect(await prisma.castAlias.findUniqueOrThrow({ where: { id: selectedAlias.id } })).toMatchObject({ validFrom: new Date("2098-07-13T00:00:00Z") });
   });
 
+  it("safely merges same-Cast duplicate Aliases with a deterministic representative", async () => {
+    const cast = await createCast("重複Alias統合");
+    const normalizedAlias = `重複Alias統合-${suffix}`;
+    const dates = ["2098-07-13", "2098-07-20", "2098-07-27"];
+    const aliases = [];
+    for (const date of dates) aliases.push(await prisma.castAlias.create({ data: { mediaType: MediaType.TOWN, aliasName: normalizedAlias, normalizedAlias, castId: cast.id, storeId, reviewStatus: "MAPPED", validFrom: new Date(`${date}T00:00:00Z`) } }));
+
+    const preview = await buildCastStartDateBulkPreview({ castIds: [cast.id], targetDate: "2098-04-01", mediaScope: MediaType.TOWN });
+    expect(preview.canExecute).toBe(true);
+    expect(preview.conflicts).toHaveLength(0);
+    expect(preview.safeAliasMerges).toHaveLength(1);
+    expect(preview.safeAliasMerges[0]).toMatchObject({ representativeAliasId: aliases[0].id, mergedAliasIds: [aliases[1].id, aliases[2].id] });
+
+    const result = await executeCastStartDateBulkChange({ castIds: [cast.id], targetDate: "2098-04-01", mediaScope: MediaType.TOWN, expectedFingerprint: preview.fingerprint, changedByUserId: adminId, reason: `重複Alias統合-${suffix}` });
+    historyIds.push(result.historyId);
+    const remaining = await prisma.castAlias.findMany({ where: { castId: cast.id, normalizedAlias }, orderBy: { id: "asc" } });
+    expect(remaining).toHaveLength(1);
+    expect(remaining[0]).toMatchObject({ id: aliases[0].id, validFrom: new Date("2098-04-01T00:00:00Z") });
+    const history = await prisma.castStartDateBulkChangeHistory.findUniqueOrThrow({ where: { id: result.historyId } });
+    expect(history.aliasChanges).toEqual(expect.arrayContaining([expect.objectContaining({ operation: "SAFE_MERGE", representativeAliasId: aliases[0].id, mergedAliasIds: [aliases[1].id, aliases[2].id] })]));
+  });
+
+  it("blocks same-Cast duplicate Aliases when their validTo periods differ", async () => {
+    const cast = await createCast("期間差分Alias");
+    const normalizedAlias = `期間差分Alias-${suffix}`;
+    await prisma.castAlias.create({ data: { mediaType: MediaType.TOWN, aliasName: normalizedAlias, normalizedAlias, castId: cast.id, storeId, reviewStatus: "MAPPED", validFrom: new Date("2098-07-13T00:00:00Z"), validTo: new Date("2098-09-30T00:00:00Z") } });
+    await prisma.castAlias.create({ data: { mediaType: MediaType.TOWN, aliasName: normalizedAlias, normalizedAlias, castId: cast.id, storeId, reviewStatus: "MAPPED", validFrom: new Date("2098-07-20T00:00:00Z"), validTo: new Date("2098-10-31T00:00:00Z") } });
+    const preview = await buildCastStartDateBulkPreview({ castIds: [cast.id], targetDate: "2098-04-01", mediaScope: MediaType.TOWN });
+    expect(preview.canExecute).toBe(false);
+    expect(preview.safeAliasMerges).toHaveLength(0);
+    expect(preview.conflicts.some((conflict) => conflict.code === "ALIAS_PERIOD_CONFLICT")).toBe(true);
+  });
+
   it("rejects merged sources and a target date after endedOn", async () => {
     const target = await createCast("統合先C");
     const merged = await createCast("統合元C");

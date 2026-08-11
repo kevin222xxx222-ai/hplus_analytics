@@ -2,6 +2,8 @@ import { apiErrorResponse, requireAdminApi } from "@/lib/api";
 import { assertSameOrigin } from "@/lib/imports/security";
 import { createHeavenPreview } from "@/lib/imports/heaven/service";
 import type { HeavenMetricType } from "@/lib/imports/heaven/parser";
+import { StoreCode } from "@/generated/prisma/client";
+import { prisma } from "@/lib/prisma";
 
 export const runtime = "nodejs";
 
@@ -12,6 +14,8 @@ export async function POST(request: Request) {
     const form = await request.formData();
     const file = form.get("file");
     const storeId = String(form.get("storeId") || "");
+    const kasukabe = await prisma.store.findUnique({ where: { code: StoreCode.KASUKABE }, select: { id: true } });
+    if (!kasukabe || storeId !== kasukabe.id) return Response.json({ code: "HEAVEN_STORE_NOT_SUPPORTED", error: "Heaven CSVは春日部店のみ登録できます。" }, { status: 400 });
     const rawHint = String(form.get("metricHint") || "");
     const metricHint = rawHint ? rawHint as HeavenMetricType : undefined;
     if (!(file instanceof File)) throw new Error("CSVファイルを選択してください。");

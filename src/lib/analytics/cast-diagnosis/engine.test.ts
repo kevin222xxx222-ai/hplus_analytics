@@ -139,6 +139,8 @@ describe("Cast diagnosis CA-1 engine", () => {
     expect(target.comparisons.find((comparison) => comparison.metricKey === "photoNominationsPerHour")?.comparisonAxis).toBe("NEW_ACQUISITION_PEERS");
     expect(target.comparisons.find((comparison) => comparison.metricKey === "mainNominationRate")?.comparisonAxis).toBe("REPEAT_CONVERSION_PEERS");
     expect(target.comparisons.find((comparison) => comparison.metricKey === "hourlyReward")?.comparisonAxis).toBe("RESULT_TOP_PEERS");
+    expect(target.comparisons.find((comparison) => comparison.metricKey === "heavenMyGirlAdds")?.comparisonAxis).toBe("MAIN_ATTENDANCE_PEERS");
+    expect(target.comparisons.find((comparison) => comparison.metricKey === "heavenFavoriteTalksPerAttendanceDay")?.comparisonAxis).toBe("MAIN_ATTENDANCE_PEERS");
   });
 
   it("keeps repeat conversion sample gating while allowing stable diagnosis below ten contracts", () => {

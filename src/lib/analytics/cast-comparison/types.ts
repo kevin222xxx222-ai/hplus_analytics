@@ -4,6 +4,7 @@ import type { CastMetric, CastMonthlyFact } from "@/lib/analytics/cast-diagnosis
 export type CastMetricKey =
   | "femaleReward" | "hourlyReward" | "contracts" | "workingHours" | "contractsPerDay" | "contractsPerHour"
   | "townPv" | "townUu" | "heavenPageAccess" | "heavenDiaryPosts"
+  | "heavenMyGirlAdds" | "heavenFavoriteTalks" | "heavenMyGirlAddsPer100Access" | "heavenMyGirlAddsPer100TownUu" | "heavenFavoriteTalksPerAttendanceDay" | "heavenFavoriteTalksPer100Access"
   | "photoNominations" | "photoNominationsPerDay" | "photoNominationsPerHour" | "photoNominationsPer100Uu" | "photoNominationShare"
   | "mainNominations" | "mainNominationRate" | "repeatCount" | "repeatShare";
 

@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { buildCastDiagnosis, buildMonthlyFacts, type CastRawInput } from "./engine";
 import type { CastComparisonProviderMode } from "@/lib/analytics/cast-comparison/types";
+import { aggregateHeavenMediaFunnel, deriveFunnelRate, type HeavenMediaFunnelRow } from "@/lib/analytics/cast-media-funnel";
 
 const stores = ["KASUKABE", "KOSHIGAYA", "NODA"] as const;
 const confirmed = { status: { in: ["COMPLETED", "COMPLETED_WITH_WARNINGS"] as ("COMPLETED" | "COMPLETED_WITH_WARNINGS")[] } };
@@ -13,16 +14,31 @@ export async function getCastDiagnosis(input: { from: string; to: string; compar
   const from = new Date(`${input.from}T00:00:00Z`); const end = clampEnd(input.to); const endDate = isoDate(end);
   const storeRows = await prisma.store.findMany({ where: { code: { in: [...stores] }, isActive: true }, select: { id: true, code: true, shortName: true } });
   const storeIds = storeRows.map((s) => s.id);
-  const [cti, town, heaven] = await Promise.all([
+  const kasukabeStoreId = storeRows.find((store) => store.code === "KASUKABE")?.id;
+  const [cti, town, heaven, heavenBaseline] = await Promise.all([
     prisma.ctiCastDaily.findMany({ where: { businessDate: { gte: from, lte: end }, storeId: { in: storeIds }, cast: { mergedIntoCastId: null }, importBatch: confirmed }, select: { castId: true, storeId: true, businessDate: true, attendanceCount: true, attendanceMinutes: true, reservationCount: true, contractCount: true, regularNominationCount: true, photoNominationCount: true, freeCount: true, newCount: true, repeatCount: true, cancellationCount: true, castRewardAmount: true, salesAmount: true, ctiProfitAmount: true, paidOptionCount: true, cast: { select: { displayName: true } }, store: { select: { shortName: true } } } }),
     prisma.townCastDaily.findMany({ where: { date: { gte: from, lte: end }, storeId: { in: storeIds }, cast: { mergedIntoCastId: null }, importBatch: confirmed }, select: { castId: true, storeId: true, date: true, pv: true, uu: true, isListed: true } }),
-    prisma.heavenCastDaily.findMany({ where: { businessDate: { gte: from, lte: end }, storeId: { in: storeIds }, metricKey: { in: ["page_access", "diary_posts"] }, cast: { mergedIntoCastId: null }, importBatch: confirmed }, select: { castId: true, storeId: true, businessDate: true, metricKey: true, rawValue: true, rawValueStatus: true } }),
+    prisma.heavenCastDaily.findMany({ where: { businessDate: { gte: from, lte: end }, ...(kasukabeStoreId ? { storeId: kasukabeStoreId } : { storeId: { in: [] } }), metricKey: { in: ["page_access", "diary_posts", "my_girl", "okini_talk_sent"] }, cast: { mergedIntoCastId: null }, importBatch: confirmed }, select: { castId: true, storeId: true, businessDate: true, metricKey: true, rawValue: true, deltaValue: true, valueKind: true, rawValueStatus: true } }),
+    prisma.heavenCastDaily.findMany({ where: { businessDate: { lt: from }, ...(kasukabeStoreId ? { storeId: kasukabeStoreId } : { storeId: { in: [] } }), metricKey: "my_girl", cast: { mergedIntoCastId: null }, importBatch: confirmed }, orderBy: { businessDate: "desc" }, select: { castId: true, businessDate: true, metricKey: true, rawValue: true, deltaValue: true, valueKind: true, rawValueStatus: true } }),
   ]);
   const mediaKey = (storeId: string, castId: string, date: string) => `${storeId}:${castId}:${date}`;
   const townMap = new Map<string, { pv: number; uu: number }>(); for (const row of town) { const k = mediaKey(row.storeId, row.castId, isoDate(row.date)); const x = townMap.get(k) ?? { pv: 0, uu: 0 }; x.pv += row.pv; x.uu += row.uu; townMap.set(k, x); }
-  const heavenMap = new Map<string, { page: number; diary: number; hasPage: boolean; hasDiary: boolean; pageRows: number; diaryRows: number }>(); for (const row of heaven) { if (!row.castId) continue; const k = mediaKey(row.storeId, row.castId, isoDate(row.businessDate)); const x = heavenMap.get(k) ?? { page: 0, diary: 0, hasPage: false, hasDiary: false, pageRows: 0, diaryRows: 0 }; const valid = row.rawValueStatus === "VALUE" && row.rawValue !== null; if (row.metricKey === "page_access") { x.pageRows++; if (valid) { x.page += Number(row.rawValue); x.hasPage = true; } } else { x.diaryRows++; if (valid) { x.diary += Number(row.rawValue); x.hasDiary = true; } } heavenMap.set(k, x); }
+  const heavenMap = new Map<string, { page: number; diary: number; hasPage: boolean; hasDiary: boolean; pageRows: number; diaryRows: number }>(); for (const row of heaven) { if (!row.castId || !["page_access", "diary_posts"].includes(row.metricKey)) continue; const k = mediaKey(row.storeId, row.castId, isoDate(row.businessDate)); const x = heavenMap.get(k) ?? { page: 0, diary: 0, hasPage: false, hasDiary: false, pageRows: 0, diaryRows: 0 }; const valid = row.rawValueStatus === "VALUE" && row.rawValue !== null; if (row.metricKey === "page_access") { x.pageRows++; if (valid) { x.page += Number(row.rawValue); x.hasPage = true; } } else { x.diaryRows++; if (valid) { x.diary += Number(row.rawValue); x.hasDiary = true; } } heavenMap.set(k, x); }
   const rows: CastRawInput[] = cti.map((row) => toRaw(row, mediaKey, townMap, heavenMap));
   const facts = buildMonthlyFacts(rows);
+  const funnelRows: HeavenMediaFunnelRow[] = heaven.filter((row) => row.castId && ["my_girl", "okini_talk_sent"].includes(row.metricKey)).map((row) => ({ castId: row.castId!, businessDate: row.businessDate, metricKey: row.metricKey, rawValue: row.rawValue === null ? null : Number(row.rawValue), deltaValue: row.deltaValue === null ? null : Number(row.deltaValue), valueKind: row.valueKind, rawValueStatus: row.rawValueStatus }));
+  const baselineRows: HeavenMediaFunnelRow[] = heavenBaseline.filter((row) => row.castId).map((row) => ({ castId: row.castId!, businessDate: row.businessDate, metricKey: row.metricKey, rawValue: row.rawValue === null ? null : Number(row.rawValue), deltaValue: row.deltaValue === null ? null : Number(row.deltaValue), valueKind: row.valueKind, rawValueStatus: row.rawValueStatus }));
+  const funnel = aggregateHeavenMediaFunnel({ rows: funnelRows, previousSnapshots: baselineRows, from: input.from, to: endDate });
+  for (const fact of facts) {
+    const aggregate = funnel.get(fact.castId);
+    if (!aggregate) continue;
+    fact.heavenMyGirlAdds = aggregate.heavenMyGirlAdds;
+    fact.heavenFavoriteTalks = aggregate.heavenFavoriteTalks;
+    fact.heavenMyGirlAddsPer100Access = deriveFunnelRate(aggregate.heavenMyGirlAdds, fact.heavenPageAccess, 100);
+    fact.heavenMyGirlAddsPer100TownUu = deriveFunnelRate(aggregate.heavenMyGirlAdds, fact.townUu, 100, "HEAVEN_TOWN");
+    fact.heavenFavoriteTalksPerAttendanceDay = deriveFunnelRate(aggregate.heavenFavoriteTalks, fact.attendanceDays, 1);
+    fact.heavenFavoriteTalksPer100Access = deriveFunnelRate(aggregate.heavenFavoriteTalks, fact.heavenPageAccess, 100);
+  }
   let rollingFacts;
   const monthlyEligible = facts.filter((fact) => ((fact.attendanceDays.value ?? 0) >= 4 || (fact.workingHours.value ?? 0) >= 20) && (fact.contracts.value ?? 0) >= 5 && fact.hourlyReward.value !== null).length;
   if (monthlyEligible <= 4) {

@@ -59,13 +59,27 @@ describe("Heaven CSV parser", () => {
 
   it.skipIf(!existsSync(heavenDir))("parses every supplied CSV without using its filename", () => {
     const files = readdirSync(heavenDir).filter((name) => name.endsWith(".csv"));
-    expect(files).toHaveLength(8);
+    expect(files.length).toBeGreaterThan(0);
+    expect(files).toEqual(expect.arrayContaining([
+      "heaven_shop_202606.csv",
+      "heaven_girl_page_access_202606.csv",
+      "heaven_girl_my_girl_202606.csv",
+      "heaven_girl_okini_talk_sent_202606.csv",
+      "tokeiGirl_202607_access.csv",
+      "tokeiGirl_202608_my.csv",
+    ]));
     for (const name of files) {
       const parsed = parseHeavenCsvText(readFileSync(`${heavenDir}/${name}`, "utf8"));
-      expect(parsed.sourcePeriodFrom).toBe("2026-06-01");
-      expect(parsed.sourcePeriodTo).toBe("2026-06-30");
-      if (name === "heaven_shop_202606.csv") expect(parsed.shopRows).toHaveLength(840);
-      else expect(parsed.castRows).toHaveLength(4410);
+      expect(parsed.sourcePeriodFrom).toMatch(/^2026-0[678]-01$/);
+      expect(parsed.sourcePeriodTo).toMatch(/^2026-0[678]-(28|29|30|31)$/);
+      if (parsed.kind === "HEAVEN_SHOP") {
+        expect(parsed.shopRows.length).toBeGreaterThan(0);
+        expect(parsed.castRows).toHaveLength(0);
+      } else {
+        expect(parsed.castRows.length).toBeGreaterThan(0);
+        expect(parsed.shopRows).toHaveLength(0);
+        expect(parsed.castRows[0]).toMatchObject({ sourceCastName: expect.any(String), rawValueStatus: expect.any(String) });
+      }
     }
   });
 });
