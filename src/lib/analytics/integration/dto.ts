@@ -6,7 +6,7 @@ const serialise = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 export type GrowthDto = { classification: GrowthResult["classification"]; availability: Availability; reason: string | null; evidence: string[]; score: number };
 export type NextBestActionDto = { level: NextBestAction["recommendationLevel"]; actionLevel: NextBestAction["recommendationLevel"]; cause: string; evidence: string[]; action: string | null; reason?: string; confidence: NextBestAction["confidence"]; availability: Availability; status: NextBestAction["status"] };
 export type RankDto = { availability: "UNAVAILABLE"; reason: string };
-export type ComparisonDto = { availability: Availability; currentAvailability: Availability; baselineAvailability: Availability; current: number | null; baseline: number | null; difference: number | null; differenceRate: number | null; baselineKind: Comparison["baselineKind"]; period: { from: string; to: string }; direction?: "increase" | "decrease" | "flat" | "unavailable"; sample?: SampleSummary; confidence?: SampleSummary["confidence"]; reason?: string };
+export type ComparisonDto = { availability: Availability; currentAvailability: Availability; baselineAvailability: Availability; current: number | null; baseline: number | null; difference: number | null; pointDifference?: number | null; differenceRate: number | null; baselineKind: Comparison["baselineKind"]; period: { from: string; to: string }; direction?: "increase" | "decrease" | "flat" | "unavailable"; sample?: SampleSummary; confidence?: SampleSummary["confidence"]; reason?: string };
 export type AnalyticsSummaryDto = { volume: VolumeSummary; efficiency: EfficiencySummary; sample: SampleSummary; trend?: TrendResult; growth?: GrowthDto; nextBestAction?: NextBestActionDto; rank?: RankDto; comparison?: ComparisonDto[] };
 export type StoreSummaryDto = { store: { id: string; code: string; name: string; shortName: string }; summary: AnalyticsSummaryDto };
 
@@ -37,7 +37,7 @@ export function toSummaryDto(input: { volume: VolumeSummary; efficiency: Efficie
 }
 
 export function toComparisonDto(comparison: Comparison, period: { from: string; to: string }, sample?: SampleSummary, direction?: ComparisonDto["direction"]): ComparisonDto {
-  return { availability: comparison.availability, currentAvailability: comparison.currentAvailability, baselineAvailability: comparison.baselineAvailability, current: comparison.current, baseline: comparison.baseline, difference: comparison.delta, differenceRate: comparison.changeRate, baselineKind: comparison.baselineKind, period, direction, sample, confidence: sample?.confidence, reason: comparison.reason };
+  return { availability: comparison.availability, currentAvailability: comparison.currentAvailability, baselineAvailability: comparison.baselineAvailability, current: comparison.current, baseline: comparison.baseline, difference: comparison.delta, pointDifference: comparison.delta, differenceRate: comparison.changeRate, baselineKind: comparison.baselineKind, period, direction, sample, confidence: sample?.confidence, reason: comparison.reason };
 }
 
 export function toPerformanceDto(input: AnalyticsInputDto, summaries: Array<{ castId: string; summary: AnalyticsSummaryDto }>, overall?: AnalyticsSummaryDto, storeSummaries: StoreSummaryDto[] = []) {

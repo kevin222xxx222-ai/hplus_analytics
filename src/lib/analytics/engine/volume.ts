@@ -1,7 +1,7 @@
 import { confidenceForSample } from "./constants";
 import type { AnalyticsRow, Availability, GroupDimension, MetricValue, SampleSummary, VolumeMetric, VolumeSummary } from "./types";
 
-const METRICS: VolumeMetric[] = ["sales", "castReward", "profit", "reservations", "services", "regularNominations", "free", "new", "repeat", "paidOptions", "diaryPosts", "townPv", "townUu", "heavenAccess", "attendancePeople", "attendanceMinutes"];
+const METRICS: VolumeMetric[] = ["sales", "castReward", "profit", "reservations", "services", "contracts", "regularNominations", "free", "new", "repeat", "paidOptions", "diaryPosts", "heavenDiaryPosts", "heavenMiteneSent", "townPv", "townUu", "heavenAccess", "attendancePeople", "attendanceMinutes"];
 
 function dateKey(value: string | Date) {
   if (typeof value === "string") return value.slice(0, 10);

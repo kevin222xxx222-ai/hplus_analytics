@@ -1,0 +1,10 @@
+import type { CastMonthlyTrendPoint, CastTrendMetric, CastTrendMetricKey, CastTrendPreviousComparison, CastTrendRollingAverage } from "./types";
+import { isValidTrendValue } from "./metrics";
+
+export const previousComparison = (current: CastTrendMetric, previous: CastTrendMetric | undefined, previousMonth: string | null, rateMetric = false): CastTrendPreviousComparison => {
+  if (!previous || !isValidTrendValue(previous)) return { previousMonth, currentValue: current.value, previousValue: null, absoluteChange: null, percentageChange: null, absolutePointChange: null, availability: "NO_PREVIOUS_VALUE" };
+  if (!isValidTrendValue(current)) return { previousMonth, currentValue: current.value, previousValue: previous.value, absoluteChange: null, percentageChange: null, absolutePointChange: null, availability: "UNCOMPUTABLE" };
+  const absoluteChange = current.value - previous.value; const percentageChange = previous.value === 0 ? null : absoluteChange / Math.abs(previous.value); return { previousMonth, currentValue: current.value, previousValue: previous.value, absoluteChange, percentageChange, absolutePointChange: rateMetric ? absoluteChange * 100 : null, availability: previous.value === 0 && absoluteChange !== 0 ? "UNCOMPUTABLE" : "VALUE" };
+};
+export const rollingAverage = (points: CastMonthlyTrendPoint[], key: CastTrendMetricKey, required: 3 | 6): CastTrendRollingAverage => { const values = points.slice(-required).filter((point) => point.status === "COMPLETE" && isValidTrendValue(point.metrics[key])).map((point) => point.metrics[key].value as number); return { value: values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null, validMonthCount: values.length, requiredMonthCount: required, availability: values.length === required ? "VALUE" : values.length > 1 ? "PARTIAL_SAMPLE" : "INSUFFICIENT" }; };
+export const relativeRate = (current: CastTrendMetric, previous: CastTrendMetric) => !isValidTrendValue(current) || !isValidTrendValue(previous) || previous.value === 0 ? null : (current.value - previous.value) / Math.abs(previous.value);

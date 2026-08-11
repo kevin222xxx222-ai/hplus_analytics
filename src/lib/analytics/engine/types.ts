@@ -7,7 +7,7 @@ export type Result<T> = { status: AnalysisStatus; value: T | null; warnings: str
 
 export type VolumeMetric =
   | "sales" | "castReward" | "profit" | "reservations" | "services" | "regularNominations"
-  | "free" | "new" | "repeat" | "paidOptions" | "diaryPosts" | "townPv" | "townUu"
+  | "contracts" | "free" | "new" | "repeat" | "paidOptions" | "diaryPosts" | "heavenDiaryPosts" | "heavenMiteneSent" | "townPv" | "townUu"
   | "heavenAccess" | "attendancePeople" | "attendanceMinutes";
 
 export type GroupDimension = "store" | "cast" | "rank" | "media" | "weekday" | "period";

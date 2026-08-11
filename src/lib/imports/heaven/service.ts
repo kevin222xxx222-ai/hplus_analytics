@@ -1,6 +1,6 @@
 import { createHash, randomUUID } from "node:crypto";
 import path from "node:path";
-import { ImportBatchStatus, ImportDataType, ImportErrorLevel, ImportMode, MediaType } from "@/generated/prisma/client";
+import { ImportBatchStatus, ImportDataType, ImportErrorLevel, ImportMode, MediaType, StoreCode } from "@/generated/prisma/client";
 import { parseDateOnly } from "@/lib/date";
 import { validateCsvUpload } from "@/lib/imports/security";
 import { readImportFile, readPreview, saveImportFile, writePreview } from "@/lib/imports/storage";
@@ -12,6 +12,8 @@ type HeavenDb = Pick<typeof prisma, "importBatch">;
 const HEAVEN_COMPLETED_STATUSES = [ImportBatchStatus.COMPLETED, ImportBatchStatus.COMPLETED_WITH_WARNINGS] as const;
 const HEAVEN_NON_TERMINAL_STATUSES = [ImportBatchStatus.UPLOADED, ImportBatchStatus.VALIDATING, ImportBatchStatus.PREVIEW_READY, ImportBatchStatus.WAITING_FOR_CAST_LINK, ImportBatchStatus.IMPORTING, ImportBatchStatus.FAILED] as const;
 const HEAVEN_DATA_TYPES = [ImportDataType.HEAVEN_STORE, ImportDataType.HEAVEN_CAST] as const;
+export const HEAVEN_SUPPORTED_STORE_CODE = StoreCode.KASUKABE;
+export function isSupportedHeavenStoreCode(code: string) { return code === HEAVEN_SUPPORTED_STORE_CODE; }
 function isHeavenDataType(value: ImportDataType): value is (typeof HEAVEN_DATA_TYPES)[number] { return HEAVEN_DATA_TYPES.includes(value as (typeof HEAVEN_DATA_TYPES)[number]); }
 
 export type HeavenPreviewRow = HeavenParsedCastRow & { castId: string | null; castDisplayName: string | null; resolutionStatus: "EXACT_ALIAS" | "NORMALIZED_ALIAS" | "EXACT_NAME" | "UNMATCHED" | "AMBIGUOUS" };
@@ -208,8 +210,8 @@ export function validateHeavenParse(result: HeavenParseResult, metricHint?: Heav
 }
 
 export async function createHeavenPreview(input: { file: File; storeId: string; metricHint?: HeavenMetricType; uploadedByUserId: string }) {
-  const store = await prisma.store.findFirst({ where: { id: input.storeId, isActive: true, hasAcquisitionMetrics: true } });
-  if (!store) throw new Error("Heaven対象店舗を選択してください。");
+  const store = await prisma.store.findFirst({ where: { code: StoreCode.KASUKABE, isActive: true, hasAcquisitionMetrics: true } });
+  if (!store || input.storeId !== store.id) throw new Error("HEAVEN_STORE_NOT_SUPPORTED: Heaven CSVは春日部店のみ登録できます。");
   const buffer = Buffer.from(await input.file.arrayBuffer());
   validateCsvUpload(input.file, buffer);
   const hash = createHash("sha256").update(buffer).digest("hex");

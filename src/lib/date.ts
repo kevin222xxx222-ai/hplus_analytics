@@ -8,3 +8,19 @@ export function parseDateOnly(value: string) {
 export function formatDateOnly(value: Date) {
   return value.toISOString().slice(0, 10);
 }
+
+/** Format persisted UTC timestamps for operators in the business timezone. */
+export function formatDateTimeJst(value: Date | string | null | undefined) {
+  if (!value) return "—";
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return "—";
+  return new Intl.DateTimeFormat("ja-JP", {
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).format(date);
+}

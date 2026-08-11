@@ -1,0 +1,30 @@
+import type { CastDiagnosisType, CastEngineCast, CastMetric } from "@/lib/analytics/cast-diagnosis/types";
+
+export type CastTrendAvailability = "VALUE" | "ZERO" | "MISSING" | "UNAVAILABLE" | "UNCOMPUTABLE";
+export type CastTrendMonthStatus = "COMPLETE" | "PARTIAL";
+export type CastTrendDirection = "RISING" | "FLAT" | "FALLING" | "VOLATILE" | "INSUFFICIENT_DATA";
+export type CastTrendMetricKey = keyof CastTrendMetrics;
+export type CastTrendMetric = { value: number | null; availability: CastTrendAvailability };
+export type CastTrendMetrics = {
+  femaleReward: CastTrendMetric; hourlyReward: CastTrendMetric; contracts: CastTrendMetric; attendanceDays: CastTrendMetric; workingHours: CastTrendMetric;
+  contractsPerDay: CastTrendMetric; contractsPerHour: CastTrendMetric; townPv: CastTrendMetric; townUu: CastTrendMetric; heavenPageAccess: CastTrendMetric; heavenDiaryPosts: CastTrendMetric;
+  photoNominations: CastTrendMetric; photoNominationShare: CastTrendMetric; photoNominationsPerHour: CastTrendMetric; photoNominationsPer100Uu: CastTrendMetric;
+  mainNominations: CastTrendMetric; mainNominationRate: CastTrendMetric; repeatCount: CastTrendMetric; repeatShare: CastTrendMetric;
+};
+export type CastTrendCoverage = { periodFrom: string; periodTo: string; activeFrom: string | null; activeTo: string | null; activeDaysInMonth: number | null; calendarDaysInMonth: number; isPartialActiveMonth: boolean };
+export type CastTrendDiagnosisSnapshot = { primaryType: CastDiagnosisType; primaryLabel: string; confidence: string; recalculatedWithCurrentRules: true; isPartialPeriod: boolean };
+export type CastTrendActionSnapshot = { actionType: string; actionLabel: string; priority: string; recalculatedWithCurrentRules: true; isPartialPeriod: boolean };
+export type CastTrendWarning = { code: string; label: string };
+export type CastTrendPreviousComparison = { previousMonth: string | null; currentValue: number | null; previousValue: number | null; absoluteChange: number | null; percentageChange: number | null; absolutePointChange: number | null; availability: "VALUE" | "NO_PREVIOUS_VALUE" | "UNCOMPUTABLE" };
+export type CastTrendRollingAverage = { value: number | null; validMonthCount: number; requiredMonthCount: number; availability: "VALUE" | "PARTIAL_SAMPLE" | "INSUFFICIENT" };
+export type CastTrendExtrema = { highest: { month: string; value: number } | null; lowest: { month: string; value: number } | null; latestIsHighest: boolean; latestIsLowest: boolean };
+export type CastTrendMetricSummary = { key: CastTrendMetricKey; latest: CastTrendMetric; previous: CastTrendPreviousComparison; rolling3: CastTrendRollingAverage; rolling6: CastTrendRollingAverage; direction: CastTrendDirection; extrema: CastTrendExtrema; record: "NEW_HIGHEST" | "PROVISIONAL_HIGHEST" | null };
+export type CastTrendActionFocus = { actionType: string | null; primaryMetricKeys: CastTrendMetricKey[]; maintainMetricKeys: CastTrendMetricKey[]; monitorMetricKeys: CastTrendMetricKey[]; reason: string };
+export type CastTrendAvailabilitySummary = Record<CastTrendMetricKey, Record<CastTrendAvailability, number>>;
+export type CastMonthlyTrendPoint = { castId: string; month: string; label: string; status: CastTrendMonthStatus; coverage: CastTrendCoverage; metrics: CastTrendMetrics; diagnosis: CastTrendDiagnosisSnapshot | null; action: CastTrendActionSnapshot | null; warnings: CastTrendWarning[]; previous: Record<CastTrendMetricKey, CastTrendPreviousComparison>; rolling3: Record<CastTrendMetricKey, CastTrendRollingAverage>; rolling6: Record<CastTrendMetricKey, CastTrendRollingAverage>; direction: Record<CastTrendMetricKey, CastTrendDirection>; extrema: Record<CastTrendMetricKey, CastTrendExtrema>; records: Record<CastTrendMetricKey, CastTrendMetricSummary["record"]> };
+export type CastTrendResult = { version: string; cast: { castId: string; displayName: string; storeLabels: string[] }; period: { from: string; to: string; monthCount: number }; months: CastMonthlyTrendPoint[]; summaries: Record<CastTrendMetricKey, CastTrendMetricSummary>; actionFocus: CastTrendActionFocus; availabilitySummary: CastTrendAvailabilitySummary; warnings: CastTrendWarning[] };
+export type TrendMonthlyInput = { month: string; periodFrom: string; periodTo: string; status: CastTrendMonthStatus; cast: CastEngineCast | null; diagnosisIncluded?: boolean; actionIncluded?: boolean; actionSnapshot?: CastTrendActionSnapshot | null; activeFrom: string | null; activeTo: string | null; calendarDaysInMonth: number };
+export const TREND_METRIC_KEYS: CastTrendMetricKey[] = ["femaleReward", "hourlyReward", "contracts", "attendanceDays", "workingHours", "contractsPerDay", "contractsPerHour", "townPv", "townUu", "heavenPageAccess", "heavenDiaryPosts", "photoNominations", "photoNominationShare", "photoNominationsPerHour", "photoNominationsPer100Uu", "mainNominations", "mainNominationRate", "repeatCount", "repeatShare"];
+export const TREND_LABELS: Record<CastTrendMetricKey, string> = { femaleReward: "女子報酬", hourlyReward: "平均時給", contracts: "成約数", attendanceDays: "出勤日数", workingHours: "稼働時間", contractsPerDay: "1日平均成約", contractsPerHour: "1時間あたり成約", townPv: "Town PV", townUu: "Town UU", heavenPageAccess: "Heavenアクセス", heavenDiaryPosts: "Heaven写メ日記", photoNominations: "写真指名数", photoNominationShare: "写真指名率（構成比）", photoNominationsPerHour: "1時間あたり写真指名", photoNominationsPer100Uu: "100UUあたり写真指名", mainNominations: "本指名数", mainNominationRate: "本指名率", repeatCount: "リピート数", repeatShare: "リピート構成比" };
+export const CAST_TREND_THRESHOLDS = { flatRangeRatio: 0.1, meaningfulChangeRatio: 0.1 };
+export const toTrendMetric = (metric: CastMetric): CastTrendMetric => ({ value: metric.value, availability: metric.availability as CastTrendAvailability });
