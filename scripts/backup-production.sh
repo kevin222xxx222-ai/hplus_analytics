@@ -37,9 +37,14 @@ checksum_path="${dump_path}.sha256"
 dump_tmp="backups/.${dump_name}.tmp.$$"
 checksum_tmp="${checksum_path}.tmp.$$"
 container_tmp="/tmp/.${dump_name}.tmp.$$"
+formal_dump_created=0
+completed=0
 
 cleanup() {
   rm -f "$dump_tmp" "$checksum_tmp"
+  if (( formal_dump_created == 1 && completed == 0 )); then
+    rm -f "$dump_path"
+  fi
   docker exec "$db_id" rm -f "$container_tmp" >/dev/null 2>&1 || true
 }
 trap cleanup EXIT
@@ -59,16 +64,28 @@ file_size="$(wc -c < "$dump_tmp" | tr -d '[:space:]')"
 docker cp "$dump_tmp" "$db_id:$container_tmp"
 docker exec "$db_id" pg_restore -l "$container_tmp" >/dev/null
 
+[[ ! -e "$dump_path" ]] || fail "同名の正式バックアップが既に存在します: ${dump_path}"
+mv "$dump_tmp" "$dump_path"
+formal_dump_created=1
+
 if command -v sha256sum >/dev/null 2>&1; then
-  sha256sum "$dump_tmp" > "$checksum_tmp"
+  (cd backups && sha256sum "$dump_name") > "$checksum_tmp"
 elif command -v shasum >/dev/null 2>&1; then
-  shasum -a 256 "$dump_tmp" > "$checksum_tmp"
+  (cd backups && shasum -a 256 "$dump_name") > "$checksum_tmp"
 else
   fail "SHA-256コマンド（sha256sum/shasum）がありません。"
 fi
 
-mv "$dump_tmp" "$dump_path"
+if command -v sha256sum >/dev/null 2>&1; then
+  (cd backups && sha256sum -c "$(basename "$checksum_tmp")" >/dev/null)
+else
+  expected_hash="$(awk '{print $1}' "$checksum_tmp")"
+  actual_hash="$(shasum -a 256 "$dump_path" | awk '{print $1}')"
+  [[ "$expected_hash" == "$actual_hash" ]] || fail "SHA-256自己検証に失敗しました。"
+fi
+
 mv "$checksum_tmp" "$checksum_path"
+completed=1
 
 printf 'Backup completed successfully.\n'
 printf 'dump path: %s\n' "$dump_path"
