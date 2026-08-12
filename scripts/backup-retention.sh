@@ -22,10 +22,11 @@ for arg in "$@"; do
   esac
 done
 [[ "$retention_days" =~ ^[1-9][0-9]*$ ]] || fail "BACKUP_RETENTION_DAYSは1以上の整数で指定してください。"
+retention_minutes=$((retention_days * 24 * 60))
 
 # Linux VPS production uses GNU find. Restrict the scan to direct regular
 # files under backups/ and the two exact backup filename families.
-mapfile -t old_files < <(find -P "$BACKUP_DIR" -maxdepth 1 -type f \( -name 'hplus_analytics_*.dump' -o -name 'hplus_analytics_*.dump.sha256' \) -mtime "+${retention_days}" -print | sort)
+mapfile -t old_files < <(find -P "$BACKUP_DIR" -maxdepth 1 -type f \( -name 'hplus_analytics_*.dump' -o -name 'hplus_analytics_*.dump.sha256' \) -mmin "+${retention_minutes}" -print | sort)
 
 latest_dump=""
 mapfile -t dump_files < <(find -P "$BACKUP_DIR" -maxdepth 1 -type f -name 'hplus_analytics_*.dump' -print)
@@ -43,7 +44,7 @@ if [[ -n "$latest_dump" ]]; then
   old_files=("${filtered_files[@]}")
 fi
 
-printf 'Backup retention: %s days\n' "$retention_days"
+printf 'Backup retention: %s days (%s minutes)\n' "$retention_days" "$retention_minutes"
 printf 'Mode: %s\n' "$([[ "$apply" == 1 ]] && echo apply || echo dry-run)"
 printf 'Latest dump protected: %s\n' "${latest_dump:-none}"
 printf 'Deletion candidates:\n'
