@@ -19,8 +19,9 @@ cd /opt/hplus-analytics
 - 形式: PostgreSQL custom format（`pg_dump -Fc`）
 - owner/privilege: `--no-owner --no-acl`。restore先のrole/権限名に依存しません。
 - ファイル名: `hplus_analytics_YYYYMMDD_HHMMSS.dump`
-- 同じdumpのSHA-256を`.dump.sha256`へ保存し、`pg_restore -l`でアーカイブを検証します。
+- 同じdumpのSHA-256を`.dump.sha256`へ保存し、PostgreSQLコンテナ内の`pg_restore -l`へ実ファイルパスを渡してアーカイブを検証します。
 - 0 byteまたは異常に小さいファイルは失敗扱いです。
+- dumpとSHA-256は一時ファイルへ生成し、サイズ・`pg_restore -l`・SHA-256生成の全検証成功後に正式なファイル名へrenameします。途中失敗時に不完全な正式バックアップを残しません。
 
 バックアップファイルは`.gitignore`の`backups/`によりGit管理しません。バックアップ自体の暗号化、オフサイト転送、Retention/cron、自動削除は別Phaseで扱います。
 
