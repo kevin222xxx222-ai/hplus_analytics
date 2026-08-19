@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { ImportDataType, MediaType, StoreCode } from "@/generated/prisma/client";
-import { assertTownStoreMapping, assertTownStoreProductionExecution, sameTownStoreIdentity, validateTownStoreExecuteInput } from "./town-store-execute";
+import { assertTownStoreMapping, assertTownStoreProductionExecution, sameTownStoreIdentity, townReviewUrl, validateTownStoreExecuteInput } from "./town-store-execute";
 
 const mapping = (overrides: Record<string, unknown> = {}) => ({ isActive: true, isFuture: false, importDataType: ImportDataType.TOWN_STORE, storeId: "store-kas", importSource: { mediaType: MediaType.TOWN, dataType: ImportDataType.TOWN_STORE, storeId: "store-kas", store: { code: StoreCode.KASUKABE } }, ...overrides });
 
@@ -31,4 +31,5 @@ describe("Town STORE manual execute validation", () => {
     expect(sameTownStoreIdentity({ origin: "GOOGLE_DRIVE", importDataType: ImportDataType.TOWN_STORE }, state, { metadata: { origin: "GOOGLE_DRIVE", importDataType: ImportDataType.TOWN_STORE, driveFileId: "file-1", driveModifiedTime: state.driveModifiedTime.toISOString(), driveSha256: "abc" } })).toBe(true);
     expect(sameTownStoreIdentity({ origin: "GOOGLE_DRIVE" }, state, { metadata: { origin: "GOOGLE_DRIVE", driveFileId: "file-1", driveModifiedTime: state.driveModifiedTime.toISOString(), driveSha256: "other" } })).toBe(false);
   });
+  it("uses the Town review route", () => expect(townReviewUrl("batch-1")).toBe("/imports/town/batch-1"));
 });

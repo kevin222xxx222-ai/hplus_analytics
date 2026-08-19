@@ -13,6 +13,10 @@ import type { GoogleDriveClient } from "./types";
 export type TownStoreExecuteInput = { driveFileId: string; targetDate: string; confirmProduction?: boolean; client: GoogleDriveClient };
 export type TownStoreExecuteResult = { outcome: "EXECUTED" | "SKIPPED" | "REUSED"; batchId?: string; batchStatus?: string; reviewUrl?: string; reason?: string };
 
+export function townReviewUrl(batchId: string): string {
+  return `/imports/town/${batchId}`;
+}
+
 function validDate(value: string): boolean {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const [year, month, day] = value.split("-").map(Number);
@@ -66,12 +70,12 @@ export async function executeTownStoreDriveFile(input: TownStoreExecuteInput): P
     });
     if (!state) throw new Error("DriveFileState was not found.");
     if (state.status !== DriveFileStatus.READY) {
-      if (state.status === DriveFileStatus.REVIEW_REQUIRED && state.lastImportBatch) return { outcome: "REUSED", batchId: state.lastImportBatch.id, batchStatus: state.lastImportBatch.status, reviewUrl: `/imports/${state.lastImportBatch.id}`, reason: "EXISTING_REVIEW" };
+      if (state.status === DriveFileStatus.REVIEW_REQUIRED && state.lastImportBatch) return { outcome: "REUSED", batchId: state.lastImportBatch.id, batchStatus: state.lastImportBatch.status, reviewUrl: townReviewUrl(state.lastImportBatch.id), reason: "EXISTING_REVIEW" };
       throw new Error(`DriveFileState is not READY: ${state.status}.`);
     }
     const mapping = state.driveFolderMapping ?? await resolveDriveFolderMapping(state.folderId);
     assertTownStoreMapping(mapping);
-    if (state.lastImportBatch && sameTownStoreIdentity(state.lastImportBatch.metadata, state, state.lastImportBatch)) return { outcome: "REUSED", batchId: state.lastImportBatch.id, batchStatus: state.lastImportBatch.status, reviewUrl: `/imports/${state.lastImportBatch.id}`, reason: "SAME_CONTENT" };
+    if (state.lastImportBatch && sameTownStoreIdentity(state.lastImportBatch.metadata, state, state.lastImportBatch)) return { outcome: "REUSED", batchId: state.lastImportBatch.id, batchStatus: state.lastImportBatch.status, reviewUrl: townReviewUrl(state.lastImportBatch.id), reason: "SAME_CONTENT" };
 
     const files = await input.client.listFilesInFolder(state.folderId);
     const file = files.find((candidate) => candidate.id === state.driveFileId);
@@ -88,7 +92,7 @@ export async function executeTownStoreDriveFile(input: TownStoreExecuteInput): P
         orderBy: { completedAt: "desc" },
         select: { id: true, status: true },
       });
-      if (duplicate) return { outcome: "REUSED", batchId: duplicate.id, batchStatus: duplicate.status, reviewUrl: `/imports/${duplicate.id}`, reason: "DUPLICATE_COMPLETED_FILE" };
+      if (duplicate) return { outcome: "REUSED", batchId: duplicate.id, batchStatus: duplicate.status, reviewUrl: townReviewUrl(duplicate.id), reason: "DUPLICATE_COMPLETED_FILE" };
       await transitionDriveFileState(state.id, DriveFileStatus.IMPORTING);
       const buffer = await readFile(downloaded.localPath);
       const actor = await getGoogleDriveSystemActor();
@@ -100,7 +104,7 @@ export async function executeTownStoreDriveFile(input: TownStoreExecuteInput): P
       });
       if (preview.status === "FAILED") throw new Error("Town STORE preview failed validation.");
       await transitionDriveFileState(state.id, DriveFileStatus.REVIEW_REQUIRED, { lastImportBatch: { connect: { id: preview.batchId } }, lastImportAttemptAt: new Date() });
-      return { outcome: "EXECUTED", batchId: preview.batchId, batchStatus: preview.status, reviewUrl: `/imports/${preview.batchId}` };
+      return { outcome: "EXECUTED", batchId: preview.batchId, batchStatus: preview.status, reviewUrl: townReviewUrl(preview.batchId) };
     } catch (error) {
       await markDriveFileFailure(state.id, { category: DriveFailureCategory.IMPORT, code: "TOWN_STORE_EXECUTE_FAILED", message: error instanceof Error ? error.message : "Town STORE execute failed.", retryable: false }).catch(() => undefined);
       throw error;

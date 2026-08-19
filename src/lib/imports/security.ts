@@ -33,9 +33,21 @@ export function validateCsvUpload(file: File, buffer: Buffer) {
   if (buffer.includes(0)) throw new Error("CSVにバイナリデータが含まれています。");
 }
 
-export function assertSameOrigin(request: Request) {
+export function normalizeAppOrigin(value: string): string {
+  let parsed: URL;
+  try {
+    parsed = new URL(value.trim());
+  } catch {
+    throw new Error("APP_ORIGIN must be a valid URL.");
+  }
+  if (parsed.protocol !== "http:" && parsed.protocol !== "https:") throw new Error("APP_ORIGIN must use http or https.");
+  return parsed.origin;
+}
+
+export function assertSameOrigin(request: Request, env: { APP_ORIGIN?: string } = process.env as { APP_ORIGIN?: string }) {
   const origin = request.headers.get("origin");
+  const configuredOrigin = env.APP_ORIGIN?.trim();
+  const expected = configuredOrigin ? normalizeAppOrigin(configuredOrigin) : new URL(request.url).origin;
   if (!origin) return;
-  const expected = new URL(request.url).origin;
   if (origin !== expected) throw new Error("Invalid request origin");
 }

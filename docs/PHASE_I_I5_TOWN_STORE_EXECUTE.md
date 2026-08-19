@@ -35,6 +35,8 @@ npm run drive:execute-town-store -- \
   --target-date=YYYY-MM-DD
 ```
 
+Review URLは`/imports/town/<batchId>`を使用する。
+
 Production環境では`--confirm-production`が必要だが、I5ではProduction実行しない。
 
 処理範囲は次の通り。
