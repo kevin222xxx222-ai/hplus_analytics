@@ -60,3 +60,21 @@ driveFileId + modifiedTime + SHA-256、既存ImportBatchのfileHash、完了済�
 ## Verification
 
 Mapping種別、store、active/future、metricHint、Production confirmation、target date、Review URLのunit testを追加しました。実Drive FileによるI7 Canaryは未実施（NOT VERIFIED）です。Canary実行後、各対象のPreview、Resolve、Manual Confirm、post-confirm syncを個別に確認します。
+
+## Operator recovery: safe DriveFileState reset
+
+誤ったFolderへ配置してから正しいMappingへ移動した場合など、ImportBatchを持たない`REVIEW_REQUIRED`だけをOperatorが`READY`へ戻せます。
+
+```bash
+npm run drive:reset-state -- \
+  --drive-file-id=<id> \
+  --to=READY \
+  --dry-run
+
+npm run drive:reset-state -- \
+  --drive-file-id=<id> \
+  --to=READY \
+  --confirm-production
+```
+
+Reset条件は、現在statusが`REVIEW_REQUIRED`、`lastImportBatchId`/`lastSuccessfulImportBatchId`がNULL、activeかつnon-futureのMappingが存在、非trashed、SHA-256保存済みです。`IMPORTED`、`READY`、Batch紐付け済みReview、FAILED_FINALなどは拒否します。SQL direct UPDATEは行わず、既存`transitionDriveFileState()`とdriveFileId advisory lockを使用します。staleなerror/retry fieldsだけをNULLへ整理し、ImportBatch関連や`lastImportedAt`は変更しません。Productionでは`--confirm-production`が必須です。今回のProduction stateはCodexから変更しません。
