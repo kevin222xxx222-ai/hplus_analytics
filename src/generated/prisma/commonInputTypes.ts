@@ -572,6 +572,84 @@ export type EnumImportBatchStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumImportBatchStatusFilter<$PrismaModel>
 }
 
+export type EnumDriveFolderMappingPriorityFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriveFolderMappingPriority | Prisma.EnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel>
+  in?: $Enums.DriveFolderMappingPriority[] | Prisma.ListEnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriveFolderMappingPriority[] | Prisma.ListEnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriveFolderMappingPriorityFilter<$PrismaModel> | $Enums.DriveFolderMappingPriority
+}
+
+export type EnumDriveFolderMappingPriorityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriveFolderMappingPriority | Prisma.EnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel>
+  in?: $Enums.DriveFolderMappingPriority[] | Prisma.ListEnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriveFolderMappingPriority[] | Prisma.ListEnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriveFolderMappingPriorityWithAggregatesFilter<$PrismaModel> | $Enums.DriveFolderMappingPriority
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriveFolderMappingPriorityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriveFolderMappingPriorityFilter<$PrismaModel>
+}
+
+export type BigIntNullableFilter<$PrismaModel = never> = {
+  equals?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel> | null
+  in?: bigint[] | number[] | Prisma.ListBigIntFieldRefInput<$PrismaModel> | null
+  notIn?: bigint[] | number[] | Prisma.ListBigIntFieldRefInput<$PrismaModel> | null
+  lt?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  lte?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  gt?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  gte?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
+}
+
+export type EnumDriveFileStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriveFileStatus | Prisma.EnumDriveFileStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DriveFileStatus[] | Prisma.ListEnumDriveFileStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriveFileStatus[] | Prisma.ListEnumDriveFileStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriveFileStatusFilter<$PrismaModel> | $Enums.DriveFileStatus
+}
+
+export type EnumDriveFailureCategoryNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriveFailureCategory | Prisma.EnumDriveFailureCategoryFieldRefInput<$PrismaModel> | null
+  in?: $Enums.DriveFailureCategory[] | Prisma.ListEnumDriveFailureCategoryFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.DriveFailureCategory[] | Prisma.ListEnumDriveFailureCategoryFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumDriveFailureCategoryNullableFilter<$PrismaModel> | $Enums.DriveFailureCategory | null
+}
+
+export type BigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel> | null
+  in?: bigint[] | number[] | Prisma.ListBigIntFieldRefInput<$PrismaModel> | null
+  notIn?: bigint[] | number[] | Prisma.ListBigIntFieldRefInput<$PrismaModel> | null
+  lt?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  lte?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  gt?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  gte?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _avg?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+  _sum?: Prisma.NestedBigIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedBigIntNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedBigIntNullableFilter<$PrismaModel>
+}
+
+export type EnumDriveFileStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriveFileStatus | Prisma.EnumDriveFileStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DriveFileStatus[] | Prisma.ListEnumDriveFileStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriveFileStatus[] | Prisma.ListEnumDriveFileStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriveFileStatusWithAggregatesFilter<$PrismaModel> | $Enums.DriveFileStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriveFileStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriveFileStatusFilter<$PrismaModel>
+}
+
+export type EnumDriveFailureCategoryNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriveFailureCategory | Prisma.EnumDriveFailureCategoryFieldRefInput<$PrismaModel> | null
+  in?: $Enums.DriveFailureCategory[] | Prisma.ListEnumDriveFailureCategoryFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.DriveFailureCategory[] | Prisma.ListEnumDriveFailureCategoryFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumDriveFailureCategoryNullableWithAggregatesFilter<$PrismaModel> | $Enums.DriveFailureCategory | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriveFailureCategoryNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriveFailureCategoryNullableFilter<$PrismaModel>
+}
+
 export type DecimalNullableFilter<$PrismaModel = never> = {
   equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null
   in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
@@ -1212,6 +1290,84 @@ export type NestedEnumImportBatchStatusWithAggregatesFilter<$PrismaModel = never
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumImportBatchStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumImportBatchStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumDriveFolderMappingPriorityFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriveFolderMappingPriority | Prisma.EnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel>
+  in?: $Enums.DriveFolderMappingPriority[] | Prisma.ListEnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriveFolderMappingPriority[] | Prisma.ListEnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriveFolderMappingPriorityFilter<$PrismaModel> | $Enums.DriveFolderMappingPriority
+}
+
+export type NestedEnumDriveFolderMappingPriorityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriveFolderMappingPriority | Prisma.EnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel>
+  in?: $Enums.DriveFolderMappingPriority[] | Prisma.ListEnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriveFolderMappingPriority[] | Prisma.ListEnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriveFolderMappingPriorityWithAggregatesFilter<$PrismaModel> | $Enums.DriveFolderMappingPriority
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriveFolderMappingPriorityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriveFolderMappingPriorityFilter<$PrismaModel>
+}
+
+export type NestedBigIntNullableFilter<$PrismaModel = never> = {
+  equals?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel> | null
+  in?: bigint[] | number[] | Prisma.ListBigIntFieldRefInput<$PrismaModel> | null
+  notIn?: bigint[] | number[] | Prisma.ListBigIntFieldRefInput<$PrismaModel> | null
+  lt?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  lte?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  gt?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  gte?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
+}
+
+export type NestedEnumDriveFileStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriveFileStatus | Prisma.EnumDriveFileStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DriveFileStatus[] | Prisma.ListEnumDriveFileStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriveFileStatus[] | Prisma.ListEnumDriveFileStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriveFileStatusFilter<$PrismaModel> | $Enums.DriveFileStatus
+}
+
+export type NestedEnumDriveFailureCategoryNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriveFailureCategory | Prisma.EnumDriveFailureCategoryFieldRefInput<$PrismaModel> | null
+  in?: $Enums.DriveFailureCategory[] | Prisma.ListEnumDriveFailureCategoryFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.DriveFailureCategory[] | Prisma.ListEnumDriveFailureCategoryFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumDriveFailureCategoryNullableFilter<$PrismaModel> | $Enums.DriveFailureCategory | null
+}
+
+export type NestedBigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel> | null
+  in?: bigint[] | number[] | Prisma.ListBigIntFieldRefInput<$PrismaModel> | null
+  notIn?: bigint[] | number[] | Prisma.ListBigIntFieldRefInput<$PrismaModel> | null
+  lt?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  lte?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  gt?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  gte?: bigint | number | Prisma.BigIntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _avg?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+  _sum?: Prisma.NestedBigIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedBigIntNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedBigIntNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumDriveFileStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriveFileStatus | Prisma.EnumDriveFileStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DriveFileStatus[] | Prisma.ListEnumDriveFileStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DriveFileStatus[] | Prisma.ListEnumDriveFileStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDriveFileStatusWithAggregatesFilter<$PrismaModel> | $Enums.DriveFileStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriveFileStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriveFileStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumDriveFailureCategoryNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DriveFailureCategory | Prisma.EnumDriveFailureCategoryFieldRefInput<$PrismaModel> | null
+  in?: $Enums.DriveFailureCategory[] | Prisma.ListEnumDriveFailureCategoryFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.DriveFailureCategory[] | Prisma.ListEnumDriveFailureCategoryFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumDriveFailureCategoryNullableWithAggregatesFilter<$PrismaModel> | $Enums.DriveFailureCategory | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDriveFailureCategoryNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDriveFailureCategoryNullableFilter<$PrismaModel>
 }
 
 export type NestedDecimalNullableFilter<$PrismaModel = never> = {

@@ -102,6 +102,16 @@ export type ImportError = Prisma.ImportErrorModel
  */
 export type ImportBatch = Prisma.ImportBatchModel
 /**
+ * Model DriveFolderMapping
+ *
+ */
+export type DriveFolderMapping = Prisma.DriveFolderMappingModel
+/**
+ * Model DriveFileState
+ *
+ */
+export type DriveFileState = Prisma.DriveFileStateModel
+/**
  * Model CtiCastDaily
  * 
  */

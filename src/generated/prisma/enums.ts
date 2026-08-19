@@ -74,6 +74,48 @@ export const ImportDataType = {
 export type ImportDataType = (typeof ImportDataType)[keyof typeof ImportDataType]
 
 
+export const DriveFolderMappingPriority = {
+  REQUIRED: 'REQUIRED',
+  OPTIONAL: 'OPTIONAL',
+  FUTURE: 'FUTURE'
+} as const
+
+export type DriveFolderMappingPriority = (typeof DriveFolderMappingPriority)[keyof typeof DriveFolderMappingPriority]
+
+
+export const DriveFileStatus = {
+  DETECTED: 'DETECTED',
+  DOWNLOADING: 'DOWNLOADING',
+  READY: 'READY',
+  IMPORTING: 'IMPORTING',
+  IMPORTED: 'IMPORTED',
+  FAILED_RETRYABLE: 'FAILED_RETRYABLE',
+  FAILED_FINAL: 'FAILED_FINAL',
+  UNMAPPED: 'UNMAPPED',
+  REVIEW_REQUIRED: 'REVIEW_REQUIRED'
+} as const
+
+export type DriveFileStatus = (typeof DriveFileStatus)[keyof typeof DriveFileStatus]
+
+
+export const DriveFailureCategory = {
+  AUTH: 'AUTH',
+  PERMISSION: 'PERMISSION',
+  FOLDER_NOT_FOUND: 'FOLDER_NOT_FOUND',
+  FILE_NOT_FOUND: 'FILE_NOT_FOUND',
+  DOWNLOAD: 'DOWNLOAD',
+  CHECKSUM: 'CHECKSUM',
+  VALIDATION: 'VALIDATION',
+  IMPORT: 'IMPORT',
+  TRANSIENT_API: 'TRANSIENT_API',
+  RATE_LIMIT: 'RATE_LIMIT',
+  DISK: 'DISK',
+  UNKNOWN: 'UNKNOWN'
+} as const
+
+export type DriveFailureCategory = (typeof DriveFailureCategory)[keyof typeof DriveFailureCategory]
+
+
 export const TownPageType = {
   STORE_TOP: 'STORE_TOP',
   SCHEDULE: 'SCHEDULE',

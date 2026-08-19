@@ -24,6 +24,9 @@
 # misc
 .DS_Store
 *.pem
+secrets/
+*.service-account.json
+/data/tmp/google-drive/
 
 # debug
 npm-debug.log*

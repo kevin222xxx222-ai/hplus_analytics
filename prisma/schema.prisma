@@ -51,6 +51,39 @@ enum ImportDataType {
   HEAVEN_CAST
 }
 
+enum DriveFolderMappingPriority {
+  REQUIRED
+  OPTIONAL
+  FUTURE
+}
+
+enum DriveFileStatus {
+  DETECTED
+  DOWNLOADING
+  READY
+  IMPORTING
+  IMPORTED
+  FAILED_RETRYABLE
+  FAILED_FINAL
+  UNMAPPED
+  REVIEW_REQUIRED
+}
+
+enum DriveFailureCategory {
+  AUTH
+  PERMISSION
+  FOLDER_NOT_FOUND
+  FILE_NOT_FOUND
+  DOWNLOAD
+  CHECKSUM
+  VALIDATION
+  IMPORT
+  TRANSIENT_API
+  RATE_LIMIT
+  DISK
+  UNKNOWN
+}
+
 enum TownPageType {
   STORE_TOP
   SCHEDULE
@@ -124,23 +157,23 @@ enum GoalScopeType {
 }
 
 model User {
-  id               String             @id @default(uuid()) @db.Uuid
-  loginId          String             @unique @map("login_id") @db.VarChar(100)
-  email            String?            @unique @db.VarChar(255)
-  displayName      String             @map("display_name") @db.VarChar(100)
-  passwordHash     String             @map("password_hash") @db.VarChar(255)
-  role             UserRole           @default(VIEWER)
-  isActive         Boolean            @default(true) @map("is_active")
-  createdAt        DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt        DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
-  sessions         Session[]
-  importBatches    ImportBatch[]
-  castNameChanges  CastNameHistory[]  @relation("CastNameChangedBy")
-  castMergeActions CastMergeHistory[] @relation("CastMergePerformedBy")
+  id                       String                           @id @default(uuid()) @db.Uuid
+  loginId                  String                           @unique @map("login_id") @db.VarChar(100)
+  email                    String?                          @unique @db.VarChar(255)
+  displayName              String                           @map("display_name") @db.VarChar(100)
+  passwordHash             String                           @map("password_hash") @db.VarChar(255)
+  role                     UserRole                         @default(VIEWER)
+  isActive                 Boolean                          @default(true) @map("is_active")
+  createdAt                DateTime                         @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt                DateTime                         @updatedAt @map("updated_at") @db.Timestamptz(3)
+  sessions                 Session[]
+  importBatches            ImportBatch[]
+  castNameChanges          CastNameHistory[]                @relation("CastNameChangedBy")
+  castMergeActions         CastMergeHistory[]               @relation("CastMergePerformedBy")
   castStartDateBulkChanges CastStartDateBulkChangeHistory[] @relation("CastStartDateBulkChangePerformedBy")
-  goalsCreated       MonthlyGoal[] @relation("MonthlyGoalCreatedBy")
-  goalsUpdated       MonthlyGoal[] @relation("MonthlyGoalUpdatedBy")
-  goalChangeHistory  MonthlyGoalChangeHistory[]
+  goalsCreated             MonthlyGoal[]                    @relation("MonthlyGoalCreatedBy")
+  goalsUpdated             MonthlyGoal[]                    @relation("MonthlyGoalUpdatedBy")
+  goalChangeHistory        MonthlyGoalChangeHistory[]
 
   @@map("users")
 }
@@ -162,20 +195,21 @@ model Session {
 }
 
 model Store {
-  id                    String             @id @default(uuid()) @db.Uuid
-  code                  StoreCode          @unique
-  name                  String             @db.VarChar(100)
-  shortName             String             @map("short_name") @db.VarChar(50)
-  displayOrder          Int                @default(0) @map("display_order")
-  isActive              Boolean            @default(true) @map("is_active")
-  hasManagementMetrics  Boolean            @default(true) @map("has_management_metrics")
-  hasAcquisitionMetrics Boolean            @default(false) @map("has_acquisition_metrics")
-  createdAt             DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt             DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
+  id                    String               @id @default(uuid()) @db.Uuid
+  code                  StoreCode            @unique
+  name                  String               @db.VarChar(100)
+  shortName             String               @map("short_name") @db.VarChar(50)
+  displayOrder          Int                  @default(0) @map("display_order")
+  isActive              Boolean              @default(true) @map("is_active")
+  hasManagementMetrics  Boolean              @default(true) @map("has_management_metrics")
+  hasAcquisitionMetrics Boolean              @default(false) @map("has_acquisition_metrics")
+  createdAt             DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt             DateTime             @updatedAt @map("updated_at") @db.Timestamptz(3)
   casts                 Cast[]
   aliases               CastAlias[]
   mediaListings         MediaListing[]
   importSources         ImportSource[]
+  driveFolderMappings   DriveFolderMapping[]
   improvementLogs       ImprovementLog[]
   ctiCastDailies        CtiCastDaily[]
   townStoreDailies      TownStoreDaily[]
@@ -208,7 +242,7 @@ model Cast {
   townCastDailies    TownCastDaily[]
   townUrlDailies     TownUrlDaily[]
   townLandingDailies TownLandingDaily[]
-  heavenCastDailies   HeavenCastDaily[]
+  heavenCastDailies  HeavenCastDaily[]
   nameHistories      CastNameHistory[]
   mergedIntoCastId   String?            @map("merged_into_cast_id") @db.Uuid
   mergedAt           DateTime?          @map("merged_at") @db.Timestamptz(3)
@@ -318,20 +352,21 @@ model MediaListing {
 }
 
 model ImportSource {
-  id         String           @id @default(uuid()) @db.Uuid
-  name       String           @db.VarChar(120)
-  kind       ImportSourceKind @default(MANUAL_UPLOAD)
-  mediaType  MediaType        @map("media_type")
-  dataType   ImportDataType   @map("data_type")
-  metricType String?          @map("metric_type") @db.VarChar(100)
-  storeId    String?          @map("store_id") @db.Uuid
-  folderPath String?          @map("folder_path") @db.VarChar(500)
-  isActive   Boolean          @default(true) @map("is_active")
-  createdAt  DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt  DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
-  store      Store?           @relation(fields: [storeId], references: [id], onDelete: SetNull)
-  errors     ImportError[]
-  batches    ImportBatch[]
+  id                  String               @id @default(uuid()) @db.Uuid
+  name                String               @db.VarChar(120)
+  kind                ImportSourceKind     @default(MANUAL_UPLOAD)
+  mediaType           MediaType            @map("media_type")
+  dataType            ImportDataType       @map("data_type")
+  metricType          String?              @map("metric_type") @db.VarChar(100)
+  storeId             String?              @map("store_id") @db.Uuid
+  folderPath          String?              @map("folder_path") @db.VarChar(500)
+  isActive            Boolean              @default(true) @map("is_active")
+  createdAt           DateTime             @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt           DateTime             @updatedAt @map("updated_at") @db.Timestamptz(3)
+  store               Store?               @relation(fields: [storeId], references: [id], onDelete: SetNull)
+  errors              ImportError[]
+  batches             ImportBatch[]
+  driveFolderMappings DriveFolderMapping[]
 
   @@unique([name])
   @@index([mediaType, dataType, storeId])
@@ -367,50 +402,114 @@ model ImportError {
 }
 
 model ImportBatch {
-  id                 String             @id @default(uuid()) @db.Uuid
-  runId              String             @unique @default(uuid()) @map("run_id") @db.Uuid
-  importSourceId     String             @map("import_source_id") @db.Uuid
-  originalFilename   String             @map("original_filename") @db.VarChar(255)
-  storedFilename     String             @map("stored_filename") @db.VarChar(255)
-  storagePath        String             @map("storage_path") @db.VarChar(1000)
-  fileHash           String             @map("file_hash") @db.Char(64)
-  fileSizeBytes      BigInt             @map("file_size_bytes")
-  dataType           ImportDataType     @map("data_type")
-  importMode         ImportMode         @map("import_mode")
-  targetFrom         DateTime           @map("target_from") @db.Date
-  targetTo           DateTime           @map("target_to") @db.Date
-  status             ImportBatchStatus  @default(UPLOADED)
-  startedAt          DateTime           @default(now()) @map("started_at") @db.Timestamptz(3)
-  completedAt        DateTime?          @map("completed_at") @db.Timestamptz(3)
-  uploadedByUserId   String?            @map("uploaded_by_user_id") @db.Uuid
-  insertedCount      Int                @default(0) @map("inserted_count")
-  updatedCount       Int                @default(0) @map("updated_count")
-  skippedCount       Int                @default(0) @map("skipped_count")
-  pendingCount       Int                @default(0) @map("pending_count")
-  warningCount       Int                @default(0) @map("warning_count")
-  errorCount         Int                @default(0) @map("error_count")
-  sourceSheetNames   Json?              @map("source_sheet_names") @db.JsonB
-  detectedColumns    Json?              @map("detected_columns") @db.JsonB
-  metadata           Json?              @db.JsonB
-  failureMessage     String?            @map("failure_message") @db.Text
-  createdAt          DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt          DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
-  importSource       ImportSource       @relation(fields: [importSourceId], references: [id], onDelete: Restrict)
-  uploadedByUser     User?              @relation(fields: [uploadedByUserId], references: [id], onDelete: SetNull)
-  errors             ImportError[]
-  ctiCastDailies     CtiCastDaily[]
-  townStoreDailies   TownStoreDaily[]
-  townCastDailies    TownCastDaily[]
-  townUrlDailies     TownUrlDaily[]
-  townLandingDailies TownLandingDaily[]
-  heavenShopDailies  HeavenShopDaily[]
-  heavenCastDailies  HeavenCastDaily[]
+  id                            String             @id @default(uuid()) @db.Uuid
+  runId                         String             @unique @default(uuid()) @map("run_id") @db.Uuid
+  importSourceId                String             @map("import_source_id") @db.Uuid
+  originalFilename              String             @map("original_filename") @db.VarChar(255)
+  storedFilename                String             @map("stored_filename") @db.VarChar(255)
+  storagePath                   String             @map("storage_path") @db.VarChar(1000)
+  fileHash                      String             @map("file_hash") @db.Char(64)
+  fileSizeBytes                 BigInt             @map("file_size_bytes")
+  dataType                      ImportDataType     @map("data_type")
+  importMode                    ImportMode         @map("import_mode")
+  targetFrom                    DateTime           @map("target_from") @db.Date
+  targetTo                      DateTime           @map("target_to") @db.Date
+  status                        ImportBatchStatus  @default(UPLOADED)
+  startedAt                     DateTime           @default(now()) @map("started_at") @db.Timestamptz(3)
+  completedAt                   DateTime?          @map("completed_at") @db.Timestamptz(3)
+  uploadedByUserId              String?            @map("uploaded_by_user_id") @db.Uuid
+  insertedCount                 Int                @default(0) @map("inserted_count")
+  updatedCount                  Int                @default(0) @map("updated_count")
+  skippedCount                  Int                @default(0) @map("skipped_count")
+  pendingCount                  Int                @default(0) @map("pending_count")
+  warningCount                  Int                @default(0) @map("warning_count")
+  errorCount                    Int                @default(0) @map("error_count")
+  sourceSheetNames              Json?              @map("source_sheet_names") @db.JsonB
+  detectedColumns               Json?              @map("detected_columns") @db.JsonB
+  metadata                      Json?              @db.JsonB
+  failureMessage                String?            @map("failure_message") @db.Text
+  createdAt                     DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt                     DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
+  importSource                  ImportSource       @relation(fields: [importSourceId], references: [id], onDelete: Restrict)
+  uploadedByUser                User?              @relation(fields: [uploadedByUserId], references: [id], onDelete: SetNull)
+  errors                        ImportError[]
+  ctiCastDailies                CtiCastDaily[]
+  townStoreDailies              TownStoreDaily[]
+  townCastDailies               TownCastDaily[]
+  townUrlDailies                TownUrlDaily[]
+  townLandingDailies            TownLandingDaily[]
+  heavenShopDailies             HeavenShopDaily[]
+  heavenCastDailies             HeavenCastDaily[]
+  driveFileStatesLastImport     DriveFileState[]   @relation("DriveFileStateLastImport")
+  driveFileStatesLastSuccessful DriveFileState[]   @relation("DriveFileStateLastSuccessful")
 
   @@index([fileHash, status])
   @@index([dataType, targetFrom, targetTo])
   @@index([status, createdAt])
   @@index([uploadedByUserId])
   @@map("import_batches")
+}
+
+model DriveFolderMapping {
+  id              String                     @id @default(uuid()) @db.Uuid
+  driveFolderId   String                     @unique @map("drive_folder_id") @db.VarChar(255)
+  displayName     String                     @map("display_name") @db.VarChar(255)
+  importSourceId  String                     @map("import_source_id") @db.Uuid
+  storeId         String?                    @map("store_id") @db.Uuid
+  importDataType  ImportDataType             @map("import_data_type")
+  metricHint      String?                    @map("metric_hint") @db.VarChar(100)
+  priority        DriveFolderMappingPriority @default(REQUIRED)
+  isActive        Boolean                    @default(true) @map("is_active")
+  isFuture        Boolean                    @default(false) @map("is_future")
+  createdAt       DateTime                   @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime                   @updatedAt @map("updated_at") @db.Timestamptz(3)
+  importSource    ImportSource               @relation(fields: [importSourceId], references: [id], onDelete: Restrict)
+  store           Store?                     @relation(fields: [storeId], references: [id], onDelete: SetNull)
+  driveFileStates DriveFileState[]
+
+  @@index([importSourceId])
+  @@index([isActive, isFuture])
+  @@map("drive_folder_mappings")
+}
+
+model DriveFileState {
+  id                          String                @id @default(uuid()) @db.Uuid
+  driveFileId                 String                @unique @map("drive_file_id") @db.VarChar(255)
+  folderId                    String                @map("folder_id") @db.VarChar(255)
+  fileName                    String                @map("file_name") @db.VarChar(255)
+  mimeType                    String                @map("mime_type") @db.VarChar(255)
+  sizeBytes                   BigInt?               @map("size_bytes")
+  driveMd5Checksum            String?               @map("drive_md5_checksum") @db.Char(32)
+  sha256                      String?               @db.Char(64)
+  driveCreatedTime            DateTime              @map("drive_created_time") @db.Timestamptz(3)
+  driveModifiedTime           DateTime              @map("drive_modified_time") @db.Timestamptz(3)
+  firstDetectedAt             DateTime              @map("first_detected_at") @db.Timestamptz(3)
+  lastDetectedAt              DateTime              @map("last_detected_at") @db.Timestamptz(3)
+  lastDownloadedAt            DateTime?             @map("last_downloaded_at") @db.Timestamptz(3)
+  lastImportAttemptAt         DateTime?             @map("last_import_attempt_at") @db.Timestamptz(3)
+  lastImportedAt              DateTime?             @map("last_imported_at") @db.Timestamptz(3)
+  status                      DriveFileStatus       @default(DETECTED)
+  retryCount                  Int                   @default(0) @map("retry_count")
+  nextRetryAt                 DateTime?             @map("next_retry_at") @db.Timestamptz(3)
+  lastErrorCategory           DriveFailureCategory? @map("last_error_category")
+  lastErrorCode               String?               @map("last_error_code") @db.VarChar(100)
+  lastErrorMessage            String?               @map("last_error_message") @db.Text
+  driveFolderMappingId        String?               @map("drive_folder_mapping_id") @db.Uuid
+  lastImportBatchId           String?               @map("last_import_batch_id") @db.Uuid
+  lastSuccessfulImportBatchId String?               @map("last_successful_import_batch_id") @db.Uuid
+  isTrashed                   Boolean               @default(false) @map("is_trashed")
+  lastSeenAt                  DateTime?             @map("last_seen_at") @db.Timestamptz(3)
+  createdAt                   DateTime              @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt                   DateTime              @updatedAt @map("updated_at") @db.Timestamptz(3)
+  driveFolderMapping          DriveFolderMapping?   @relation(fields: [driveFolderMappingId], references: [id], onDelete: SetNull)
+  lastImportBatch             ImportBatch?          @relation("DriveFileStateLastImport", fields: [lastImportBatchId], references: [id], onDelete: SetNull)
+  lastSuccessfulImportBatch   ImportBatch?          @relation("DriveFileStateLastSuccessful", fields: [lastSuccessfulImportBatchId], references: [id], onDelete: SetNull)
+
+  @@index([status, nextRetryAt])
+  @@index([folderId, status])
+  @@index([driveFolderMappingId, status])
+  @@index([driveModifiedTime, lastDetectedAt])
+  @@map("drive_file_states")
 }
 
 model CtiCastDaily {
@@ -653,31 +752,31 @@ model ImprovementLog {
 }
 
 model MonthlyGoal {
-  id                         String       @id @default(uuid()) @db.Uuid
-  targetMonth                DateTime     @map("target_month") @db.Date
-  scopeType                  GoalScopeType @map("scope_type")
-  scopeKey                   String       @map("scope_key") @db.VarChar(120)
-  storeId                    String?      @map("store_id") @db.Uuid
-  salesTarget                Decimal?     @map("sales_target") @db.Decimal(16, 2)
-  contractsTarget            Int?         @map("contracts_target")
-  averageActiveCastsTarget   Decimal?     @map("average_active_casts_target") @db.Decimal(10, 2)
-  nominationRateTarget       Decimal?     @map("nomination_rate_target") @db.Decimal(8, 5)
-  castPayoutTarget           Decimal?     @map("cast_payout_target") @db.Decimal(16, 2)
-  averageUnitPriceTarget     Decimal?     @map("average_unit_price_target") @db.Decimal(16, 2)
-  workingHoursTarget         Decimal?     @map("working_hours_target") @db.Decimal(12, 2)
-  townPvTarget               Int?         @map("town_pv_target")
-  townUuTarget               Int?         @map("town_uu_target")
-  townTelTarget              Int?         @map("town_tel_target")
-  heavenPageAccessTarget     Int?         @map("heaven_page_access_target")
-  note                       String?      @db.Text
-  createdByUserId            String       @map("created_by_user_id") @db.Uuid
-  updatedByUserId            String       @map("updated_by_user_id") @db.Uuid
-  createdAt                  DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
-  updatedAt                  DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
-  store                      Store?       @relation(fields: [storeId], references: [id], onDelete: Restrict)
-  createdBy                  User         @relation("MonthlyGoalCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
-  updatedBy                  User         @relation("MonthlyGoalUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: Restrict)
-  history                    MonthlyGoalChangeHistory[]
+  id                       String                     @id @default(uuid()) @db.Uuid
+  targetMonth              DateTime                   @map("target_month") @db.Date
+  scopeType                GoalScopeType              @map("scope_type")
+  scopeKey                 String                     @map("scope_key") @db.VarChar(120)
+  storeId                  String?                    @map("store_id") @db.Uuid
+  salesTarget              Decimal?                   @map("sales_target") @db.Decimal(16, 2)
+  contractsTarget          Int?                       @map("contracts_target")
+  averageActiveCastsTarget Decimal?                   @map("average_active_casts_target") @db.Decimal(10, 2)
+  nominationRateTarget     Decimal?                   @map("nomination_rate_target") @db.Decimal(8, 5)
+  castPayoutTarget         Decimal?                   @map("cast_payout_target") @db.Decimal(16, 2)
+  averageUnitPriceTarget   Decimal?                   @map("average_unit_price_target") @db.Decimal(16, 2)
+  workingHoursTarget       Decimal?                   @map("working_hours_target") @db.Decimal(12, 2)
+  townPvTarget             Int?                       @map("town_pv_target")
+  townUuTarget             Int?                       @map("town_uu_target")
+  townTelTarget            Int?                       @map("town_tel_target")
+  heavenPageAccessTarget   Int?                       @map("heaven_page_access_target")
+  note                     String?                    @db.Text
+  createdByUserId          String                     @map("created_by_user_id") @db.Uuid
+  updatedByUserId          String                     @map("updated_by_user_id") @db.Uuid
+  createdAt                DateTime                   @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt                DateTime                   @updatedAt @map("updated_at") @db.Timestamptz(3)
+  store                    Store?                     @relation(fields: [storeId], references: [id], onDelete: Restrict)
+  createdBy                User                       @relation("MonthlyGoalCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  updatedBy                User                       @relation("MonthlyGoalUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: Restrict)
+  history                  MonthlyGoalChangeHistory[]
 
   @@unique([targetMonth, scopeKey])
   @@index([targetMonth, scopeType])
@@ -686,15 +785,15 @@ model MonthlyGoal {
 }
 
 model MonthlyGoalChangeHistory {
-  id            String      @id @default(uuid()) @db.Uuid
-  monthlyGoalId String      @map("monthly_goal_id") @db.Uuid
-  beforeValues  Json?       @map("before_values") @db.JsonB
-  afterValues   Json        @map("after_values") @db.JsonB
-  changedByUserId String    @map("changed_by_user_id") @db.Uuid
-  reason        String?     @db.Text
-  changedAt     DateTime    @default(now()) @map("changed_at") @db.Timestamptz(3)
-  monthlyGoal   MonthlyGoal @relation(fields: [monthlyGoalId], references: [id], onDelete: Cascade)
-  changedBy     User        @relation(fields: [changedByUserId], references: [id], onDelete: Restrict)
+  id              String      @id @default(uuid()) @db.Uuid
+  monthlyGoalId   String      @map("monthly_goal_id") @db.Uuid
+  beforeValues    Json?       @map("before_values") @db.JsonB
+  afterValues     Json        @map("after_values") @db.JsonB
+  changedByUserId String      @map("changed_by_user_id") @db.Uuid
+  reason          String?     @db.Text
+  changedAt       DateTime    @default(now()) @map("changed_at") @db.Timestamptz(3)
+  monthlyGoal     MonthlyGoal @relation(fields: [monthlyGoalId], references: [id], onDelete: Cascade)
+  changedBy       User        @relation(fields: [changedByUserId], references: [id], onDelete: Restrict)
 
   @@index([monthlyGoalId, changedAt])
   @@index([changedByUserId, changedAt])

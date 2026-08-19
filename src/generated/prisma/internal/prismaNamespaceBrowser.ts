@@ -63,6 +63,8 @@ export const ModelName = {
   ImportSource: 'ImportSource',
   ImportError: 'ImportError',
   ImportBatch: 'ImportBatch',
+  DriveFolderMapping: 'DriveFolderMapping',
+  DriveFileState: 'DriveFileState',
   CtiCastDaily: 'CtiCastDaily',
   TownStoreDaily: 'TownStoreDaily',
   TownCastDaily: 'TownCastDaily',
@@ -302,6 +304,58 @@ export const ImportBatchScalarFieldEnum = {
 } as const
 
 export type ImportBatchScalarFieldEnum = (typeof ImportBatchScalarFieldEnum)[keyof typeof ImportBatchScalarFieldEnum]
+
+
+export const DriveFolderMappingScalarFieldEnum = {
+  id: 'id',
+  driveFolderId: 'driveFolderId',
+  displayName: 'displayName',
+  importSourceId: 'importSourceId',
+  storeId: 'storeId',
+  importDataType: 'importDataType',
+  metricHint: 'metricHint',
+  priority: 'priority',
+  isActive: 'isActive',
+  isFuture: 'isFuture',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DriveFolderMappingScalarFieldEnum = (typeof DriveFolderMappingScalarFieldEnum)[keyof typeof DriveFolderMappingScalarFieldEnum]
+
+
+export const DriveFileStateScalarFieldEnum = {
+  id: 'id',
+  driveFileId: 'driveFileId',
+  folderId: 'folderId',
+  fileName: 'fileName',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  driveMd5Checksum: 'driveMd5Checksum',
+  sha256: 'sha256',
+  driveCreatedTime: 'driveCreatedTime',
+  driveModifiedTime: 'driveModifiedTime',
+  firstDetectedAt: 'firstDetectedAt',
+  lastDetectedAt: 'lastDetectedAt',
+  lastDownloadedAt: 'lastDownloadedAt',
+  lastImportAttemptAt: 'lastImportAttemptAt',
+  lastImportedAt: 'lastImportedAt',
+  status: 'status',
+  retryCount: 'retryCount',
+  nextRetryAt: 'nextRetryAt',
+  lastErrorCategory: 'lastErrorCategory',
+  lastErrorCode: 'lastErrorCode',
+  lastErrorMessage: 'lastErrorMessage',
+  driveFolderMappingId: 'driveFolderMappingId',
+  lastImportBatchId: 'lastImportBatchId',
+  lastSuccessfulImportBatchId: 'lastSuccessfulImportBatchId',
+  isTrashed: 'isTrashed',
+  lastSeenAt: 'lastSeenAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DriveFileStateScalarFieldEnum = (typeof DriveFileStateScalarFieldEnum)[keyof typeof DriveFileStateScalarFieldEnum]
 
 
 export const CtiCastDailyScalarFieldEnum = {

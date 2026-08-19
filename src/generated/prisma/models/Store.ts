@@ -260,6 +260,7 @@ export type StoreWhereInput = {
   aliases?: Prisma.CastAliasListRelationFilter
   mediaListings?: Prisma.MediaListingListRelationFilter
   importSources?: Prisma.ImportSourceListRelationFilter
+  driveFolderMappings?: Prisma.DriveFolderMappingListRelationFilter
   improvementLogs?: Prisma.ImprovementLogListRelationFilter
   ctiCastDailies?: Prisma.CtiCastDailyListRelationFilter
   townStoreDailies?: Prisma.TownStoreDailyListRelationFilter
@@ -286,6 +287,7 @@ export type StoreOrderByWithRelationInput = {
   aliases?: Prisma.CastAliasOrderByRelationAggregateInput
   mediaListings?: Prisma.MediaListingOrderByRelationAggregateInput
   importSources?: Prisma.ImportSourceOrderByRelationAggregateInput
+  driveFolderMappings?: Prisma.DriveFolderMappingOrderByRelationAggregateInput
   improvementLogs?: Prisma.ImprovementLogOrderByRelationAggregateInput
   ctiCastDailies?: Prisma.CtiCastDailyOrderByRelationAggregateInput
   townStoreDailies?: Prisma.TownStoreDailyOrderByRelationAggregateInput
@@ -315,6 +317,7 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   aliases?: Prisma.CastAliasListRelationFilter
   mediaListings?: Prisma.MediaListingListRelationFilter
   importSources?: Prisma.ImportSourceListRelationFilter
+  driveFolderMappings?: Prisma.DriveFolderMappingListRelationFilter
   improvementLogs?: Prisma.ImprovementLogListRelationFilter
   ctiCastDailies?: Prisma.CtiCastDailyListRelationFilter
   townStoreDailies?: Prisma.TownStoreDailyListRelationFilter
@@ -375,6 +378,7 @@ export type StoreCreateInput = {
   aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
@@ -401,6 +405,7 @@ export type StoreUncheckedCreateInput = {
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -427,6 +432,7 @@ export type StoreUpdateInput = {
   aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
@@ -453,6 +459,7 @@ export type StoreUncheckedUpdateInput = {
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -634,6 +641,22 @@ export type StoreUpdateOneWithoutImportSourcesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutImportSourcesInput, Prisma.StoreUpdateWithoutImportSourcesInput>, Prisma.StoreUncheckedUpdateWithoutImportSourcesInput>
 }
 
+export type StoreCreateNestedOneWithoutDriveFolderMappingsInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutDriveFolderMappingsInput, Prisma.StoreUncheckedCreateWithoutDriveFolderMappingsInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutDriveFolderMappingsInput
+  connect?: Prisma.StoreWhereUniqueInput
+}
+
+export type StoreUpdateOneWithoutDriveFolderMappingsNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutDriveFolderMappingsInput, Prisma.StoreUncheckedCreateWithoutDriveFolderMappingsInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutDriveFolderMappingsInput
+  upsert?: Prisma.StoreUpsertWithoutDriveFolderMappingsInput
+  disconnect?: Prisma.StoreWhereInput | boolean
+  delete?: Prisma.StoreWhereInput | boolean
+  connect?: Prisma.StoreWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutDriveFolderMappingsInput, Prisma.StoreUpdateWithoutDriveFolderMappingsInput>, Prisma.StoreUncheckedUpdateWithoutDriveFolderMappingsInput>
+}
+
 export type StoreCreateNestedOneWithoutCtiCastDailiesInput = {
   create?: Prisma.XOR<Prisma.StoreCreateWithoutCtiCastDailiesInput, Prisma.StoreUncheckedCreateWithoutCtiCastDailiesInput>
   connectOrCreate?: Prisma.StoreCreateOrConnectWithoutCtiCastDailiesInput
@@ -778,6 +801,7 @@ export type StoreCreateWithoutCastsInput = {
   aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
@@ -803,6 +827,7 @@ export type StoreUncheckedCreateWithoutCastsInput = {
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -844,6 +869,7 @@ export type StoreUpdateWithoutCastsInput = {
   aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
@@ -869,6 +895,7 @@ export type StoreUncheckedUpdateWithoutCastsInput = {
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -894,6 +921,7 @@ export type StoreCreateWithoutAliasesInput = {
   casts?: Prisma.CastCreateNestedManyWithoutPrimaryStoreInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
@@ -919,6 +947,7 @@ export type StoreUncheckedCreateWithoutAliasesInput = {
   casts?: Prisma.CastUncheckedCreateNestedManyWithoutPrimaryStoreInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -960,6 +989,7 @@ export type StoreUpdateWithoutAliasesInput = {
   casts?: Prisma.CastUpdateManyWithoutPrimaryStoreNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
@@ -985,6 +1015,7 @@ export type StoreUncheckedUpdateWithoutAliasesInput = {
   casts?: Prisma.CastUncheckedUpdateManyWithoutPrimaryStoreNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -1010,6 +1041,7 @@ export type StoreCreateWithoutMediaListingsInput = {
   casts?: Prisma.CastCreateNestedManyWithoutPrimaryStoreInput
   aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
@@ -1035,6 +1067,7 @@ export type StoreUncheckedCreateWithoutMediaListingsInput = {
   casts?: Prisma.CastUncheckedCreateNestedManyWithoutPrimaryStoreInput
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -1076,6 +1109,7 @@ export type StoreUpdateWithoutMediaListingsInput = {
   casts?: Prisma.CastUpdateManyWithoutPrimaryStoreNestedInput
   aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
@@ -1101,6 +1135,7 @@ export type StoreUncheckedUpdateWithoutMediaListingsInput = {
   casts?: Prisma.CastUncheckedUpdateManyWithoutPrimaryStoreNestedInput
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -1126,6 +1161,7 @@ export type StoreCreateWithoutImportSourcesInput = {
   casts?: Prisma.CastCreateNestedManyWithoutPrimaryStoreInput
   aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
@@ -1151,6 +1187,7 @@ export type StoreUncheckedCreateWithoutImportSourcesInput = {
   casts?: Prisma.CastUncheckedCreateNestedManyWithoutPrimaryStoreInput
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -1192,6 +1229,7 @@ export type StoreUpdateWithoutImportSourcesInput = {
   casts?: Prisma.CastUpdateManyWithoutPrimaryStoreNestedInput
   aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
@@ -1217,6 +1255,127 @@ export type StoreUncheckedUpdateWithoutImportSourcesInput = {
   casts?: Prisma.CastUncheckedUpdateManyWithoutPrimaryStoreNestedInput
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutStoreNestedInput
+  monthlyGoals?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreCreateWithoutDriveFolderMappingsInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutStoreInput
+  monthlyGoals?: Prisma.MonthlyGoalCreateNestedManyWithoutStoreInput
+}
+
+export type StoreUncheckedCreateWithoutDriveFolderMappingsInput = {
+  id?: string
+  code: $Enums.StoreCode
+  name: string
+  shortName: string
+  displayOrder?: number
+  isActive?: boolean
+  hasManagementMetrics?: boolean
+  hasAcquisitionMetrics?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  casts?: Prisma.CastUncheckedCreateNestedManyWithoutPrimaryStoreInput
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
+  importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutStoreInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutStoreInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutStoreInput
+  monthlyGoals?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutStoreInput
+}
+
+export type StoreCreateOrConnectWithoutDriveFolderMappingsInput = {
+  where: Prisma.StoreWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreCreateWithoutDriveFolderMappingsInput, Prisma.StoreUncheckedCreateWithoutDriveFolderMappingsInput>
+}
+
+export type StoreUpsertWithoutDriveFolderMappingsInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutDriveFolderMappingsInput, Prisma.StoreUncheckedUpdateWithoutDriveFolderMappingsInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutDriveFolderMappingsInput, Prisma.StoreUncheckedCreateWithoutDriveFolderMappingsInput>
+  where?: Prisma.StoreWhereInput
+}
+
+export type StoreUpdateToOneWithWhereWithoutDriveFolderMappingsInput = {
+  where?: Prisma.StoreWhereInput
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutDriveFolderMappingsInput, Prisma.StoreUncheckedUpdateWithoutDriveFolderMappingsInput>
+}
+
+export type StoreUpdateWithoutDriveFolderMappingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutStoreNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutStoreNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutStoreNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutStoreNestedInput
+  monthlyGoals?: Prisma.MonthlyGoalUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreUncheckedUpdateWithoutDriveFolderMappingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.EnumStoreCodeFieldUpdateOperationsInput | $Enums.StoreCode
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortName?: Prisma.StringFieldUpdateOperationsInput | string
+  displayOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasManagementMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasAcquisitionMetrics?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  casts?: Prisma.CastUncheckedUpdateManyWithoutPrimaryStoreNestedInput
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
+  importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -1243,6 +1402,7 @@ export type StoreCreateWithoutCtiCastDailiesInput = {
   aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
@@ -1268,6 +1428,7 @@ export type StoreUncheckedCreateWithoutCtiCastDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -1309,6 +1470,7 @@ export type StoreUpdateWithoutCtiCastDailiesInput = {
   aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
@@ -1334,6 +1496,7 @@ export type StoreUncheckedUpdateWithoutCtiCastDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -1359,6 +1522,7 @@ export type StoreCreateWithoutTownStoreDailiesInput = {
   aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
@@ -1384,6 +1548,7 @@ export type StoreUncheckedCreateWithoutTownStoreDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -1425,6 +1590,7 @@ export type StoreUpdateWithoutTownStoreDailiesInput = {
   aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
@@ -1450,6 +1616,7 @@ export type StoreUncheckedUpdateWithoutTownStoreDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -1475,6 +1642,7 @@ export type StoreCreateWithoutTownCastDailiesInput = {
   aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
@@ -1500,6 +1668,7 @@ export type StoreUncheckedCreateWithoutTownCastDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -1541,6 +1710,7 @@ export type StoreUpdateWithoutTownCastDailiesInput = {
   aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
@@ -1566,6 +1736,7 @@ export type StoreUncheckedUpdateWithoutTownCastDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -1591,6 +1762,7 @@ export type StoreCreateWithoutTownUrlDailiesInput = {
   aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
@@ -1616,6 +1788,7 @@ export type StoreUncheckedCreateWithoutTownUrlDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -1657,6 +1830,7 @@ export type StoreUpdateWithoutTownUrlDailiesInput = {
   aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
@@ -1682,6 +1856,7 @@ export type StoreUncheckedUpdateWithoutTownUrlDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -1707,6 +1882,7 @@ export type StoreCreateWithoutTownLandingDailiesInput = {
   aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
@@ -1732,6 +1908,7 @@ export type StoreUncheckedCreateWithoutTownLandingDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -1773,6 +1950,7 @@ export type StoreUpdateWithoutTownLandingDailiesInput = {
   aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
@@ -1798,6 +1976,7 @@ export type StoreUncheckedUpdateWithoutTownLandingDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -1823,6 +2002,7 @@ export type StoreCreateWithoutHeavenShopDailiesInput = {
   aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
@@ -1848,6 +2028,7 @@ export type StoreUncheckedCreateWithoutHeavenShopDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -1889,6 +2070,7 @@ export type StoreUpdateWithoutHeavenShopDailiesInput = {
   aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
@@ -1914,6 +2096,7 @@ export type StoreUncheckedUpdateWithoutHeavenShopDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -1939,6 +2122,7 @@ export type StoreCreateWithoutHeavenCastDailiesInput = {
   aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
@@ -1964,6 +2148,7 @@ export type StoreUncheckedCreateWithoutHeavenCastDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -2005,6 +2190,7 @@ export type StoreUpdateWithoutHeavenCastDailiesInput = {
   aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
@@ -2030,6 +2216,7 @@ export type StoreUncheckedUpdateWithoutHeavenCastDailiesInput = {
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -2055,6 +2242,7 @@ export type StoreCreateWithoutImprovementLogsInput = {
   aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
   townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutStoreInput
@@ -2080,6 +2268,7 @@ export type StoreUncheckedCreateWithoutImprovementLogsInput = {
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
   townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -2121,6 +2310,7 @@ export type StoreUpdateWithoutImprovementLogsInput = {
   aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
   townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutStoreNestedInput
@@ -2146,6 +2336,7 @@ export type StoreUncheckedUpdateWithoutImprovementLogsInput = {
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
   townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -2171,6 +2362,7 @@ export type StoreCreateWithoutMonthlyGoalsInput = {
   aliases?: Prisma.CastAliasCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutStoreInput
@@ -2196,6 +2388,7 @@ export type StoreUncheckedCreateWithoutMonthlyGoalsInput = {
   aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutStoreInput
   mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutStoreInput
   importSources?: Prisma.ImportSourceUncheckedCreateNestedManyWithoutStoreInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutStoreInput
   improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutStoreInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutStoreInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutStoreInput
@@ -2237,6 +2430,7 @@ export type StoreUpdateWithoutMonthlyGoalsInput = {
   aliases?: Prisma.CastAliasUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutStoreNestedInput
@@ -2262,6 +2456,7 @@ export type StoreUncheckedUpdateWithoutMonthlyGoalsInput = {
   aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutStoreNestedInput
   mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutStoreNestedInput
   importSources?: Prisma.ImportSourceUncheckedUpdateManyWithoutStoreNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutStoreNestedInput
   improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutStoreNestedInput
   ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutStoreNestedInput
   townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutStoreNestedInput
@@ -2282,6 +2477,7 @@ export type StoreCountOutputType = {
   aliases: number
   mediaListings: number
   importSources: number
+  driveFolderMappings: number
   improvementLogs: number
   ctiCastDailies: number
   townStoreDailies: number
@@ -2298,6 +2494,7 @@ export type StoreCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   aliases?: boolean | StoreCountOutputTypeCountAliasesArgs
   mediaListings?: boolean | StoreCountOutputTypeCountMediaListingsArgs
   importSources?: boolean | StoreCountOutputTypeCountImportSourcesArgs
+  driveFolderMappings?: boolean | StoreCountOutputTypeCountDriveFolderMappingsArgs
   improvementLogs?: boolean | StoreCountOutputTypeCountImprovementLogsArgs
   ctiCastDailies?: boolean | StoreCountOutputTypeCountCtiCastDailiesArgs
   townStoreDailies?: boolean | StoreCountOutputTypeCountTownStoreDailiesArgs
@@ -2345,6 +2542,13 @@ export type StoreCountOutputTypeCountMediaListingsArgs<ExtArgs extends runtime.T
  */
 export type StoreCountOutputTypeCountImportSourcesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ImportSourceWhereInput
+}
+
+/**
+ * StoreCountOutputType without action
+ */
+export type StoreCountOutputTypeCountDriveFolderMappingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DriveFolderMappingWhereInput
 }
 
 /**
@@ -2426,6 +2630,7 @@ export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   aliases?: boolean | Prisma.Store$aliasesArgs<ExtArgs>
   mediaListings?: boolean | Prisma.Store$mediaListingsArgs<ExtArgs>
   importSources?: boolean | Prisma.Store$importSourcesArgs<ExtArgs>
+  driveFolderMappings?: boolean | Prisma.Store$driveFolderMappingsArgs<ExtArgs>
   improvementLogs?: boolean | Prisma.Store$improvementLogsArgs<ExtArgs>
   ctiCastDailies?: boolean | Prisma.Store$ctiCastDailiesArgs<ExtArgs>
   townStoreDailies?: boolean | Prisma.Store$townStoreDailiesArgs<ExtArgs>
@@ -2483,6 +2688,7 @@ export type StoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   aliases?: boolean | Prisma.Store$aliasesArgs<ExtArgs>
   mediaListings?: boolean | Prisma.Store$mediaListingsArgs<ExtArgs>
   importSources?: boolean | Prisma.Store$importSourcesArgs<ExtArgs>
+  driveFolderMappings?: boolean | Prisma.Store$driveFolderMappingsArgs<ExtArgs>
   improvementLogs?: boolean | Prisma.Store$improvementLogsArgs<ExtArgs>
   ctiCastDailies?: boolean | Prisma.Store$ctiCastDailiesArgs<ExtArgs>
   townStoreDailies?: boolean | Prisma.Store$townStoreDailiesArgs<ExtArgs>
@@ -2504,6 +2710,7 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     aliases: Prisma.$CastAliasPayload<ExtArgs>[]
     mediaListings: Prisma.$MediaListingPayload<ExtArgs>[]
     importSources: Prisma.$ImportSourcePayload<ExtArgs>[]
+    driveFolderMappings: Prisma.$DriveFolderMappingPayload<ExtArgs>[]
     improvementLogs: Prisma.$ImprovementLogPayload<ExtArgs>[]
     ctiCastDailies: Prisma.$CtiCastDailyPayload<ExtArgs>[]
     townStoreDailies: Prisma.$TownStoreDailyPayload<ExtArgs>[]
@@ -2923,6 +3130,7 @@ export interface Prisma__StoreClient<T, Null = never, ExtArgs extends runtime.Ty
   aliases<T extends Prisma.Store$aliasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$aliasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastAliasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   mediaListings<T extends Prisma.Store$mediaListingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$mediaListingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MediaListingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   importSources<T extends Prisma.Store$importSourcesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$importSourcesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImportSourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  driveFolderMappings<T extends Prisma.Store$driveFolderMappingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$driveFolderMappingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DriveFolderMappingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   improvementLogs<T extends Prisma.Store$improvementLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$improvementLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImprovementLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ctiCastDailies<T extends Prisma.Store$ctiCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$ctiCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CtiCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   townStoreDailies<T extends Prisma.Store$townStoreDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$townStoreDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownStoreDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3457,6 +3665,30 @@ export type Store$importSourcesArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.ImportSourceScalarFieldEnum | Prisma.ImportSourceScalarFieldEnum[]
+}
+
+/**
+ * Store.driveFolderMappings
+ */
+export type Store$driveFolderMappingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DriveFolderMapping
+   */
+  select?: Prisma.DriveFolderMappingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DriveFolderMapping
+   */
+  omit?: Prisma.DriveFolderMappingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DriveFolderMappingInclude<ExtArgs> | null
+  where?: Prisma.DriveFolderMappingWhereInput
+  orderBy?: Prisma.DriveFolderMappingOrderByWithRelationInput | Prisma.DriveFolderMappingOrderByWithRelationInput[]
+  cursor?: Prisma.DriveFolderMappingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DriveFolderMappingScalarFieldEnum | Prisma.DriveFolderMappingScalarFieldEnum[]
 }
 
 /**

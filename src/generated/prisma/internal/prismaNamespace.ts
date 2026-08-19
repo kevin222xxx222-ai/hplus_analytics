@@ -396,6 +396,8 @@ export const ModelName = {
   ImportSource: 'ImportSource',
   ImportError: 'ImportError',
   ImportBatch: 'ImportBatch',
+  DriveFolderMapping: 'DriveFolderMapping',
+  DriveFileState: 'DriveFileState',
   CtiCastDaily: 'CtiCastDaily',
   TownStoreDaily: 'TownStoreDaily',
   TownCastDaily: 'TownCastDaily',
@@ -421,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "store" | "cast" | "castNameHistory" | "castMergeHistory" | "castStartDateBulkChangeHistory" | "castAlias" | "mediaListing" | "importSource" | "importError" | "importBatch" | "ctiCastDaily" | "townStoreDaily" | "townCastDaily" | "townUrlDaily" | "townLandingDaily" | "heavenShopDaily" | "heavenCastDaily" | "improvementLog" | "monthlyGoal" | "monthlyGoalChangeHistory"
+    modelProps: "user" | "session" | "store" | "cast" | "castNameHistory" | "castMergeHistory" | "castStartDateBulkChangeHistory" | "castAlias" | "mediaListing" | "importSource" | "importError" | "importBatch" | "driveFolderMapping" | "driveFileState" | "ctiCastDaily" | "townStoreDaily" | "townCastDaily" | "townUrlDaily" | "townLandingDaily" | "heavenShopDaily" | "heavenCastDaily" | "improvementLog" | "monthlyGoal" | "monthlyGoalChangeHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1310,6 +1312,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ImportBatchCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ImportBatchCountAggregateOutputType> | number
+        }
+      }
+    }
+    DriveFolderMapping: {
+      payload: Prisma.$DriveFolderMappingPayload<ExtArgs>
+      fields: Prisma.DriveFolderMappingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DriveFolderMappingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFolderMappingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DriveFolderMappingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFolderMappingPayload>
+        }
+        findFirst: {
+          args: Prisma.DriveFolderMappingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFolderMappingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DriveFolderMappingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFolderMappingPayload>
+        }
+        findMany: {
+          args: Prisma.DriveFolderMappingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFolderMappingPayload>[]
+        }
+        create: {
+          args: Prisma.DriveFolderMappingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFolderMappingPayload>
+        }
+        createMany: {
+          args: Prisma.DriveFolderMappingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DriveFolderMappingCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFolderMappingPayload>[]
+        }
+        delete: {
+          args: Prisma.DriveFolderMappingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFolderMappingPayload>
+        }
+        update: {
+          args: Prisma.DriveFolderMappingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFolderMappingPayload>
+        }
+        deleteMany: {
+          args: Prisma.DriveFolderMappingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DriveFolderMappingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DriveFolderMappingUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFolderMappingPayload>[]
+        }
+        upsert: {
+          args: Prisma.DriveFolderMappingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFolderMappingPayload>
+        }
+        aggregate: {
+          args: Prisma.DriveFolderMappingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDriveFolderMapping>
+        }
+        groupBy: {
+          args: Prisma.DriveFolderMappingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriveFolderMappingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DriveFolderMappingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriveFolderMappingCountAggregateOutputType> | number
+        }
+      }
+    }
+    DriveFileState: {
+      payload: Prisma.$DriveFileStatePayload<ExtArgs>
+      fields: Prisma.DriveFileStateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DriveFileStateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFileStatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DriveFileStateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFileStatePayload>
+        }
+        findFirst: {
+          args: Prisma.DriveFileStateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFileStatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DriveFileStateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFileStatePayload>
+        }
+        findMany: {
+          args: Prisma.DriveFileStateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFileStatePayload>[]
+        }
+        create: {
+          args: Prisma.DriveFileStateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFileStatePayload>
+        }
+        createMany: {
+          args: Prisma.DriveFileStateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DriveFileStateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFileStatePayload>[]
+        }
+        delete: {
+          args: Prisma.DriveFileStateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFileStatePayload>
+        }
+        update: {
+          args: Prisma.DriveFileStateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFileStatePayload>
+        }
+        deleteMany: {
+          args: Prisma.DriveFileStateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DriveFileStateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DriveFileStateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFileStatePayload>[]
+        }
+        upsert: {
+          args: Prisma.DriveFileStateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DriveFileStatePayload>
+        }
+        aggregate: {
+          args: Prisma.DriveFileStateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDriveFileState>
+        }
+        groupBy: {
+          args: Prisma.DriveFileStateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriveFileStateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DriveFileStateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DriveFileStateCountAggregateOutputType> | number
         }
       }
     }
@@ -2305,6 +2455,58 @@ export const ImportBatchScalarFieldEnum = {
 export type ImportBatchScalarFieldEnum = (typeof ImportBatchScalarFieldEnum)[keyof typeof ImportBatchScalarFieldEnum]
 
 
+export const DriveFolderMappingScalarFieldEnum = {
+  id: 'id',
+  driveFolderId: 'driveFolderId',
+  displayName: 'displayName',
+  importSourceId: 'importSourceId',
+  storeId: 'storeId',
+  importDataType: 'importDataType',
+  metricHint: 'metricHint',
+  priority: 'priority',
+  isActive: 'isActive',
+  isFuture: 'isFuture',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DriveFolderMappingScalarFieldEnum = (typeof DriveFolderMappingScalarFieldEnum)[keyof typeof DriveFolderMappingScalarFieldEnum]
+
+
+export const DriveFileStateScalarFieldEnum = {
+  id: 'id',
+  driveFileId: 'driveFileId',
+  folderId: 'folderId',
+  fileName: 'fileName',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  driveMd5Checksum: 'driveMd5Checksum',
+  sha256: 'sha256',
+  driveCreatedTime: 'driveCreatedTime',
+  driveModifiedTime: 'driveModifiedTime',
+  firstDetectedAt: 'firstDetectedAt',
+  lastDetectedAt: 'lastDetectedAt',
+  lastDownloadedAt: 'lastDownloadedAt',
+  lastImportAttemptAt: 'lastImportAttemptAt',
+  lastImportedAt: 'lastImportedAt',
+  status: 'status',
+  retryCount: 'retryCount',
+  nextRetryAt: 'nextRetryAt',
+  lastErrorCategory: 'lastErrorCategory',
+  lastErrorCode: 'lastErrorCode',
+  lastErrorMessage: 'lastErrorMessage',
+  driveFolderMappingId: 'driveFolderMappingId',
+  lastImportBatchId: 'lastImportBatchId',
+  lastSuccessfulImportBatchId: 'lastSuccessfulImportBatchId',
+  isTrashed: 'isTrashed',
+  lastSeenAt: 'lastSeenAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DriveFileStateScalarFieldEnum = (typeof DriveFileStateScalarFieldEnum)[keyof typeof DriveFileStateScalarFieldEnum]
+
+
 export const CtiCastDailyScalarFieldEnum = {
   id: 'id',
   businessDate: 'businessDate',
@@ -2826,6 +3028,48 @@ export type ListEnumImportBatchStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'DriveFolderMappingPriority'
+ */
+export type EnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DriveFolderMappingPriority'>
+
+
+
+/**
+ * Reference to a field of type 'DriveFolderMappingPriority[]'
+ */
+export type ListEnumDriveFolderMappingPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DriveFolderMappingPriority[]'>
+
+
+
+/**
+ * Reference to a field of type 'DriveFileStatus'
+ */
+export type EnumDriveFileStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DriveFileStatus'>
+
+
+
+/**
+ * Reference to a field of type 'DriveFileStatus[]'
+ */
+export type ListEnumDriveFileStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DriveFileStatus[]'>
+
+
+
+/**
+ * Reference to a field of type 'DriveFailureCategory'
+ */
+export type EnumDriveFailureCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DriveFailureCategory'>
+
+
+
+/**
+ * Reference to a field of type 'DriveFailureCategory[]'
+ */
+export type ListEnumDriveFailureCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DriveFailureCategory[]'>
+
+
+
+/**
  * Reference to a field of type 'Decimal'
  */
 export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
@@ -3058,6 +3302,8 @@ export type GlobalOmitConfig = {
   importSource?: Prisma.ImportSourceOmit
   importError?: Prisma.ImportErrorOmit
   importBatch?: Prisma.ImportBatchOmit
+  driveFolderMapping?: Prisma.DriveFolderMappingOmit
+  driveFileState?: Prisma.DriveFileStateOmit
   ctiCastDaily?: Prisma.CtiCastDailyOmit
   townStoreDaily?: Prisma.TownStoreDailyOmit
   townCastDaily?: Prisma.TownCastDailyOmit
@@ -3130,4 +3376,3 @@ export type PrismaAction =
  * `PrismaClient` proxy available in interactive transactions.
  */
 export type TransactionClient = Omit<DefaultPrismaClient, runtime.ITXClientDenyList>
-

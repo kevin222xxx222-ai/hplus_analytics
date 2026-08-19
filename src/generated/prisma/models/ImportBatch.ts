@@ -422,6 +422,8 @@ export type ImportBatchWhereInput = {
   townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
   heavenShopDailies?: Prisma.HeavenShopDailyListRelationFilter
   heavenCastDailies?: Prisma.HeavenCastDailyListRelationFilter
+  driveFileStatesLastImport?: Prisma.DriveFileStateListRelationFilter
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateListRelationFilter
 }
 
 export type ImportBatchOrderByWithRelationInput = {
@@ -463,6 +465,8 @@ export type ImportBatchOrderByWithRelationInput = {
   townLandingDailies?: Prisma.TownLandingDailyOrderByRelationAggregateInput
   heavenShopDailies?: Prisma.HeavenShopDailyOrderByRelationAggregateInput
   heavenCastDailies?: Prisma.HeavenCastDailyOrderByRelationAggregateInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateOrderByRelationAggregateInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateOrderByRelationAggregateInput
 }
 
 export type ImportBatchWhereUniqueInput = Prisma.AtLeast<{
@@ -507,6 +511,8 @@ export type ImportBatchWhereUniqueInput = Prisma.AtLeast<{
   townLandingDailies?: Prisma.TownLandingDailyListRelationFilter
   heavenShopDailies?: Prisma.HeavenShopDailyListRelationFilter
   heavenCastDailies?: Prisma.HeavenCastDailyListRelationFilter
+  driveFileStatesLastImport?: Prisma.DriveFileStateListRelationFilter
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateListRelationFilter
 }, "id" | "runId">
 
 export type ImportBatchOrderByWithAggregationInput = {
@@ -616,6 +622,8 @@ export type ImportBatchCreateInput = {
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateInput = {
@@ -655,6 +663,8 @@ export type ImportBatchUncheckedCreateInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchUpdateInput = {
@@ -694,6 +704,8 @@ export type ImportBatchUpdateInput = {
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateInput = {
@@ -733,6 +745,8 @@ export type ImportBatchUncheckedUpdateInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchCreateManyInput = {
@@ -1069,6 +1083,38 @@ export type EnumImportBatchStatusFieldUpdateOperationsInput = {
   set?: $Enums.ImportBatchStatus
 }
 
+export type ImportBatchCreateNestedOneWithoutDriveFileStatesLastImportInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutDriveFileStatesLastImportInput, Prisma.ImportBatchUncheckedCreateWithoutDriveFileStatesLastImportInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutDriveFileStatesLastImportInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+}
+
+export type ImportBatchCreateNestedOneWithoutDriveFileStatesLastSuccessfulInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutDriveFileStatesLastSuccessfulInput, Prisma.ImportBatchUncheckedCreateWithoutDriveFileStatesLastSuccessfulInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutDriveFileStatesLastSuccessfulInput
+  connect?: Prisma.ImportBatchWhereUniqueInput
+}
+
+export type ImportBatchUpdateOneWithoutDriveFileStatesLastImportNestedInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutDriveFileStatesLastImportInput, Prisma.ImportBatchUncheckedCreateWithoutDriveFileStatesLastImportInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutDriveFileStatesLastImportInput
+  upsert?: Prisma.ImportBatchUpsertWithoutDriveFileStatesLastImportInput
+  disconnect?: Prisma.ImportBatchWhereInput | boolean
+  delete?: Prisma.ImportBatchWhereInput | boolean
+  connect?: Prisma.ImportBatchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ImportBatchUpdateToOneWithWhereWithoutDriveFileStatesLastImportInput, Prisma.ImportBatchUpdateWithoutDriveFileStatesLastImportInput>, Prisma.ImportBatchUncheckedUpdateWithoutDriveFileStatesLastImportInput>
+}
+
+export type ImportBatchUpdateOneWithoutDriveFileStatesLastSuccessfulNestedInput = {
+  create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutDriveFileStatesLastSuccessfulInput, Prisma.ImportBatchUncheckedCreateWithoutDriveFileStatesLastSuccessfulInput>
+  connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutDriveFileStatesLastSuccessfulInput
+  upsert?: Prisma.ImportBatchUpsertWithoutDriveFileStatesLastSuccessfulInput
+  disconnect?: Prisma.ImportBatchWhereInput | boolean
+  delete?: Prisma.ImportBatchWhereInput | boolean
+  connect?: Prisma.ImportBatchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ImportBatchUpdateToOneWithWhereWithoutDriveFileStatesLastSuccessfulInput, Prisma.ImportBatchUpdateWithoutDriveFileStatesLastSuccessfulInput>, Prisma.ImportBatchUncheckedUpdateWithoutDriveFileStatesLastSuccessfulInput>
+}
+
 export type ImportBatchCreateNestedOneWithoutCtiCastDailiesInput = {
   create?: Prisma.XOR<Prisma.ImportBatchCreateWithoutCtiCastDailiesInput, Prisma.ImportBatchUncheckedCreateWithoutCtiCastDailiesInput>
   connectOrCreate?: Prisma.ImportBatchCreateOrConnectWithoutCtiCastDailiesInput
@@ -1203,6 +1249,8 @@ export type ImportBatchCreateWithoutUploadedByUserInput = {
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutUploadedByUserInput = {
@@ -1241,6 +1289,8 @@ export type ImportBatchUncheckedCreateWithoutUploadedByUserInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutUploadedByUserInput = {
@@ -1339,6 +1389,8 @@ export type ImportBatchCreateWithoutImportSourceInput = {
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutImportSourceInput = {
@@ -1377,6 +1429,8 @@ export type ImportBatchUncheckedCreateWithoutImportSourceInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutImportSourceInput = {
@@ -1441,6 +1495,8 @@ export type ImportBatchCreateWithoutErrorsInput = {
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutErrorsInput = {
@@ -1479,6 +1535,8 @@ export type ImportBatchUncheckedCreateWithoutErrorsInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutErrorsInput = {
@@ -1533,6 +1591,8 @@ export type ImportBatchUpdateWithoutErrorsInput = {
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutErrorsInput = {
@@ -1571,6 +1631,360 @@ export type ImportBatchUncheckedUpdateWithoutErrorsInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastSuccessfulImportBatchNestedInput
+}
+
+export type ImportBatchCreateWithoutDriveFileStatesLastImportInput = {
+  id?: string
+  runId?: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  importSource: Prisma.ImportSourceCreateNestedOneWithoutBatchesInput
+  uploadedByUser?: Prisma.UserCreateNestedOneWithoutImportBatchesInput
+  errors?: Prisma.ImportErrorCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateCreateNestedManyWithoutLastSuccessfulImportBatchInput
+}
+
+export type ImportBatchUncheckedCreateWithoutDriveFileStatesLastImportInput = {
+  id?: string
+  runId?: string
+  importSourceId: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  uploadedByUserId?: string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastSuccessfulImportBatchInput
+}
+
+export type ImportBatchCreateOrConnectWithoutDriveFileStatesLastImportInput = {
+  where: Prisma.ImportBatchWhereUniqueInput
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutDriveFileStatesLastImportInput, Prisma.ImportBatchUncheckedCreateWithoutDriveFileStatesLastImportInput>
+}
+
+export type ImportBatchCreateWithoutDriveFileStatesLastSuccessfulInput = {
+  id?: string
+  runId?: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  importSource: Prisma.ImportSourceCreateNestedOneWithoutBatchesInput
+  uploadedByUser?: Prisma.UserCreateNestedOneWithoutImportBatchesInput
+  errors?: Prisma.ImportErrorCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateCreateNestedManyWithoutLastImportBatchInput
+}
+
+export type ImportBatchUncheckedCreateWithoutDriveFileStatesLastSuccessfulInput = {
+  id?: string
+  runId?: string
+  importSourceId: string
+  originalFilename: string
+  storedFilename: string
+  storagePath: string
+  fileHash: string
+  fileSizeBytes: bigint | number
+  dataType: $Enums.ImportDataType
+  importMode: $Enums.ImportMode
+  targetFrom: Date | string
+  targetTo: Date | string
+  status?: $Enums.ImportBatchStatus
+  startedAt?: Date | string
+  completedAt?: Date | string | null
+  uploadedByUserId?: string | null
+  insertedCount?: number
+  updatedCount?: number
+  skippedCount?: number
+  pendingCount?: number
+  warningCount?: number
+  errorCount?: number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportBatchInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastImportBatchInput
+}
+
+export type ImportBatchCreateOrConnectWithoutDriveFileStatesLastSuccessfulInput = {
+  where: Prisma.ImportBatchWhereUniqueInput
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutDriveFileStatesLastSuccessfulInput, Prisma.ImportBatchUncheckedCreateWithoutDriveFileStatesLastSuccessfulInput>
+}
+
+export type ImportBatchUpsertWithoutDriveFileStatesLastImportInput = {
+  update: Prisma.XOR<Prisma.ImportBatchUpdateWithoutDriveFileStatesLastImportInput, Prisma.ImportBatchUncheckedUpdateWithoutDriveFileStatesLastImportInput>
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutDriveFileStatesLastImportInput, Prisma.ImportBatchUncheckedCreateWithoutDriveFileStatesLastImportInput>
+  where?: Prisma.ImportBatchWhereInput
+}
+
+export type ImportBatchUpdateToOneWithWhereWithoutDriveFileStatesLastImportInput = {
+  where?: Prisma.ImportBatchWhereInput
+  data: Prisma.XOR<Prisma.ImportBatchUpdateWithoutDriveFileStatesLastImportInput, Prisma.ImportBatchUncheckedUpdateWithoutDriveFileStatesLastImportInput>
+}
+
+export type ImportBatchUpdateWithoutDriveFileStatesLastImportInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  importSource?: Prisma.ImportSourceUpdateOneRequiredWithoutBatchesNestedInput
+  uploadedByUser?: Prisma.UserUpdateOneWithoutImportBatchesNestedInput
+  errors?: Prisma.ImportErrorUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUpdateManyWithoutLastSuccessfulImportBatchNestedInput
+}
+
+export type ImportBatchUncheckedUpdateWithoutDriveFileStatesLastImportInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  importSourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastSuccessfulImportBatchNestedInput
+}
+
+export type ImportBatchUpsertWithoutDriveFileStatesLastSuccessfulInput = {
+  update: Prisma.XOR<Prisma.ImportBatchUpdateWithoutDriveFileStatesLastSuccessfulInput, Prisma.ImportBatchUncheckedUpdateWithoutDriveFileStatesLastSuccessfulInput>
+  create: Prisma.XOR<Prisma.ImportBatchCreateWithoutDriveFileStatesLastSuccessfulInput, Prisma.ImportBatchUncheckedCreateWithoutDriveFileStatesLastSuccessfulInput>
+  where?: Prisma.ImportBatchWhereInput
+}
+
+export type ImportBatchUpdateToOneWithWhereWithoutDriveFileStatesLastSuccessfulInput = {
+  where?: Prisma.ImportBatchWhereInput
+  data: Prisma.XOR<Prisma.ImportBatchUpdateWithoutDriveFileStatesLastSuccessfulInput, Prisma.ImportBatchUncheckedUpdateWithoutDriveFileStatesLastSuccessfulInput>
+}
+
+export type ImportBatchUpdateWithoutDriveFileStatesLastSuccessfulInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  importSource?: Prisma.ImportSourceUpdateOneRequiredWithoutBatchesNestedInput
+  uploadedByUser?: Prisma.UserUpdateOneWithoutImportBatchesNestedInput
+  errors?: Prisma.ImportErrorUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUpdateManyWithoutLastImportBatchNestedInput
+}
+
+export type ImportBatchUncheckedUpdateWithoutDriveFileStatesLastSuccessfulInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  runId?: Prisma.StringFieldUpdateOperationsInput | string
+  importSourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storedFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  storagePath?: Prisma.StringFieldUpdateOperationsInput | string
+  fileHash?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  importMode?: Prisma.EnumImportModeFieldUpdateOperationsInput | $Enums.ImportMode
+  targetFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumImportBatchStatusFieldUpdateOperationsInput | $Enums.ImportBatchStatus
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploadedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  insertedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  updatedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  skippedCount?: Prisma.IntFieldUpdateOperationsInput | number
+  pendingCount?: Prisma.IntFieldUpdateOperationsInput | number
+  warningCount?: Prisma.IntFieldUpdateOperationsInput | number
+  errorCount?: Prisma.IntFieldUpdateOperationsInput | number
+  sourceSheetNames?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  detectedColumns?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  failureMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportBatchNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townStoreDailies?: Prisma.TownStoreDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastImportBatchNestedInput
 }
 
 export type ImportBatchCreateWithoutCtiCastDailiesInput = {
@@ -1609,6 +2023,8 @@ export type ImportBatchCreateWithoutCtiCastDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutCtiCastDailiesInput = {
@@ -1647,6 +2063,8 @@ export type ImportBatchUncheckedCreateWithoutCtiCastDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutCtiCastDailiesInput = {
@@ -1701,6 +2119,8 @@ export type ImportBatchUpdateWithoutCtiCastDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutCtiCastDailiesInput = {
@@ -1739,6 +2159,8 @@ export type ImportBatchUncheckedUpdateWithoutCtiCastDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchCreateWithoutTownStoreDailiesInput = {
@@ -1777,6 +2199,8 @@ export type ImportBatchCreateWithoutTownStoreDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutTownStoreDailiesInput = {
@@ -1815,6 +2239,8 @@ export type ImportBatchUncheckedCreateWithoutTownStoreDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutTownStoreDailiesInput = {
@@ -1869,6 +2295,8 @@ export type ImportBatchUpdateWithoutTownStoreDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutTownStoreDailiesInput = {
@@ -1907,6 +2335,8 @@ export type ImportBatchUncheckedUpdateWithoutTownStoreDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchCreateWithoutTownCastDailiesInput = {
@@ -1945,6 +2375,8 @@ export type ImportBatchCreateWithoutTownCastDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutTownCastDailiesInput = {
@@ -1983,6 +2415,8 @@ export type ImportBatchUncheckedCreateWithoutTownCastDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutTownCastDailiesInput = {
@@ -2037,6 +2471,8 @@ export type ImportBatchUpdateWithoutTownCastDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutTownCastDailiesInput = {
@@ -2075,6 +2511,8 @@ export type ImportBatchUncheckedUpdateWithoutTownCastDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchCreateWithoutTownUrlDailiesInput = {
@@ -2113,6 +2551,8 @@ export type ImportBatchCreateWithoutTownUrlDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutTownUrlDailiesInput = {
@@ -2151,6 +2591,8 @@ export type ImportBatchUncheckedCreateWithoutTownUrlDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutTownUrlDailiesInput = {
@@ -2205,6 +2647,8 @@ export type ImportBatchUpdateWithoutTownUrlDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutTownUrlDailiesInput = {
@@ -2243,6 +2687,8 @@ export type ImportBatchUncheckedUpdateWithoutTownUrlDailiesInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchCreateWithoutTownLandingDailiesInput = {
@@ -2281,6 +2727,8 @@ export type ImportBatchCreateWithoutTownLandingDailiesInput = {
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutTownLandingDailiesInput = {
@@ -2319,6 +2767,8 @@ export type ImportBatchUncheckedCreateWithoutTownLandingDailiesInput = {
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutTownLandingDailiesInput = {
@@ -2373,6 +2823,8 @@ export type ImportBatchUpdateWithoutTownLandingDailiesInput = {
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutTownLandingDailiesInput = {
@@ -2411,6 +2863,8 @@ export type ImportBatchUncheckedUpdateWithoutTownLandingDailiesInput = {
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchCreateWithoutHeavenShopDailiesInput = {
@@ -2449,6 +2903,8 @@ export type ImportBatchCreateWithoutHeavenShopDailiesInput = {
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutHeavenShopDailiesInput = {
@@ -2487,6 +2943,8 @@ export type ImportBatchUncheckedCreateWithoutHeavenShopDailiesInput = {
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutHeavenShopDailiesInput = {
@@ -2541,6 +2999,8 @@ export type ImportBatchUpdateWithoutHeavenShopDailiesInput = {
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutHeavenShopDailiesInput = {
@@ -2579,6 +3039,8 @@ export type ImportBatchUncheckedUpdateWithoutHeavenShopDailiesInput = {
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchCreateWithoutHeavenCastDailiesInput = {
@@ -2617,6 +3079,8 @@ export type ImportBatchCreateWithoutHeavenCastDailiesInput = {
   townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchUncheckedCreateWithoutHeavenCastDailiesInput = {
@@ -2655,6 +3119,8 @@ export type ImportBatchUncheckedCreateWithoutHeavenCastDailiesInput = {
   townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutImportBatchInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutImportBatchInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedCreateNestedManyWithoutImportBatchInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastImportBatchInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedCreateNestedManyWithoutLastSuccessfulImportBatchInput
 }
 
 export type ImportBatchCreateOrConnectWithoutHeavenCastDailiesInput = {
@@ -2709,6 +3175,8 @@ export type ImportBatchUpdateWithoutHeavenCastDailiesInput = {
   townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutHeavenCastDailiesInput = {
@@ -2747,6 +3215,8 @@ export type ImportBatchUncheckedUpdateWithoutHeavenCastDailiesInput = {
   townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchCreateManyUploadedByUserInput = {
@@ -2815,6 +3285,8 @@ export type ImportBatchUpdateWithoutUploadedByUserInput = {
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutUploadedByUserInput = {
@@ -2853,6 +3325,8 @@ export type ImportBatchUncheckedUpdateWithoutUploadedByUserInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateManyWithoutUploadedByUserInput = {
@@ -2951,6 +3425,8 @@ export type ImportBatchUpdateWithoutImportSourceInput = {
   townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateWithoutImportSourceInput = {
@@ -2989,6 +3465,8 @@ export type ImportBatchUncheckedUpdateWithoutImportSourceInput = {
   townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenShopDailies?: Prisma.HeavenShopDailyUncheckedUpdateManyWithoutImportBatchNestedInput
   heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutImportBatchNestedInput
+  driveFileStatesLastImport?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastImportBatchNestedInput
+  driveFileStatesLastSuccessful?: Prisma.DriveFileStateUncheckedUpdateManyWithoutLastSuccessfulImportBatchNestedInput
 }
 
 export type ImportBatchUncheckedUpdateManyWithoutImportSourceInput = {
@@ -3035,6 +3513,8 @@ export type ImportBatchCountOutputType = {
   townLandingDailies: number
   heavenShopDailies: number
   heavenCastDailies: number
+  driveFileStatesLastImport: number
+  driveFileStatesLastSuccessful: number
 }
 
 export type ImportBatchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3046,6 +3526,8 @@ export type ImportBatchCountOutputTypeSelect<ExtArgs extends runtime.Types.Exten
   townLandingDailies?: boolean | ImportBatchCountOutputTypeCountTownLandingDailiesArgs
   heavenShopDailies?: boolean | ImportBatchCountOutputTypeCountHeavenShopDailiesArgs
   heavenCastDailies?: boolean | ImportBatchCountOutputTypeCountHeavenCastDailiesArgs
+  driveFileStatesLastImport?: boolean | ImportBatchCountOutputTypeCountDriveFileStatesLastImportArgs
+  driveFileStatesLastSuccessful?: boolean | ImportBatchCountOutputTypeCountDriveFileStatesLastSuccessfulArgs
 }
 
 /**
@@ -3114,6 +3596,20 @@ export type ImportBatchCountOutputTypeCountHeavenCastDailiesArgs<ExtArgs extends
   where?: Prisma.HeavenCastDailyWhereInput
 }
 
+/**
+ * ImportBatchCountOutputType without action
+ */
+export type ImportBatchCountOutputTypeCountDriveFileStatesLastImportArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DriveFileStateWhereInput
+}
+
+/**
+ * ImportBatchCountOutputType without action
+ */
+export type ImportBatchCountOutputTypeCountDriveFileStatesLastSuccessfulArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DriveFileStateWhereInput
+}
+
 
 export type ImportBatchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3154,6 +3650,8 @@ export type ImportBatchSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   townLandingDailies?: boolean | Prisma.ImportBatch$townLandingDailiesArgs<ExtArgs>
   heavenShopDailies?: boolean | Prisma.ImportBatch$heavenShopDailiesArgs<ExtArgs>
   heavenCastDailies?: boolean | Prisma.ImportBatch$heavenCastDailiesArgs<ExtArgs>
+  driveFileStatesLastImport?: boolean | Prisma.ImportBatch$driveFileStatesLastImportArgs<ExtArgs>
+  driveFileStatesLastSuccessful?: boolean | Prisma.ImportBatch$driveFileStatesLastSuccessfulArgs<ExtArgs>
   _count?: boolean | Prisma.ImportBatchCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["importBatch"]>
 
@@ -3266,6 +3764,8 @@ export type ImportBatchInclude<ExtArgs extends runtime.Types.Extensions.Internal
   townLandingDailies?: boolean | Prisma.ImportBatch$townLandingDailiesArgs<ExtArgs>
   heavenShopDailies?: boolean | Prisma.ImportBatch$heavenShopDailiesArgs<ExtArgs>
   heavenCastDailies?: boolean | Prisma.ImportBatch$heavenCastDailiesArgs<ExtArgs>
+  driveFileStatesLastImport?: boolean | Prisma.ImportBatch$driveFileStatesLastImportArgs<ExtArgs>
+  driveFileStatesLastSuccessful?: boolean | Prisma.ImportBatch$driveFileStatesLastSuccessfulArgs<ExtArgs>
   _count?: boolean | Prisma.ImportBatchCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ImportBatchIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3290,6 +3790,8 @@ export type $ImportBatchPayload<ExtArgs extends runtime.Types.Extensions.Interna
     townLandingDailies: Prisma.$TownLandingDailyPayload<ExtArgs>[]
     heavenShopDailies: Prisma.$HeavenShopDailyPayload<ExtArgs>[]
     heavenCastDailies: Prisma.$HeavenCastDailyPayload<ExtArgs>[]
+    driveFileStatesLastImport: Prisma.$DriveFileStatePayload<ExtArgs>[]
+    driveFileStatesLastSuccessful: Prisma.$DriveFileStatePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3724,6 +4226,8 @@ export interface Prisma__ImportBatchClient<T, Null = never, ExtArgs extends runt
   townLandingDailies<T extends Prisma.ImportBatch$townLandingDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$townLandingDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TownLandingDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   heavenShopDailies<T extends Prisma.ImportBatch$heavenShopDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$heavenShopDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HeavenShopDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   heavenCastDailies<T extends Prisma.ImportBatch$heavenCastDailiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$heavenCastDailiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HeavenCastDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  driveFileStatesLastImport<T extends Prisma.ImportBatch$driveFileStatesLastImportArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$driveFileStatesLastImportArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DriveFileStatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  driveFileStatesLastSuccessful<T extends Prisma.ImportBatch$driveFileStatesLastSuccessfulArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportBatch$driveFileStatesLastSuccessfulArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DriveFileStatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4390,6 +4894,54 @@ export type ImportBatch$heavenCastDailiesArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   distinct?: Prisma.HeavenCastDailyScalarFieldEnum | Prisma.HeavenCastDailyScalarFieldEnum[]
+}
+
+/**
+ * ImportBatch.driveFileStatesLastImport
+ */
+export type ImportBatch$driveFileStatesLastImportArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DriveFileState
+   */
+  select?: Prisma.DriveFileStateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DriveFileState
+   */
+  omit?: Prisma.DriveFileStateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DriveFileStateInclude<ExtArgs> | null
+  where?: Prisma.DriveFileStateWhereInput
+  orderBy?: Prisma.DriveFileStateOrderByWithRelationInput | Prisma.DriveFileStateOrderByWithRelationInput[]
+  cursor?: Prisma.DriveFileStateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DriveFileStateScalarFieldEnum | Prisma.DriveFileStateScalarFieldEnum[]
+}
+
+/**
+ * ImportBatch.driveFileStatesLastSuccessful
+ */
+export type ImportBatch$driveFileStatesLastSuccessfulArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DriveFileState
+   */
+  select?: Prisma.DriveFileStateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DriveFileState
+   */
+  omit?: Prisma.DriveFileStateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DriveFileStateInclude<ExtArgs> | null
+  where?: Prisma.DriveFileStateWhereInput
+  orderBy?: Prisma.DriveFileStateOrderByWithRelationInput | Prisma.DriveFileStateOrderByWithRelationInput[]
+  cursor?: Prisma.DriveFileStateWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DriveFileStateScalarFieldEnum | Prisma.DriveFileStateScalarFieldEnum[]
 }
 
 /**

@@ -233,6 +233,7 @@ export type ImportSourceWhereInput = {
   store?: Prisma.XOR<Prisma.StoreNullableScalarRelationFilter, Prisma.StoreWhereInput> | null
   errors?: Prisma.ImportErrorListRelationFilter
   batches?: Prisma.ImportBatchListRelationFilter
+  driveFolderMappings?: Prisma.DriveFolderMappingListRelationFilter
 }
 
 export type ImportSourceOrderByWithRelationInput = {
@@ -250,6 +251,7 @@ export type ImportSourceOrderByWithRelationInput = {
   store?: Prisma.StoreOrderByWithRelationInput
   errors?: Prisma.ImportErrorOrderByRelationAggregateInput
   batches?: Prisma.ImportBatchOrderByRelationAggregateInput
+  driveFolderMappings?: Prisma.DriveFolderMappingOrderByRelationAggregateInput
 }
 
 export type ImportSourceWhereUniqueInput = Prisma.AtLeast<{
@@ -270,6 +272,7 @@ export type ImportSourceWhereUniqueInput = Prisma.AtLeast<{
   store?: Prisma.XOR<Prisma.StoreNullableScalarRelationFilter, Prisma.StoreWhereInput> | null
   errors?: Prisma.ImportErrorListRelationFilter
   batches?: Prisma.ImportBatchListRelationFilter
+  driveFolderMappings?: Prisma.DriveFolderMappingListRelationFilter
 }, "id" | "name">
 
 export type ImportSourceOrderByWithAggregationInput = {
@@ -320,6 +323,7 @@ export type ImportSourceCreateInput = {
   store?: Prisma.StoreCreateNestedOneWithoutImportSourcesInput
   errors?: Prisma.ImportErrorCreateNestedManyWithoutImportSourceInput
   batches?: Prisma.ImportBatchCreateNestedManyWithoutImportSourceInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutImportSourceInput
 }
 
 export type ImportSourceUncheckedCreateInput = {
@@ -336,6 +340,7 @@ export type ImportSourceUncheckedCreateInput = {
   updatedAt?: Date | string
   errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportSourceInput
   batches?: Prisma.ImportBatchUncheckedCreateNestedManyWithoutImportSourceInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutImportSourceInput
 }
 
 export type ImportSourceUpdateInput = {
@@ -352,6 +357,7 @@ export type ImportSourceUpdateInput = {
   store?: Prisma.StoreUpdateOneWithoutImportSourcesNestedInput
   errors?: Prisma.ImportErrorUpdateManyWithoutImportSourceNestedInput
   batches?: Prisma.ImportBatchUpdateManyWithoutImportSourceNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutImportSourceNestedInput
 }
 
 export type ImportSourceUncheckedUpdateInput = {
@@ -368,6 +374,7 @@ export type ImportSourceUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportSourceNestedInput
   batches?: Prisma.ImportBatchUncheckedUpdateManyWithoutImportSourceNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutImportSourceNestedInput
 }
 
 export type ImportSourceCreateManyInput = {
@@ -553,6 +560,20 @@ export type ImportSourceUpdateOneRequiredWithoutBatchesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ImportSourceUpdateToOneWithWhereWithoutBatchesInput, Prisma.ImportSourceUpdateWithoutBatchesInput>, Prisma.ImportSourceUncheckedUpdateWithoutBatchesInput>
 }
 
+export type ImportSourceCreateNestedOneWithoutDriveFolderMappingsInput = {
+  create?: Prisma.XOR<Prisma.ImportSourceCreateWithoutDriveFolderMappingsInput, Prisma.ImportSourceUncheckedCreateWithoutDriveFolderMappingsInput>
+  connectOrCreate?: Prisma.ImportSourceCreateOrConnectWithoutDriveFolderMappingsInput
+  connect?: Prisma.ImportSourceWhereUniqueInput
+}
+
+export type ImportSourceUpdateOneRequiredWithoutDriveFolderMappingsNestedInput = {
+  create?: Prisma.XOR<Prisma.ImportSourceCreateWithoutDriveFolderMappingsInput, Prisma.ImportSourceUncheckedCreateWithoutDriveFolderMappingsInput>
+  connectOrCreate?: Prisma.ImportSourceCreateOrConnectWithoutDriveFolderMappingsInput
+  upsert?: Prisma.ImportSourceUpsertWithoutDriveFolderMappingsInput
+  connect?: Prisma.ImportSourceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ImportSourceUpdateToOneWithWhereWithoutDriveFolderMappingsInput, Prisma.ImportSourceUpdateWithoutDriveFolderMappingsInput>, Prisma.ImportSourceUncheckedUpdateWithoutDriveFolderMappingsInput>
+}
+
 export type ImportSourceCreateWithoutStoreInput = {
   id?: string
   name: string
@@ -566,6 +587,7 @@ export type ImportSourceCreateWithoutStoreInput = {
   updatedAt?: Date | string
   errors?: Prisma.ImportErrorCreateNestedManyWithoutImportSourceInput
   batches?: Prisma.ImportBatchCreateNestedManyWithoutImportSourceInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutImportSourceInput
 }
 
 export type ImportSourceUncheckedCreateWithoutStoreInput = {
@@ -581,6 +603,7 @@ export type ImportSourceUncheckedCreateWithoutStoreInput = {
   updatedAt?: Date | string
   errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportSourceInput
   batches?: Prisma.ImportBatchUncheckedCreateNestedManyWithoutImportSourceInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutImportSourceInput
 }
 
 export type ImportSourceCreateOrConnectWithoutStoreInput = {
@@ -639,6 +662,7 @@ export type ImportSourceCreateWithoutErrorsInput = {
   updatedAt?: Date | string
   store?: Prisma.StoreCreateNestedOneWithoutImportSourcesInput
   batches?: Prisma.ImportBatchCreateNestedManyWithoutImportSourceInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutImportSourceInput
 }
 
 export type ImportSourceUncheckedCreateWithoutErrorsInput = {
@@ -654,6 +678,7 @@ export type ImportSourceUncheckedCreateWithoutErrorsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   batches?: Prisma.ImportBatchUncheckedCreateNestedManyWithoutImportSourceInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutImportSourceInput
 }
 
 export type ImportSourceCreateOrConnectWithoutErrorsInput = {
@@ -685,6 +710,7 @@ export type ImportSourceUpdateWithoutErrorsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   store?: Prisma.StoreUpdateOneWithoutImportSourcesNestedInput
   batches?: Prisma.ImportBatchUpdateManyWithoutImportSourceNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutImportSourceNestedInput
 }
 
 export type ImportSourceUncheckedUpdateWithoutErrorsInput = {
@@ -700,6 +726,7 @@ export type ImportSourceUncheckedUpdateWithoutErrorsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   batches?: Prisma.ImportBatchUncheckedUpdateManyWithoutImportSourceNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutImportSourceNestedInput
 }
 
 export type ImportSourceCreateWithoutBatchesInput = {
@@ -715,6 +742,7 @@ export type ImportSourceCreateWithoutBatchesInput = {
   updatedAt?: Date | string
   store?: Prisma.StoreCreateNestedOneWithoutImportSourcesInput
   errors?: Prisma.ImportErrorCreateNestedManyWithoutImportSourceInput
+  driveFolderMappings?: Prisma.DriveFolderMappingCreateNestedManyWithoutImportSourceInput
 }
 
 export type ImportSourceUncheckedCreateWithoutBatchesInput = {
@@ -730,6 +758,7 @@ export type ImportSourceUncheckedCreateWithoutBatchesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportSourceInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedCreateNestedManyWithoutImportSourceInput
 }
 
 export type ImportSourceCreateOrConnectWithoutBatchesInput = {
@@ -761,6 +790,7 @@ export type ImportSourceUpdateWithoutBatchesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   store?: Prisma.StoreUpdateOneWithoutImportSourcesNestedInput
   errors?: Prisma.ImportErrorUpdateManyWithoutImportSourceNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutImportSourceNestedInput
 }
 
 export type ImportSourceUncheckedUpdateWithoutBatchesInput = {
@@ -776,6 +806,87 @@ export type ImportSourceUncheckedUpdateWithoutBatchesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportSourceNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutImportSourceNestedInput
+}
+
+export type ImportSourceCreateWithoutDriveFolderMappingsInput = {
+  id?: string
+  name: string
+  kind?: $Enums.ImportSourceKind
+  mediaType: $Enums.MediaType
+  dataType: $Enums.ImportDataType
+  metricType?: string | null
+  folderPath?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  store?: Prisma.StoreCreateNestedOneWithoutImportSourcesInput
+  errors?: Prisma.ImportErrorCreateNestedManyWithoutImportSourceInput
+  batches?: Prisma.ImportBatchCreateNestedManyWithoutImportSourceInput
+}
+
+export type ImportSourceUncheckedCreateWithoutDriveFolderMappingsInput = {
+  id?: string
+  name: string
+  kind?: $Enums.ImportSourceKind
+  mediaType: $Enums.MediaType
+  dataType: $Enums.ImportDataType
+  metricType?: string | null
+  storeId?: string | null
+  folderPath?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  errors?: Prisma.ImportErrorUncheckedCreateNestedManyWithoutImportSourceInput
+  batches?: Prisma.ImportBatchUncheckedCreateNestedManyWithoutImportSourceInput
+}
+
+export type ImportSourceCreateOrConnectWithoutDriveFolderMappingsInput = {
+  where: Prisma.ImportSourceWhereUniqueInput
+  create: Prisma.XOR<Prisma.ImportSourceCreateWithoutDriveFolderMappingsInput, Prisma.ImportSourceUncheckedCreateWithoutDriveFolderMappingsInput>
+}
+
+export type ImportSourceUpsertWithoutDriveFolderMappingsInput = {
+  update: Prisma.XOR<Prisma.ImportSourceUpdateWithoutDriveFolderMappingsInput, Prisma.ImportSourceUncheckedUpdateWithoutDriveFolderMappingsInput>
+  create: Prisma.XOR<Prisma.ImportSourceCreateWithoutDriveFolderMappingsInput, Prisma.ImportSourceUncheckedCreateWithoutDriveFolderMappingsInput>
+  where?: Prisma.ImportSourceWhereInput
+}
+
+export type ImportSourceUpdateToOneWithWhereWithoutDriveFolderMappingsInput = {
+  where?: Prisma.ImportSourceWhereInput
+  data: Prisma.XOR<Prisma.ImportSourceUpdateWithoutDriveFolderMappingsInput, Prisma.ImportSourceUncheckedUpdateWithoutDriveFolderMappingsInput>
+}
+
+export type ImportSourceUpdateWithoutDriveFolderMappingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumImportSourceKindFieldUpdateOperationsInput | $Enums.ImportSourceKind
+  mediaType?: Prisma.EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  metricType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  folderPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  store?: Prisma.StoreUpdateOneWithoutImportSourcesNestedInput
+  errors?: Prisma.ImportErrorUpdateManyWithoutImportSourceNestedInput
+  batches?: Prisma.ImportBatchUpdateManyWithoutImportSourceNestedInput
+}
+
+export type ImportSourceUncheckedUpdateWithoutDriveFolderMappingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumImportSourceKindFieldUpdateOperationsInput | $Enums.ImportSourceKind
+  mediaType?: Prisma.EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+  dataType?: Prisma.EnumImportDataTypeFieldUpdateOperationsInput | $Enums.ImportDataType
+  metricType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  folderPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportSourceNestedInput
+  batches?: Prisma.ImportBatchUncheckedUpdateManyWithoutImportSourceNestedInput
 }
 
 export type ImportSourceCreateManyStoreInput = {
@@ -804,6 +915,7 @@ export type ImportSourceUpdateWithoutStoreInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   errors?: Prisma.ImportErrorUpdateManyWithoutImportSourceNestedInput
   batches?: Prisma.ImportBatchUpdateManyWithoutImportSourceNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUpdateManyWithoutImportSourceNestedInput
 }
 
 export type ImportSourceUncheckedUpdateWithoutStoreInput = {
@@ -819,6 +931,7 @@ export type ImportSourceUncheckedUpdateWithoutStoreInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   errors?: Prisma.ImportErrorUncheckedUpdateManyWithoutImportSourceNestedInput
   batches?: Prisma.ImportBatchUncheckedUpdateManyWithoutImportSourceNestedInput
+  driveFolderMappings?: Prisma.DriveFolderMappingUncheckedUpdateManyWithoutImportSourceNestedInput
 }
 
 export type ImportSourceUncheckedUpdateManyWithoutStoreInput = {
@@ -842,11 +955,13 @@ export type ImportSourceUncheckedUpdateManyWithoutStoreInput = {
 export type ImportSourceCountOutputType = {
   errors: number
   batches: number
+  driveFolderMappings: number
 }
 
 export type ImportSourceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   errors?: boolean | ImportSourceCountOutputTypeCountErrorsArgs
   batches?: boolean | ImportSourceCountOutputTypeCountBatchesArgs
+  driveFolderMappings?: boolean | ImportSourceCountOutputTypeCountDriveFolderMappingsArgs
 }
 
 /**
@@ -873,6 +988,13 @@ export type ImportSourceCountOutputTypeCountBatchesArgs<ExtArgs extends runtime.
   where?: Prisma.ImportBatchWhereInput
 }
 
+/**
+ * ImportSourceCountOutputType without action
+ */
+export type ImportSourceCountOutputTypeCountDriveFolderMappingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DriveFolderMappingWhereInput
+}
+
 
 export type ImportSourceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -889,6 +1011,7 @@ export type ImportSourceSelect<ExtArgs extends runtime.Types.Extensions.Internal
   store?: boolean | Prisma.ImportSource$storeArgs<ExtArgs>
   errors?: boolean | Prisma.ImportSource$errorsArgs<ExtArgs>
   batches?: boolean | Prisma.ImportSource$batchesArgs<ExtArgs>
+  driveFolderMappings?: boolean | Prisma.ImportSource$driveFolderMappingsArgs<ExtArgs>
   _count?: boolean | Prisma.ImportSourceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["importSource"]>
 
@@ -941,6 +1064,7 @@ export type ImportSourceInclude<ExtArgs extends runtime.Types.Extensions.Interna
   store?: boolean | Prisma.ImportSource$storeArgs<ExtArgs>
   errors?: boolean | Prisma.ImportSource$errorsArgs<ExtArgs>
   batches?: boolean | Prisma.ImportSource$batchesArgs<ExtArgs>
+  driveFolderMappings?: boolean | Prisma.ImportSource$driveFolderMappingsArgs<ExtArgs>
   _count?: boolean | Prisma.ImportSourceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ImportSourceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -956,6 +1080,7 @@ export type $ImportSourcePayload<ExtArgs extends runtime.Types.Extensions.Intern
     store: Prisma.$StorePayload<ExtArgs> | null
     errors: Prisma.$ImportErrorPayload<ExtArgs>[]
     batches: Prisma.$ImportBatchPayload<ExtArgs>[]
+    driveFolderMappings: Prisma.$DriveFolderMappingPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1366,6 +1491,7 @@ export interface Prisma__ImportSourceClient<T, Null = never, ExtArgs extends run
   store<T extends Prisma.ImportSource$storeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportSource$storeArgs<ExtArgs>>): Prisma.Prisma__StoreClient<runtime.Types.Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   errors<T extends Prisma.ImportSource$errorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportSource$errorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImportErrorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   batches<T extends Prisma.ImportSource$batchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportSource$batchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ImportBatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  driveFolderMappings<T extends Prisma.ImportSource$driveFolderMappingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ImportSource$driveFolderMappingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DriveFolderMappingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1871,6 +1997,30 @@ export type ImportSource$batchesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.ImportBatchScalarFieldEnum | Prisma.ImportBatchScalarFieldEnum[]
+}
+
+/**
+ * ImportSource.driveFolderMappings
+ */
+export type ImportSource$driveFolderMappingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DriveFolderMapping
+   */
+  select?: Prisma.DriveFolderMappingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DriveFolderMapping
+   */
+  omit?: Prisma.DriveFolderMappingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DriveFolderMappingInclude<ExtArgs> | null
+  where?: Prisma.DriveFolderMappingWhereInput
+  orderBy?: Prisma.DriveFolderMappingOrderByWithRelationInput | Prisma.DriveFolderMappingOrderByWithRelationInput[]
+  cursor?: Prisma.DriveFolderMappingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DriveFolderMappingScalarFieldEnum | Prisma.DriveFolderMappingScalarFieldEnum[]
 }
 
 /**
