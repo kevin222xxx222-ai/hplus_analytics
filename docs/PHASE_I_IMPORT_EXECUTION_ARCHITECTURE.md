@@ -153,8 +153,8 @@ I3からI7まではProduction cronを変更しない。I8でAUTO解放が承認�
 | I3 CTI Manual Execute | COMPLETE / Development VERIFIED |
 | I4 CTI Manual Review + Post-Confirm Sync | COMPLETE / Development VERIFIED |
 | I5 Town STORE Manual Execute | COMPLETE / Production Canary VERIFIED |
-| I6 Heaven SHOP | IMPLEMENTED / Development manual execute pending verification |
-| I7 MANUAL_REVIEW系 | NOT STARTED |
+| I6 Heaven SHOP | COMPLETE / Production Canary VERIFIED |
+| I7 MANUAL_REVIEW系 | IMPLEMENTED / Canary pending |
 | I8 AUTO Execution Gate | NOT STARTED |
 | I9 Production Rollout | NOT STARTED |
 

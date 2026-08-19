@@ -28,6 +28,8 @@
     "drive:execute-cti": "node --import tsx scripts/drive-execute-cti.ts",
     "drive:execute-town-store": "node --import tsx scripts/drive-execute-town-store.ts",
     "drive:execute-heaven-shop": "node --import tsx scripts/drive-execute-heaven-shop.ts",
+    "drive:execute-town-cast": "node --import tsx scripts/drive-execute-town-cast.ts",
+    "drive:execute-heaven-cast": "node --import tsx scripts/drive-execute-heaven-cast.ts",
     "automation:provision-system-user": "node --import tsx scripts/provision-system-user.ts",
     "qa:e2e": "playwright test",
     "qa:a11y": "playwright test tests/e2e/accessibility.spec.ts",

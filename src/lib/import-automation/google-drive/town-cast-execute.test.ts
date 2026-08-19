@@ -1,0 +1,10 @@
+import { describe, expect, it } from "vitest";
+import { ImportDataType, MediaType, StoreCode } from "@/generated/prisma/client";
+import { assertTownCastMapping, assertTownCastProductionExecution, townCastReviewUrl, validateTownCastExecuteInput } from "./town-cast-execute";
+const mapping = (overrides: Record<string, unknown> = {}) => ({ isActive: true, isFuture: false, importDataType: ImportDataType.TOWN_CAST, storeId: "store-kas", importSource: { mediaType: MediaType.TOWN, dataType: ImportDataType.TOWN_CAST, storeId: "store-kas", store: { code: StoreCode.KASUKABE } }, ...overrides });
+describe("Town CAST manual execute", () => {
+  it("requires a valid target date", () => { expect(() => validateTownCastExecuteInput({ driveFileId: "", targetDate: "2026-08-18" })).toThrow("--drive-file-id"); expect(() => validateTownCastExecuteInput({ driveFileId: "f", targetDate: "2026-02-30" })).toThrow("--target-date"); expect(() => validateTownCastExecuteInput({ driveFileId: "f", targetDate: "2026-08-18" })).not.toThrow(); });
+  it("accepts Kasukabe and Koshigaya mappings", () => { expect(() => assertTownCastMapping(mapping())).not.toThrow(); expect(() => assertTownCastMapping(mapping({ storeId: "store-kos", importSource: { mediaType: MediaType.TOWN, dataType: ImportDataType.TOWN_CAST, storeId: "store-kos", store: { code: StoreCode.KOSHIGAYA } } }))).not.toThrow(); });
+  it("rejects non-Town CAST, missing store and inactive/future mappings", () => { expect(() => assertTownCastMapping(mapping({ importDataType: ImportDataType.TOWN_STORE }))).toThrow(); expect(() => assertTownCastMapping(mapping({ storeId: null }))).toThrow(); expect(() => assertTownCastMapping(mapping({ isActive: false }))).toThrow(); expect(() => assertTownCastMapping(mapping({ isFuture: true }))).toThrow(); });
+  it("requires production confirmation and uses the Town URL", () => { expect(() => assertTownCastProductionExecution("production", false)).toThrow("--confirm-production"); expect(() => assertTownCastProductionExecution("development", false)).not.toThrow(); expect(townCastReviewUrl("batch-1")).toBe("/imports/town/batch-1"); });
+});
