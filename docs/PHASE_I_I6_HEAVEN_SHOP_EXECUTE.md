@@ -52,10 +52,22 @@ Production環境での実行には `--confirm-production` が必要ですが、I
 
 Heaven serviceが依存する `src/lib/imports/heaven`、`src/lib/date.ts`、`src/lib/normalize.ts`、Prisma/generated clientは既存runner imageのserver-side source packagingに含まれます。今回Dockerfile変更は不要です。Secrets、Production Folder ID、Service Account情報はCLIや本書へ埋め込みません。
 
+## Production Canary (verified)
+
+I6のProduction Canaryとして、春日部Heaven Shopの`tokeiShop_202608.csv`を手動実行した。`READY → IMPORTING → REVIEW_REQUIRED → Manual Confirm → IMPORTED`を確認し、ImportBatchは`COMPLETED`（inserted 308、updated 197、skipped 0、warning 0、error 0）、DriveFileStateは`IMPORTED`となり、`lastImportBatchId` / `lastSuccessfulImportBatchId`の同期も確認済みである。
+
+Fact tableは既存の`heaven_shop_daily`を使用し、列の意味は次のとおりである。日付列は`date`ではなく`business_date`である。
+
+`business_date`, `store_id`, `import_batch_id`, `metric_key`, `raw_value`, `value_kind`, `raw_value_status`, `delta_value`, `source_column`, `source_row_number`
+
+監査で通常のHeaven Confirm成功経路に`ImportBatch.completedAt`更新漏れが見つかった。通常成功時（`COMPLETED` / `COMPLETED_WITH_WARNINGS`）にstatus更新と同じtransactionで`completedAt`を設定する最小修正を適用した。Duplicate Cancel経路は既存の`completedAt`設定を維持する。Canary Batchの再ConfirmやProduction DBの直接補正は行っていない。
+
+既存Canaryの`completedAt`は、`lastImportedAt`を根拠に後付け補正すると監査時刻と確定時刻を混同するため、現時点ではNULLの履歴をそのまま保持することを推奨する。必要な場合のみ、別途監査承認と明示的な補正手順を設ける。
+
 ## Test / verification status
 
 追加したunit testは、file id、Production confirmation、Mapping（active/future/type/store/metricHint）、Drive identity、Review URLを確認します。実Google Drive実行はこの変更では未実施（NOT VERIFIED）です。Production cron、AUTO Import、AUTO Confirm、I7以降のHeaven CAST等は未開始です。
 
 ## I6 status
 
-実装準備済み（Development manual execute CLI追加）。Development実ファイルによるCanary確認後にI6をVerifiedへ進めます。Productionは変更・実行していません。
+COMPLETE / Production Canary VERIFIED。Production Canaryの実Import・Manual Confirm・Drive State同期まで確認済み。Production cronのAUTO Import、AUTO Confirmは引き続き未解放です。
