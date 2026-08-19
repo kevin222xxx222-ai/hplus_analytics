@@ -98,7 +98,7 @@ OR (status = FAILED_RETRYABLE AND nextRetryAt <= now)
 
 `DOWNLOADING`/`IMPORTING`の期限切れはrecovery処理で`FAILED_RETRYABLE`へ戻してから次回処理する。`READY`は同じone-shot内でDispatcherへ渡し、次回scanの主対象にはしない。
 
-Production cronの有効化はManual CLI Vertical Slice、Development Folder、重複/障害テスト、preview-only検証が完了した後とする。「最初からcronを動かさない」をPhase H v1の運用条件とする。
+Production cronは、Manual CLI Vertical Slice、Development Folder、重複/障害テスト、preview-only検証を完了した後に有効化する。H9でこのゲートを満たし、10分間隔のProduction pollを運用中である。Import実行は引き続きRESOLVE_ONLY境界で禁止する。
 
 ## 6. DriveFileState MVP Decision
 
@@ -163,7 +163,7 @@ Auto-confirmは既存Parser/Validation/Resolverの結果が全て決定的に安
 
 ### 8.3 Missing credential behavior
 
-H9で確定するまでの安全側方針は、credential不在時にDrive Automationだけをdisabledにし、既存Manual Import/Analyticsを継続することとする。health/CLIにはredacted errorのみを出す。
+credential不在時はDrive Automationだけをdisabledにし、既存Manual Import/Analyticsを継続する。ProductionではH9で専用credentialのread-only mountとreadabilityを確認済みで、health/CLIにはredacted errorのみを出す。
 
 ## 9. Dispatcher Input Contract Decision
 
@@ -242,16 +242,16 @@ Town URL/LP、Heaven MyGirl/Mitene/Talk、Heaven通知2種、Archive/Error、野
 | Phase | Scope | Gate |
 |---|---|---|
 | H1 | Documentation / Architecture | **COMPLETE** |
-| H2 | Google Authentication + Connection Test | Development credentialのみ |
-| H3 | Drive Client / Adapter | DB/Import未接続 |
-| H4 | DriveFolderMapping | 8 Folder mapping検証 |
-| H5 | DriveFileState | additive migration、旧App互換 |
-| H6 | Import Dispatcher | dry-run/preview境界 |
-| H7 | Manual one-shot CLI scan | まず手動実行、cronなし |
-| H8 | Advisory Lock + Retry + cron | 10分poll、重複/障害テスト後 |
-| H9 | Production rollout | 段階有効化、手動rollback |
+| H2 | Google Authentication + Connection Test | **COMPLETE** |
+| H3 | Drive Client / Adapter | **COMPLETE** |
+| H4 | DriveFolderMapping | **COMPLETE** |
+| H5 | DriveFileState | **COMPLETE** |
+| H6 | Import Dispatcher | **COMPLETE**（RESOLVE_ONLY） |
+| H7 | Manual one-shot CLI scan | **COMPLETE** |
+| H8 | Advisory Lock + Retry + cron foundation | **COMPLETE** |
+| H9 | Production rollout | **COMPLETE**（scan/download/resolveのみ） |
 
-最初からcronを登録・有効化しない。H7で手動CLIのVertical Sliceを完成させ、H8で自動実行へ昇格する。
+H7の手動CLI検証とH8のlock/retry検証を完了後、H9でProductionの10分pollへ昇格した。Import Pipeline自動実行は別の明示的な解放判断まで行わない。
 
 ## 12. First Vertical Slice Definition
 
@@ -286,7 +286,7 @@ Town URL/LP、Heaven MyGirl/Mitene/Talk、Heaven通知2種、Archive/Error、野
 
 - Status 9
 - `driveFileId` advisory lock
-- 10分cron one-shot（H7完了後に有効化）
+- 10分cron one-shot（H9 Productionで稼働確認済み）
 - State最大27 field（25運用 + 2監査timestamp）、Future fieldの抑制
 - Source別Auto-confirm matrix
 - Production/Development credential・Folder分離
@@ -318,4 +318,4 @@ Town URL/LP、Heaven MyGirl/Mitene/Talk、Heaven通知2種、Archive/Error、野
 
 Authentication文書の実ファイル名は`PHASE_H_GOOGLE_DRIVE_AUTHENTICATION_SPECIFICATION.md`であり、依頼文中の短縮名`...AUTHENTICATION_SPEC.md`はこの正式ファイルを指すものとして扱う。
 
-本書で固定した決定により、Architectureの候補status、Lock未確定、Scheduler Future、Auto-confirm未定義、MVP範囲未確定というレビュー指摘を解消する。
+本書で固定した決定により、Architectureの候補status、Lock未確定、Scheduler Future、Auto-confirm未定義、MVP範囲未確定というレビュー指摘を解消した。H9 ProductionではScheduler/cron、Lock、MVP mapping、RESOLVE_ONLY pollまで実稼働確認済みである。実データImportとAUTO confirmは引き続き未解放である。

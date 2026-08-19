@@ -12,7 +12,7 @@
 
 HPlus Analyticsは、CTI、デリヘルタウン（Town）、シティヘブン（Heaven）に分散する売上・出勤・成約・指名・顧客・媒体実績を統合し、店長が翌朝の事実、曜日の構造、キャストごとの改善確認箇所、月目標との差を短時間で確認する業務分析基盤である。
 
-`v1.0.1-production-ready`では、認証、ImportBatch管理、日次fact、Home、Management、Store、Cast Diagnosis/Comparison/Action/Trend、曜日分析、目標管理、Production deploy/backup/restore/retentionの手順・スクリプトがリポジトリに存在する。Google Drive自動取込、外部監視、バックアップのオフサイト保管などは次Phaseである。
+`v1.0.1-production-ready`では、認証、ImportBatch管理、日次fact、Home、Management、Store、Cast Diagnosis/Comparison/Action/Trend、曜日分析、目標管理、Production deploy/backup/restore/retentionの手順・スクリプトがリポジトリに存在する。Phase H v1のGoogle Drive取得基盤（scan、detection、download、SHA-256、DriveFileState、RESOLVE_ONLY poll）はProduction稼働済みである。実データImport自動実行、AUTO confirm、ImportBatch自動作成、外部監視、バックアップのオフサイト保管などは未解放または次Phaseである。
 
 ## 3. Business Background
 
@@ -35,7 +35,7 @@ HPlus Analyticsは、CTI、デリヘルタウン（Town）、シティヘブン�
 
 ### 非対象または未実装
 
-Google Drive自動Import、予約経路の因果特定、AI文章生成、施策自動実行、パスワード再設定、ログイン試行制限、外部監視基盤は`FUTURE`または`NOT IMPLEMENTED`である。
+Google Driveの実データ自動Import、AUTO confirm、ImportBatch自動作成、予約経路の因果特定、AI文章生成、施策自動実行、パスワード再設定、ログイン試行制限、外部監視基盤は`FUTURE`または`NOT IMPLEMENTED`である。Drive取得・検知・ダウンロード・RESOLVE_ONLYまではPhase H v1でProduction稼働済みである。
 
 ## 6. Users and Roles
 
@@ -557,18 +557,18 @@ Productionの`https://analytics.womansgroup.link/api/health`でHTTP 200、`statu
 
 ## 47. Phase H / Google Drive Automation
 
-これはv1.0.1の欠陥ではなく、次PhaseのFuture Requirementである。
+H1〜H9は完了している。H9でProductionのGoogle Drive取得基盤（scan、detection、download、SHA-256、DriveFileState、RESOLVE_ONLY poll）まで稼働確認済みである。実データImport Pipeline、自動AUTO confirm、ImportBatch自動作成は未解放であり、次の明示的な承認対象とする。
 
 ```text
-Google Drive → 新規file検知 → download → file判定
-→ 既存parser/preview → ImportBatch → confirm → DB → Analytics
+Google Drive → 新規file検知 → download → SHA-256 → DriveFileState
+→ RESOLVE_ONLY → （未解放）既存parser/preview → ImportBatch → confirm → DB → Analytics
 ```
 
 必要要素: Drive API、folder、service account/OAuth、file id、modifiedTime、etag、SHA-256、idempotency、scheduler、retry/backoff、quarantine、distributed lock、audit、manual retry、Data Health連携。初期は自動確定せずpreview/ADMIN confirmを推奨。
 
 ## 48. Future Roadmap
 
-- Phase H: Google Drive pipeline。
+- Phase H後続: RESOLVE_ONLY後段の既存parser/preview、ADMIN confirm、ImportBatch連携。
 - Production operations: external monitoring、backup encryption/offsite、restore drill、RTO/RPO。
 - Security: login throttling、password reset、MFA、secret rotation。
 - Analytics: 運用結果を見た上での曜日×週施策、媒体ファネルの正式Diagnosis採用判断。
@@ -628,7 +628,7 @@ schema変更は別レビュー。migrationは`migrate deploy`のみ。本番で`
 
 ### 調査根拠
 
-`src/app`、`src/components`、`src/lib`、`src/generated`、`prisma/schema.prisma`、11 migrations、`scripts`、`tests`、`Dockerfile`、両Compose、`package.json`、`prisma.config.ts`、`README.md`、`AGENTS.md`、docs一式を再確認した。測定値は2026-08-12時点。ProductionではURL/HTTPS/Nginx proxy、既存admin login、health、deploy、backup、retention、UFW、SSH、cronを確認済み。開発→Production手動pg_restoreも成功済み。破壊的な`restore-production.sh`全手順、外部監視、Google Drive自動取込、認証済みE2E CIは`NOT VERIFIED`。
+`src/app`、`src/components`、`src/lib`、`src/generated`、`prisma/schema.prisma`、13 migrations、`scripts`、`tests`、`Dockerfile`、両Compose、`package.json`、`prisma.config.ts`、`README.md`、`AGENTS.md`、docs一式を再確認した。測定値は2026-08-19時点。ProductionではURL/HTTPS/Nginx proxy、既存admin login、health、deploy、backup、retention、UFW、SSH、cronを確認済み。開発→Production手動pg_restoreも成功済み。Phase H H9のGoogle Drive取得基盤（scan、detection、download、SHA-256、DriveFileState、RESOLVE_ONLY poll）はProductionで確認済み。破壊的な`restore-production.sh`全手順、外部監視、実データImport自動実行、認証済みE2E CIは`NOT VERIFIED`または未解放。
 
 ### Current verification
 

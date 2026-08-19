@@ -8,7 +8,7 @@ HPlus Analyticsは、CTI・デリヘルタウン・シティヘブンの実績�
 
 `v1.0.1-production-ready`を引継ぎ基準とします。認証、Home/Morning Report、Management Dashboard、Store Analytics、Weekday Analytics、Cast Diagnosis/Comparison/Action/Trend、Goals、Data Health、CTI/Town/Heaven手動Import、Alias/Merge、Production deploy/backup/restore/retention手順が実装済みです（コード確認済み）。Productionは`https://analytics.womansgroup.link`で稼働し、HTTPS、既存admin login、`/api/health`（`status=ok`、`database=connected`）を確認済みです。
 
-Google Drive自動取込、外部監視、offsite backup、login rate limit/password reset、AI施策自動実行は未実装です。破壊的な`restore-production.sh`の本番全手順も未検証です。
+Phase H v1のGoogle Drive取得基盤（scan、detection、download、SHA-256、DriveFileState、RESOLVE_ONLY poll）はProductionで稼働確認済みです。実データのImport Pipeline自動実行、AUTO confirm、ImportBatch自動作成は未解放です。外部監視、offsite backup、login rate limit/password reset、AI施策自動実行も未実装です。破壊的な`restore-production.sh`の本番全手順は未検証です。
 
 ## 3. 技術構成
 
@@ -52,7 +52,7 @@ Next.js 16.2.10、React 19.2.4、TypeScript、Tailwind CSS 4、Node 24、Postgre
 
 ## 8. 開発会社に依頼可能な作業
 
-1. Google Drive discovery→preview→ADMIN confirm→ImportBatch連携。
+1. RESOLVE_ONLY後段のGoogle Drive preview→ADMIN confirm→ImportBatch連携（実Import解放判断を含む）。
 2. retry/quarantine/lock/通知とData Health連携。
 3. backup暗号化、offsite保管、restore drill、RTO/RPO。
 4. authenticated Playwright CI、visual/a11y gate、OpenAPI/contract tests。

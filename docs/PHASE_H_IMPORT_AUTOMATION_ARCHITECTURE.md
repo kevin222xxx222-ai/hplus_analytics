@@ -380,7 +380,7 @@ Adapterで成功してもImport成功ではない。既存Pipelineの`PREVIEW_RE
 
 ## 21. Scheduler and Production
 
-本番では既存`deploy-production.sh`、backup/restore/retention運用と独立したAutomation workerを想定する。`docker compose down`、DB reset、seed、既存driver-management操作は行わない。
+本番では既存`deploy-production.sh`、backup/restore/retention運用と独立した10分間隔のone-shot pollを運用する。Phase H v1のProduction pollはscan、detection、download、SHA-256、DriveFileState更新、RESOLVE_ONLYまでで終了し、Import Pipeline、AUTO confirm、ImportBatch自動作成は行わない。`docker compose down`、DB reset、seed、既存driver-management操作は行わない。
 
 Scheduler/Workerには、health、処理件数、待機件数、retry件数、quarantine件数、処理時間、最終成功時刻、Drive API quotaを外部監視へ渡せる設計余地を持たせる。ただし外部監視/SLO/通知はFutureである。
 
@@ -388,15 +388,15 @@ Scheduler/Workerには、health、処理件数、待機件数、retry件数、qu
 
 | Phase | 内容 | 成果物 | 今回 |
 |---|---|---|---|
-| H1 | Architecture | 本書、境界、状態、失敗方針 | 設計完了 |
-| H2 | Google Authentication | OAuth/service account、secret、権限 | Future |
-| H3 | Drive Adapter | Folder polling、metadata、download、hash | Future |
-| H4 | Dispatcher | Folder ID→ImportSource、既存Service呼出し | Future |
-| H5 | Drive State | fileId/status/idempotency永続化 | Future・schema承認要 |
-| H6 | Scheduler | cron/worker/queue、Lock、polling | Future |
-| H7 | Retry | backoff、quarantine、manual retry | Future |
-| H8 | Monitoring | metrics、alert、監査画面/ログ | Future |
-| H9 | Production | deploy、secret、backup、runbook、段階有効化 | Future |
+| H1 | Architecture | 本書、境界、状態、失敗方針 | **COMPLETE** |
+| H2 | Google Authentication | Service Account、secret、権限 | **COMPLETE** |
+| H3 | Drive Adapter | Folder polling、metadata、download、hash | **COMPLETE** |
+| H4 | Dispatcher | Folder ID→ImportSource、既存Service呼出し | **COMPLETE**（RESOLVE_ONLY） |
+| H5 | Drive State | fileId/status/idempotency永続化 | **COMPLETE** |
+| H6 | Scheduler | cron、advisory lock、polling | **COMPLETE** |
+| H7 | Retry | backoff、manual retry境界 | **COMPLETE** |
+| H8 | Monitoring | poll log、retry/lock observability基盤 | **COMPLETE** |
+| H9 | Production | credential mount、MVP mapping、10分poll、runbook | **COMPLETE**（Import未解放） |
 
 各Phaseで既存Import Pipelineの回帰テスト、dry-run、preview-onlyを先に行い、いきなり自動確定しない。
 
