@@ -28,6 +28,7 @@ services:
       NODE_ENV: production
       UPLOAD_DIR: /app/data/uploads
       GOOGLE_DRIVE_AUTOMATION_ENV: production
+      GOOGLE_DRIVE_AUTOMATION_ENABLED: "true"
       GOOGLE_DRIVE_CREDENTIALS_PATH: /run/secrets/google-drive-production-service-account.json
     command: ["npm", "start"]
     depends_on:
