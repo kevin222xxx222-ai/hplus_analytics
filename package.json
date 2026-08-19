@@ -19,6 +19,7 @@
     "audit:cast-media-diagnosis": "tsx scripts/audit-cast-media-diagnosis.ts",
     "drive:test-connection": "node --import tsx scripts/phase-h-drive-test.ts",
     "drive:test-download": "node --import tsx scripts/phase-h-drive-download-test.ts",
+    "drive:inspect-folder": "node --import tsx scripts/drive-inspect-folder.ts",
     "drive:test-detect-state": "node --import tsx scripts/phase-h-drive-state-detect-test.ts",
     "drive:test-dispatch": "node --import tsx scripts/phase-h-drive-dispatch-test.ts",
     "drive:scan-once": "node --import tsx scripts/phase-h-drive-scan-once.ts",
