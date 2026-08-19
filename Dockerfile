@@ -8,6 +8,7 @@ RUN npm ci --ignore-scripts
 FROM deps AS builder
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_OPTIONS=--max-old-space-size=1536
 ENV DATABASE_URL=postgresql://build:build@localhost:5432/build
 COPY . .
 RUN npm run db:generate && npm run build
