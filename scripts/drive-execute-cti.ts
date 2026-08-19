@@ -1,0 +1,27 @@
+import "dotenv/config";
+import { createDriveClient } from "../src/lib/import-automation/google-drive/client";
+import { executeCtiDriveFile } from "../src/lib/import-automation/google-drive/cti-execute";
+
+function arg(name: string): string | undefined {
+  const prefix = `--${name}=`;
+  return process.argv.slice(2).find((value) => value.startsWith(prefix))?.slice(prefix.length);
+}
+
+async function main() {
+  const driveFileId = arg("drive-file-id");
+  const targetDate = arg("target-date");
+  const confirmProduction = process.argv.includes("--confirm-production");
+  if (!driveFileId || !targetDate) throw new Error("Usage: npm run drive:execute-cti -- --drive-file-id=<id> --target-date=YYYY-MM-DD [--confirm-production]");
+  const result = await executeCtiDriveFile({ driveFileId, targetDate, confirmProduction, client: createDriveClient() });
+  console.log(`CTI Drive Execute: ${result.outcome === "SKIPPED" ? "SKIPPED" : "OK"}`);
+  if (result.batchId) console.log(`ImportBatch: ${result.batchId}`);
+  if (result.batchStatus) console.log(`Batch Status: ${result.batchStatus}`);
+  console.log(`Drive State: ${result.outcome === "EXECUTED" ? "REVIEW_REQUIRED" : result.reason || "UNCHANGED"}`);
+  if (result.reviewUrl) console.log(`Review URL: ${result.reviewUrl}`);
+  console.log("Confirm: NOT EXECUTED");
+}
+
+main().catch((error: unknown) => {
+  console.error(`CTI Drive Execute: FAILED — ${error instanceof Error ? error.message : "unknown error"}`);
+  process.exitCode = 1;
+});
