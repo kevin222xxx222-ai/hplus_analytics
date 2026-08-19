@@ -4,7 +4,7 @@
 
 Phase H v1のProduction自動化は、Google Drive scan、detection、download、SHA-256、DriveFileState、Dispatcher `RESOLVE_ONLY`までである。Phase IはREADY Fileを既存Import Pipelineへ渡すExecution Gateを設計するが、最初からAUTO Importを解放しない。
 
-今回の設計対象はCTI `CTI_CAST_REPORT`の手動Execution Vertical Sliceだけである。コード、DB、Prisma、Docker、Compose、Production設定は変更しない。
+初期設計対象はCTI `CTI_CAST_REPORT`の手動Execution Vertical Sliceだった。現在はI5 Town STORE Manual Executeまで実装・Production Canary検証済みである。AUTO Importの解放、DB schema、Prisma、Migration、Docker、Compose、Production cronの自動Execute化は引き続き対象外である。
 
 ## 2. 設計原則
 
@@ -20,7 +20,7 @@ Phase H v1のProduction自動化は、Google Drive scan、detection、download�
 | Mode | 使用場所 | 動作 |
 |---|---|---|
 | `RESOLVE_ONLY` | Production cron、現行poll | Mapping/route/policyを解決し、Import未実行 |
-| `EXECUTE` | Phase I手動CLIのみ | READYのFileを既存PipelineのPreview入口へ渡す |
+| `EXECUTE` | Phase I手動CLIのみ | READYのFileを既存PipelineのPreview入口へ渡す。I3 CTI/I5 Town STOREで検証済み |
 
 `EXECUTE`でもCTI policyは`MANUAL_REVIEW`である。したがってExecutorはPreview Batchを作成した時点で停止し、Confirm APIを呼ばない。
 
@@ -143,6 +143,28 @@ DriveFileStateだけを唯一の排他根拠にしない。Stateのstatus更新�
 | I9 | Production rollout | canary、cron RESOLVE_ONLY維持、段階的解放 |
 
 I3からI7まではProduction cronを変更しない。I8でAUTO解放が承認されない限り、ProductionはH9のRESOLVE_ONLYへ戻せる。
+
+## 11A. Current Phase I status
+
+| Phase | Status |
+|---|---|
+| I1 Existing Pipeline Audit | COMPLETE |
+| I2 Import Execution Decision Record | COMPLETE |
+| I3 CTI Manual Execute | COMPLETE / Development VERIFIED |
+| I4 CTI Manual Review + Post-Confirm Sync | COMPLETE / Development VERIFIED |
+| I5 Town STORE Manual Execute | COMPLETE / Production Canary VERIFIED |
+| I6 Heaven SHOP | IMPLEMENTED / Development manual execute pending verification |
+| I7 MANUAL_REVIEW系 | NOT STARTED |
+| I8 AUTO Execution Gate | NOT STARTED |
+| I9 Production Rollout | NOT STARTED |
+
+### I5 production evidence
+
+春日部 `TOWN_STORE`の`dto.jp-shop-20260818_to_20260818.csv`を対象日2026-08-18で実行し、`READY → REVIEW_REQUIRED → IMPORTED`、ImportBatch `COMPLETED`、`town_store_daily` 1件、Drive Stateのsuccessful Batch同期を確認済み。Production cronはRESOLVE_ONLYのままである。
+
+### I6 implementation note
+
+Heaven SHOPは既存の`createHeavenPreview()` / `confirmHeavenImport()`と`heavenShopDaily` upsertを再利用する手動CLIを追加した。CSVから既存parserが決定するsourcePeriodを使用し、`READY → IMPORTING → REVIEW_REQUIRED`で停止する。Confirm後は既存Drive synchronizerで`IMPORTED`へ同期する。Production cron、AUTO Import、AUTO Confirmは変更しない。
 
 ## 12. Open Questions
 

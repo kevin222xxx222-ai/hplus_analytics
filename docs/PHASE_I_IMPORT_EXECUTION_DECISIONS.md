@@ -4,6 +4,29 @@
 **状態:** Decision Freeze  
 **変更範囲:** Documentation only（コード、DB、Prisma、Migration、Docker、Compose、Production設定は変更しない）
 
+## Current implementation status
+
+| Phase | Status |
+|---|---|
+| I1 Existing Pipeline Audit | COMPLETE |
+| I2 Import Execution Decision Record | COMPLETE |
+| I3 CTI Manual Execute | COMPLETE / Development VERIFIED |
+| I4 CTI Manual Review + Post-Confirm Sync | COMPLETE / Development VERIFIED |
+| I5 Town STORE Manual Execute | COMPLETE / Production Canary VERIFIED |
+| I6 Heaven SHOP | IMPLEMENTED / Development manual execute pending verification |
+| I7 MANUAL_REVIEW系 | NOT STARTED |
+| I8 AUTO Execution Gate | NOT STARTED |
+| I9 Production Rollout | NOT STARTED |
+
+I5では春日部の`TOWN_STORE` CSVをManual Executeし、既存Town Preview/Review/Confirm経路を通して`town_store_daily`への1件の確定とDriveFileStateの`IMPORTED`同期をProduction Canaryで確認した。AUTO Import、AUTO Confirm、cronからの実Importは未解放である。
+
+## I5 Canary decision record
+
+- RunnerへTown既存Pipeline sourceを含め、`MODULE_NOT_FOUND`を解消した。Business Logicは変更していない。
+- Town Review URLを`/imports/town/<batchId>`へ統一した。
+- Reverse proxy配下のOrigin検証は固定public `APP_ORIGIN`のURL validation・`URL.origin`正規化・完全一致で行う。CSRF/Same-Origin保護、Origin headerなしの既存policy、未設定時fallbackを維持する。
+- Production HealthはOK、Databaseはconnected、既存10分Drive cronはRESOLVE_ONLY継続。
+
 ## 1. Decision summary
 
 | Decision | Freeze |
@@ -216,6 +239,15 @@ Developmentで次をすべて満たすことをI3/I4の完了条件とする。
 
 ## 15. Design Freeze変更手順
 
+## 16. I6 Heaven SHOP Decision
+
+- 対象は春日部の`HEAVEN_STORE` Shop Mappingのみ。女子指標MappingはI6対象外。
+- `npm run drive:execute-heaven-shop -- --drive-file-id=<id>`で1 Fileを明示実行し、`createHeavenPreview()`へ委譲する。独自CSV解析、`target-date`補完、直接fact writeは行わない。
+- source periodは既存Heaven parserの`sourcePeriodFrom` / `sourcePeriodTo`を正とする。
+- 実行は`READY → IMPORTING → REVIEW_REQUIRED`で止まり、Confirmは既存Heaven Review UIの人手操作のみ。Confirm後のDrive Stateは既存Synchronizerで更新する。
+- Productionでは`--confirm-production`が必要だが、cronは引き続き`RESOLVE_ONLY`、AUTO Import/ConfirmはOFF。
+- `driveFileId` advisory lock、modifiedTime/SHA検証、既存HeavenのfileHash duplicate制御を併用し、同一内容のBatch増殖を禁止する。
+
 本書をPhase I initial vertical sliceのDecision Freezeとする。変更時は必ず次を記録する。
 
 ```text
@@ -229,4 +261,3 @@ Decision変更
   ↓
 承認後に関連Documentationを更新
 ```
-
