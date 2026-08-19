@@ -29,6 +29,9 @@ COPY --from=builder /app/tsconfig.json ./tsconfig.json
 COPY --from=builder /app/src/generated ./src/generated
 COPY --from=builder /app/scripts ./scripts
 COPY --from=builder /app/src/lib/import-automation ./src/lib/import-automation
+COPY --from=builder /app/src/lib/imports ./src/lib/imports
+COPY --from=builder /app/src/lib/date.ts ./src/lib/date.ts
+COPY --from=builder /app/src/lib/normalize.ts ./src/lib/normalize.ts
 COPY --from=builder /app/src/lib/prisma.ts ./src/lib/prisma.ts
 EXPOSE 3000
 CMD ["npm", "start"]
