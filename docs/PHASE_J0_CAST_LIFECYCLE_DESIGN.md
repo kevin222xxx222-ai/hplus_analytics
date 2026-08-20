@@ -272,7 +272,7 @@ Rollbackは、旧Queryを維持したままMembership読み取りをFeature Flag
 - Migration変更: なし
 - Backfill実行: なし
 - DB更新: なし
-- UI変更: なし
+- UI変更: J0-DでReview / Management UIを追加（詳細は`docs/PHASE_J0_CAST_MEMBERSHIP_UI.md`）
 - Resolver変更: なし
 - Analytics変更: なし
 - Production変更: なし
@@ -298,3 +298,7 @@ J0-Bで以下を正式導入した。
 J0-Cでは既存CastのBackfill候補分類とDry-run CLIを追加した。Legacy `startedOn/endedOn`には信頼度メタデータがないため、デフォルトではSAFE_AUTO/SAFE_LEFTへ自動分類せず、DATE_UNCERTAINとしてManual Reviewへ送る。複数店舗のAlias・Listing・Fact根拠、店舗不明、既存Membershipはそれぞれ専用分類とする。
 
 CLIは`npm run memberships:backfill-audit`で実行し、`artifacts/audits/`へJSONレポートを生成する。DB更新・Backfill・Apply CLIは行わない。詳細は`docs/PHASE_J0_CAST_MEMBERSHIP_BACKFILL.md`を参照する。
+
+## 21. J0-D Review / Management UI
+
+`/masters/casts/memberships`に、Backfill分類・店舗根拠・Membership履歴を確認する管理画面を追加した。ViewerはRead Only、Adminだけが既存Membership Service経由で変更できる。Fact・Alias・MediaListingの期間は根拠表示に限定し、Membershipへ自動適用しない。Production Backfill、Resolver切替、Analytics切替は未実施である。

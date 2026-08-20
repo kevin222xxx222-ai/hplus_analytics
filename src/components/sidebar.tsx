@@ -30,7 +30,7 @@ const groups: SidebarGroup[] = [
   },
   { id: "management", label: "管理", items: [{ href: "/data-health", label: "DATA HEALTH" }, { href: "/settings/goals", label: "目標管理" }] },
   { id: "imports", label: "データ取込", items: [{ href: "/imports", label: "CTI取込", admin: true }, { href: "/imports/town", label: "タウン取込", admin: true }, { href: "/imports/heaven", label: "Heaven取込", admin: true }, { href: "/masters/import-sources", label: "媒体取込元", admin: true }] },
-  { id: "masters", label: "マスタ管理", items: [{ href: "/masters/stores", label: "店舗マスタ", admin: true }, { href: "/masters/casts", label: "キャスト管理", admin: true }, { href: "/masters/aliases", label: "エイリアス管理", admin: true }, { href: "/masters/users", label: "ユーザー管理", admin: true }] },
+  { id: "masters", label: "マスタ管理", items: [{ href: "/masters/stores", label: "店舗マスタ", admin: true }, { href: "/masters/casts", label: "キャスト管理", admin: true }, { href: "/masters/casts/memberships", label: "在籍履歴レビュー" }, { href: "/masters/aliases", label: "エイリアス管理", admin: true }, { href: "/masters/users", label: "ユーザー管理", admin: true }] },
   { id: "guides", label: "ガイド", items: [{ href: "/help/metrics", label: "指標ガイド" }, { href: "/help/analytics-guide", label: "分析ガイド" }] },
 ];
 
