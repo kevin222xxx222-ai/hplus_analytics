@@ -15,26 +15,26 @@ GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED=true
 GOOGLE_DRIVE_AUTO_EXECUTION_ROUTES=HEAVEN_SHOP
 ```
 
-## Initial policy
+## Initial policy and I10 completion
 
-I8実装時点でAUTO Previewを許可するのは、既存parserがファイル内部からsource periodを安全に決定できるHeaven系です。
+I8初期はHeaven系のみでしたが、I10で既存parserを再利用したTown/CTI target-date resolverを追加し、Production 8 MappingをVerifiedとしました。
 
 | Mapping | AUTO Preview | 理由 |
 |---|---:|---|
 | HEAVEN_STORE | 許可 | `sourcePeriodFrom/To`をHeaven parserが取得 |
 | HEAVEN_CAST + PAGE_ACCESS | 許可 | 同上 |
 | HEAVEN_CAST + DIARY_POSTS | 許可 | 同上 |
-| CTI_CAST_REPORT | I10実装 / Canary pending | 厳格filenameとXLSX 3店舗sheet検証でtarget dateを解決 |
-| TOWN_STORE | I10実装 / Canary pending | CSV内部単日期間を正としてtarget dateを解決 |
-| TOWN_CAST | I10実装 / Canary pending | CSV内部単日期間を正としてtarget dateを解決 |
+| CTI_CAST_REPORT | Production Verified | 厳格filenameとXLSX 3店舗sheet検証でtarget dateを解決 |
+| TOWN_STORE | Production Verified | CSV内部単日期間を正としてtarget dateを解決 |
+| TOWN_CAST | Production Verified | CSV内部単日期間を正としてtarget dateを解決 |
 | Town URL/LANDING | Blocked | I8対象外 |
 | Heaven MY_GIRL、MITENE、TALK、通知系 | Blocked | 未解放 |
 
-CTI/Townはファイル名を無条件に正とせず、内部日付と対象日検証を整理した後に別Decisionで解放します。
+CTI/Townはファイル名を無条件に正とせず、TownはCSV内部期間、CTIは厳格filenameと3店舗sheet検証を使います。
 
 ## Execution Registry / Dispatcher
 
-`auto-execution-gate.ts`の型付きPolicy ResolverがMapping/DataType + metricHintを判定し、Global Gateとroute allowlistの両方を通過したHeaven adapterだけをRegistryから呼び出します。route未許可時は`AUTO_ROUTE_NOT_ENABLED`としてRESOLVE_ONLY相当で停止します。Dispatcherは既存H6を使用し、`executePipeline` callbackと`executorOwnsState`を渡します。Parser、ImportBatch、fact writeはDispatcherへ追加していません。Manual CLIと同じadapter/coreを共有します。
+`auto-execution-gate.ts`の型付きPolicy ResolverがMapping/DataType + metricHintを判定し、Global Gateとroute allowlistの両方を通過したadapterだけをRegistryから呼び出します。route未許可またはtarget-date解決不能時は安全に停止します。Dispatcherは既存H6を使用し、`executePipeline` callbackと`executorOwnsState`を渡します。Parser、ImportBatch、fact writeはDispatcherへ追加していません。Manual CLIと同じadapter/coreを共有します。
 
 ## State and failure
 
@@ -59,6 +59,10 @@ Heaven SHOPの月次累計CSVは、Mapping Folder内に日付別ファイルを�
 ## Observability
 
 `scan_end`のAUTOカウンタは、`autoAttempted`（試行数）、`autoPreviewCreated`/`autoExecuted`（新Preview作成数）、`autoReviewRequired`（新Previewまたは既存Review）、`autoReused`（既存Batch再利用）、`autoNoop`（完了済み重複のNOOP）、`autoFailed`、`autoBlocked`に分離します。`autoExecuted`は後方互換の別名として新Preview作成数を示します。秘密情報、credential、Folder IDは出力しません。`import`表示は引き続き`NOT_EXECUTED`（Confirm未実行）です。
+
+## Final Production status
+
+I10総合Canaryで、`TOWN_STORE`、`TOWN_CAST`、`CTI_CAST_REPORT`、`HEAVEN_SHOP`、`HEAVEN_GIRL_ACCESS`、`HEAVEN_GIRL_DIARY`の全routeをProductionで確認済み。Global Gateは有効、route allowlistはdefault denyを維持し、`autoAttempted=37`、`autoPreviewCreated=34`、`autoReused=3`、`autoNoop=3`、`autoFailed=0`、`autoBlocked=0`だった。AUTO Confirmは実行せず、34件はHuman Review/Confirmへ進めた。
 
 ## Canary order
 

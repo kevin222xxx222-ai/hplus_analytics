@@ -20,13 +20,32 @@ I9は新しいImport business logicを追加せず、Phase H〜IのGoogle Drive 
 
 同一SHAのCompleted BatchはNOOP、新Batch・fact rewrite・Reviewを作らない。内容変更時は`IMPORTED → DETECTED → DOWNLOADING → READY → AUTO Preview → REVIEW_REQUIRED`、Confirm成功後にのみ新Batchをsuccessfulとして同期する。
 
+## Archive運用
+
+### CTI / Town
+
+- Confirm完了・`IMPORTED`後の元ファイルは削除せず、監査のため保持・Archiveを推奨する。
+- Archive先はGoogle Drive AutomationのMapping対象外Folderとする。
+- 同一Mapping Folder内に旧版を別名保存しない。
+- DBへ確定済みのfactは、Drive Fileの移動・削除によって削除されない。
+
+### Heaven
+
+- 当月の累計CSVはMapping Folderに残す。
+- 月ごとに同一Drive File IDを維持して上書き更新する。
+- 当月中はArchiveしない。
+- 月替わり後、前月ファイルはMapping対象外のArchive Folderへ手動移動できる。
+- 旧版を同一Mapping Folderへ別名保存しない。
+
+Archive Folderの作成・ファイル移動はPhase Iでは自動化せず、Operatorによる手動運用とする。
+
 ## AUTO Preview段階解放
 
 | Stage | `GOOGLE_DRIVE_AUTO_EXECUTION_ROUTES` | 状態 |
 |---|---|---|
 | 1 | `HEAVEN_SHOP` | Production Verified |
-| 2 | `HEAVEN_SHOP,HEAVEN_GIRL_ACCESS` | PAGE_ACCESS差分Canary pending |
-| 3 | `HEAVEN_SHOP,HEAVEN_GIRL_ACCESS,HEAVEN_GIRL_DIARY` | DIARY_POSTS Canary pending |
+| 2 | `HEAVEN_SHOP,HEAVEN_GIRL_ACCESS` | Production Verified |
+| 3 | `HEAVEN_SHOP,HEAVEN_GIRL_ACCESS,HEAVEN_GIRL_DIARY` | Production Verified |
 
 各Stageは1 Fileで`AUTO Preview → REVIEW_REQUIRED → Manual Confirm → IMPORTED`を確認してから次へ進む。AUTO Confirm、CTI/Town AUTO解放、cron頻度変更は行わない。
 
@@ -111,12 +130,12 @@ Deploy前に以下を確認する。
 - cronとpoll logを確認
 - Migration変更がないDeployでは不要な`migrate deploy`を毎回実行しない
 
-## I8 pending Canary / I10 rollout / Phase I completion
+## I10 Final Canary / Phase I completion
 
-I9/I10完了前に、Town STORE春日部、Town CAST春日部、Town越谷、CTIの順でAUTO Preview Canaryを行う。続いて実データ差分を用いた`HEAVEN_GIRL_ACCESS`、`HEAVEN_GIRL_DIARY`のCanaryを完了する。各々Manual Confirmと`IMPORTED`同期を確認する。
+I10総合Canaryで、Town春日部/越谷のSTORE/CAST、CTI、Heaven SHOP/PAGE_ACCESS/DIARY_POSTSの全8 Mappingを確認済み。poll実績は`mappings=8`、`filesSeen=62`、`downloaded=37`、`skipped=25`、`reviewRequired=34`、`failed=0`、`autoNoop=3`だった。
 
-Phase I COMPLETE条件は、I1〜I7 COMPLETE、I8 Heaven 3 route Production Verified、10分cron安定、Manual Confirmのみ、failure/recovery runbook、Emergency Stop、Rollback、Security、Backup、Logs、Production Healthがすべて確認済みであることとする。
+Phase I COMPLETE条件は充足済みである。I1〜I10 COMPLETE、8 Mapping Production VERIFIED、10分cron安定、Manual Confirmのみ、failure/recovery runbook、Emergency Stop、Rollback、Security、Backup、Logs、Production Healthを確認済みとする。
 
 ## Status
 
-I9は本Runbook作成によるrollout preparation段階。Productionへの設定変更・cron登録・Deployは未実施。
+I9 **COMPLETE / Production VERIFIED**。Productionへのcron頻度変更・新規cron登録・DB変更は行っていない。

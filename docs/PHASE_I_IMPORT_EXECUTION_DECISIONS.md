@@ -14,12 +14,12 @@
 | I4 CTI Manual Review + Post-Confirm Sync | COMPLETE / Development VERIFIED |
 | I5 Town STORE Manual Execute | COMPLETE / Production Canary VERIFIED |
 | I6 Heaven SHOP | COMPLETE / Production Canary VERIFIED |
-| I7 MANUAL_REVIEW系 | IMPLEMENTED / Canary pending |
-| I8 AUTO Execution Gate | IMPLEMENTED / Production Canary pending |
-| I9 Production Rollout | IMPLEMENTED / Operations preparation |
-| I10 Final Auto Preview Completion | IMPLEMENTED / Canary pending |
+| I7 MANUAL_REVIEW系 | COMPLETE / Production VERIFIED |
+| I8 AUTO Execution Gate | COMPLETE / Production VERIFIED |
+| I9 Production Rollout | COMPLETE / Production VERIFIED |
+| I10 Final Auto Preview Completion | COMPLETE / Production VERIFIED |
 
-I5では春日部の`TOWN_STORE` CSVをManual Executeし、既存Town Preview/Review/Confirm経路を通して`town_store_daily`への1件の確定とDriveFileStateの`IMPORTED`同期をProduction Canaryで確認した。AUTO Import、AUTO Confirm、cronからの実Importは未解放である。
+I5では春日部の`TOWN_STORE` CSVをManual Executeし、既存Town Preview/Review/Confirm経路を通して`town_store_daily`への1件の確定とDriveFileStateの`IMPORTED`同期をProduction Canaryで確認した。I10総合Canaryでは8 MappingすべてのAUTO PreviewとHuman Confirmを確認済みである。AUTO Confirmは実装していない。
 
 ## I5 Canary decision record
 

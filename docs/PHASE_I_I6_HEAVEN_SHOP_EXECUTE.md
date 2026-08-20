@@ -2,7 +2,7 @@
 
 ## Scope
 
-I6は、Google Driveの `HEAVEN_STORE`（春日部 Shop）をDevelopmentで1ファイルずつ手動実行するためのVertical Sliceです。自動実行・自動Confirm・cron・Production実行は解放しません。対象は `HEAVEN_KASUKABE_HEAVEN_STORE_SHOP` のMappingだけで、Heavenの女子指標（PAGE_ACCESS、DIARY_POSTS、MY_GIRL、MITENE、TALK、NOTICE）は対象外です。
+I6は、Google Driveの `HEAVEN_STORE`（春日部 Shop）をDevelopmentで1ファイルずつ手動実行するためのVertical Sliceです。I10総合CanaryでHeaven 3 routeのAUTO PreviewがProduction Verifiedとなったが、AUTO Confirmは実装していない。対象は `HEAVEN_KASUKABE_HEAVEN_STORE_SHOP` のMappingだけで、Heavenの未解放Metric（MY_GIRL、MITENE、TALK、NOTICE）は対象外です。
 
 ## Existing pipeline audit
 
@@ -66,8 +66,8 @@ Fact tableは既存の`heaven_shop_daily`を使用し、列の意味は次のと
 
 ## Test / verification status
 
-追加したunit testは、file id、Production confirmation、Mapping（active/future/type/store/metricHint）、Drive identity、Review URLを確認します。実Google Drive実行はこの変更では未実施（NOT VERIFIED）です。Production cron、AUTO Import、AUTO Confirm、I7以降のHeaven CAST等は未開始です。
+追加したunit testは、file id、Production confirmation、Mapping（active/future/type/store/metricHint）、Drive identity、Review URLを確認します。I10総合CanaryでHeaven CASTのAUTO routeもProduction Verifiedとなった。AUTO Confirmは実装していない。
 
 ## I6 status
 
-COMPLETE / Production Canary VERIFIED。Production Canaryの実Import・Manual Confirm・Drive State同期まで確認済み。Production cronのAUTO Import、AUTO Confirmは引き続き未解放です。
+COMPLETE / Production Canary VERIFIED。Production Canaryの実Import・Manual Confirm・Drive State同期まで確認済み。I10でAUTO Preview経路もProduction Verifiedとなり、最終確定はHuman Confirmのみである。

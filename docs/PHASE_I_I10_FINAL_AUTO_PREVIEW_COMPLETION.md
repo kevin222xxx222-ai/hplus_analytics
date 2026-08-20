@@ -34,6 +34,12 @@ Town/CTI adapterへ内部`autoPreview` capabilityとresolver結果を渡す。Ma
 
 `driveFileId` advisory lock、`driveModifiedTime`、SHA-256、ImportBatch `fileHash`、natural-key upsertを維持する。同一SHA CompletedはNOOP、新Contentは新Preview。Confirm前は`lastSuccessfulImportBatchId`を旧成功Batchのまま維持する。
 
+## Archive運用
+
+CTI/Townは`IMPORTED`後の元ファイルを監査目的で保持し、必要に応じてMapping対象外のArchive Folderへ手動移動する。同一Mapping Folder内への旧版別名保存は禁止する。確定済みfactはDrive Fileの移動・削除では削除されない。
+
+Heavenの当月累計CSVはMapping Folderに残し、同一Drive File IDを上書き更新する。当月中はArchiveせず、月替わり後に前月ファイルをMapping対象外Archive Folderへ手動移動できる。Archive Folderの自動作成・自動移動はPhase I対象外である。
+
 ## Rollout order
 
 1. Town STORE 春日部
@@ -49,15 +55,23 @@ Town/CTI adapterへ内部`autoPreview` capabilityとresolver結果を渡す。Ma
 
 | Mapping | AUTO Preview | 実績/残作業 |
 |---|---:|---|
-| CTI | I10 resolver実装済み | Production Canary pending |
-| Town 春日部 STORE | I10 resolver実装済み | Production Canary pending |
-| Town 春日部 CAST | I10 resolver実装済み | Production Canary pending |
-| Town 越谷 STORE | I10 resolver実装済み | Production Canary pending |
-| Town 越谷 CAST | I10 resolver実装済み | Production Canary pending |
+| CTI | 実装済み | Production Verified |
+| Town 春日部 STORE | 実装済み | Production Verified |
+| Town 春日部 CAST | 実装済み | Production Verified |
+| Town 越谷 STORE | 実装済み | Production Verified |
+| Town 越谷 CAST | 実装済み | Production Verified |
 | Heaven SHOP | 実装済み | changed-content Canary verified |
-| Heaven PAGE_ACCESS | 実装済み | changed-content Canary pending |
-| Heaven DIARY_POSTS | 実装済み | changed-content Canary pending |
+| Heaven PAGE_ACCESS | 実装済み | Production Verified |
+| Heaven DIARY_POSTS | 実装済み | Production Verified |
 
-## Status
+## Production総合Canary
 
-I10はコード実装とunit/regression test段階。8 MappingのProduction Canary完了まではPhase I Final COMPLETEにしない。Production設定・DB・Drive・cronは変更していない。
+Production 8 Mappingすべてで、Drive検知、Download、AUTO Preview、`REVIEW_REQUIRED`、Human Confirm、DB反映、`IMPORTED`まで確認済みである。総合pollは`mappings=8`、`filesSeen=62`、`downloaded=37`、`skipped=25`、`reviewRequired=34`、`failed=0`、`autoAttempted=37`、`autoPreviewCreated=34`、`autoReused=3`、`autoNoop=3`、`autoFailed=0`、`autoBlocked=0`だった。
+
+CTIは厳格な`女子別レポート_YYYYMMDD.xlsx` filename target-date resolver、TownはCSV内部`sourcePeriodFrom/sourcePeriodTo`（単日一致）を正とするresolverで確認済み。Heaven SHOPのchanged-content、PAGE_ACCESS、DIARY_POSTSもAUTO routeとして確認済みである。
+
+## Final status
+
+I10 **COMPLETE / Production VERIFIED**。Phase I全体を**COMPLETE / Production VERIFIED**とする。通常運用でManual Execute CLIは不要だが、既存CLIはtarget-date解決不能、形式不一致、Mapping不整合、AUTO失敗、緊急復旧のOperator fallbackとして残す。AUTO ConfirmはPhase Iの対象外であり、最終確定はHuman Confirmのみとする。
+
+Production設定・DB・Drive・cronは変更していない。
