@@ -5,6 +5,7 @@ import { classifyDriveFileUpdate, getDriveFileStateByDriveFileId, markDriveFileF
 import { listActiveDriveFolderMappings } from "./mapping-service";
 import { GoogleDriveTemporaryStorage } from "./temporary-storage";
 import type { DriveFileMetadata, DriveImportFile, GoogleDriveClient } from "./types";
+import { createAutoExecutionRegistry, resolveAutoPreviewDecision } from "./auto-execution-gate";
 
 export type OneShotScanSummary = {
   mappingsScanned: number;
@@ -16,6 +17,10 @@ export type OneShotScanSummary = {
   skippedFiles: number;
   reviewRequired: number;
   failedFiles: number;
+  autoExecuted?: number;
+  autoReviewRequired?: number;
+  autoFailed?: number;
+  autoBlocked?: number;
 };
 
 export type OneShotScanFileResult = {
@@ -82,7 +87,8 @@ export async function runManualOneShotScan(dependencies: OneShotScanDependencies
   const dispatch = dependencies.dispatch ?? dispatchDriveImport;
   const markFailure = dependencies.markFailure ?? markDriveFileFailure;
   const mappings = dependencies.mappings ?? await getMappings();
-  const summary: OneShotScanSummary = { mappingsScanned: 0, filesSeen: 0, newFiles: 0, changedFiles: 0, unchangedFiles: 0, downloadedFiles: 0, skippedFiles: 0, reviewRequired: 0, failedFiles: 0 };
+  const autoExecutionEnabled = process.env.GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED === "true";
+  const summary: OneShotScanSummary = { mappingsScanned: 0, filesSeen: 0, newFiles: 0, changedFiles: 0, unchangedFiles: 0, downloadedFiles: 0, skippedFiles: 0, reviewRequired: 0, failedFiles: 0, autoExecuted: 0, autoReviewRequired: 0, autoFailed: 0, autoBlocked: 0 };
   const results: OneShotScanFileResult[] = [];
 
   for (const mapping of mappings) {
@@ -117,7 +123,18 @@ export async function runManualOneShotScan(dependencies: OneShotScanDependencies
           summary.downloadedFiles += 1;
           result.download = "OK";
           result.status = DriveFileStatus.READY;
-          result.dispatcher = await dispatch({ file: downloaded, mapping: mappingForDispatcher(mapping), stateId: state.id, stateStatus: DriveFileStatus.READY }, { mode: "RESOLVE_ONLY" });
+          const autoDecision = resolveAutoPreviewDecision(mappingForDispatcher(mapping), autoExecutionEnabled);
+          if (autoExecutionEnabled && !autoDecision.allowed) {
+            summary.autoBlocked = (summary.autoBlocked ?? 0) + 1;
+            result.dispatcher = await dispatch({ file: downloaded, mapping: mappingForDispatcher(mapping), stateId: state.id, stateStatus: DriveFileStatus.READY }, { mode: "RESOLVE_ONLY" });
+          } else if (autoExecutionEnabled) {
+            summary.autoExecuted = (summary.autoExecuted ?? 0) + 1;
+            result.dispatcher = await dispatch({ file: downloaded, mapping: mappingForDispatcher(mapping), stateId: state.id, stateStatus: DriveFileStatus.READY }, { mode: "EXECUTE", executeManualReview: true, executorOwnsState: true, executePipeline: createAutoExecutionRegistry(dependencies.client) });
+            if (result.dispatcher.status === "REVIEW_REQUIRED") { summary.autoReviewRequired = (summary.autoReviewRequired ?? 0) + 1; result.status = DriveFileStatus.REVIEW_REQUIRED; }
+            if (result.dispatcher.status === "FAILED") summary.autoFailed = (summary.autoFailed ?? 0) + 1;
+          } else {
+            result.dispatcher = await dispatch({ file: downloaded, mapping: mappingForDispatcher(mapping), stateId: state.id, stateStatus: DriveFileStatus.READY }, { mode: "RESOLVE_ONLY" });
+          }
           if (result.dispatcher.status === "REVIEW_REQUIRED") summary.reviewRequired += 1;
         } finally {
           if (downloaded) await storage.cleanup(downloaded.localPath).catch(() => undefined);
@@ -130,7 +147,12 @@ export async function runManualOneShotScan(dependencies: OneShotScanDependencies
        }
        results.push(result);
       };
-      const lockResult = dependencies.withFileLock
+      // AUTO adapters acquire the same driveFileId lock around their complete
+      // Preview execution. Do not nest the scan lock or the adapter would
+      // intentionally observe its own lock as contention.
+      const lockResult = autoExecutionEnabled
+        ? { acquired: true, result: await processFile() }
+        : dependencies.withFileLock
         ? await dependencies.withFileLock(file.id, processFile)
         : { acquired: true, result: await processFile() };
       if (!lockResult.acquired) {

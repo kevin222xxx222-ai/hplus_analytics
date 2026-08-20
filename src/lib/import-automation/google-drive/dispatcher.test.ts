@@ -42,4 +42,12 @@ describe("Google Drive Import Dispatcher", () => {
     const result = await dispatchDriveImport({ file, mapping: mapping(ImportDataType.HEAVEN_STORE) }, { mode: "EXECUTE", executePipeline: vi.fn().mockResolvedValue({ importBatchId: "batch-1", status: "PREVIEW_READY", warningCount: 1 }) });
     expect(result).toMatchObject({ status: "REVIEW_REQUIRED", reviewReason: "PIPELINE_VALIDATION_REVIEW" });
   });
+  it("supports AUTO Preview for a manual-review route without confirming", async () => {
+    const executePipeline = vi.fn().mockResolvedValue({ importBatchId: "batch-1", status: "REVIEW_REQUIRED", reviewRequired: true });
+    const transitionState = vi.fn();
+    const result = await dispatchDriveImport({ file, mapping: mapping(ImportDataType.HEAVEN_CAST, "PAGE_ACCESS"), stateId: "state-1", stateStatus: "READY" }, { mode: "EXECUTE", executeManualReview: true, executorOwnsState: true, transitionState, executePipeline });
+    expect(result).toMatchObject({ status: "REVIEW_REQUIRED", autoConfirmed: false, importBatchId: "batch-1" });
+    expect(executePipeline).toHaveBeenCalled();
+    expect(transitionState).not.toHaveBeenCalled();
+  });
 });

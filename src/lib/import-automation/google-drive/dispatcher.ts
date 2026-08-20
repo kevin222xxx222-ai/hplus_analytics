@@ -37,12 +37,15 @@ export type PipelineExecutionResult = {
   warningCount?: number;
   pendingCount?: number;
   errorCount?: number;
+  reviewRequired?: boolean;
 };
 
 export type DispatcherOptions = {
   mode?: DispatcherMode;
   executePipeline?: (input: DispatcherInput & { route: DispatchRoute }) => Promise<PipelineExecutionResult>;
   transitionState?: (stateId: string, to: DriveFileStatus) => Promise<unknown>;
+  executeManualReview?: boolean;
+  executorOwnsState?: boolean;
 };
 
 export type DispatcherResult = {
@@ -97,7 +100,7 @@ export async function dispatchDriveImport(input: DispatcherInput, options: Dispa
     return baseResult(route, "REVIEW_REQUIRED", `Route resolved to ${route.pipeline}; Import was not executed.`, { reviewReason: "RESOLVE_ONLY" });
   }
   const transitionState = options.transitionState ?? ((stateId: string, to: DriveFileStatus) => transitionDriveFileState(stateId, to));
-  if (route.policy === "MANUAL_REVIEW") {
+  if (route.policy === "MANUAL_REVIEW" && !options.executeManualReview) {
     if (input.stateId && transitionState && input.stateStatus === DriveFileStatus.READY) await transitionState(input.stateId, DriveFileStatus.REVIEW_REQUIRED);
     return baseResult(route, "REVIEW_REQUIRED", `Route resolved to ${route.pipeline}; manual review is required.`, { reviewReason: route.reason || "MANUAL_REVIEW_POLICY" });
   }
@@ -105,16 +108,18 @@ export async function dispatchDriveImport(input: DispatcherInput, options: Dispa
   if (input.stateId && input.stateStatus && input.stateStatus !== DriveFileStatus.READY) return baseResult(route, "REVIEW_REQUIRED", "DriveFileState is not READY for dispatch.", { reviewReason: "DRIVE_FILE_STATE_NOT_READY" });
 
   try {
-    if (input.stateId) await transitionState(input.stateId, DriveFileStatus.IMPORTING);
+    if (input.stateId && !options.executorOwnsState) await transitionState(input.stateId, DriveFileStatus.IMPORTING);
     const execution = await options.executePipeline({ ...input, route });
     const hasIssues = (execution.warningCount ?? 0) > 0 || (execution.pendingCount ?? 0) > 0 || (execution.errorCount ?? 0) > 0;
+    if (execution.reviewRequired || execution.status === "REVIEW_REQUIRED") return baseResult(route, "REVIEW_REQUIRED", "Preview completed; manual review is required.", { importBatchId: execution.importBatchId ?? null, reviewReason: "AUTO_PREVIEW_REVIEW_REQUIRED" });
     if (hasIssues) return baseResult(route, "REVIEW_REQUIRED", "Validation completed with warnings or unresolved rows.", { importBatchId: execution.importBatchId ?? null, reviewReason: "PIPELINE_VALIDATION_REVIEW" });
-    if (input.stateId) await transitionState(input.stateId, DriveFileStatus.IMPORTED);
+    if (input.stateId && !options.executorOwnsState) await transitionState(input.stateId, DriveFileStatus.IMPORTED);
     return baseResult(route, "IMPORTED", `Import pipeline ${route.pipeline} completed.`, { importBatchId: execution.importBatchId ?? null, autoConfirmed: true });
   } catch (error) {
     if (input.stateId) {
       const candidate = error as { retryable?: boolean; code?: string; message?: string };
       try {
+        if (options.executorOwnsState) return resultForFailure(route, error);
         await transitionState(input.stateId, candidate.retryable ? DriveFileStatus.FAILED_RETRYABLE : DriveFileStatus.FAILED_FINAL);
       } catch {
         // Preserve the original pipeline failure; state recovery is handled by the next operator action.

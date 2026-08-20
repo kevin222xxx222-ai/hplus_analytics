@@ -155,7 +155,7 @@ I3からI7まではProduction cronを変更しない。I8でAUTO解放が承認�
 | I5 Town STORE Manual Execute | COMPLETE / Production Canary VERIFIED |
 | I6 Heaven SHOP | COMPLETE / Production Canary VERIFIED |
 | I7 MANUAL_REVIEW系 | IMPLEMENTED / Canary pending |
-| I8 AUTO Execution Gate | NOT STARTED |
+| I8 AUTO Execution Gate | IMPLEMENTED / Production Canary pending |
 | I9 Production Rollout | NOT STARTED |
 
 ### I5 production evidence
