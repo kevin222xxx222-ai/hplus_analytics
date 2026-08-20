@@ -33,10 +33,12 @@ export function resolveAutoPreviewDecision(mapping: Pick<ResolvedDriveFolderMapp
 
 export function createAutoExecutionRegistry(client: GoogleDriveClient) {
   return async (input: DispatcherInput & { route: DispatchRoute }): Promise<PipelineExecutionResult> => {
-    let result: { outcome: string; batchId?: string; batchStatus?: string };
+    let result: { outcome: string; batchId?: string; batchStatus?: string; reason?: string };
     if (input.route.pipeline === "HEAVEN_SHOP") result = await executeHeavenShopDriveFile({ driveFileId: input.file.driveFileId, autoPreview: true, client });
     else if (input.route.pipeline === "HEAVEN_GIRL_ACCESS" || input.route.pipeline === "HEAVEN_GIRL_DIARY") result = await executeHeavenCastDriveFile({ driveFileId: input.file.driveFileId, autoPreview: true, client });
     else throw new Error(`AUTO preview adapter is not available for ${input.route.pipeline}.`);
-    return { status: result.outcome === "EXECUTED" || result.outcome === "REUSED" ? "REVIEW_REQUIRED" : result.outcome, importBatchId: result.batchId, reviewRequired: true };
+    if (result.outcome === "REUSED" && (result.reason === "DUPLICATE_COMPLETED_FILE" || (result.reason === "SAME_CONTENT" && (result.batchStatus === "COMPLETED" || result.batchStatus === "COMPLETED_WITH_WARNINGS")))) return { status: "NOOP", importBatchId: result.batchId, executionClass: "REUSED_NOOP" as const };
+    if (result.outcome === "REUSED") return { status: "REVIEW_REQUIRED", importBatchId: result.batchId, reviewRequired: true, executionClass: "REUSED_REVIEW" as const };
+    return { status: result.outcome === "EXECUTED" ? "REVIEW_REQUIRED" : result.outcome, importBatchId: result.batchId, reviewRequired: true, executionClass: "PREVIEW_CREATED" as const };
   };
 }

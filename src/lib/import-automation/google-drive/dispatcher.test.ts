@@ -50,4 +50,10 @@ describe("Google Drive Import Dispatcher", () => {
     expect(executePipeline).toHaveBeenCalled();
     expect(transitionState).not.toHaveBeenCalled();
   });
+  it("classifies an idempotent completed reuse as NOOP without state transition", async () => {
+    const transitionState = vi.fn();
+    const result = await dispatchDriveImport({ file, mapping: mapping(ImportDataType.HEAVEN_STORE), stateId: "state-1", stateStatus: "READY" as never }, { mode: "EXECUTE", executorOwnsState: true, transitionState, executePipeline: vi.fn().mockResolvedValue({ status: "NOOP", executionClass: "REUSED_NOOP", importBatchId: "batch-1" }) });
+    expect(result).toMatchObject({ status: "NOOP", importBatchId: "batch-1", reviewReason: "IDEMPOTENT_REUSE" });
+    expect(transitionState).not.toHaveBeenCalled();
+  });
 });

@@ -26,7 +26,7 @@ async function main() {
     mappings: summary?.mappingsScanned ?? 0, filesSeen: summary?.filesSeen ?? 0, downloaded: summary?.downloadedFiles ?? 0,
     skipped: summary?.skippedFiles ?? 0, retryPending: result.retryPending, reviewRequired: summary?.reviewRequired ?? 0,
     failed: summary?.failedFiles ?? 0, autoExecutionEnabled: process.env.GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED === "true", autoExecutionRoutes: [...parseAutoExecutionRoutes().routes], autoExecutionUnknownRoutes: parseAutoExecutionRoutes().unknown,
-    autoExecuted: summary?.autoExecuted ?? 0,
+    autoExecuted: summary?.autoExecuted ?? 0, autoAttempted: summary?.autoAttempted ?? 0, autoPreviewCreated: summary?.autoPreviewCreated ?? 0, autoReused: summary?.autoReused ?? 0, autoNoop: summary?.autoNoop ?? 0,
     autoReviewRequired: summary?.autoReviewRequired ?? 0, autoFailed: summary?.autoFailed ?? 0, autoBlocked: summary?.autoBlocked ?? 0,
     durationMs: Date.now() - startedAt, exit: 0, import: "NOT_EXECUTED",
   });

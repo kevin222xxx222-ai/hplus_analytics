@@ -46,7 +46,7 @@ Adapter側がDownload、SHA、lock、Preview、State更新を所有します。�
 
 ## Idempotency and safety
 
-既存のdriveFileId advisory lock、driveModifiedTime、SHA-256、fileHash、既存Batch duplicate制御を維持します。cron重複時はlockまたは既存Reviewへ誘導し、同一内容のBatchを増やしません。`confirmCtiImport()`、`confirmTownImport()`、`confirmHeavenImport()`、`forceDuplicate`はAUTO経路から呼びません。
+既存のdriveFileId advisory lock、driveModifiedTime、SHA-256、fileHash、既存Batch duplicate制御を維持します。cron重複時はlockまたは既存Reviewへ誘導し、同一内容のBatchを増やしません。完了済みBatchと同一fileHashの`DUPLICATE_COMPLETED_FILE`はNOOPとして扱い、新しいReviewやBatchを作りません。`confirmCtiImport()`、`confirmTownImport()`、`confirmHeavenImport()`、`forceDuplicate`はAUTO経路から呼びません。
 
 ## Heaven cumulative file canonical operation
 
@@ -58,7 +58,7 @@ Heaven SHOPの月次累計CSVは、Mapping Folder内に日付別ファイルを�
 
 ## Observability
 
-`scan_end`へ`autoExecutionEnabled`、`autoExecuted`、`autoReviewRequired`、`autoFailed`、`autoBlocked`を追加しました。秘密情報、credential、Folder IDは出力しません。`import`表示は引き続き`NOT_EXECUTED`（Confirm未実行）です。
+`scan_end`のAUTOカウンタは、`autoAttempted`（試行数）、`autoPreviewCreated`/`autoExecuted`（新Preview作成数）、`autoReviewRequired`（新Previewまたは既存Review）、`autoReused`（既存Batch再利用）、`autoNoop`（完了済み重複のNOOP）、`autoFailed`、`autoBlocked`に分離します。`autoExecuted`は後方互換の別名として新Preview作成数を示します。秘密情報、credential、Folder IDは出力しません。`import`表示は引き続き`NOT_EXECUTED`（Confirm未実行）です。
 
 ## Canary order
 

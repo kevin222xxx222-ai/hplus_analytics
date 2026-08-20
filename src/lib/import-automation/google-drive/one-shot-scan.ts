@@ -18,6 +18,10 @@ export type OneShotScanSummary = {
   reviewRequired: number;
   failedFiles: number;
   autoExecuted?: number;
+  autoAttempted?: number;
+  autoPreviewCreated?: number;
+  autoReused?: number;
+  autoNoop?: number;
   autoReviewRequired?: number;
   autoFailed?: number;
   autoBlocked?: number;
@@ -89,7 +93,7 @@ export async function runManualOneShotScan(dependencies: OneShotScanDependencies
   const mappings = dependencies.mappings ?? await getMappings();
   const autoExecutionEnabled = process.env.GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED === "true";
   const autoExecutionRoutes = parseAutoExecutionRoutes().routes;
-  const summary: OneShotScanSummary = { mappingsScanned: 0, filesSeen: 0, newFiles: 0, changedFiles: 0, unchangedFiles: 0, downloadedFiles: 0, skippedFiles: 0, reviewRequired: 0, failedFiles: 0, autoExecuted: 0, autoReviewRequired: 0, autoFailed: 0, autoBlocked: 0 };
+  const summary: OneShotScanSummary = { mappingsScanned: 0, filesSeen: 0, newFiles: 0, changedFiles: 0, unchangedFiles: 0, downloadedFiles: 0, skippedFiles: 0, reviewRequired: 0, failedFiles: 0, autoExecuted: 0, autoAttempted: 0, autoPreviewCreated: 0, autoReused: 0, autoNoop: 0, autoReviewRequired: 0, autoFailed: 0, autoBlocked: 0 };
   const results: OneShotScanFileResult[] = [];
 
   for (const mapping of mappings) {
@@ -129,8 +133,11 @@ export async function runManualOneShotScan(dependencies: OneShotScanDependencies
             summary.autoBlocked = (summary.autoBlocked ?? 0) + 1;
             result.dispatcher = await dispatch({ file: downloaded, mapping: mappingForDispatcher(mapping), stateId: state.id, stateStatus: DriveFileStatus.READY }, { mode: "RESOLVE_ONLY" });
           } else if (autoExecutionEnabled) {
-            summary.autoExecuted = (summary.autoExecuted ?? 0) + 1;
+            summary.autoAttempted = (summary.autoAttempted ?? 0) + 1;
             result.dispatcher = await dispatch({ file: downloaded, mapping: mappingForDispatcher(mapping), stateId: state.id, stateStatus: DriveFileStatus.READY }, { mode: "EXECUTE", executeManualReview: true, executorOwnsState: true, executePipeline: createAutoExecutionRegistry(dependencies.client) });
+            if (result.dispatcher.status === "REVIEW_REQUIRED" && result.dispatcher.reviewReason === "AUTO_PREVIEW_REVIEW_REQUIRED") { summary.autoPreviewCreated = (summary.autoPreviewCreated ?? 0) + 1; summary.autoExecuted = (summary.autoExecuted ?? 0) + 1; }
+            if (result.dispatcher.reviewReason === "IDEMPOTENT_REVIEW_REUSE" || result.dispatcher.status === "NOOP") { summary.autoReused = (summary.autoReused ?? 0) + 1; }
+            if (result.dispatcher.status === "NOOP") { summary.autoNoop = (summary.autoNoop ?? 0) + 1; }
             if (result.dispatcher.status === "REVIEW_REQUIRED") { summary.autoReviewRequired = (summary.autoReviewRequired ?? 0) + 1; result.status = DriveFileStatus.REVIEW_REQUIRED; }
             if (result.dispatcher.status === "FAILED") summary.autoFailed = (summary.autoFailed ?? 0) + 1;
           } else {
