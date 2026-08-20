@@ -34,8 +34,8 @@ export function resolveAutoPreviewDecision(mapping: Pick<ResolvedDriveFolderMapp
 export function createAutoExecutionRegistry(client: GoogleDriveClient) {
   return async (input: DispatcherInput & { route: DispatchRoute }): Promise<PipelineExecutionResult> => {
     let result: { outcome: string; batchId?: string; batchStatus?: string };
-    if (input.route.pipeline === "HEAVEN_SHOP") result = await executeHeavenShopDriveFile({ driveFileId: input.file.driveFileId, client });
-    else if (input.route.pipeline === "HEAVEN_GIRL_ACCESS" || input.route.pipeline === "HEAVEN_GIRL_DIARY") result = await executeHeavenCastDriveFile({ driveFileId: input.file.driveFileId, client });
+    if (input.route.pipeline === "HEAVEN_SHOP") result = await executeHeavenShopDriveFile({ driveFileId: input.file.driveFileId, autoPreview: true, client });
+    else if (input.route.pipeline === "HEAVEN_GIRL_ACCESS" || input.route.pipeline === "HEAVEN_GIRL_DIARY") result = await executeHeavenCastDriveFile({ driveFileId: input.file.driveFileId, autoPreview: true, client });
     else throw new Error(`AUTO preview adapter is not available for ${input.route.pipeline}.`);
     return { status: result.outcome === "EXECUTED" || result.outcome === "REUSED" ? "REVIEW_REQUIRED" : result.outcome, importBatchId: result.batchId, reviewRequired: true };
   };

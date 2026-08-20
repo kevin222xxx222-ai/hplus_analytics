@@ -10,7 +10,8 @@ import { resolveDriveFolderMapping } from "./mapping-service";
 import { GoogleDriveTemporaryStorage } from "./temporary-storage";
 import type { GoogleDriveClient } from "./types";
 
-export type HeavenShopExecuteInput = { driveFileId: string; confirmProduction?: boolean; client: GoogleDriveClient };
+/** autoPreview is an internal capability passed only by the allowlisted I8 registry; it never confirms/imports. */
+export type HeavenShopExecuteInput = { driveFileId: string; confirmProduction?: boolean; autoPreview?: boolean; client: GoogleDriveClient };
 export type HeavenShopExecuteResult = { outcome: "EXECUTED" | "SKIPPED" | "REUSED"; batchId?: string; batchStatus?: string; reviewUrl?: string; reason?: string };
 
 export function heavenReviewUrl(batchId: string): string {
@@ -21,8 +22,8 @@ export function validateHeavenShopExecuteInput(input: Pick<HeavenShopExecuteInpu
   if (!input.driveFileId.trim()) throw new Error("--drive-file-id is required.");
 }
 
-export function assertHeavenShopProductionExecution(environment: string | undefined, confirmProduction: boolean): void {
-  if (environment === "production" && !confirmProduction) throw new Error("Production execution requires --confirm-production.");
+export function assertHeavenShopProductionExecution(environment: string | undefined, confirmProduction: boolean, autoPreview = false): void {
+  if (environment === "production" && !confirmProduction && !autoPreview) throw new Error("Production execution requires --confirm-production.");
 }
 
 export function assertHeavenShopMapping(mapping: {
@@ -55,7 +56,7 @@ export function sameHeavenShopIdentity(metadata: unknown, state: { driveFileId: 
 
 export async function executeHeavenShopDriveFile(input: HeavenShopExecuteInput): Promise<HeavenShopExecuteResult> {
   validateHeavenShopExecuteInput(input);
-  assertHeavenShopProductionExecution(process.env.GOOGLE_DRIVE_AUTOMATION_ENV, Boolean(input.confirmProduction));
+  assertHeavenShopProductionExecution(process.env.GOOGLE_DRIVE_AUTOMATION_ENV, Boolean(input.confirmProduction), Boolean(input.autoPreview));
 
   const locked = await withAdvisoryLock<HeavenShopExecuteResult>(driveFileLockName(input.driveFileId), async () => {
     const state = await prisma.driveFileState.findUnique({

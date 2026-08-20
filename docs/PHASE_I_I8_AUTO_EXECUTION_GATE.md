@@ -48,6 +48,14 @@ Adapter側がDownload、SHA、lock、Preview、State更新を所有します。�
 
 既存のdriveFileId advisory lock、driveModifiedTime、SHA-256、fileHash、既存Batch duplicate制御を維持します。cron重複時はlockまたは既存Reviewへ誘導し、同一内容のBatchを増やしません。`confirmCtiImport()`、`confirmTownImport()`、`confirmHeavenImport()`、`forceDuplicate`はAUTO経路から呼びません。
 
+## Heaven cumulative file canonical operation
+
+Heaven SHOPの月次累計CSVは、Mapping Folder内に日付別ファイルを増やすのではなく、月単位の同一Drive File（例：`tokeiShop_YYYYMM.csv`）を毎日上書きする運用を正規候補とします。同じDrive File IDの`modifiedTime`または内容SHA-256の変化をscanが検知し、既存の`IMPORTED` stateは新しい内容について`DETECTED`へ戻り、通常の`DOWNLOADING → READY → AUTO Preview → REVIEW_REQUIRED`を再実行します。新しいPreviewでは`lastImportBatchId`だけを新Batchへ関連付け、Manual Confirmが成功するまで`lastSuccessfulImportBatchId`は直前の成功Batchを保持します。Confirm後にのみpost-confirm syncが新Batchへ更新します。
+
+同一Drive File IDで内容SHA-256が同じ場合は、既存のdriveFileId lock・driveModifiedTime/SHA・ImportBatchのfileHash重複検査により新しいBatchを作成しません。Heavenの確定処理は既存Pipelineの`heavenShopDaily` upsertを使用し、`businessDate + storeId + metricKey`の既存行は更新、新規日付は追加します。新しい累計ファイルに存在しない過去行を削除する処理はありません。
+
+既存Import adapterはManual CLIのProduction確認ガードも共有します。I8のallowlist判定を通過したRegistryだけが内部`autoPreview` capabilityを渡してPreviewを起動でき、これはConfirmやfact writeを許可するものではありません。手動CLIは従来どおり`--confirm-production`を要求します。旧版を別名ファイルとして同じMapping Folderへ残す運用は再検知・重複判定を招くため非推奨とし、Archive/Error移動方針はI9で扱います。
+
 ## Observability
 
 `scan_end`へ`autoExecutionEnabled`、`autoExecuted`、`autoReviewRequired`、`autoFailed`、`autoBlocked`を追加しました。秘密情報、credential、Folder IDは出力しません。`import`表示は引き続き`NOT_EXECUTED`（Confirm未実行）です。
@@ -55,3 +63,5 @@ Adapter側がDownload、SHA、lock、Preview、State更新を所有します。�
 ## Canary order
 
 Global Gateをいきなり全Mappingへ適用せず、Heaven SHOP → PAGE_ACCESS → DIARY_POSTS → target date解決後のTown/CTIの順で、1 FileずつPreview、Review、Manual Confirm、Drive State同期を確認します。I8のProduction実行は本変更では行っていません。
+
+今回の累計ファイル監査でもAUTO Gateは変更・有効化していません。ProductionはOFFのままです。

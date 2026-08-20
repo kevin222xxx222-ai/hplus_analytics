@@ -15,6 +15,7 @@ describe("Heaven SHOP manual execute validation", () => {
   });
   it("requires explicit confirmation in production only", () => {
     expect(() => assertHeavenShopProductionExecution("production", false)).toThrow("--confirm-production");
+    expect(() => assertHeavenShopProductionExecution("production", false, true)).not.toThrow();
     expect(() => assertHeavenShopProductionExecution("production", true)).not.toThrow();
     expect(() => assertHeavenShopProductionExecution("development", false)).not.toThrow();
   });

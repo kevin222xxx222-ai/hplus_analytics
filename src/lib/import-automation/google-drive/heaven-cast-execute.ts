@@ -12,12 +12,13 @@ import { GoogleDriveTemporaryStorage } from "./temporary-storage";
 import type { GoogleDriveClient } from "./types";
 
 const ALLOWED_METRICS = new Set<HeavenMetricType>(["PAGE_ACCESS", "DIARY_POSTS"]);
-export type HeavenCastExecuteInput = { driveFileId: string; confirmProduction?: boolean; client: GoogleDriveClient };
+/** autoPreview is an internal capability passed only by the allowlisted I8 registry; it never confirms/imports. */
+export type HeavenCastExecuteInput = { driveFileId: string; confirmProduction?: boolean; autoPreview?: boolean; client: GoogleDriveClient };
 export type HeavenCastExecuteResult = { outcome: "EXECUTED" | "SKIPPED" | "REUSED"; batchId?: string; batchStatus?: string; reviewUrl?: string; reason?: string };
 export const heavenCastReviewUrl = (batchId: string) => `/imports/heaven/${batchId}`;
 
 export function validateHeavenCastExecuteInput(input: Pick<HeavenCastExecuteInput, "driveFileId">) { if (!input.driveFileId.trim()) throw new Error("--drive-file-id is required."); }
-export function assertHeavenCastProductionExecution(environment: string | undefined, confirmProduction: boolean) { if (environment === "production" && !confirmProduction) throw new Error("Production execution requires --confirm-production."); }
+export function assertHeavenCastProductionExecution(environment: string | undefined, confirmProduction: boolean, autoPreview = false) { if (environment === "production" && !confirmProduction && !autoPreview) throw new Error("Production execution requires --confirm-production."); }
 export function assertHeavenCastMapping(mapping: { isActive: boolean; isFuture: boolean; importDataType: ImportDataType; storeId: string | null; metricHint?: string | null; importSource: { mediaType: MediaType; dataType: ImportDataType; storeId: string | null; store?: { code: StoreCode } | null } }) {
   if (!mapping.isActive || mapping.isFuture) throw new Error("Drive mapping is inactive or future.");
   if (mapping.importDataType !== ImportDataType.HEAVEN_CAST || mapping.importSource.dataType !== ImportDataType.HEAVEN_CAST || mapping.importSource.mediaType !== MediaType.HEAVEN) throw new Error("Drive mapping is not a valid HEAVEN_CAST mapping.");
@@ -28,7 +29,7 @@ function metadataObject(value: unknown): Record<string, unknown> { return value 
 export function sameHeavenCastIdentity(_metadata: unknown, state: { driveFileId: string; driveModifiedTime: Date; sha256: string | null }, batch: { metadata: unknown } | null) { const data = metadataObject(batch?.metadata); return data.origin === "GOOGLE_DRIVE" && data.importDataType === ImportDataType.HEAVEN_CAST && data.driveFileId === state.driveFileId && data.driveModifiedTime === state.driveModifiedTime.toISOString() && data.driveSha256 === state.sha256; }
 
 export async function executeHeavenCastDriveFile(input: HeavenCastExecuteInput): Promise<HeavenCastExecuteResult> {
-  validateHeavenCastExecuteInput(input); assertHeavenCastProductionExecution(process.env.GOOGLE_DRIVE_AUTOMATION_ENV, Boolean(input.confirmProduction));
+  validateHeavenCastExecuteInput(input); assertHeavenCastProductionExecution(process.env.GOOGLE_DRIVE_AUTOMATION_ENV, Boolean(input.confirmProduction), Boolean(input.autoPreview));
   const locked = await withAdvisoryLock<HeavenCastExecuteResult>(driveFileLockName(input.driveFileId), async () => {
     const state = await prisma.driveFileState.findUnique({ where: { driveFileId: input.driveFileId }, include: { driveFolderMapping: { include: { importSource: { include: { store: true } }, store: true } }, lastImportBatch: true } });
     if (!state) throw new Error("DriveFileState was not found.");
