@@ -24,6 +24,18 @@ enum CastStatus {
   INACTIVE
 }
 
+enum CastMembershipStatus {
+  ACTIVE
+  ON_LEAVE
+  LEFT
+}
+
+enum CastMembershipSourceConfidence {
+  CONFIRMED
+  INFERRED
+  UNKNOWN
+}
+
 enum MediaType {
   CTI
   TOWN
@@ -171,6 +183,8 @@ model User {
   castNameChanges          CastNameHistory[]                @relation("CastNameChangedBy")
   castMergeActions         CastMergeHistory[]               @relation("CastMergePerformedBy")
   castStartDateBulkChanges CastStartDateBulkChangeHistory[] @relation("CastStartDateBulkChangePerformedBy")
+  castMembershipsCreated   CastStoreMembership[]           @relation("CastMembershipCreatedBy")
+  castMembershipsUpdated   CastStoreMembership[]           @relation("CastMembershipUpdatedBy")
   goalsCreated             MonthlyGoal[]                    @relation("MonthlyGoalCreatedBy")
   goalsUpdated             MonthlyGoal[]                    @relation("MonthlyGoalUpdatedBy")
   goalChangeHistory        MonthlyGoalChangeHistory[]
@@ -218,6 +232,7 @@ model Store {
   townLandingDailies    TownLandingDaily[]
   heavenShopDailies     HeavenShopDaily[]
   heavenCastDailies     HeavenCastDaily[]
+  memberships           CastStoreMembership[]
   monthlyGoals          MonthlyGoal[]
 
   @@map("stores")
@@ -250,11 +265,41 @@ model Cast {
   mergedSources      Cast[]             @relation("CastMergeRedirect")
   mergesAsSource     CastMergeHistory[] @relation("CastMergeSource")
   mergesAsTarget     CastMergeHistory[] @relation("CastMergeTarget")
+  memberships        CastStoreMembership[]
 
   @@index([normalizedName])
   @@index([primaryStoreId, status])
   @@index([mergedIntoCastId])
   @@map("casts")
+}
+
+model CastStoreMembership {
+  id               String                          @id @default(uuid()) @db.Uuid
+  castId           String                          @map("cast_id") @db.Uuid
+  storeId          String                          @map("store_id") @db.Uuid
+  joinedAt         DateTime?                       @map("joined_at") @db.Date
+  leftAt           DateTime?                       @map("left_at") @db.Date
+  status           CastMembershipStatus            @default(ACTIVE)
+  source           String?                         @db.VarChar(100)
+  sourceConfidence CastMembershipSourceConfidence? @map("source_confidence")
+  note             String?                         @db.Text
+  createdByUserId  String?                         @map("created_by_user_id") @db.Uuid
+  updatedByUserId  String?                         @map("updated_by_user_id") @db.Uuid
+  createdAt        DateTime                        @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime                        @updatedAt @map("updated_at") @db.Timestamptz(3)
+  cast             Cast                            @relation(fields: [castId], references: [id], onDelete: Restrict)
+  store            Store                           @relation(fields: [storeId], references: [id], onDelete: Restrict)
+  createdBy        User?                           @relation("CastMembershipCreatedBy", fields: [createdByUserId], references: [id], onDelete: SetNull)
+  updatedBy        User?                           @relation("CastMembershipUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([castId])
+  @@index([storeId])
+  @@index([castId, storeId])
+  @@index([status])
+  @@index([joinedAt])
+  @@index([leftAt])
+  @@index([storeId, status, joinedAt, leftAt])
+  @@map("cast_store_memberships")
 }
 
 model CastNameHistory {

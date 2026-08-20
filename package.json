@@ -17,6 +17,7 @@
     "audit:weekday-strategy": "tsx scripts/audit-weekday-strategy.ts",
     "audit:cast-media-funnel": "tsx scripts/audit-cast-media-funnel.ts",
     "audit:cast-media-diagnosis": "tsx scripts/audit-cast-media-diagnosis.ts",
+    "memberships:backfill-audit": "node --import tsx scripts/audit-cast-membership-backfill.ts",
     "drive:test-connection": "node --import tsx scripts/phase-h-drive-test.ts",
     "drive:test-download": "node --import tsx scripts/phase-h-drive-download-test.ts",
     "drive:inspect-folder": "node --import tsx scripts/drive-inspect-folder.ts",
