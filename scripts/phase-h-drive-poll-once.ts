@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { createDriveClient } from "../src/lib/import-automation/google-drive/client";
 import { runPollOnce } from "../src/lib/import-automation/google-drive/poll-once";
+import { parseAutoExecutionRoutes } from "../src/lib/import-automation/google-drive/auto-execution-gate";
 
 function log(event: string, data: Record<string, unknown> = {}) {
   console.log(JSON.stringify({ timestamp: new Date().toISOString(), event, environment: process.env.GOOGLE_DRIVE_AUTOMATION_ENV ?? "unset", ...data }));
@@ -24,7 +25,8 @@ async function main() {
   log("scan_end", {
     mappings: summary?.mappingsScanned ?? 0, filesSeen: summary?.filesSeen ?? 0, downloaded: summary?.downloadedFiles ?? 0,
     skipped: summary?.skippedFiles ?? 0, retryPending: result.retryPending, reviewRequired: summary?.reviewRequired ?? 0,
-    failed: summary?.failedFiles ?? 0, autoExecutionEnabled: process.env.GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED === "true", autoExecuted: summary?.autoExecuted ?? 0,
+    failed: summary?.failedFiles ?? 0, autoExecutionEnabled: process.env.GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED === "true", autoExecutionRoutes: [...parseAutoExecutionRoutes().routes], autoExecutionUnknownRoutes: parseAutoExecutionRoutes().unknown,
+    autoExecuted: summary?.autoExecuted ?? 0,
     autoReviewRequired: summary?.autoReviewRequired ?? 0, autoFailed: summary?.autoFailed ?? 0, autoBlocked: summary?.autoBlocked ?? 0,
     durationMs: Date.now() - startedAt, exit: 0, import: "NOT_EXECUTED",
   });

@@ -6,7 +6,14 @@ I8のAUTOは、既存Import PipelineのPreview作成までを自動化する`AUT
 
 ## Global gate
 
-`GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED=true`のときだけAUTO Previewを評価します。未設定またはfalseでは従来のRESOLVE_ONLYです。既存`GOOGLE_DRIVE_AUTOMATION_ENABLED`（scan/download/state tracking）とは別のGateです。cron行や頻度は変更しません。
+`GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED=true`のときだけAUTO Previewを評価します。さらに`GOOGLE_DRIVE_AUTO_EXECUTION_ROUTES`へ既知routeを明示列挙した場合だけ許可します。未設定・空・未知tokenは全routeを拒否するdefault denyです。既存`GOOGLE_DRIVE_AUTOMATION_ENABLED`（scan/download/state tracking）とは別のGateです。cron行や頻度は変更しません。
+
+許可routeは`HEAVEN_SHOP`、`HEAVEN_GIRL_ACCESS`、`HEAVEN_GIRL_DIARY`だけです。例えば最初のCanaryは次の設定です。
+
+```text
+GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED=true
+GOOGLE_DRIVE_AUTO_EXECUTION_ROUTES=HEAVEN_SHOP
+```
 
 ## Initial policy
 
@@ -27,7 +34,7 @@ CTI/Townはファイル名を無条件に正とせず、内部日付と対象日
 
 ## Execution Registry / Dispatcher
 
-`auto-execution-gate.ts`の型付きPolicy ResolverがMapping/DataType + metricHintを判定し、許可されたHeaven adapterだけをRegistryから呼び出します。Dispatcherは既存H6を使用し、`executePipeline` callbackと`executorOwnsState`を渡します。Parser、ImportBatch、fact writeはDispatcherへ追加していません。Manual CLIと同じadapter/coreを共有します。
+`auto-execution-gate.ts`の型付きPolicy ResolverがMapping/DataType + metricHintを判定し、Global Gateとroute allowlistの両方を通過したHeaven adapterだけをRegistryから呼び出します。route未許可時は`AUTO_ROUTE_NOT_ENABLED`としてRESOLVE_ONLY相当で停止します。Dispatcherは既存H6を使用し、`executePipeline` callbackと`executorOwnsState`を渡します。Parser、ImportBatch、fact writeはDispatcherへ追加していません。Manual CLIと同じadapter/coreを共有します。
 
 ## State and failure
 

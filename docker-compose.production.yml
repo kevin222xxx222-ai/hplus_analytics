@@ -30,6 +30,8 @@ services:
       UPLOAD_DIR: /app/data/uploads
       GOOGLE_DRIVE_AUTOMATION_ENV: production
       GOOGLE_DRIVE_AUTOMATION_ENABLED: "true"
+      GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED: ${GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED:-"false"}
+      GOOGLE_DRIVE_AUTO_EXECUTION_ROUTES: ${GOOGLE_DRIVE_AUTO_EXECUTION_ROUTES:-""}
       GOOGLE_DRIVE_CREDENTIALS_PATH: /run/secrets/google-drive-production-service-account.json
     command: ["npm", "start"]
     depends_on:

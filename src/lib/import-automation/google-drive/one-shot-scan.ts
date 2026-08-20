@@ -5,7 +5,7 @@ import { classifyDriveFileUpdate, getDriveFileStateByDriveFileId, markDriveFileF
 import { listActiveDriveFolderMappings } from "./mapping-service";
 import { GoogleDriveTemporaryStorage } from "./temporary-storage";
 import type { DriveFileMetadata, DriveImportFile, GoogleDriveClient } from "./types";
-import { createAutoExecutionRegistry, resolveAutoPreviewDecision } from "./auto-execution-gate";
+import { createAutoExecutionRegistry, parseAutoExecutionRoutes, resolveAutoPreviewDecision } from "./auto-execution-gate";
 
 export type OneShotScanSummary = {
   mappingsScanned: number;
@@ -88,6 +88,7 @@ export async function runManualOneShotScan(dependencies: OneShotScanDependencies
   const markFailure = dependencies.markFailure ?? markDriveFileFailure;
   const mappings = dependencies.mappings ?? await getMappings();
   const autoExecutionEnabled = process.env.GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED === "true";
+  const autoExecutionRoutes = parseAutoExecutionRoutes().routes;
   const summary: OneShotScanSummary = { mappingsScanned: 0, filesSeen: 0, newFiles: 0, changedFiles: 0, unchangedFiles: 0, downloadedFiles: 0, skippedFiles: 0, reviewRequired: 0, failedFiles: 0, autoExecuted: 0, autoReviewRequired: 0, autoFailed: 0, autoBlocked: 0 };
   const results: OneShotScanFileResult[] = [];
 
@@ -123,7 +124,7 @@ export async function runManualOneShotScan(dependencies: OneShotScanDependencies
           summary.downloadedFiles += 1;
           result.download = "OK";
           result.status = DriveFileStatus.READY;
-          const autoDecision = resolveAutoPreviewDecision(mappingForDispatcher(mapping), autoExecutionEnabled);
+          const autoDecision = resolveAutoPreviewDecision(mappingForDispatcher(mapping), autoExecutionEnabled, autoExecutionRoutes);
           if (autoExecutionEnabled && !autoDecision.allowed) {
             summary.autoBlocked = (summary.autoBlocked ?? 0) + 1;
             result.dispatcher = await dispatch({ file: downloaded, mapping: mappingForDispatcher(mapping), stateId: state.id, stateStatus: DriveFileStatus.READY }, { mode: "RESOLVE_ONLY" });
