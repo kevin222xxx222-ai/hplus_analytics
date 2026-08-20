@@ -57,9 +57,13 @@ driveFileId + modifiedTime + SHA-256、既存ImportBatchのfileHash、完了済�
 
 既存runnerの`src/lib/imports`、`src/lib/date.ts`、`src/lib/normalize.ts`、Prisma/generated clientでTown/Heaven CAST依存を解決できます。今回Dockerfile、Compose、DB、Prisma、Migrationは変更していません。Production cronはRESOLVE_ONLYのままです。
 
+## Production Canary status
+
+Town CAST（春日部・越谷）、Heaven PAGE_ACCESS、Heaven DIARY_POSTSはManual Production Canaryを確認済み。PAGE_ACCESS/DIARY_POSTSの同一SHA duplicate NOOPも確認済みである。差分ContentのAUTO PreviewはI10の段階Canary対象として残す。
+
 ## Verification
 
-Mapping種別、store、active/future、metricHint、Production confirmation、target date、Review URLのunit testを追加しました。実Drive FileによるI7 Canaryは未実施（NOT VERIFIED）です。Canary実行後、各対象のPreview、Resolve、Manual Confirm、post-confirm syncを個別に確認します。
+Mapping種別、store、active/future、metricHint、Production confirmation、target date、Review URLのunit testを追加しました。Manual Production Canaryは上記のとおり確認済みである。
 
 ## Operator recovery: safe DriveFileState reset
 

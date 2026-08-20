@@ -39,6 +39,7 @@ export type PipelineExecutionResult = {
   errorCount?: number;
   reviewRequired?: boolean;
   executionClass?: "PREVIEW_CREATED" | "REUSED_REVIEW" | "REUSED_NOOP";
+  errorCode?: string;
 };
 
 export type DispatcherOptions = {
@@ -111,6 +112,7 @@ export async function dispatchDriveImport(input: DispatcherInput, options: Dispa
   try {
     if (input.stateId && !options.executorOwnsState) await transitionState(input.stateId, DriveFileStatus.IMPORTING);
     const execution = await options.executePipeline({ ...input, route });
+    if (execution.status === "BLOCKED") return baseResult(route, "BLOCKED", "AUTO execution was safely blocked before Preview.", { errorCode: execution.errorCode || "AUTO_EXECUTION_BLOCKED" });
     if (execution.status === "NOOP" || execution.executionClass === "REUSED_NOOP") return baseResult(route, "NOOP", "Existing completed import reused; no new preview was created.", { importBatchId: execution.importBatchId ?? null, reviewReason: "IDEMPOTENT_REUSE" });
     const hasIssues = (execution.warningCount ?? 0) > 0 || (execution.pendingCount ?? 0) > 0 || (execution.errorCount ?? 0) > 0;
     if (execution.reviewRequired || execution.status === "REVIEW_REQUIRED") return baseResult(route, "REVIEW_REQUIRED", "Preview completed; manual review is required.", { importBatchId: execution.importBatchId ?? null, reviewReason: execution.executionClass === "REUSED_REVIEW" ? "IDEMPOTENT_REVIEW_REUSE" : "AUTO_PREVIEW_REVIEW_REQUIRED" });

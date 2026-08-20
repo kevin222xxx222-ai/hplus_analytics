@@ -10,7 +10,7 @@ import { resolveDriveFolderMapping } from "./mapping-service";
 import { GoogleDriveTemporaryStorage } from "./temporary-storage";
 import type { GoogleDriveClient } from "./types";
 
-export type TownCastExecuteInput = { driveFileId: string; targetDate: string; confirmProduction?: boolean; client: GoogleDriveClient };
+export type TownCastExecuteInput = { driveFileId: string; targetDate: string; confirmProduction?: boolean; autoPreview?: boolean; client: GoogleDriveClient };
 export type TownCastExecuteResult = { outcome: "EXECUTED" | "SKIPPED" | "REUSED"; batchId?: string; batchStatus?: string; reviewUrl?: string; reason?: string };
 
 export const townCastReviewUrl = (batchId: string) => `/imports/town/${batchId}`;
@@ -46,7 +46,7 @@ export function sameTownCastIdentity(_metadata: unknown, state: { driveFileId: s
 
 export async function executeTownCastDriveFile(input: TownCastExecuteInput): Promise<TownCastExecuteResult> {
   validateTownCastExecuteInput(input);
-  assertTownCastProductionExecution(process.env.GOOGLE_DRIVE_AUTOMATION_ENV, Boolean(input.confirmProduction));
+  if (process.env.GOOGLE_DRIVE_AUTOMATION_ENV === "production" && !input.confirmProduction && !input.autoPreview) throw new Error("Production execution requires --confirm-production.");
   const locked = await withAdvisoryLock<TownCastExecuteResult>(driveFileLockName(input.driveFileId), async () => {
     const state = await prisma.driveFileState.findUnique({ where: { driveFileId: input.driveFileId }, include: { driveFolderMapping: { include: { importSource: { include: { store: true } }, store: true } }, lastImportBatch: true } });
     if (!state) throw new Error("DriveFileState was not found.");

@@ -10,7 +10,7 @@ import { resolveDriveFolderMapping } from "./mapping-service";
 import { GoogleDriveTemporaryStorage } from "./temporary-storage";
 import type { GoogleDriveClient } from "./types";
 
-export type TownStoreExecuteInput = { driveFileId: string; targetDate: string; confirmProduction?: boolean; client: GoogleDriveClient };
+export type TownStoreExecuteInput = { driveFileId: string; targetDate: string; confirmProduction?: boolean; autoPreview?: boolean; client: GoogleDriveClient };
 export type TownStoreExecuteResult = { outcome: "EXECUTED" | "SKIPPED" | "REUSED"; batchId?: string; batchStatus?: string; reviewUrl?: string; reason?: string };
 
 export function townReviewUrl(batchId: string): string {
@@ -61,7 +61,7 @@ export function sameTownStoreIdentity(metadata: unknown, state: { driveFileId: s
 
 export async function executeTownStoreDriveFile(input: TownStoreExecuteInput): Promise<TownStoreExecuteResult> {
   validateTownStoreExecuteInput(input);
-  assertTownStoreProductionExecution(process.env.GOOGLE_DRIVE_AUTOMATION_ENV, Boolean(input.confirmProduction));
+  if (process.env.GOOGLE_DRIVE_AUTOMATION_ENV === "production" && !input.confirmProduction && !input.autoPreview) throw new Error("Production execution requires --confirm-production.");
 
   const locked = await withAdvisoryLock<TownStoreExecuteResult>(driveFileLockName(input.driveFileId), async () => {
     const state = await prisma.driveFileState.findUnique({

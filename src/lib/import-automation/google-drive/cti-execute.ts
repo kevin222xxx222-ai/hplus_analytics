@@ -10,7 +10,7 @@ import { resolveDriveFolderMapping } from "./mapping-service";
 import { GoogleDriveTemporaryStorage } from "./temporary-storage";
 import type { GoogleDriveClient } from "./types";
 
-export type CtiExecuteInput = { driveFileId: string; targetDate: string; confirmProduction?: boolean; client: GoogleDriveClient };
+export type CtiExecuteInput = { driveFileId: string; targetDate: string; confirmProduction?: boolean; autoPreview?: boolean; client: GoogleDriveClient };
 export type CtiExecuteResult = { outcome: "EXECUTED" | "SKIPPED" | "REUSED"; batchId?: string; batchStatus?: string; reviewUrl?: string; reason?: string };
 
 function validDate(value: string): boolean {
@@ -39,7 +39,7 @@ function sameIdentity(metadata: unknown, state: { driveFileId: string; driveModi
 
 export async function executeCtiDriveFile(input: CtiExecuteInput): Promise<CtiExecuteResult> {
   validateCtiExecuteInput(input);
-  if (process.env.GOOGLE_DRIVE_AUTOMATION_ENV === "production" && !input.confirmProduction) throw new Error("Production execution requires --confirm-production.");
+  if (process.env.GOOGLE_DRIVE_AUTOMATION_ENV === "production" && !input.confirmProduction && !input.autoPreview) throw new Error("Production execution requires --confirm-production.");
 
   const locked = await withAdvisoryLock<CtiExecuteResult>(driveFileLockName(input.driveFileId), async () => {
     const state = await prisma.driveFileState.findUnique({

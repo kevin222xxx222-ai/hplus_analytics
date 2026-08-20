@@ -8,7 +8,7 @@ I8のAUTOは、既存Import PipelineのPreview作成までを自動化する`AUT
 
 `GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED=true`のときだけAUTO Previewを評価します。さらに`GOOGLE_DRIVE_AUTO_EXECUTION_ROUTES`へ既知routeを明示列挙した場合だけ許可します。未設定・空・未知tokenは全routeを拒否するdefault denyです。既存`GOOGLE_DRIVE_AUTOMATION_ENABLED`（scan/download/state tracking）とは別のGateです。cron行や頻度は変更しません。
 
-許可routeは`HEAVEN_SHOP`、`HEAVEN_GIRL_ACCESS`、`HEAVEN_GIRL_DIARY`だけです。例えば最初のCanaryは次の設定です。
+許可routeは`HEAVEN_SHOP`、`HEAVEN_GIRL_ACCESS`、`HEAVEN_GIRL_DIARY`、`TOWN_STORE`、`TOWN_CAST`、`CTI_CAST_REPORT`です。未設定routeはdefault denyです。例えば最初のCanaryは次の設定です。
 
 ```text
 GOOGLE_DRIVE_AUTO_EXECUTION_ENABLED=true
@@ -24,9 +24,9 @@ I8実装時点でAUTO Previewを許可するのは、既存parserがファイル
 | HEAVEN_STORE | 許可 | `sourcePeriodFrom/To`をHeaven parserが取得 |
 | HEAVEN_CAST + PAGE_ACCESS | 許可 | 同上 |
 | HEAVEN_CAST + DIARY_POSTS | 許可 | 同上 |
-| CTI_CAST_REPORT | 保留/Blocked | 現行CLIが明示`target-date`を要求 |
-| TOWN_STORE | 保留/Blocked | target dateをOperator入力なしに確定できない |
-| TOWN_CAST | 保留/Blocked | target dateをOperator入力なしに確定できない |
+| CTI_CAST_REPORT | I10実装 / Canary pending | 厳格filenameとXLSX 3店舗sheet検証でtarget dateを解決 |
+| TOWN_STORE | I10実装 / Canary pending | CSV内部単日期間を正としてtarget dateを解決 |
+| TOWN_CAST | I10実装 / Canary pending | CSV内部単日期間を正としてtarget dateを解決 |
 | Town URL/LANDING | Blocked | I8対象外 |
 | Heaven MY_GIRL、MITENE、TALK、通知系 | Blocked | 未解放 |
 

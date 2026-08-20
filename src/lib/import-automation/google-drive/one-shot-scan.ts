@@ -138,6 +138,7 @@ export async function runManualOneShotScan(dependencies: OneShotScanDependencies
             if (result.dispatcher.status === "REVIEW_REQUIRED" && result.dispatcher.reviewReason === "AUTO_PREVIEW_REVIEW_REQUIRED") { summary.autoPreviewCreated = (summary.autoPreviewCreated ?? 0) + 1; summary.autoExecuted = (summary.autoExecuted ?? 0) + 1; }
             if (result.dispatcher.reviewReason === "IDEMPOTENT_REVIEW_REUSE" || result.dispatcher.status === "NOOP") { summary.autoReused = (summary.autoReused ?? 0) + 1; }
             if (result.dispatcher.status === "NOOP") { summary.autoNoop = (summary.autoNoop ?? 0) + 1; }
+            if (result.dispatcher.status === "BLOCKED") { summary.autoBlocked = (summary.autoBlocked ?? 0) + 1; }
             if (result.dispatcher.status === "REVIEW_REQUIRED") { summary.autoReviewRequired = (summary.autoReviewRequired ?? 0) + 1; result.status = DriveFileStatus.REVIEW_REQUIRED; }
             if (result.dispatcher.status === "FAILED") summary.autoFailed = (summary.autoFailed ?? 0) + 1;
           } else {

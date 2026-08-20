@@ -16,7 +16,8 @@
 | I6 Heaven SHOP | COMPLETE / Production Canary VERIFIED |
 | I7 MANUAL_REVIEW系 | IMPLEMENTED / Canary pending |
 | I8 AUTO Execution Gate | IMPLEMENTED / Production Canary pending |
-| I9 Production Rollout | NOT STARTED |
+| I9 Production Rollout | IMPLEMENTED / Operations preparation |
+| I10 Final Auto Preview Completion | IMPLEMENTED / Canary pending |
 
 I5では春日部の`TOWN_STORE` CSVをManual Executeし、既存Town Preview/Review/Confirm経路を通して`town_store_daily`への1件の確定とDriveFileStateの`IMPORTED`同期をProduction Canaryで確認した。AUTO Import、AUTO Confirm、cronからの実Importは未解放である。
 
@@ -249,6 +250,10 @@ Developmentで次をすべて満たすことをI3/I4の完了条件とする。
 - `driveFileId` advisory lock、modifiedTime/SHA検証、既存HeavenのfileHash duplicate制御を併用し、同一内容のBatch増殖を禁止する。
 
 本書をPhase I initial vertical sliceのDecision Freezeとする。変更時は必ず次を記録する。
+
+## I9 Operations decision
+
+Production pollingは10分cron、AUTO Confirmなし、route allowlistによる段階解放、同一Drive File IDのHeaven累計上書き、NOOP idempotency、Operator recovery、Emergency Stop、Rollback、Failure MatrixをRunbookへ固定する。I9文書作成時点ではProduction設定・cron・DBを変更しない。
 
 ```text
 Decision変更
