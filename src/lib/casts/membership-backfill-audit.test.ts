@@ -21,7 +21,7 @@ describe("membership backfill audit", () => {
     expect(classifyCastForMembershipBackfill(base({ primaryStoreId: null, evidence: { storeIds: [], sourceKinds: [], dateRanges: [] } }), true).classification).toBe("STORE_UNCERTAIN");
   });
   it("classifies multi-store evidence as manual review", () => {
-    expect(classifyCastForMembershipBackfill(base({ evidence: { storeIds: ["store-1", "store-2"], sourceKinds: ["FACT", "ALIAS"], dateRanges: [] } }), true).classification).toBe("MULTI_STORE_EVIDENCE");
+    expect(classifyCastForMembershipBackfill(base({ evidence: { storeIds: ["store-1", "store-2"], sourceKinds: ["FACT", "ALIAS"], dateRanges: [] } }), true).classification).toBe("MULTI_STORE_CANDIDATE");
   });
   it("does not classify invalid date ranges as safe", () => {
     expect(classifyCastForMembershipBackfill(base({ status: CastStatus.INACTIVE, endedOn: new Date("2024-12-31T00:00:00Z") }), true).classification).toBe("DATE_UNCERTAIN");

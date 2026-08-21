@@ -9,7 +9,7 @@ export type MembershipEvidence = {
 export type BackfillClassification =
   | "SAFE_AUTO"
   | "SAFE_LEFT"
-  | "MULTI_STORE_EVIDENCE"
+  | "MULTI_STORE_CANDIDATE"
   | "DATE_UNCERTAIN"
   | "STORE_UNCERTAIN"
   | "EXISTING_MEMBERSHIP";
@@ -45,7 +45,7 @@ export function classifyCastForMembershipBackfill(input: BackfillAuditCast, trus
     return { ...input, classification: "EXISTING_MEMBERSHIP", reason: "既存MembershipがあるためBackfill対象外です。", sourceConfidence: null, proposedStatus: null };
   }
   if (storeIds.length > 1) {
-    return { ...input, classification: "MULTI_STORE_EVIDENCE", reason: "複数店舗のAlias・Fact・Listing根拠があるため自動作成しません。", sourceConfidence: null, proposedStatus: null };
+    return { ...input, classification: "MULTI_STORE_CANDIDATE", reason: "複数店舗に所属・掲載されている可能性があるため、店舗別に確認します。", sourceConfidence: null, proposedStatus: null };
   }
   if (storeIds.length === 0 || !input.primaryStoreId) {
     return { ...input, classification: "STORE_UNCERTAIN", reason: "primaryStoreまたは店舗根拠がありません。", sourceConfidence: null, proposedStatus: null };
@@ -75,7 +75,7 @@ export function summarizeBackfillAudit(results: BackfillAuditResult[]) {
   for (const result of results) {
     if (result.classification === "SAFE_AUTO") summary.safeAuto += 1;
     else if (result.classification === "SAFE_LEFT") summary.safeLeft += 1;
-    else if (result.classification === "MULTI_STORE_EVIDENCE") summary.multiStore += 1;
+    else if (result.classification === "MULTI_STORE_CANDIDATE") summary.multiStore += 1;
     else if (result.classification === "DATE_UNCERTAIN") summary.dateUncertain += 1;
     else if (result.classification === "STORE_UNCERTAIN") summary.storeUncertain += 1;
     else if (result.classification === "EXISTING_MEMBERSHIP") summary.alreadyMigrated += 1;

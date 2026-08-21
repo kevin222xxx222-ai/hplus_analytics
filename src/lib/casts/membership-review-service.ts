@@ -57,7 +57,7 @@ export async function loadMembershipReviewCasts(db: DbClient = prisma): Promise<
 }
 
 export function reviewClassificationLabel(value: string) {
-  return ({ MULTI_STORE_EVIDENCE: "複数店舗根拠", DATE_UNCERTAIN: "日付要確認", STORE_UNCERTAIN: "店舗要確認", SAFE_AUTO: "自動候補", SAFE_LEFT: "退店候補", EXISTING_MEMBERSHIP: "対応済み" } as Record<string, string>)[value] ?? value;
+  return ({ MULTI_STORE_CANDIDATE: "複数店舗候補", DATE_UNCERTAIN: "日付要確認", STORE_UNCERTAIN: "店舗要確認", SAFE_AUTO: "自動候補", SAFE_LEFT: "退店候補", EXISTING_MEMBERSHIP: "確認済み" } as Record<string, string>)[value] ?? value;
 }
 
 export function reviewStatusLabel(value: CastStatus) { return value === CastStatus.ACTIVE ? "在籍" : "退店"; }

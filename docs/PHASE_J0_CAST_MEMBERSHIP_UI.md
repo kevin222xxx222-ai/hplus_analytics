@@ -33,7 +33,7 @@ Status: IMPLEMENTED / Production Backfill NOT EXECUTED
 - Total casts
 - Membership設定済み
 - 未対応
-- MULTI_STORE_EVIDENCE
+- 複数店舗候補（MULTI_STORE_CANDIDATE）
 - STORE_UNCERTAIN
 
 ## Evidence
@@ -46,7 +46,7 @@ Status: IMPLEMENTED / Production Backfill NOT EXECUTED
 - Alias: validFrom / validTo / mediaType
 - MediaListing: listedFrom / listedTo / isListed
 
-これらは確認された根拠期間であり、Membershipへ自動コピーしない。
+Factの最小・最大日は実績の存在範囲であり、退店日ではない。MediaListingの掲載中状態やAliasのvalidTo未設定は現在掲載の候補として表示する。これらは確認された根拠期間であり、Membershipへ自動コピーしない。
 
 ## Membership操作
 
@@ -61,7 +61,13 @@ Status: IMPLEMENTED / Production Backfill NOT EXECUTED
 
 Service側のstatus、日付順、重複検証を唯一のValidationとする。
 
-Legacy `startedOn`は「入店日候補（編集可）」として表示するだけで、自動保存しない。
+Legacy `startedOn`は候補として表示するが、入店日フォームは未入力を初期値とし、自動保存しない。現在所属の確認を優先し、日付不明のMembershipはNULLで登録できる。
+
+## Quick Registration
+
+AdminはEvidenceを確認した店舗を複数選択し、「選択内容を確認」→「確認済み・選択店舗を登録」の2段階でACTIVE Membershipを登録できる。入店日はNULL、sourceは手動確認として保存する。既存Membershipのある店舗はQuick登録から除外し、詳細フォームで確認する。Viewerには操作を表示しない。
+
+Membershipの状態・信頼度は日本語で表示する（在籍・休業・退店、確認済み・推定・不明）。再入店は既存LEFT行を編集せず、新規Membershipを作成する。退店操作は退店日入力と同じフォームで行い、leftAt当日は在籍扱いの既存境界を維持する。
 
 ## Production / Import境界
 

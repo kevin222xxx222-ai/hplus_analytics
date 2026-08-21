@@ -4,8 +4,8 @@ import { CastStatus } from "@/generated/prisma/client";
 
 describe("membership review presentation", () => {
   it("provides stable labels for review classifications", () => {
-    expect(reviewClassificationLabel("MULTI_STORE_EVIDENCE")).toBe("複数店舗根拠");
-    expect(reviewClassificationLabel("EXISTING_MEMBERSHIP")).toBe("対応済み");
+    expect(reviewClassificationLabel("MULTI_STORE_CANDIDATE")).toBe("複数店舗候補");
+    expect(reviewClassificationLabel("EXISTING_MEMBERSHIP")).toBe("確認済み");
     expect(reviewClassificationLabel("UNKNOWN")).toBe("UNKNOWN");
   });
 

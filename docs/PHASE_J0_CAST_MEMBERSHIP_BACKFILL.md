@@ -46,9 +46,9 @@ Fact、Alias、Listingは店舗の補助的な存在根拠としてのみ使用�
 
 自動作成時は`status=LEFT`を予定する。J0-Cでは作成しない。
 
-### MULTI_STORE_EVIDENCE
+### MULTI_STORE_CANDIDATE
 
-Alias、Listing、Factなどから複数店舗の根拠があるCast。自動作成せずManual Reviewとする。
+Alias、Listing、Factなどから複数店舗の根拠があるCast。異常とは断定せず、複数店舗所属の可能性を店舗別に確認する。自動作成せずManual Reviewとする。
 
 ### DATE_UNCERTAIN
 

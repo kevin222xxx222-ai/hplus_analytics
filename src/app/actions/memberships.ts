@@ -5,7 +5,7 @@ import { z } from "zod";
 import { CastMembershipSourceConfidence, CastMembershipStatus } from "@/generated/prisma/client";
 import { requireAdmin } from "@/lib/auth";
 import { parseDateOnly } from "@/lib/date";
-import { closeMembership, createMembership, createReentryMembership, resumeFromLeave, setOnLeave, updateMembership } from "@/lib/casts/membership-service";
+import { closeMembership, createMembership, createReentryMembership, listMemberships, resumeFromLeave, setOnLeave, updateMembership } from "@/lib/casts/membership-service";
 
 const uuid = z.string().uuid();
 const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
@@ -32,6 +32,21 @@ export async function createMembershipAction(formData: FormData) {
   const admin = await requireAdmin();
   const data = common(formValues(formData));
   await createMembership({ ...data, createdByUserId: admin.id, updatedByUserId: admin.id });
+  revalidatePath("/masters/casts/memberships");
+}
+
+export async function quickRegisterMembershipsAction(formData: FormData) {
+  const admin = await requireAdmin();
+  const castId = uuid.parse(formData.get("castId"));
+  const storeIds = [...new Set(formData.getAll("storeId").map((value) => uuid.parse(value)))];
+  if (storeIds.length === 0) throw new Error("登録する店舗を選択してください。");
+  const existing = await listMemberships(castId);
+  if (storeIds.some((storeId) => existing.some((membership) => membership.storeId === storeId))) {
+    throw new Error("既存Membershipがある店舗はQuick登録の対象外です。詳細フォームから確認してください。");
+  }
+  for (const storeId of storeIds) {
+    await createMembership({ castId, storeId, status: CastMembershipStatus.ACTIVE, joinedAt: null, leftAt: null, source: "MANUAL_REVIEW", sourceConfidence: CastMembershipSourceConfidence.UNKNOWN, createdByUserId: admin.id, updatedByUserId: admin.id });
+  }
   revalidatePath("/masters/casts/memberships");
 }
 
