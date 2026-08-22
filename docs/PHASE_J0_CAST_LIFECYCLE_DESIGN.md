@@ -1,13 +1,15 @@
 # Phase J0-A Cast Lifecycle / Store Membership Design
 
 更新日: 2026-08-20  
-Status: DESIGN ONLY / 未実装
+Status: J0-E COMPLETE / Production VERIFIED（Resolver・Analytics切替は未実施）
 
 ## 1. 目的と適用範囲
 
 Castは人物の恒久的なマスターとして維持し、店舗ごとの在籍期間・退店・再入店・休業を別の履歴として保持する。これにより、現在在籍・過去時点在籍・新人・在籍期間・退店前推移を同じ人物IDで再現できるようにする。
 
 J0-Aではデータモデル、互換性、Migration方針だけを確定する。Resolver、Analytics、UI、Production DBは変更しない。
+
+J0-EでCurrent Membership初期化をProduction Canaryまで完了した。現在Membershipの正本は`CastStoreMembership`とし、日常の追加・Cast単位退店・再入店・休業操作はMembership serviceへ集約する。Cast単位退店ではLegacyの`status/endedOn`も同一transactionで同期し、Resolver/Analyticsの切替はJ0-F以降に読み取り比較を行ってから判断する。
 
 ## 2. 現行構造の監査結果
 

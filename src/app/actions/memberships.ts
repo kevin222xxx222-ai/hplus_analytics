@@ -5,7 +5,7 @@ import { z } from "zod";
 import { CastMembershipSourceConfidence, CastMembershipStatus } from "@/generated/prisma/client";
 import { requireAdmin } from "@/lib/auth";
 import { parseDateOnly } from "@/lib/date";
-import { closeMembership, createMembership, createReentryMembership, initializeCurrentMemberships, listMemberships, resumeFromLeave, setOnLeave, updateMembership } from "@/lib/casts/membership-service";
+import { closeMembership, createMembership, createReentryMembership, exitCast, initializeCurrentMemberships, listMemberships, resumeFromLeave, setOnLeave, updateMembership } from "@/lib/casts/membership-service";
 import { loadCurrentMembershipCandidates, summarizeCurrentMembershipCandidates } from "@/lib/casts/current-membership-evidence";
 
 const uuid = z.string().uuid();
@@ -74,6 +74,14 @@ export async function closeMembershipAction(formData: FormData) {
   await closeMembership(uuid.parse(formData.get("id")), parseDateOnly(date.parse(String(formData.get("leftAt")))), admin.id);
   revalidatePath("/masters/casts/memberships");
   revalidatePath("/masters/casts");
+}
+
+export async function exitCastAction(formData: FormData) {
+  const admin = await requireAdmin();
+  const parsed = z.object({ castId: uuid, leftAt: date, confirmation: z.literal("EXIT_CAST") }).parse(Object.fromEntries(formData));
+  await exitCast(parsed.castId, parseDateOnly(parsed.leftAt), admin.id);
+  revalidatePath("/masters/casts");
+  revalidatePath("/masters/casts/memberships");
 }
 
 export async function createReentryMembershipAction(formData: FormData) {

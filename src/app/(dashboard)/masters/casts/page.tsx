@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { CalendarRange, GitMerge, History, Plus, UserCheck, UserX } from "lucide-react";
-import { createCastAction, setCastStatusAction } from "@/app/actions/masters";
-import { addCurrentMembershipAction, closeMembershipAction } from "@/app/actions/memberships";
+import { CalendarRange, GitMerge, History, Plus, UserX } from "lucide-react";
+import { createCastAction } from "@/app/actions/masters";
+import { addCurrentMembershipAction, exitCastAction } from "@/app/actions/memberships";
 import { CastDisplayNameForm } from "@/components/cast-display-name-form";
 import { CastPrimaryStoreForm } from "@/components/cast-primary-store-form";
 import { PageHeader } from "@/components/page-header";
@@ -9,12 +9,14 @@ import { CastStatus } from "@/generated/prisma/client";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-export default async function CastsPage({ searchParams }: { searchParams: Promise<{ showMerged?: string }> }) {
+export default async function CastsPage({ searchParams }: { searchParams: Promise<{ showMerged?: string; q?: string }> }) {
   await requireAdmin();
-  const showMerged = (await searchParams).showMerged === "true";
+  const params = await searchParams;
+  const showMerged = params.showMerged === "true";
+  const query = params.q?.trim() ?? "";
   const [casts, stores] = await Promise.all([
     prisma.cast.findMany({
-      where: showMerged ? { mergedIntoCastId: { not: null } } : { mergedIntoCastId: null },
+      where: showMerged ? { mergedIntoCastId: { not: null } } : { mergedIntoCastId: null, ...(query ? { OR: [{ displayName: { contains: query, mode: "insensitive" } }, { aliases: { some: { aliasName: { contains: query, mode: "insensitive" } } } }] } : {}) },
       include: {
         primaryStore: true,
         mergedInto: { select: { id: true, displayName: true } },
@@ -31,6 +33,7 @@ export default async function CastsPage({ searchParams }: { searchParams: Promis
     <PageHeader title="キャスト管理" description="内部IDを維持したまま表示名・主所属・在籍状態を管理します。媒体名はAliasとして保持します。" />
     <div className="mb-5 flex flex-wrap gap-3"><Link href="/masters/casts/duplicates" className="secondary-button"><GitMerge className="size-4" />重複候補</Link><Link href="/masters/casts/merges" className="secondary-button"><History className="size-4" />統合履歴</Link><Link href="/masters/casts/start-date-maintenance" className="secondary-button"><CalendarRange className="size-4" />開始日一括前倒し</Link><Link href={showMerged ? "/masters/casts" : "/masters/casts?showMerged=true"} className="secondary-button">{showMerged ? "通常キャストを表示" : "統合済みを表示"}</Link></div>
     <section className="panel mb-6 p-5">
+      <form method="get" className="mb-5 flex flex-wrap items-end gap-3"><div><label className="form-label">キャスト検索</label><input name="q" defaultValue={query} placeholder="表示名・媒体Alias" className="form-input mt-2 w-72" /></div><button className="secondary-button">検索</button>{query && <Link href="/masters/casts" className="text-sm text-slate-500 underline">クリア</Link>}</form>
       <h2 className="text-base font-semibold text-slate-900">キャストを登録</h2>
       <form action={createCastAction} className="mt-4 grid gap-4 lg:grid-cols-[1fr_180px_220px_1fr_auto] lg:items-end">
         <div><label className="form-label">キャスト名</label><input name="displayName" required className="form-input mt-2" /></div>
@@ -58,7 +61,7 @@ export default async function CastsPage({ searchParams }: { searchParams: Promis
             </div></td>
             <td className="align-top">{cast.startedOn.toLocaleDateString("ja-JP")}</td>
             <td className="align-top"><span className={`status-badge ${cast.status === "ACTIVE" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-500"}`}>{cast.status === "ACTIVE" ? "在籍" : "退店"}</span></td>
-            <td className="align-top">{cast.mergedIntoCastId ? <span className="text-xs text-slate-400">変更不可</span> : <form action={setCastStatusAction} className="flex items-center gap-2"><input type="hidden" name="id" value={cast.id} /><input type="hidden" name="status" value={cast.status === CastStatus.ACTIVE ? CastStatus.INACTIVE : CastStatus.ACTIVE} />{cast.status === CastStatus.ACTIVE && <input type="date" name="endedOn" className="compact-input" required />}<button className="icon-button" title={cast.status === CastStatus.ACTIVE ? "退店にする" : "在籍に戻す"}>{cast.status === CastStatus.ACTIVE ? <UserX className="size-4" /> : <UserCheck className="size-4" />}</button></form>}</td>
+            <td className="align-top">{cast.mergedIntoCastId ? <span className="text-xs text-slate-400">変更不可</span> : cast.status === CastStatus.ACTIVE ? <form action={exitCastAction} className="space-y-2"><input type="hidden" name="castId" value={cast.id} /><input type="hidden" name="confirmation" value="EXIT_CAST" /><label className="text-xs text-slate-500">Cast全体の退店日</label><div className="flex items-center gap-2"><input type="date" name="leftAt" className="compact-input" required /><button className="icon-button" title="全店舗を退店として保存"><UserX className="size-4" /></button></div></form> : <span className="text-xs text-slate-500">退店日: {cast.endedOn?.toLocaleDateString("ja-JP") ?? "不明"}</span>}</td>
           </tr>)}</tbody>
         </table>
         {casts.length === 0 && <p className="empty-state">キャストはまだ登録されていません。</p>}
@@ -68,5 +71,5 @@ export default async function CastsPage({ searchParams }: { searchParams: Promis
 }
 
 function MembershipStoreControls({ castId, stores, memberships }: { castId: string; stores: Array<{ id: string; shortName: string }>; memberships: Array<{ id: string; storeId: string; status: string }> }) {
-  return <div className="mt-3 rounded border border-emerald-100 bg-emerald-50/40 p-2"><div className="text-xs font-semibold text-slate-600">在籍店舗（Membership正本）</div><div className="mt-1 space-y-1">{stores.map((store) => { const active = memberships.find((membership) => membership.storeId === store.id && membership.status !== "LEFT"); const left = memberships.some((membership) => membership.storeId === store.id && membership.status === "LEFT"); return <div key={store.id} className="flex flex-wrap items-center gap-2 text-xs"><label className="flex items-center gap-1"><input type="checkbox" checked={Boolean(active)} readOnly />{store.shortName}{active?.status === "ON_LEAVE" ? "（休業）" : ""}</label>{active ? <form action={closeMembershipAction} className="flex items-center gap-1"><input type="hidden" name="id" value={active.id} /><input className="compact-input w-[125px]" type="date" name="leftAt" required /><button className="text-red-700 underline" type="submit">退店</button></form> : <form action={addCurrentMembershipAction}><input type="hidden" name="castId" value={castId} /><input type="hidden" name="storeId" value={store.id} /><button className="text-emerald-700 underline" type="submit">{left ? "再入店" : "在籍追加"}</button></form>}</div>; })}</div><Link className="mt-2 inline-block text-xs text-emerald-700 underline" href={`/masters/casts/memberships?castId=${castId}`}>在籍履歴を見る</Link></div>;
+  return <div className="mt-3 rounded border border-emerald-100 bg-emerald-50/40 p-2"><div className="text-xs font-semibold text-slate-600">在籍店舗（Membership正本）</div><div className="mt-1 space-y-1">{stores.map((store) => { const active = memberships.find((membership) => membership.storeId === store.id && membership.status !== "LEFT"); const left = memberships.some((membership) => membership.storeId === store.id && membership.status === "LEFT"); return <div key={store.id} className="flex flex-wrap items-center gap-2 text-xs"><label className="flex items-center gap-1"><input type="checkbox" checked={Boolean(active)} readOnly />{store.shortName}{active?.status === "ON_LEAVE" ? "（休業）" : ""}</label>{active ? <span className="text-slate-500">在籍中（退店はCast単位）</span> : <form action={addCurrentMembershipAction}><input type="hidden" name="castId" value={castId} /><input type="hidden" name="storeId" value={store.id} /><button className="text-emerald-700 underline" type="submit">{left ? "再入店" : "在籍追加"}</button></form>}</div>; })}</div><Link className="mt-2 inline-block text-xs text-emerald-700 underline" href={`/masters/casts/memberships?castId=${castId}`}>在籍履歴を見る</Link></div>;
 }
