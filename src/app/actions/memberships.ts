@@ -5,7 +5,8 @@ import { z } from "zod";
 import { CastMembershipSourceConfidence, CastMembershipStatus } from "@/generated/prisma/client";
 import { requireAdmin } from "@/lib/auth";
 import { parseDateOnly } from "@/lib/date";
-import { closeMembership, createMembership, createReentryMembership, listMemberships, resumeFromLeave, setOnLeave, updateMembership } from "@/lib/casts/membership-service";
+import { closeMembership, createMembership, createReentryMembership, initializeCurrentMemberships, listMemberships, resumeFromLeave, setOnLeave, updateMembership } from "@/lib/casts/membership-service";
+import { loadCurrentMembershipCandidates } from "@/lib/casts/current-membership-evidence";
 
 const uuid = z.string().uuid();
 const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
@@ -35,6 +36,17 @@ export async function createMembershipAction(formData: FormData) {
   revalidatePath("/masters/casts/memberships");
 }
 
+export async function addCurrentMembershipAction(formData: FormData) {
+  const admin = await requireAdmin();
+  const castId = uuid.parse(formData.get("castId"));
+  const storeId = uuid.parse(formData.get("storeId"));
+  const existing = (await listMemberships(castId)).filter((membership) => membership.storeId === storeId);
+  if (existing.some((membership) => membership.status === CastMembershipStatus.ACTIVE || membership.status === CastMembershipStatus.ON_LEAVE)) throw new Error("既に在籍中または休業中です。");
+  if (existing.some((membership) => membership.status === CastMembershipStatus.LEFT)) await createReentryMembership({ castId, storeId, joinedAt: null, leftAt: null, source: "MANUAL_REVIEW", sourceConfidence: CastMembershipSourceConfidence.CONFIRMED, createdByUserId: admin.id, updatedByUserId: admin.id });
+  else await createMembership({ castId, storeId, joinedAt: null, leftAt: null, status: CastMembershipStatus.ACTIVE, source: "MANUAL_REVIEW", sourceConfidence: CastMembershipSourceConfidence.CONFIRMED, createdByUserId: admin.id, updatedByUserId: admin.id });
+  revalidatePath("/masters/casts");
+}
+
 export async function quickRegisterMembershipsAction(formData: FormData) {
   const admin = await requireAdmin();
   const castId = uuid.parse(formData.get("castId"));
@@ -61,6 +73,7 @@ export async function closeMembershipAction(formData: FormData) {
   const admin = await requireAdmin();
   await closeMembership(uuid.parse(formData.get("id")), parseDateOnly(date.parse(String(formData.get("leftAt")))), admin.id);
   revalidatePath("/masters/casts/memberships");
+  revalidatePath("/masters/casts");
 }
 
 export async function createReentryMembershipAction(formData: FormData) {
@@ -80,4 +93,14 @@ export async function resumeMembershipAction(formData: FormData) {
   const admin = await requireAdmin();
   await resumeFromLeave(uuid.parse(formData.get("id")), admin.id);
   revalidatePath("/masters/casts/memberships");
+}
+
+export async function initializeCurrentMembershipsAction(formData: FormData) {
+  const admin = await requireAdmin();
+  const ids = z.array(uuid).min(1).parse(JSON.parse(String(formData.get("candidateIds"))));
+  const candidates = await loadCurrentMembershipCandidates();
+  const selected = candidates.filter((candidate) => ids.includes(`${candidate.castId}:${candidate.storeId}`) && candidate.decision === "CREATE_ACTIVE");
+  await initializeCurrentMemberships(selected.map((candidate) => ({ castId: candidate.castId, storeId: candidate.storeId, status: CastMembershipStatus.ACTIVE, joinedAt: null, leftAt: null, source: "MEDIA_EVIDENCE_BACKFILL", sourceConfidence: CastMembershipSourceConfidence.CONFIRMED, createdByUserId: admin.id, updatedByUserId: admin.id })));
+  revalidatePath("/masters/casts/memberships/initialize");
+  revalidatePath("/masters/casts");
 }

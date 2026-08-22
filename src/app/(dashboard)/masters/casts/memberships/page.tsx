@@ -31,6 +31,7 @@ export default async function CastMembershipsPage({ searchParams }: { searchPara
 
   return <>
     <PageHeader title="Cast Membership Review" description="店舗別の在籍期間をFact・Alias・掲載根拠と照合し、人が確認して登録します。根拠の日付は自動でMembershipへ反映しません。" />
+    <div className="mb-5 flex flex-wrap gap-3"><Link className="secondary-button" href="/masters/casts/memberships/initialize">現在Membership初期化 Preview</Link><Link className="secondary-button" href="/masters/casts">キャスト管理へ</Link></div>
     <section className="panel mb-5 p-4"><div className="grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-5"><span>総Cast: <strong>{counts.total}</strong></span><span>確認済み: <strong>{counts.configured}</strong></span><span>未確認: <strong>{counts.unreviewed}</strong></span><span>複数店舗候補: <strong>{counts.multi}</strong></span><span>店舗不明: <strong>{counts.storeUncertain}</strong></span></div></section>
     <form className="panel mb-5 grid gap-3 p-4 md:grid-cols-[1fr_190px_190px_auto] md:items-end">
       <label className="form-label">名前・ID<input className="form-input mt-1" name="q" defaultValue={query.q ?? ""} /></label>

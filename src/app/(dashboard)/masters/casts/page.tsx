@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CalendarRange, GitMerge, History, Plus, UserCheck, UserX } from "lucide-react";
 import { createCastAction, setCastStatusAction } from "@/app/actions/masters";
+import { addCurrentMembershipAction, closeMembershipAction } from "@/app/actions/memberships";
 import { CastDisplayNameForm } from "@/components/cast-display-name-form";
 import { CastPrimaryStoreForm } from "@/components/cast-primary-store-form";
 import { PageHeader } from "@/components/page-header";
@@ -18,6 +19,7 @@ export default async function CastsPage({ searchParams }: { searchParams: Promis
         primaryStore: true,
         mergedInto: { select: { id: true, displayName: true } },
         aliases: { include: { store: true }, orderBy: [{ mediaType: "asc" }, { storeId: "asc" }, { aliasName: "asc" }] },
+        memberships: { orderBy: [{ storeId: "asc" }, { joinedAt: "asc" }] },
         nameHistories: { include: { changedBy: { select: { displayName: true } } }, orderBy: { changedAt: "desc" } },
       },
       orderBy: [{ status: "asc" }, { displayName: "asc" }],
@@ -45,7 +47,7 @@ export default async function CastsPage({ searchParams }: { searchParams: Promis
           <tbody>{casts.map((cast) => <tr key={cast.id}>
             <td className="align-top">{cast.mergedIntoCastId ? <div><div className="font-medium">{cast.displayName}</div><span className="status-badge mt-1 bg-slate-100 text-slate-600">統合済み</span></div> : <CastDisplayNameForm castId={cast.id} initialName={cast.displayName} />}</td>
             <td className="align-top font-mono text-xs text-slate-400">{cast.id.slice(0, 8)}…</td>
-            <td className="align-top">{cast.mergedIntoCastId ? <div>{cast.primaryStore?.shortName || "未設定"}<div className="mt-2 text-xs">統合先: <Link href={`/analytics/casts/${cast.mergedIntoCastId}`} className="text-emerald-700">{cast.mergedInto?.displayName}</Link></div><div className="text-xs text-slate-400">{cast.mergedAt?.toLocaleString("ja-JP")}</div></div> : <CastPrimaryStoreForm key={`${cast.id}:${cast.primaryStoreId || "none"}`} castId={cast.id} displayName={cast.displayName} initialStoreId={cast.primaryStoreId} stores={stores.map(({ id, shortName }) => ({ id, shortName }))} />}</td>
+            <td className="align-top">{cast.mergedIntoCastId ? <div>{cast.primaryStore?.shortName || "未設定"}<div className="mt-2 text-xs">統合先: <Link href={`/analytics/casts/${cast.mergedIntoCastId}`} className="text-emerald-700">{cast.mergedInto?.displayName}</Link></div><div className="text-xs text-slate-400">{cast.mergedAt?.toLocaleString("ja-JP")}</div></div> : <><div className="mb-2 text-xs text-slate-500">主表示店舗（Legacy）</div><CastPrimaryStoreForm key={`${cast.id}:${cast.primaryStoreId || "none"}`} castId={cast.id} displayName={cast.displayName} initialStoreId={cast.primaryStoreId} stores={stores.map(({ id, shortName }) => ({ id, shortName }))} /><MembershipStoreControls castId={cast.id} stores={stores.map(({ id, shortName }) => ({ id, shortName }))} memberships={cast.memberships.map(({ id, storeId, status }) => ({ id, storeId, status }))} /></>}</td>
             <td className="align-top"><div className="min-w-[220px] space-y-1 text-xs">
               {cast.aliases.length === 0 && <span className="text-slate-400">Aliasなし</span>}
               {cast.aliases.map((alias) => <div key={alias.id}><span className="font-semibold text-slate-500">{alias.mediaType}{alias.store ? ` ${alias.store.shortName}` : ""}</span><span className="ml-2 text-slate-800">{alias.aliasName}</span></div>)}
@@ -63,4 +65,8 @@ export default async function CastsPage({ searchParams }: { searchParams: Promis
       </div>
     </section>
   </>;
+}
+
+function MembershipStoreControls({ castId, stores, memberships }: { castId: string; stores: Array<{ id: string; shortName: string }>; memberships: Array<{ id: string; storeId: string; status: string }> }) {
+  return <div className="mt-3 rounded border border-emerald-100 bg-emerald-50/40 p-2"><div className="text-xs font-semibold text-slate-600">在籍店舗（Membership正本）</div><div className="mt-1 space-y-1">{stores.map((store) => { const active = memberships.find((membership) => membership.storeId === store.id && membership.status !== "LEFT"); const left = memberships.some((membership) => membership.storeId === store.id && membership.status === "LEFT"); return <div key={store.id} className="flex flex-wrap items-center gap-2 text-xs"><label className="flex items-center gap-1"><input type="checkbox" checked={Boolean(active)} readOnly />{store.shortName}{active?.status === "ON_LEAVE" ? "（休業）" : ""}</label>{active ? <form action={closeMembershipAction} className="flex items-center gap-1"><input type="hidden" name="id" value={active.id} /><input className="compact-input w-[125px]" type="date" name="leftAt" required /><button className="text-red-700 underline" type="submit">退店</button></form> : <form action={addCurrentMembershipAction}><input type="hidden" name="castId" value={castId} /><input type="hidden" name="storeId" value={store.id} /><button className="text-emerald-700 underline" type="submit">{left ? "再入店" : "在籍追加"}</button></form>}</div>; })}</div><Link className="mt-2 inline-block text-xs text-emerald-700 underline" href={`/masters/casts/memberships?castId=${castId}`}>在籍履歴を見る</Link></div>;
 }

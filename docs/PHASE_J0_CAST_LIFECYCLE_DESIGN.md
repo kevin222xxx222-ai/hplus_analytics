@@ -302,3 +302,7 @@ CLIは`npm run memberships:backfill-audit`で実行し、`artifacts/audits/`へJ
 ## 21. J0-D Review / Management UI
 
 `/masters/casts/memberships`に、Backfill分類・店舗根拠・Membership履歴を確認する管理画面を追加した。ViewerはRead Only、Adminだけが既存Membership Service経由で変更できる。Fact・Alias・MediaListingの期間は根拠表示に限定し、Membershipへ自動適用しない。Production Backfill、Resolver切替、Analytics切替は未実施である。
+
+## 22. J0-E Current Membership Initialization / Cast Management Integration
+
+現在媒体EvidenceをCast・店舗単位で判定し、`/masters/casts/memberships/initialize`でPreview後にAdminが明示Confirmできる導線を追加した。日常の店舗追加・退店・再入店は`/masters/casts`へ統合し、Membershipを正本として扱う。Production Apply、Resolver切替、Analytics切替は未実施である。

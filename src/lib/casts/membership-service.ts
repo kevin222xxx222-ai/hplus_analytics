@@ -107,6 +107,21 @@ export async function createMembership(input: MembershipInput) {
   });
 }
 
+export async function initializeCurrentMemberships(inputs: MembershipInput[]) {
+  return prisma.$transaction(async (tx) => {
+    const created: string[] = [];
+    for (const input of inputs) {
+      await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`cast-membership:${input.castId}:${input.storeId}`}))`;
+      const existing = await tx.castStoreMembership.findMany({ where: { castId: input.castId, storeId: input.storeId }, select: { status: true } });
+      if (existing.length) continue;
+      validateMembershipInput({ ...input, status: input.status ?? CastMembershipStatus.ACTIVE });
+      const row = await tx.castStoreMembership.create({ data: { castId: input.castId, storeId: input.storeId, joinedAt: null, leftAt: null, status: CastMembershipStatus.ACTIVE, source: input.source ?? "MEDIA_EVIDENCE_BACKFILL", sourceConfidence: input.sourceConfidence ?? CastMembershipSourceConfidence.CONFIRMED, createdByUserId: input.createdByUserId ?? null, updatedByUserId: input.updatedByUserId ?? input.createdByUserId ?? null } });
+      created.push(row.id);
+    }
+    return created;
+  });
+}
+
 export async function updateMembership(id: string, input: Omit<MembershipInput, "castId" | "storeId"> & { castId?: string; storeId?: string }) {
   return prisma.$transaction(async (tx) => {
     const current = await tx.castStoreMembership.findUnique({ where: { id } });
