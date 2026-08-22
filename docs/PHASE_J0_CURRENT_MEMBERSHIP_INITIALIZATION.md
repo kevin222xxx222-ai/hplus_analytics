@@ -1,6 +1,8 @@
 # Phase J0-E Current Membership Initialization
 
-Status: IMPLEMENTED / Production Apply NOT EXECUTED
+Status: E2 HARDENED / Production Apply NOT EXECUTED
+
+旧Previewの373 CREATE_ACTIVE候補はConfirmしていない。旧ロジックはCast自身のFact最大日・媒体混在Store最大日・累計HeavenFactをCurrent判定に含み得たため、Production初期化条件として不十分だった。
 
 ## Current Evidence
 
@@ -8,13 +10,16 @@ Cast × Store単位で、次のEvidenceを判定する。
 
 - `MediaListing.isListed = true`
 - `CastAlias.validTo IS NULL`
-- 店舗の最新Fact日と一致する最新媒体実績
+- CTI×Storeの最新成功CTI Datasetに存在
+- Town CAST×Storeの最新成功Town CAST Datasetに存在
 
-Factの最初の日付・最終日付、Aliasの終了日、Listingの終了日、Import日、Drive日付、表示名の「退店」は退店日として使用しない。
+Heaven累計Fact、Factの最初・最終日、Aliasの終了日、Listingの終了日、Import日、Drive日付、表示名の「退店」はCurrent CREATE_ACTIVEや退店日として使用しない。AliasとMediaListingは補足Evidenceへ降格した。
+
+最新Datasetは既存ImportBatchの`COMPLETED` / `COMPLETED_WITH_WARNINGS`だけを対象に、source×storeの`targetTo`最大Datasetを選ぶ。Datasetに存在しないことから退店・LEFTは生成しない。
 
 ## Preview / Confirm
 
-`/masters/casts/memberships/initialize`で作成候補を表示する。候補はCast・店舗・Evidence理由・作成内容を確認できる。ViewerはPreviewのみ、Adminの明示Confirm時だけ初期Membershipを作成する。
+`/masters/casts/memberships/initialize`で作成候補を表示する。候補はCast・店舗・Source・最新Dataset日・成功済みImportBatch（先頭8文字表示、詳細はtitle）・Evidence理由・作成内容を確認できる。ViewerはPreviewのみ、Adminの明示Confirm時だけ初期Membershipを作成する。
 
 作成値は次のとおり。
 
@@ -26,7 +31,7 @@ source = MEDIA_EVIDENCE_BACKFILL
 sourceConfidence = CONFIRMED
 ```
 
-既存ACTIVEはNOOP、ON_LEAVEは要確認、既存LEFTに現在Evidenceがある場合はREENTRY_REVIEWとし、自動作成しない。作成はtransaction・advisory lock・既存Membership検証を通す。
+既存ACTIVEはNOOP、ON_LEAVEは要確認、既存LEFTにCurrent CTI/Town Evidenceがある場合はREENTRY_REVIEW、Legacy markerまたはINACTIVEとの矛盾はLEGACY_STATUS_CONFLICT、HeavenだけはHEAVEN_CURRENT_REVIEWとする。作成はtransaction・advisory lock・既存Membership検証を通す。
 
 ## Daily Operations
 
