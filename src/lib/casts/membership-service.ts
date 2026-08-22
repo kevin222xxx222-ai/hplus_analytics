@@ -51,7 +51,7 @@ export function validateMembershipInput(input: Pick<MembershipInput, "joinedAt" 
 }
 
 async function lockMembershipScope(db: DbClient, castId: string, storeId: string) {
-  await db.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`cast-membership:${castId}:${storeId}`}))`;
+  await db.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`cast-membership:${castId}:${storeId}`})) IS NULL AS locked`;
 }
 
 async function assertNoOverlap(db: DbClient, input: MembershipDateRange & { castId: string; storeId: string; excludeId?: string }) {
@@ -111,7 +111,7 @@ export async function initializeCurrentMemberships(inputs: MembershipInput[]) {
   return prisma.$transaction(async (tx) => {
     const created: string[] = [];
     for (const input of inputs) {
-      await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`cast-membership:${input.castId}:${input.storeId}`}))`;
+      await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`cast-membership:${input.castId}:${input.storeId}`})) IS NULL AS locked`;
       const existing = await tx.castStoreMembership.findMany({ where: { castId: input.castId, storeId: input.storeId }, select: { status: true } });
       if (existing.length) continue;
       validateMembershipInput({ ...input, status: input.status ?? CastMembershipStatus.ACTIVE });
