@@ -6,7 +6,7 @@ import { CastMembershipSourceConfidence, CastMembershipStatus } from "@/generate
 import { requireAdmin } from "@/lib/auth";
 import { parseDateOnly } from "@/lib/date";
 import { closeMembership, createMembership, createReentryMembership, initializeCurrentMemberships, listMemberships, resumeFromLeave, setOnLeave, updateMembership } from "@/lib/casts/membership-service";
-import { loadCurrentMembershipCandidates } from "@/lib/casts/current-membership-evidence";
+import { loadCurrentMembershipCandidates, summarizeCurrentMembershipCandidates } from "@/lib/casts/current-membership-evidence";
 
 const uuid = z.string().uuid();
 const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
@@ -97,9 +97,16 @@ export async function resumeMembershipAction(formData: FormData) {
 
 export async function initializeCurrentMembershipsAction(formData: FormData) {
   const admin = await requireAdmin();
-  const ids = z.array(uuid).min(1).parse(JSON.parse(String(formData.get("candidateIds"))));
+  z.literal("CONFIRM").parse(formData.get("confirm"));
   const candidates = await loadCurrentMembershipCandidates();
-  const selected = candidates.filter((candidate) => ids.includes(`${candidate.castId}:${candidate.storeId}`) && candidate.decision === "CREATE_ACTIVE");
+  const summary = summarizeCurrentMembershipCandidates(candidates);
+  const equationValid = summary.createActiveTotal === summary.townOnly + summary.ctiOnly + summary.both
+    && summary.createActiveTotal === Object.values(summary.storeCounts).reduce((total, count) => total + count, 0)
+    && summary.duplicateCastStoreCount === 0
+    && summary.invalidBatchStatusCount === 0;
+  if (!equationValid) throw new Error("Current Membership監査に失敗したため、初期化を中止しました。DB変更はありません。");
+  const selected = candidates.filter((candidate) => candidate.decision === "CREATE_ACTIVE");
+  if (selected.length === 0) throw new Error("CREATE_ACTIVE候補がありません。DB変更はありません。");
   await initializeCurrentMemberships(selected.map((candidate) => ({ castId: candidate.castId, storeId: candidate.storeId, status: CastMembershipStatus.ACTIVE, joinedAt: null, leftAt: null, source: "MEDIA_EVIDENCE_BACKFILL", sourceConfidence: CastMembershipSourceConfidence.CONFIRMED, createdByUserId: admin.id, updatedByUserId: admin.id })));
   revalidatePath("/masters/casts/memberships/initialize");
   revalidatePath("/masters/casts");
