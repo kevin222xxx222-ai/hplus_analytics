@@ -13,10 +13,12 @@ async function main() {
   console.log("Store Scope Audit: READ-ONLY");
   console.log(`LEGACY_ACTIVE_MEMBERSHIP_INACTIVE: ${audit.validation.legacyTotal}`);
   console.log(`Legacy classification: ${JSON.stringify(audit.legacyCounts)}`);
-  for (const row of audit.legacyRows.filter((item) => item.classification === "CURRENT_STORE_MEMBERSHIP_MISSING")) console.log(`CURRENT_STORE_MEMBERSHIP_MISSING\t${row.displayName}\t${row.storeName}\t${row.castId}\tTown=${row.townCurrent ? row.townDatasetDate?.toISOString().slice(0, 10) : "-"}\tCTI=${row.ctiCurrent ? row.ctiDatasetDate?.toISOString().slice(0, 10) : "-"}\tRecommendation=${row.recommendation}`);
+  const missingRows = audit.legacyRows.filter((item) => item.classification === "CURRENT_STORE_MEMBERSHIP_MISSING");
+  for (const row of missingRows) console.log(`CURRENT_STORE_MEMBERSHIP_MISSING\t${JSON.stringify(row)}`);
   console.log(`PRIMARY_STORE_DIFFERENCE cells: ${audit.validation.primaryTotal}`);
   console.log(`Primary Store Cast classification: ${JSON.stringify(audit.primaryCounts)}`);
   console.log(`Membership-free Strong Dataset: ${audit.validation.strongMembershipFree}`);
+  console.log(`Membership-free Strong Dataset detail: ${JSON.stringify(audit.strongMembershipFreeRows)}`);
   console.log(`CREATE_ACTIVE: ${audit.validation.createActive}`);
   console.log(`Validation: ${audit.validation.legacyExclusive && audit.validation.otherLegacy === 0 && audit.validation.otherPrimary === 0 && audit.validation.strongMembershipFreeZero ? "PASS" : "REVIEW_REQUIRED"}`);
   console.log(`artifact: ${file}`);
