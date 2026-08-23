@@ -34,7 +34,7 @@ export async function loadStoreScopeAudit(db = prisma) {
   const reviewMap = new Map(reviews.map((review) => [`${review.castId}:${review.storeId}`, review]));
   const candidateMap: CandidateMap = new Map(candidates.map((candidate) => [`${candidate.castId}:${candidate.storeId}`, candidate]));
   const summary = summarizeShadowSnapshot(casts, stores, new Date());
-  const legacyRows = casts.flatMap((cast) => stores.filter((store) => cast.status === CastStatus.ACTIVE && cast.primaryStoreId === store.id && !hasCurrentStoreMembership(cast.memberships, store.id)).map((store) => ({ cast, store }))).map(({ cast, store }) => {
+  const allLegacyRows = casts.flatMap((cast) => stores.filter((store) => cast.status === CastStatus.ACTIVE && cast.primaryStoreId === store.id && !hasCurrentStoreMembership(cast.memberships, store.id)).map((store) => ({ cast, store }))).map(({ cast, store }) => {
     const candidate = candidateMap.get(`${cast.id}:${store.id}`);
     const target = cast.memberships.find((membership) => membership.storeId === store.id);
     const otherActive = cast.memberships.filter((membership) => membership.storeId !== store.id && (membership.status === CastMembershipStatus.ACTIVE || membership.status === CastMembershipStatus.ON_LEAVE));
@@ -45,6 +45,9 @@ export async function loadStoreScopeAudit(db = prisma) {
     const recommendation = classification === "CURRENT_STORE_MEMBERSHIP_MISSING" ? "ADD_MEMBERSHIP_CANDIDATE" : classification === "EXPECTED_NON_REGULAR" ? "EXPECTED_NON_REGULAR" : classification === "LEFT_STORE_CONFLICT" ? "REENTRY_REVIEW" : classification === "OTHER" ? "DATA_CONFLICT" : "AUDIT_BUG";
     return { castId: cast.id, displayName: cast.displayName, storeId: store.id, storeName: store.shortName, legacyStatus: cast.status, legacyEndedOn: cast.endedOn, primaryStoreId: cast.primaryStoreId, targetMembershipStatus: target?.status ?? null, targetMembershipLeftAt: target?.leftAt ?? null, otherActiveMemberships: otherActive.map((membership) => ({ storeId: membership.storeId, status: membership.status })), townCurrent, townDatasetDate: candidate?.evidence.townDataset?.date ?? null, townBatchId: candidate?.evidence.townDataset?.batchId ?? null, ctiCurrent, ctiDatasetDate: candidate?.evidence.ctiDataset?.date ?? null, ctiBatchId: candidate?.evidence.ctiDataset?.batchId ?? null, aliasEvidence: candidate?.evidence.aliasEvidence ?? false, mediaListingEvidence: candidate?.evidence.mediaListingEvidence ?? false, classification, recommendation, reason: classification === "EXPECTED_NON_REGULAR" ? explicitReview?.reason : classification === "EXPECTED_STORE_SCOPE_DIFFERENCE" ? "他Storeに在籍Membershipがあり、対象StoreにCurrent Town/CTI evidenceなし" : classification === "CURRENT_STORE_MEMBERSHIP_MISSING" ? "対象Storeに最新Town/CTI evidenceがあるがActive Membershipなし" : classification === "LEFT_STORE_CONFLICT" ? "対象StoreがLEFT MembershipでCurrent evidenceあり" : classification === "LEGACY_STATUS_STALE" ? "Legacy ACTIVEだが在籍MembershipとCurrent evidenceなし" : "分類条件外" };
   });
+  const shadowLegacyKeys = new Set(summary.differences.filter((row) => row.classification === "LEGACY_ACTIVE_MEMBERSHIP_INACTIVE").map((row) => `${row.cast.id}:${row.store.id}`));
+  const legacyRows = allLegacyRows.filter((row) => shadowLegacyKeys.has(`${row.castId}:${row.storeId}`));
+  const legacyStatusStaleCandidates = allLegacyRows.filter((row) => row.classification === "LEGACY_STATUS_STALE");
   const primaryRows = summary.differences.filter((row) => row.classification === "PRIMARY_STORE_DIFFERENCE");
   const primaryByCast = new Map<string, typeof casts[number]>();
   for (const row of primaryRows) primaryByCast.set(row.cast.id, row.cast);
@@ -58,5 +61,5 @@ export async function loadStoreScopeAudit(db = prisma) {
   const strongMembershipFree = new Set(gapPreview.filter((row) => row.membershipFree && (row.townCurrent || row.ctiCurrent)).map((row) => row.castId)).size;
   const strongMembershipFreeRows = gapPreview.filter((row) => row.membershipFree && (row.townCurrent || row.ctiCurrent));
   const validation = { legacyTotal: legacyRows.length, legacyExclusive: Object.values(counts).reduce((sum, count) => sum + count, 0) === legacyRows.length, primaryTotal: primaryRows.length, primaryCastTotal: primary.length, otherLegacy: counts.OTHER ?? 0, otherPrimary: primaryCounts.OTHER ?? 0, strongMembershipFree, strongMembershipFreeZero: strongMembershipFree === 0, createActive: gapPreview.filter((row) => row.action === "CREATE_ACTIVE").length };
-  return { generatedAt: new Date(), legacyRows, legacyCounts: counts, primaryRows: primary, primaryCounts, strongMembershipFreeRows, validation };
+  return { generatedAt: new Date(), legacyRows, legacyCounts: counts, legacyStatusStaleCandidates, primaryRows: primary, primaryCounts, strongMembershipFreeRows, validation };
 }

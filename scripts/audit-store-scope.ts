@@ -5,14 +5,15 @@ import { prisma } from "@/lib/prisma";
 
 async function main() {
   const audit = await loadStoreScopeAudit();
-  const report = { mode: "READ_ONLY", generatedAt: audit.generatedAt.toISOString(), summary: { legacyActiveMembershipInactive: audit.validation.legacyTotal, legacyClassification: audit.legacyCounts, primaryStoreDifferenceCells: audit.validation.primaryTotal, primaryStoreCastClassification: audit.primaryCounts, strongMembershipFree: audit.validation.strongMembershipFree, createActive: audit.validation.createActive, validation: audit.validation }, legacyRows: audit.legacyRows, primaryRows: audit.primaryRows };
+  const report = { mode: "READ_ONLY", generatedAt: audit.generatedAt.toISOString(), summary: { shadowLegacyActiveMembershipInactive: audit.validation.legacyTotal, legacyClassification: audit.legacyCounts, legacyStatusStaleCandidates: audit.legacyStatusStaleCandidates.length, primaryStoreDifferenceCells: audit.validation.primaryTotal, primaryStoreCastClassification: audit.primaryCounts, strongMembershipFree: audit.validation.strongMembershipFree, createActive: audit.validation.createActive, validation: audit.validation }, legacyRows: audit.legacyRows, legacyStatusStaleCandidates: audit.legacyStatusStaleCandidates, primaryRows: audit.primaryRows };
   const dir = path.join(process.cwd(), "artifacts", "audits");
   await mkdir(dir, { recursive: true });
   const file = path.join(dir, `store-scope-${new Date().toISOString().replace(/[-:TZ.]/g, "").slice(0, 14)}.json`);
   await writeFile(file, `${JSON.stringify(report, null, 2)}\n`, "utf8");
   console.log("Store Scope Audit: READ-ONLY");
-  console.log(`LEGACY_ACTIVE_MEMBERSHIP_INACTIVE: ${audit.validation.legacyTotal}`);
+  console.log(`Shadow LEGACY_ACTIVE_MEMBERSHIP_INACTIVE: ${audit.validation.legacyTotal}`);
   console.log(`Legacy classification: ${JSON.stringify(audit.legacyCounts)}`);
+  console.log(`Legacy status stale candidates (separate population): ${audit.legacyStatusStaleCandidates.length}`);
   const missingRows = audit.legacyRows.filter((item) => item.classification === "CURRENT_STORE_MEMBERSHIP_MISSING");
   for (const row of missingRows) console.log(`CURRENT_STORE_MEMBERSHIP_MISSING\t${JSON.stringify(row)}`);
   console.log(`PRIMARY_STORE_DIFFERENCE cells: ${audit.validation.primaryTotal}`);
