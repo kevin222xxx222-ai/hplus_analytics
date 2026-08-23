@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { CalendarRange, GitMerge, History, Plus, UserX } from "lucide-react";
+import { CalendarRange, GitMerge, History, Plus } from "lucide-react";
 import { createCastAction } from "@/app/actions/masters";
-import { addCurrentMembershipAction, exitCastAction } from "@/app/actions/memberships";
+import { addCurrentMembershipAction } from "@/app/actions/memberships";
 import { CastDisplayNameForm } from "@/components/cast-display-name-form";
+import { CastExitForm } from "@/components/cast-exit-form";
 import { CastPrimaryStoreForm } from "@/components/cast-primary-store-form";
 import { PageHeader } from "@/components/page-header";
 import { CastStatus } from "@/generated/prisma/client";
@@ -61,7 +62,7 @@ export default async function CastsPage({ searchParams }: { searchParams: Promis
             </div></td>
             <td className="align-top">{cast.startedOn.toLocaleDateString("ja-JP")}</td>
             <td className="align-top"><span className={`status-badge ${cast.status === "ACTIVE" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-500"}`}>{cast.status === "ACTIVE" ? "在籍" : "退店"}</span></td>
-            <td className="align-top">{cast.mergedIntoCastId ? <span className="text-xs text-slate-400">変更不可</span> : cast.status === CastStatus.ACTIVE ? <form action={exitCastAction} className="space-y-2"><input type="hidden" name="castId" value={cast.id} /><input type="hidden" name="confirmation" value="EXIT_CAST" /><label className="text-xs text-slate-500">Cast全体の退店日</label><div className="flex items-center gap-2"><input type="date" name="leftAt" className="compact-input" required /><button className="icon-button" title="全店舗を退店として保存"><UserX className="size-4" /></button></div></form> : <span className="text-xs text-slate-500">退店日: {cast.endedOn?.toLocaleDateString("ja-JP") ?? "不明"}</span>}</td>
+            <td className="align-top">{cast.mergedIntoCastId ? <span className="text-xs text-slate-400">変更不可</span> : cast.status === CastStatus.ACTIVE ? <CastExitForm castId={cast.id} /> : <span className="text-xs text-slate-500">退店日: {cast.endedOn?.toLocaleDateString("ja-JP") ?? "不明"}</span>}</td>
           </tr>)}</tbody>
         </table>
         {casts.length === 0 && <p className="empty-state">キャストはまだ登録されていません。</p>}

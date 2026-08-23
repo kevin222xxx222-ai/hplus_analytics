@@ -63,6 +63,13 @@ export function validateExitDatePreflight(exitDate: Date, futureAliasCount: numb
   }
 }
 
+export class ExitDateConflictError extends Error {
+  constructor(public readonly aliasDates: Date[], public readonly listingDates: Date[]) {
+    super(`退店日より後に開始した媒体履歴があります。Alias ${aliasDates.length}件、MediaListing ${listingDates.length}件の確認が必要です。`);
+    this.name = "ExitDateConflictError";
+  }
+}
+
 export function classifyMediaRepair(startDate: Date | null, castEndedOn: Date) {
   if (!startDate || startDate.getTime() <= castEndedOn.getTime()) return "NORMAL_CLOSE" as const;
   return "FUTURE_START_CONFLICT" as const;
@@ -248,7 +255,7 @@ export async function initializeCurrentMemberships(inputs: MembershipInput[]) {
   });
 }
 
-export async function exitCast(castId: string, leftAt: Date, updatedByUserId?: string | null) {
+export async function exitCast(castId: string, leftAt: Date, updatedByUserId?: string | null, options: { allowLegacyConflictRepair?: boolean } = {}) {
   return prisma.$transaction(async (tx) => {
     await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`cast-exit:${castId}`})) IS NULL AS locked`;
     const cast = await tx.cast.findFirst({ where: { id: castId, mergedIntoCastId: null }, select: { id: true, status: true, endedOn: true } });
@@ -259,11 +266,18 @@ export async function exitCast(castId: string, leftAt: Date, updatedByUserId?: s
       tx.mediaListing.findMany({ where: { castId, isListed: true }, select: { listedFrom: true, listedTo: true } }),
     ]);
     validateExitDateConsistency(leftAt, [cast.endedOn, ...memberships.filter((membership) => membership.status === CastMembershipStatus.LEFT).map((membership) => membership.leftAt)]);
-    validateExitDatePreflight(leftAt, aliases.filter((alias) => alias.validFrom && alias.validFrom > leftAt).length, listings.filter((listing) => listing.listedFrom && listing.listedFrom > leftAt).length);
+    const futureAliases = aliases.filter((alias) => alias.validFrom && alias.validFrom > leftAt);
+    const futureListings = listings.filter((listing) => listing.listedFrom && listing.listedFrom > leftAt);
+    if (!options.allowLegacyConflictRepair && (futureAliases.length || futureListings.length)) throw new ExitDateConflictError(futureAliases.map((alias) => alias.validFrom!), futureListings.map((listing) => listing.listedFrom!));
     const openMemberships = memberships.filter((membership) => membership.status === CastMembershipStatus.ACTIVE || membership.status === CastMembershipStatus.ON_LEAVE);
     await tx.castStoreMembership.updateMany({ where: { id: { in: openMemberships.map((membership) => membership.id) } }, data: { status: CastMembershipStatus.LEFT, leftAt, updatedByUserId: updatedByUserId ?? null } });
-    await tx.castAlias.updateMany({ where: { castId, validTo: null }, data: { validTo: leftAt } });
-    await tx.mediaListing.updateMany({ where: { castId, isListed: true, listedTo: null }, data: { isListed: false, listedTo: leftAt } });
+    if (options.allowLegacyConflictRepair) {
+      await tx.castAlias.updateMany({ where: { castId, validTo: null, validFrom: { gt: leftAt } }, data: { reviewStatus: "IGNORED", validTo: null } });
+      await tx.mediaListing.updateMany({ where: { castId, isListed: true, listedFrom: { gt: leftAt } }, data: { isListed: false, listedTo: null } });
+    }
+    await tx.castAlias.updateMany({ where: { castId, validTo: null, OR: [{ validFrom: null }, { validFrom: { lte: leftAt } }] }, data: { validTo: leftAt } });
+    await tx.mediaListing.updateMany({ where: { castId, isListed: true, listedFrom: { lte: leftAt } }, data: { isListed: false, listedTo: leftAt } });
+    await tx.mediaListing.updateMany({ where: { castId, isListed: true, listedFrom: null }, data: { isListed: false, listedTo: leftAt } });
     await tx.mediaListing.updateMany({ where: { castId, isListed: true, listedTo: { not: null } }, data: { isListed: false } });
     return tx.cast.update({ where: { id: castId }, data: { status: CastStatus.INACTIVE, endedOn: leftAt } });
   });

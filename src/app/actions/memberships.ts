@@ -5,7 +5,7 @@ import { z } from "zod";
 import { CastMembershipSourceConfidence, CastMembershipStatus } from "@/generated/prisma/client";
 import { requireAdmin } from "@/lib/auth";
 import { parseDateOnly } from "@/lib/date";
-import { closeMembership, createMembership, createReentryMembership, exitCast, initializeCurrentMemberships, listMemberships, resumeFromLeave, setOnLeave, updateMembership } from "@/lib/casts/membership-service";
+import { closeMembership, createMembership, createReentryMembership, exitCast, ExitDateConflictError, initializeCurrentMemberships, listMemberships, resumeFromLeave, setOnLeave, updateMembership } from "@/lib/casts/membership-service";
 import { loadCurrentMembershipCandidates, summarizeCurrentMembershipCandidates } from "@/lib/casts/current-membership-evidence";
 
 const uuid = z.string().uuid();
@@ -78,10 +78,16 @@ export async function closeMembershipAction(formData: FormData) {
 
 export async function exitCastAction(formData: FormData) {
   const admin = await requireAdmin();
-  const parsed = z.object({ castId: uuid, leftAt: date, confirmation: z.literal("EXIT_CAST") }).parse(Object.fromEntries(formData));
-  await exitCast(parsed.castId, parseDateOnly(parsed.leftAt), admin.id);
+  const parsed = z.object({ castId: uuid, leftAt: date, confirmation: z.literal("EXIT_CAST"), repairLegacy: z.enum(["true", "false"]).optional() }).parse(Object.fromEntries(formData));
+  try {
+    await exitCast(parsed.castId, parseDateOnly(parsed.leftAt), admin.id, { allowLegacyConflictRepair: parsed.repairLegacy === "true" });
+  } catch (error) {
+    if (error instanceof ExitDateConflictError) return { status: "CONFLICT", message: error.message, aliasCount: error.aliasDates.length, listingCount: error.listingDates.length };
+    throw error;
+  }
   revalidatePath("/masters/casts");
   revalidatePath("/masters/casts/memberships");
+  return { status: "COMPLETED" };
 }
 
 export async function createReentryMembershipAction(formData: FormData) {
