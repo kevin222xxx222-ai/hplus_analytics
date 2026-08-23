@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { CastMembershipStatus } from "@/generated/prisma/client";
-import { isMembershipActiveOn, membershipPeriodsOverlap, validateExitDateConsistency, validateExitDatePreflight, validateMembershipInput } from "./membership-service";
+import { classifyMediaRepair, isMembershipActiveOn, membershipPeriodsOverlap, validateExitDateConsistency, validateExitDatePreflight, validateMembershipInput } from "./membership-service";
 
 const day = (value: string) => new Date(`${value}T00:00:00.000Z`);
 
@@ -43,5 +43,11 @@ describe("membership-service validation", () => {
     expect(() => validateExitDatePreflight(day("2026-06-30"), 0, 0)).not.toThrow();
     expect(() => validateExitDatePreflight(day("2026-06-30"), 1, 0)).toThrow();
     expect(() => validateExitDatePreflight(day("2026-06-30"), 0, 1)).toThrow();
+  });
+
+  it("classifies normal close and future-start conflicts without changing dates", () => {
+    expect(classifyMediaRepair(day("2026-06-01"), day("2026-06-30"))).toBe("NORMAL_CLOSE");
+    expect(classifyMediaRepair(day("2026-06-30"), day("2026-06-30"))).toBe("NORMAL_CLOSE");
+    expect(classifyMediaRepair(day("2026-07-13"), day("2026-06-30"))).toBe("FUTURE_START_CONFLICT");
   });
 });

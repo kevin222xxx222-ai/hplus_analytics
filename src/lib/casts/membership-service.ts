@@ -63,6 +63,11 @@ export function validateExitDatePreflight(exitDate: Date, futureAliasCount: numb
   }
 }
 
+export function classifyMediaRepair(startDate: Date | null, castEndedOn: Date) {
+  if (!startDate || startDate.getTime() <= castEndedOn.getTime()) return "NORMAL_CLOSE" as const;
+  return "FUTURE_START_CONFLICT" as const;
+}
+
 export async function auditCastDateRangeConflicts(db: DbClient = prisma) {
   const [aliases, listings] = await Promise.all([
     db.castAlias.findMany({ where: { validFrom: { not: null }, validTo: { not: null } }, select: { id: true, castId: true, validFrom: true, validTo: true } }),
@@ -71,6 +76,104 @@ export async function auditCastDateRangeConflicts(db: DbClient = prisma) {
   const aliasConflicts = aliases.filter((row) => row.validFrom && row.validTo && row.validTo < row.validFrom);
   const listingConflicts = listings.filter((row) => row.listedFrom && row.listedTo && row.listedTo < row.listedFrom);
   return { aliasCount: aliasConflicts.length, listingCount: listingConflicts.length, aliases: aliasConflicts, listings: listingConflicts };
+}
+
+export async function auditCastMediaStateConflicts(db: DbClient = prisma) {
+  const [casts, aliases, listings] = await Promise.all([
+    db.cast.findMany({ where: { mergedIntoCastId: null }, select: { id: true, displayName: true, status: true, endedOn: true, memberships: { select: { status: true } } } }),
+    db.castAlias.findMany({ where: { castId: { not: null } }, select: { id: true, castId: true, aliasName: true, validFrom: true, validTo: true, reviewStatus: true } }),
+    db.mediaListing.findMany({ select: { id: true, castId: true, storeId: true, isListed: true, listedFrom: true, listedTo: true } }),
+  ]);
+  const castMap = new Map(casts.map((cast) => [cast.id, cast]));
+  const range = await auditCastDateRangeConflicts(db);
+  const retired = (castId: string) => {
+    const cast = castMap.get(castId);
+    return Boolean(cast && (cast.status === "INACTIVE" || cast.endedOn));
+  };
+  const currentAliases = aliases.filter((alias) => alias.castId && retired(alias.castId) && alias.validTo === null && alias.reviewStatus !== "IGNORED");
+  const currentListings = listings.filter((listing) => retired(listing.castId) && listing.isListed);
+  const allLeftCastIds = new Set(casts.filter((cast) => cast.memberships.length > 0 && cast.memberships.every((membership) => membership.status === "LEFT")).map((cast) => cast.id));
+  const allLeftAliases = currentAliases.filter((alias) => alias.castId && allLeftCastIds.has(alias.castId));
+  const allLeftListings = currentListings.filter((listing) => allLeftCastIds.has(listing.castId));
+  return {
+    ...range,
+    retiredCurrentAliasCount: currentAliases.length,
+    retiredCurrentListingCount: currentListings.length,
+    allLeftCurrentAliasCount: allLeftAliases.length,
+    allLeftCurrentListingCount: allLeftListings.length,
+    retiredCurrentAliases: currentAliases,
+    retiredCurrentListings: currentListings,
+  };
+}
+
+export type LegacyMediaRepairCandidate = {
+  castId: string;
+  castName: string;
+  recordType: "ALIAS" | "MEDIA_LISTING";
+  recordId: string;
+  storeId: string | null;
+  mediaType: string | null;
+  startDate: Date | null;
+  currentEndDate: Date | null;
+  castEndedOn: Date;
+  classification: "NORMAL_CLOSE" | "FUTURE_START_CONFLICT";
+  repair: Record<string, string | null | boolean>;
+};
+
+export async function previewLegacyMediaConflictRepair(db: DbClient = prisma, castIds?: string[]) {
+  const [casts, aliases, listings] = await Promise.all([
+    db.cast.findMany({ where: { mergedIntoCastId: null, endedOn: { not: null }, ...(castIds?.length ? { id: { in: castIds } } : {}) }, select: { id: true, displayName: true, endedOn: true } }),
+    db.castAlias.findMany({ where: { castId: castIds?.length ? { in: castIds } : { not: null } }, select: { id: true, castId: true, storeId: true, mediaType: true, validFrom: true, validTo: true, reviewStatus: true } }),
+    db.mediaListing.findMany({ where: { castId: castIds?.length ? { in: castIds } : undefined }, select: { id: true, castId: true, storeId: true, mediaType: true, listedFrom: true, listedTo: true, isListed: true } }),
+  ]);
+  const castMap = new Map(casts.map((cast) => [cast.id, cast]));
+  const result: LegacyMediaRepairCandidate[] = [];
+  for (const alias of aliases) {
+    const cast = alias.castId ? castMap.get(alias.castId) : undefined;
+    if (!cast?.endedOn || alias.reviewStatus === "IGNORED") continue;
+    const invalid = Boolean(alias.validFrom && alias.validTo && alias.validTo < alias.validFrom);
+    const current = alias.validTo === null;
+    if (!invalid && !current) continue;
+    const future = Boolean(alias.validFrom && alias.validFrom > cast.endedOn);
+    result.push({ castId: cast.id, castName: cast.displayName, recordType: "ALIAS", recordId: alias.id, storeId: alias.storeId, mediaType: alias.mediaType, startDate: alias.validFrom, currentEndDate: alias.validTo, castEndedOn: cast.endedOn, classification: future ? "FUTURE_START_CONFLICT" : "NORMAL_CLOSE", repair: future ? { reviewStatus: "IGNORED", validTo: null } : { reviewStatus: alias.reviewStatus, validTo: cast.endedOn.toISOString().slice(0, 10) } });
+  }
+  for (const listing of listings) {
+    const cast = castMap.get(listing.castId);
+    if (!cast?.endedOn) continue;
+    const invalid = Boolean(listing.listedFrom && listing.listedTo && listing.listedTo < listing.listedFrom);
+    if (!invalid && !listing.isListed) continue;
+    const future = Boolean(listing.listedFrom && listing.listedFrom > cast.endedOn);
+    result.push({ castId: cast.id, castName: cast.displayName, recordType: "MEDIA_LISTING", recordId: listing.id, storeId: listing.storeId, mediaType: listing.mediaType, startDate: listing.listedFrom, currentEndDate: listing.listedTo, castEndedOn: cast.endedOn, classification: future ? "FUTURE_START_CONFLICT" : "NORMAL_CLOSE", repair: future ? { isListed: false, listedTo: null } : { isListed: false, listedTo: cast.endedOn.toISOString().slice(0, 10) } });
+  }
+  return result;
+}
+
+export async function repairLegacyMediaConflicts(candidates: Array<Pick<LegacyMediaRepairCandidate, "recordType" | "recordId">>, confirmation: string, db: DbClient = prisma) {
+  if (confirmation !== "REPAIR") throw new Error("RepairにはREPAIRの明示確認が必要です。");
+  const ids = candidates.map((candidate) => candidate.recordId);
+  if (!ids.length) return { updated: 0 };
+  return db.$transaction(async (tx) => {
+    const preview = await previewLegacyMediaConflictRepair(tx);
+    const selected = preview.filter((candidate) => candidates.some((input) => input.recordType === candidate.recordType && input.recordId === candidate.recordId));
+    const castIds = [...new Set(selected.map((candidate) => candidate.castId))].sort();
+    for (const castId of castIds) await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`cast-media-repair:${castId}`})) IS NULL AS locked`;
+    let updated = 0;
+    for (const candidate of selected) {
+      const castEndedOn = candidate.castEndedOn;
+      if (candidate.recordType === "ALIAS") {
+        const result = candidate.classification === "FUTURE_START_CONFLICT"
+          ? await tx.castAlias.updateMany({ where: { id: candidate.recordId }, data: { reviewStatus: "IGNORED", validTo: null } })
+          : await tx.castAlias.updateMany({ where: { id: candidate.recordId, validTo: null }, data: { validTo: castEndedOn } });
+        updated += result.count;
+      } else {
+        const result = candidate.classification === "FUTURE_START_CONFLICT"
+          ? await tx.mediaListing.updateMany({ where: { id: candidate.recordId }, data: { isListed: false, listedTo: null } })
+          : await tx.mediaListing.updateMany({ where: { id: candidate.recordId, isListed: true }, data: { isListed: false, listedTo: castEndedOn } });
+        updated += result.count;
+      }
+    }
+    return { updated };
+  });
 }
 
 async function lockMembershipScope(db: DbClient, castId: string, storeId: string) {

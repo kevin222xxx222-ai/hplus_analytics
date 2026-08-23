@@ -1,4 +1,4 @@
-import { CastMembershipStatus, ImportBatchStatus, ImportDataType, type Prisma } from "@/generated/prisma/client";
+import { AliasReviewStatus, CastMembershipStatus, ImportBatchStatus, ImportDataType, type Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 
 type DbClient = Prisma.TransactionClient | typeof prisma;
@@ -93,7 +93,7 @@ export async function loadCurrentMembershipCandidates(db: DbClient = prisma): Pr
   const [casts, stores, aliases, listings, cti, town, heaven] = await Promise.all([
     db.cast.findMany({ where: { mergedIntoCastId: null }, select: { id: true, displayName: true, status: true, memberships: { select: { storeId: true, status: true } } } }),
     db.store.findMany({ where: { isActive: true }, select: { id: true, shortName: true } }),
-    db.castAlias.findMany({ where: { castId: { not: null }, validTo: null }, select: { castId: true, storeId: true } }),
+    db.castAlias.findMany({ where: { castId: { not: null }, validTo: null, reviewStatus: { not: AliasReviewStatus.IGNORED } }, select: { castId: true, storeId: true } }),
     db.mediaListing.findMany({ where: { isListed: true }, select: { castId: true, storeId: true } }),
     db.ctiCastDaily.findMany({ where: { importBatch: { dataType: ImportDataType.CTI_CAST_REPORT, status: { in: successful } } }, select: { castId: true, storeId: true, businessDate: true, importBatch: { select: { id: true, targetTo: true, status: true, originalFilename: true } } } }),
     db.townCastDaily.findMany({ where: { importBatch: { dataType: ImportDataType.TOWN_CAST, status: { in: successful } } }, select: { castId: true, storeId: true, date: true, importBatch: { select: { id: true, targetTo: true, status: true, originalFilename: true } } } }),
