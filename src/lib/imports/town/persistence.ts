@@ -1,5 +1,6 @@
 import { MediaType, type Prisma } from "@/generated/prisma/client";
 import { parseDateOnly } from "@/lib/date";
+import { canCurrentizeTownCast } from "@/lib/imports/town/media-state-policy";
 import type { TownPreview, TownPreviewRow } from "@/lib/imports/town/types";
 
 export function townRowKey(row: TownPreviewRow) {
@@ -22,7 +23,9 @@ export async function persistTownRow(tx: Prisma.TransactionClient, batchId: stri
     if (existing?.importBatchId === batchId) return { key, existed: true, existingImportBatchId: batchId, persisted: false };
     const data = { importBatchId: batchId, sourceCastName: row.originalCastName, pv: row.pv, uu: row.uu, averagePv: row.averagePv, sourceAveragePv: row.sourceAveragePv, telTapUu: row.telTapUu, conversionRate: row.conversionRate, sourceConversionRate: row.sourceConversionRate, isListed: true, sourceRowNumber: row.sourceRowNumber };
     await tx.townCastDaily.upsert({ where: { date_storeId_castId: { date, storeId: preview.storeId, castId: row.castId } }, create: { date, storeId: preview.storeId, castId: row.castId, ...data }, update: data });
-    await tx.mediaListing.upsert({ where: { castId_storeId_mediaType: { castId: row.castId, storeId: preview.storeId, mediaType: MediaType.TOWN } }, create: { castId: row.castId, storeId: preview.storeId, mediaType: MediaType.TOWN, isListed: true, listedFrom: date }, update: { isListed: true, listedTo: null } });
+    if (await canCurrentizeTownCast(tx, { castId: row.castId, storeId: preview.storeId, targetDate: date, normalizedAlias: row.normalizedCastName })) {
+      await tx.mediaListing.upsert({ where: { castId_storeId_mediaType: { castId: row.castId, storeId: preview.storeId, mediaType: MediaType.TOWN } }, create: { castId: row.castId, storeId: preview.storeId, mediaType: MediaType.TOWN, isListed: true, listedFrom: date }, update: { isListed: true, listedTo: null } });
+    }
     return { key, existed: Boolean(existing), existingImportBatchId: existing?.importBatchId || null, persisted: true };
   }
   if (row.kind === "URL") {

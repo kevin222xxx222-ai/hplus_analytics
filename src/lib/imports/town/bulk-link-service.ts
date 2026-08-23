@@ -8,6 +8,7 @@ import type { TownPreview, TownPreviewRow } from "@/lib/imports/town/types";
 import type { TownBulkLinkCandidate, TownBulkLinkCastOption, TownBulkLinkCategory, TownBulkLinkCategorySummary, TownBulkLinkCandidateExecuteInput, TownBulkLinkExecuteInput, TownBulkLinkImpactPreview, TownBulkLinkPreview } from "@/lib/imports/town/bulk-link-types";
 import { normalizeCastName } from "@/lib/normalize";
 import { prisma } from "@/lib/prisma";
+import { canCurrentizeTownCast } from "@/lib/imports/town/media-state-policy";
 
 type AnalysisDb = Pick<Prisma.TransactionClient, "importBatch" | "cast" | "castAlias" | "castNameHistory" | "ctiCastDaily" | "mediaListing" | "store" | "townCastDaily" | "townUrlDaily" | "townLandingDaily">;
 type RowReference = { batchId: string; rowNumber: number; rowKey: string; date: string; kind: TownPreviewRow["kind"]; normalizedUrl: string | null };
@@ -634,7 +635,9 @@ export async function executeTownBulkLinkCandidate(input: TownBulkLinkCandidateE
       const alias = existingAlias
         ? await tx.castAlias.update({ where: { id: existingAlias.id }, data: { aliasName: candidate.townName, reviewStatus: AliasReviewStatus.MAPPED, validFrom: !existingAlias.validFrom || existingAlias.validFrom <= targetDate ? existingAlias.validFrom : targetDate } })
         : await tx.castAlias.create({ data: { mediaType: MediaType.TOWN, aliasName: candidate.townName, normalizedAlias: candidate.normalizedName, reviewStatus: AliasReviewStatus.MAPPED, castId, storeId: candidate.storeId, validFrom: targetDate } });
-      if (input.operation === "NEW") await tx.mediaListing.upsert({ where: { castId_storeId_mediaType: { castId, storeId: candidate.storeId, mediaType: MediaType.TOWN } }, create: { castId, storeId: candidate.storeId, mediaType: MediaType.TOWN, isListed: true, listedFrom: targetDate }, update: { isListed: true, listedTo: null } });
+      if (input.operation === "NEW" && await canCurrentizeTownCast(tx, { castId, storeId: candidate.storeId, targetDate, normalizedAlias: candidate.normalizedName })) {
+        await tx.mediaListing.upsert({ where: { castId_storeId_mediaType: { castId, storeId: candidate.storeId, mediaType: MediaType.TOWN } }, create: { castId, storeId: candidate.storeId, mediaType: MediaType.TOWN, isListed: true, listedFrom: targetDate }, update: { isListed: true, listedTo: null } });
+      }
 
       const batchIds = [...new Set(candidate.rows.map((row) => row.batchId))];
       const batches = await tx.importBatch.findMany({ where: { id: { in: batchIds } }, include: { errors: { select: { rowNumber: true, errorCode: true, status: true } } } });

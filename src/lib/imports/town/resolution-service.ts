@@ -6,6 +6,7 @@ import { canResolveTownRow, isTownResolutionBatch, openUnmatchedRowNumbers, TOWN
 import type { TownPreview, TownPreviewRow } from "@/lib/imports/town/types";
 import { normalizeCastName } from "@/lib/normalize";
 import { prisma } from "@/lib/prisma";
+import { canCurrentizeTownCast } from "@/lib/imports/town/media-state-policy";
 
 type NewCastInput = {
   action: "NEW";
@@ -202,11 +203,13 @@ export async function resolveTownPreviewRow(batchId: string, rowKey: string, inp
         primaryStoreId: input.primaryStoreId || null,
         notes: newCastData.notes,
       } });
-      await tx.mediaListing.upsert({
-        where: { castId_storeId_mediaType: { castId: selected.id, storeId: primaryPreview.storeId, mediaType: MediaType.TOWN } },
-        create: { castId: selected.id, storeId: primaryPreview.storeId, mediaType: MediaType.TOWN, isListed: true, listedFrom: validFrom },
-        update: { isListed: true, listedTo: null },
-      });
+      if (await canCurrentizeTownCast(tx, { castId: selected.id, storeId: primaryPreview.storeId, targetDate: validFrom, normalizedAlias: name.normalized })) {
+        await tx.mediaListing.upsert({
+          where: { castId_storeId_mediaType: { castId: selected.id, storeId: primaryPreview.storeId, mediaType: MediaType.TOWN } },
+          create: { castId: selected.id, storeId: primaryPreview.storeId, mediaType: MediaType.TOWN, isListed: true, listedFrom: validFrom },
+          update: { isListed: true, listedTo: null },
+        });
+      }
     } else if (input.action === "EXISTING") {
       selected = await tx.cast.findFirst({ where: { id: input.castId, mergedIntoCastId: null, startedOn: { lte: validFrom }, OR: [{ endedOn: null }, { endedOn: { gte: validFrom } }] } });
       if (!selected) throw new Error("対象日に在籍期間内のキャストを選択してください。");

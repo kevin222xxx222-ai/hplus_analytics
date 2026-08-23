@@ -2,6 +2,7 @@ import { ImportBatchStatus, ImportErrorLevel, MediaType } from "@/generated/pris
 import { parseDateOnly } from "@/lib/date";
 import { readPreview } from "@/lib/imports/storage";
 import { summarizeTownPreview } from "@/lib/imports/town/service";
+import { canCurrentizeTownCast } from "@/lib/imports/town/media-state-policy";
 import type { TownPreview, TownPreviewRow } from "@/lib/imports/town/types";
 import { prisma } from "@/lib/prisma";
 
@@ -113,11 +114,13 @@ export async function confirmTownImport(batchId: string, forceDuplicate: boolean
           };
           await tx.townCastDaily.upsert({ where: { date_storeId_castId: { date, storeId: preview.storeId, castId: row.castId } }, create: { date, storeId: preview.storeId, castId: row.castId, ...data }, update: data });
           if (options?.mode !== "CAST_ONLY_HOLD_PARTIAL" && options?.mode !== "ID_NO_SOURCE_URL_HOLD_PARTIAL") {
-            await tx.mediaListing.upsert({
-              where: { castId_storeId_mediaType: { castId: row.castId, storeId: preview.storeId, mediaType: MediaType.TOWN } },
-              create: { castId: row.castId, storeId: preview.storeId, mediaType: MediaType.TOWN, isListed: true, listedFrom: date },
-              update: { isListed: true, listedTo: null },
-            });
+            if (await canCurrentizeTownCast(tx, { castId: row.castId, storeId: preview.storeId, targetDate: date, normalizedAlias: row.normalizedCastName })) {
+              await tx.mediaListing.upsert({
+                where: { castId_storeId_mediaType: { castId: row.castId, storeId: preview.storeId, mediaType: MediaType.TOWN } },
+                create: { castId: row.castId, storeId: preview.storeId, mediaType: MediaType.TOWN, isListed: true, listedFrom: date },
+                update: { isListed: true, listedTo: null },
+              });
+            }
           }
         } else if (row.kind === "URL") {
           const data = {
