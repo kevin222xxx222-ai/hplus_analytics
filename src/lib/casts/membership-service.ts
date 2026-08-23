@@ -50,6 +50,13 @@ export function validateMembershipInput(input: Pick<MembershipInput, "joinedAt" 
   }
 }
 
+export function validateExitDateConsistency(requestedDate: Date, existingDates: Array<Date | null | undefined>) {
+  const requested = requestedDate.getTime();
+  if (existingDates.some((value) => value && value.getTime() !== requested)) {
+    throw new Error("既存の退店日と異なる日付では退店同期を再実行できません。");
+  }
+}
+
 async function lockMembershipScope(db: DbClient, castId: string, storeId: string) {
   await db.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`cast-membership:${castId}:${storeId}`})) IS NULL AS locked`;
 }
@@ -125,10 +132,12 @@ export async function initializeCurrentMemberships(inputs: MembershipInput[]) {
 export async function exitCast(castId: string, leftAt: Date, updatedByUserId?: string | null) {
   return prisma.$transaction(async (tx) => {
     await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`cast-exit:${castId}`})) IS NULL AS locked`;
-    const cast = await tx.cast.findFirst({ where: { id: castId, mergedIntoCastId: null }, select: { id: true, status: true } });
+    const cast = await tx.cast.findFirst({ where: { id: castId, mergedIntoCastId: null }, select: { id: true, status: true, endedOn: true } });
     if (!cast) throw new Error("キャストが見つかりません。");
-    const memberships = await tx.castStoreMembership.findMany({ where: { castId, status: { in: [CastMembershipStatus.ACTIVE, CastMembershipStatus.ON_LEAVE] } }, select: { id: true } });
-    await tx.castStoreMembership.updateMany({ where: { id: { in: memberships.map((membership) => membership.id) } }, data: { status: CastMembershipStatus.LEFT, leftAt, updatedByUserId: updatedByUserId ?? null } });
+    const memberships = await tx.castStoreMembership.findMany({ where: { castId }, select: { id: true, status: true, leftAt: true } });
+    validateExitDateConsistency(leftAt, [cast.endedOn, ...memberships.filter((membership) => membership.status === CastMembershipStatus.LEFT).map((membership) => membership.leftAt)]);
+    const openMemberships = memberships.filter((membership) => membership.status === CastMembershipStatus.ACTIVE || membership.status === CastMembershipStatus.ON_LEAVE);
+    await tx.castStoreMembership.updateMany({ where: { id: { in: openMemberships.map((membership) => membership.id) } }, data: { status: CastMembershipStatus.LEFT, leftAt, updatedByUserId: updatedByUserId ?? null } });
     await tx.castAlias.updateMany({ where: { castId, validTo: null }, data: { validTo: leftAt } });
     await tx.mediaListing.updateMany({ where: { castId, isListed: true, listedTo: null }, data: { isListed: false, listedTo: leftAt } });
     await tx.mediaListing.updateMany({ where: { castId, isListed: true, listedTo: { not: null } }, data: { isListed: false } });

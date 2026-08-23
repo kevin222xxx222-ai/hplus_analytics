@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { CastMembershipStatus } from "@/generated/prisma/client";
-import { isMembershipActiveOn, membershipPeriodsOverlap, validateMembershipInput } from "./membership-service";
+import { isMembershipActiveOn, membershipPeriodsOverlap, validateExitDateConsistency, validateMembershipInput } from "./membership-service";
 
 const day = (value: string) => new Date(`${value}T00:00:00.000Z`);
 
@@ -32,5 +32,10 @@ describe("membership-service validation", () => {
   it("keeps an ON_LEAVE membership in its date range", () => {
     expect(() => validateMembershipInput({ status: CastMembershipStatus.ON_LEAVE, joinedAt: day("2025-01-01"), leftAt: null })).not.toThrow();
     expect(isMembershipActiveOn({ joinedAt: day("2025-01-01"), leftAt: null }, day("2025-06-01"))).toBe(true);
+  });
+
+  it("allows idempotent exit repair and rejects a conflicting exit date", () => {
+    expect(() => validateExitDateConsistency(day("2026-06-30"), [day("2026-06-30"), null])).not.toThrow();
+    expect(() => validateExitDateConsistency(day("2026-07-01"), [day("2026-06-30")])).toThrow();
   });
 });
