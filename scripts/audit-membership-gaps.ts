@@ -33,7 +33,7 @@ async function main() {
   console.log(`Excluded: REENTRY_REVIEW ${report.summary.gapApply.reentryReview}, REVIEW_REQUIRED ${report.summary.gapApply.reviewRequired}`);
   console.log(`REVIEW_REQUIRED reasons: ${JSON.stringify(reviewReasons)}`);
   console.log(`REVIEW_REQUIRED Cast counts: ${JSON.stringify(reviewReasonCastCounts)}`);
-  console.log(`Current Evidence 60: ${JSON.stringify(validation.currentEvidence60)}`);
+  console.log(`Current Evidence ${validation.currentEvidenceCastCount}: ${JSON.stringify(validation.currentEvidence60)}`);
   console.log(`Strong Dataset Casts: ${validation.strongDatasetCastCount}, excluded from CREATE_ACTIVE: ${JSON.stringify(validation.strongDatasetExcluded)}`);
   console.log(`Validation: ${validation.valid ? "PASS" : `FAIL (${validation.errors.join("; ")})`}`);
   console.log(`report: ${reportPath}`);
