@@ -1,10 +1,15 @@
 import { describe, expect, it } from "vitest";
 import { CastMembershipStatus, CastStatus } from "@/generated/prisma/client";
-import { classifyLegacyActiveInactive, classifyPrimaryStore } from "@/lib/casts/store-scope-audit";
+import { classifyLegacyActiveInactive, classifyPrimaryStore, hasCurrentStoreMembership } from "@/lib/casts/store-scope-audit";
 
 describe("store scope audit", () => {
   it("classifies expected non-primary scope without current dataset", () => {
     expect(classifyLegacyActiveInactive({ legacyStatus: CastStatus.ACTIVE, otherActiveCount: 1, townCurrent: false, ctiCurrent: false })).toBe("EXPECTED_STORE_SCOPE_DIFFERENCE");
+  });
+  it("recognizes ACTIVE and ON_LEAVE membership for the exact store", () => {
+    expect(hasCurrentStoreMembership([{ storeId: "a", status: CastMembershipStatus.ACTIVE }], "a")).toBe(true);
+    expect(hasCurrentStoreMembership([{ storeId: "a", status: CastMembershipStatus.ON_LEAVE }], "a")).toBe(true);
+    expect(hasCurrentStoreMembership([{ storeId: "b", status: CastMembershipStatus.ACTIVE }], "a")).toBe(false);
   });
   it("classifies current evidence without membership as a gap", () => {
     expect(classifyLegacyActiveInactive({ legacyStatus: CastStatus.ACTIVE, otherActiveCount: 1, townCurrent: true, ctiCurrent: false })).toBe("CURRENT_STORE_MEMBERSHIP_MISSING");

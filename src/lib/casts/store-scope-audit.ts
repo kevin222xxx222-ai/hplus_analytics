@@ -9,6 +9,10 @@ export type PrimaryStoreClassification = "EXPECTED_MULTI_STORE_DIFFERENCE" | "PR
 
 type CandidateMap = Map<string, CurrentMembershipCandidate>;
 
+export function hasCurrentStoreMembership(memberships: Array<{ storeId: string; status: CastMembershipStatus }>, storeId: string) {
+  return memberships.some((membership) => membership.storeId === storeId && (membership.status === CastMembershipStatus.ACTIVE || membership.status === CastMembershipStatus.ON_LEAVE));
+}
+
 export function classifyLegacyActiveInactive(input: { legacyStatus: CastStatus; targetStatus?: CastMembershipStatus; otherActiveCount: number; townCurrent: boolean; ctiCurrent: boolean }): StoreScopeClassification {
   const strong = input.townCurrent || input.ctiCurrent;
   if (input.targetStatus === CastMembershipStatus.LEFT && strong) return "LEFT_STORE_CONFLICT";
@@ -30,16 +34,16 @@ export async function loadStoreScopeAudit(db = prisma) {
   const reviewMap = new Map(reviews.map((review) => [`${review.castId}:${review.storeId}`, review]));
   const candidateMap: CandidateMap = new Map(candidates.map((candidate) => [`${candidate.castId}:${candidate.storeId}`, candidate]));
   const summary = summarizeShadowSnapshot(casts, stores, new Date());
-  const legacyRows = summary.differences.filter((row) => row.classification === "LEGACY_ACTIVE_MEMBERSHIP_INACTIVE").map((row) => {
-    const candidate = candidateMap.get(`${row.cast.id}:${row.store.id}`);
-    const target = row.cast.memberships.find((membership) => membership.storeId === row.store.id);
-    const otherActive = row.cast.memberships.filter((membership) => membership.storeId !== row.store.id && (membership.status === CastMembershipStatus.ACTIVE || membership.status === CastMembershipStatus.ON_LEAVE));
+  const legacyRows = casts.flatMap((cast) => stores.filter((store) => cast.status === CastStatus.ACTIVE && cast.primaryStoreId === store.id && !hasCurrentStoreMembership(cast.memberships, store.id)).map((store) => ({ cast, store }))).map(({ cast, store }) => {
+    const candidate = candidateMap.get(`${cast.id}:${store.id}`);
+    const target = cast.memberships.find((membership) => membership.storeId === store.id);
+    const otherActive = cast.memberships.filter((membership) => membership.storeId !== store.id && (membership.status === CastMembershipStatus.ACTIVE || membership.status === CastMembershipStatus.ON_LEAVE));
     const townCurrent = candidate?.evidence.townCurrent ?? false;
     const ctiCurrent = candidate?.evidence.ctiCurrent ?? false;
-    const explicitReview = reviewMap.get(`${row.cast.id}:${row.store.id}`);
-    const classification = explicitReview && (townCurrent || ctiCurrent) && !target?.status ? "EXPECTED_NON_REGULAR" as const : classifyLegacyActiveInactive({ legacyStatus: row.cast.status, targetStatus: target?.status, otherActiveCount: otherActive.length, townCurrent, ctiCurrent });
+    const explicitReview = reviewMap.get(`${cast.id}:${store.id}`);
+    const classification = explicitReview && (townCurrent || ctiCurrent) && !target?.status ? "EXPECTED_NON_REGULAR" as const : classifyLegacyActiveInactive({ legacyStatus: cast.status, targetStatus: target?.status, otherActiveCount: otherActive.length, townCurrent, ctiCurrent });
     const recommendation = classification === "CURRENT_STORE_MEMBERSHIP_MISSING" ? "ADD_MEMBERSHIP_CANDIDATE" : classification === "EXPECTED_NON_REGULAR" ? "EXPECTED_NON_REGULAR" : classification === "LEFT_STORE_CONFLICT" ? "REENTRY_REVIEW" : classification === "OTHER" ? "DATA_CONFLICT" : "AUDIT_BUG";
-    return { castId: row.cast.id, displayName: row.cast.displayName, storeId: row.store.id, storeName: row.store.shortName, legacyStatus: row.cast.status, legacyEndedOn: row.cast.endedOn, primaryStoreId: row.cast.primaryStoreId, targetMembershipStatus: target?.status ?? null, targetMembershipLeftAt: target?.leftAt ?? null, otherActiveMemberships: otherActive.map((membership) => ({ storeId: membership.storeId, status: membership.status })), townCurrent, townDatasetDate: candidate?.evidence.townDataset?.date ?? null, townBatchId: candidate?.evidence.townDataset?.batchId ?? null, ctiCurrent, ctiDatasetDate: candidate?.evidence.ctiDataset?.date ?? null, ctiBatchId: candidate?.evidence.ctiDataset?.batchId ?? null, aliasEvidence: candidate?.evidence.aliasEvidence ?? false, mediaListingEvidence: candidate?.evidence.mediaListingEvidence ?? false, classification, recommendation, reason: classification === "EXPECTED_NON_REGULAR" ? explicitReview?.reason : classification === "EXPECTED_STORE_SCOPE_DIFFERENCE" ? "他Storeに在籍Membershipがあり、対象StoreにCurrent Town/CTI evidenceなし" : classification === "CURRENT_STORE_MEMBERSHIP_MISSING" ? "対象Storeに最新Town/CTI evidenceがあるがActive Membershipなし" : classification === "LEFT_STORE_CONFLICT" ? "対象StoreがLEFT MembershipでCurrent evidenceあり" : classification === "LEGACY_STATUS_STALE" ? "Legacy ACTIVEだが在籍MembershipとCurrent evidenceなし" : "分類条件外" };
+    return { castId: cast.id, displayName: cast.displayName, storeId: store.id, storeName: store.shortName, legacyStatus: cast.status, legacyEndedOn: cast.endedOn, primaryStoreId: cast.primaryStoreId, targetMembershipStatus: target?.status ?? null, targetMembershipLeftAt: target?.leftAt ?? null, otherActiveMemberships: otherActive.map((membership) => ({ storeId: membership.storeId, status: membership.status })), townCurrent, townDatasetDate: candidate?.evidence.townDataset?.date ?? null, townBatchId: candidate?.evidence.townDataset?.batchId ?? null, ctiCurrent, ctiDatasetDate: candidate?.evidence.ctiDataset?.date ?? null, ctiBatchId: candidate?.evidence.ctiDataset?.batchId ?? null, aliasEvidence: candidate?.evidence.aliasEvidence ?? false, mediaListingEvidence: candidate?.evidence.mediaListingEvidence ?? false, classification, recommendation, reason: classification === "EXPECTED_NON_REGULAR" ? explicitReview?.reason : classification === "EXPECTED_STORE_SCOPE_DIFFERENCE" ? "他Storeに在籍Membershipがあり、対象StoreにCurrent Town/CTI evidenceなし" : classification === "CURRENT_STORE_MEMBERSHIP_MISSING" ? "対象Storeに最新Town/CTI evidenceがあるがActive Membershipなし" : classification === "LEFT_STORE_CONFLICT" ? "対象StoreがLEFT MembershipでCurrent evidenceあり" : classification === "LEGACY_STATUS_STALE" ? "Legacy ACTIVEだが在籍MembershipとCurrent evidenceなし" : "分類条件外" };
   });
   const primaryRows = summary.differences.filter((row) => row.classification === "PRIMARY_STORE_DIFFERENCE");
   const primaryByCast = new Map<string, typeof casts[number]>();
