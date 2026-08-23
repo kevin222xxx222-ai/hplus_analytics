@@ -111,4 +111,14 @@ export type TownPreview = {
   rows: TownPreviewRow[];
   globalIssues: TownIssue[];
   createdAt: string;
+  /** Read-only J0-H shadow payload; absent in legacy mode. */
+  membershipShadow?: {
+    resolver: "TOWN_CAST";
+    storeId: string;
+    evaluated: number;
+    total: number;
+    differences: number;
+    differenceCounts: Record<string, number>;
+    examples: Array<Record<string, unknown>>;
+  };
 };

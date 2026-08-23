@@ -6,7 +6,7 @@ import { validateCsvUpload } from "@/lib/imports/security";
 import { saveImportFile, writePreview } from "@/lib/imports/storage";
 import { TOWN_DATA_TYPES } from "@/lib/imports/town/columns";
 import { parseTownCsv } from "@/lib/imports/town/parser";
-import { resolveTownPreviewRows } from "@/lib/imports/town/resolver";
+import { resolveTownPreviewRowsWithShadow } from "@/lib/imports/town/resolver";
 import type { TownImportDataType, TownIssue, TownPreview } from "@/lib/imports/town/types";
 import { prisma } from "@/lib/prisma";
 
@@ -87,7 +87,8 @@ export async function createTownPreview(input: CreateTownPreviewInput) {
       targetFrom: input.targetFrom, targetTo: input.targetTo,
       expectedExternalStoreId: TOWN_EXTERNAL_STORE_IDS[importSource.store.code] || null,
     });
-    preview = { ...preview, rows: await resolveTownPreviewRows(preview.rows, importSource.store.id, targetToDate) };
+    const resolved = await resolveTownPreviewRowsWithShadow(preview.rows, importSource.store.id, targetToDate);
+    preview = { ...preview, rows: resolved.rows, ...(resolved.shadow ? { membershipShadow: resolved.shadow } : {}) };
     if (input.additionalGlobalIssues?.length) preview.globalIssues.push(...input.additionalGlobalIssues);
     if (duplicate) preview.globalIssues.push({ code: "DUPLICATE_COMPLETED_FILE", level: "WARNING", message: "同じハッシュ・種別の完了済みファイルがあります。確定には明示的な再処理指定が必要です。", rawData: { batchId: duplicate.id } });
     const summary = summarizeTownPreview(preview);

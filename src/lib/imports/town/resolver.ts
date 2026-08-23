@@ -2,8 +2,9 @@ import { MediaType, type Cast } from "@/generated/prisma/client";
 import type { TownPreviewRow } from "@/lib/imports/town/types";
 import { normalizeCastName } from "@/lib/normalize";
 import { prisma } from "@/lib/prisma";
+import { resolveMembershipReadMode, resolveCurrentMembershipRead, summarizeCurrentMembershipShadow, isCastCurrentMember, type CurrentMembershipShadowRow, type MembershipLike } from "@/lib/casts/membership-read";
 
-export type TownResolverCast = Pick<Cast, "id" | "displayName" | "startedOn" | "endedOn">;
+export type TownResolverCast = Pick<Cast, "id" | "displayName" | "startedOn" | "endedOn"> & { primaryStoreId?: string | null; memberships?: MembershipLike[] };
 export type TownResolverAlias = {
   aliasName: string;
   normalizedAlias: string;
@@ -58,4 +59,44 @@ export async function resolveTownPreviewRows(rows: TownPreviewRow[], storeId: st
     prisma.cast.findMany({ where: { mergedIntoCastId: null, startedOn: { lte: businessDate }, OR: [{ endedOn: null }, { endedOn: { gte: businessDate } }] } }),
   ]);
   return rows.map((row) => resolveTownPreviewRow(row, storeId, businessDate, aliases, casts));
+}
+
+export type TownResolverShadowSummary = ReturnType<typeof summarizeCurrentMembershipShadow> & {
+  resolver: "TOWN_CAST";
+  storeId: string;
+  evaluated: number;
+  examples: CurrentMembershipShadowRow[];
+};
+
+function townShadowReason(membershipResult: boolean, cast: TownResolverCast, storeId: string): CurrentMembershipShadowRow["reason"] {
+  if (membershipResult) return undefined;
+  if (cast.memberships?.length === 0) return "MEMBERSHIP_MISSING";
+  if (cast.primaryStoreId && cast.primaryStoreId !== storeId) return "EXPECTED_STORE_SCOPE";
+  return "OTHER";
+}
+
+/**
+ * Read-only first Resolver shadow target. It deliberately returns the same
+ * resolved rows as the legacy resolver; the membership comparison is an
+ * additional aggregate payload for CLI/audit callers.
+ */
+export async function resolveTownPreviewRowsWithShadow(rows: TownPreviewRow[], storeId: string, businessDate: Date): Promise<{ rows: TownPreviewRow[]; shadow: TownResolverShadowSummary | null }> {
+  const resolved = await resolveTownPreviewRows(rows, storeId, businessDate);
+  const mode = resolveMembershipReadMode();
+  if (mode === "legacy") return { rows: resolved, shadow: null };
+  const [casts] = await Promise.all([
+    prisma.cast.findMany({ where: { id: { in: resolved.flatMap((row) => row.castId ? [row.castId] : []) } }, select: { id: true, displayName: true, startedOn: true, endedOn: true, primaryStoreId: true, memberships: { select: { storeId: true, status: true, joinedAt: true, leftAt: true } } } }),
+  ]);
+  const byId = new Map(casts.map((cast) => [cast.id, cast]));
+  const comparisons: CurrentMembershipShadowRow[] = [];
+  for (const row of resolved) {
+    if (!row.castId) continue;
+    const cast = byId.get(row.castId);
+    if (!cast) continue;
+    const membershipResult = isCastCurrentMember({ memberships: cast.memberships, storeId });
+    const comparison = resolveCurrentMembershipRead({ mode, castId: cast.id, storeId, legacyResult: true, memberships: cast.memberships, reason: townShadowReason(membershipResult, cast, storeId) });
+    if (comparison.shadow) comparisons.push(comparison.shadow);
+  }
+  const summary = summarizeCurrentMembershipShadow(comparisons);
+  return { rows: resolved, shadow: { resolver: "TOWN_CAST", storeId, evaluated: comparisons.length, examples: comparisons.slice(0, 20), ...summary } };
 }
