@@ -80,7 +80,7 @@ function townShadowReason(membershipResult: boolean, cast: TownResolverCast, sto
  * resolved rows as the legacy resolver; the membership comparison is an
  * additional aggregate payload for CLI/audit callers.
  */
-export async function resolveTownPreviewRowsWithShadow(rows: TownPreviewRow[], storeId: string, businessDate: Date, requestedMode = resolveMembershipReadMode()): Promise<{ rows: TownPreviewRow[]; shadow: TownResolverShadowSummary | null }> {
+export async function resolveTownPreviewRowsWithShadow(rows: TownPreviewRow[], storeId: string, businessDate: Date, requestedMode = resolveMembershipReadMode(), exampleLimit = 20): Promise<{ rows: TownPreviewRow[]; shadow: TownResolverShadowSummary | null }> {
   const resolved = await resolveTownPreviewRows(rows, storeId, businessDate);
   const mode = requestedMode;
   if (mode === "legacy") return { rows: resolved, shadow: null };
@@ -98,5 +98,5 @@ export async function resolveTownPreviewRowsWithShadow(rows: TownPreviewRow[], s
     if (comparison.shadow) comparisons.push(comparison.shadow);
   }
   const summary = summarizeCurrentMembershipShadow(comparisons);
-  return { rows: resolved, shadow: { resolver: "TOWN_CAST", storeId, evaluated: comparisons.length, examples: comparisons.slice(0, 20), ...summary } };
+  return { rows: resolved, shadow: { resolver: "TOWN_CAST", storeId, evaluated: comparisons.length, examples: comparisons.slice(0, exampleLimit), ...summary } };
 }
