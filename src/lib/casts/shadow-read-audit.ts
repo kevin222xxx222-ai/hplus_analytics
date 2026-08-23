@@ -1,4 +1,5 @@
 import { CastMembershipStatus, CastStatus, type Prisma } from "@/generated/prisma/client";
+import { isCastCurrentMember } from "@/lib/casts/membership-read";
 import { prisma } from "@/lib/prisma";
 
 export type ShadowClassification =
@@ -38,8 +39,10 @@ function membershipState(membership: ShadowCast["memberships"][number] | undefin
 export function classifyShadowCell(cast: ShadowCast, storeId: string, date: Date, current = false): ShadowClassification {
   const legacyGlobal = legacyActive(cast, date);
   const legacy = legacyGlobal && cast.primaryStoreId === storeId;
-  const membership = membershipState(cast.memberships.find((item) => item.storeId === storeId && item.status !== CastMembershipStatus.LEFT)
-    ?? cast.memberships.find((item) => item.storeId === storeId), date, current);
+  const membership = current
+    ? (isCastCurrentMember({ memberships: cast.memberships, storeId }) ? "ACTIVE" : "INACTIVE")
+    : membershipState(cast.memberships.find((item) => item.storeId === storeId && item.status !== CastMembershipStatus.LEFT)
+      ?? cast.memberships.find((item) => item.storeId === storeId), date, false);
   if (membership === "UNKNOWN") return "UNKNOWN_DATE";
   const membershipActive = membership === "ACTIVE" || membership === "ON_LEAVE";
   if (!membershipActive && cast.memberships.length === 0) return "MEMBERSHIP_MISSING";

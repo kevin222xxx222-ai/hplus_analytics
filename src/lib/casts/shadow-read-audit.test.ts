@@ -18,6 +18,6 @@ describe("cast membership shadow comparison", () => {
   it("keeps leftAt inclusive and identifies re-entry differences", () => {
     const retired = { ...base, status: CastStatus.INACTIVE, endedOn: day("2026-06-30"), memberships: [{ storeId: "store-a", status: CastMembershipStatus.ACTIVE, joinedAt: day("2026-08-23"), leftAt: null }] };
     expect(classifyShadowCell(retired, "store-a", day("2026-08-23"), true)).toBe("REENTRY_DIFFERENCE");
-    expect(classifyShadowCell({ ...base, status: CastStatus.INACTIVE, endedOn: day("2026-06-30"), memberships: [{ storeId: "store-a", status: CastMembershipStatus.LEFT, joinedAt: null, leftAt: day("2026-06-30") }] }, "store-a", day("2026-06-30"), true)).toBe("LEGACY_INACTIVE_MEMBERSHIP_ACTIVE");
+    expect(classifyShadowCell({ ...base, status: CastStatus.INACTIVE, endedOn: day("2026-06-30"), memberships: [{ storeId: "store-a", status: CastMembershipStatus.LEFT, joinedAt: null, leftAt: day("2026-06-30") }] }, "store-a", day("2026-06-30"), true)).toBe("MATCH");
   });
 });
