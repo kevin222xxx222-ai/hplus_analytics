@@ -57,6 +57,22 @@ export function validateExitDateConsistency(requestedDate: Date, existingDates: 
   }
 }
 
+export function validateExitDatePreflight(exitDate: Date, futureAliasCount: number, futureListingCount: number) {
+  if (futureAliasCount || futureListingCount) {
+    throw new Error(`退店日より後に開始した媒体履歴があります。Alias ${futureAliasCount}件、MediaListing ${futureListingCount}件の確認が必要です。`);
+  }
+}
+
+export async function auditCastDateRangeConflicts(db: DbClient = prisma) {
+  const [aliases, listings] = await Promise.all([
+    db.castAlias.findMany({ where: { validFrom: { not: null }, validTo: { not: null } }, select: { id: true, castId: true, validFrom: true, validTo: true } }),
+    db.mediaListing.findMany({ where: { listedFrom: { not: null }, listedTo: { not: null } }, select: { id: true, castId: true, listedFrom: true, listedTo: true } }),
+  ]);
+  const aliasConflicts = aliases.filter((row) => row.validFrom && row.validTo && row.validTo < row.validFrom);
+  const listingConflicts = listings.filter((row) => row.listedFrom && row.listedTo && row.listedTo < row.listedFrom);
+  return { aliasCount: aliasConflicts.length, listingCount: listingConflicts.length, aliases: aliasConflicts, listings: listingConflicts };
+}
+
 async function lockMembershipScope(db: DbClient, castId: string, storeId: string) {
   await db.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`cast-membership:${castId}:${storeId}`})) IS NULL AS locked`;
 }
@@ -134,8 +150,13 @@ export async function exitCast(castId: string, leftAt: Date, updatedByUserId?: s
     await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`cast-exit:${castId}`})) IS NULL AS locked`;
     const cast = await tx.cast.findFirst({ where: { id: castId, mergedIntoCastId: null }, select: { id: true, status: true, endedOn: true } });
     if (!cast) throw new Error("キャストが見つかりません。");
-    const memberships = await tx.castStoreMembership.findMany({ where: { castId }, select: { id: true, status: true, leftAt: true } });
+    const [memberships, aliases, listings] = await Promise.all([
+      tx.castStoreMembership.findMany({ where: { castId }, select: { id: true, status: true, leftAt: true } }),
+      tx.castAlias.findMany({ where: { castId, validTo: null }, select: { validFrom: true } }),
+      tx.mediaListing.findMany({ where: { castId, isListed: true }, select: { listedFrom: true, listedTo: true } }),
+    ]);
     validateExitDateConsistency(leftAt, [cast.endedOn, ...memberships.filter((membership) => membership.status === CastMembershipStatus.LEFT).map((membership) => membership.leftAt)]);
+    validateExitDatePreflight(leftAt, aliases.filter((alias) => alias.validFrom && alias.validFrom > leftAt).length, listings.filter((listing) => listing.listedFrom && listing.listedFrom > leftAt).length);
     const openMemberships = memberships.filter((membership) => membership.status === CastMembershipStatus.ACTIVE || membership.status === CastMembershipStatus.ON_LEAVE);
     await tx.castStoreMembership.updateMany({ where: { id: { in: openMemberships.map((membership) => membership.id) } }, data: { status: CastMembershipStatus.LEFT, leftAt, updatedByUserId: updatedByUserId ?? null } });
     await tx.castAlias.updateMany({ where: { castId, validTo: null }, data: { validTo: leftAt } });
