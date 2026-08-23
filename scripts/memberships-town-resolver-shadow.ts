@@ -33,7 +33,6 @@ async function main() {
     const legacyRunA = await resolveTownPreviewRows(preview.rows, store.id, batch.targetTo);
     const legacyRunB = await resolveTownPreviewRows(preview.rows, store.id, batch.targetTo);
     const result = await resolveTownPreviewRowsWithShadow(preview.rows, store.id, batch.targetTo, "shadow", 10_000);
-    const rowState = (row: TownPreview["rows"][number] | undefined) => row ? { rowKey: row.rowKey, sourceRowNumber: row.sourceRowNumber, mediaCastName: row.kind === "CAST" ? row.originalCastName : row.kind === "URL" || row.kind === "LANDING" ? row.sourceCastName : null, castId: row.castId, resolutionStatus: row.resolutionStatus, castDisplayName: row.castDisplayName, normalizedCastName: row.kind === "CAST" || row.kind === "URL" || row.kind === "LANDING" ? row.normalizedCastName : null, issues: row.issues } : null;
     const byKey = (rows: TownPreview["rows"]) => new Map(rows.map((row) => [row.rowKey, row]));
     const originalByKey = byKey(preview.rows);
     const runAByKey = byKey(legacyRunA);
@@ -55,7 +54,8 @@ async function main() {
       const classification = marker || review ? "RETIRED_OR_REVIEW_REQUIRED" : baseClassification;
       return { ...example, displayName: cast?.displayName ?? null, store: store.shortName, legacyStatus: cast?.status ?? null, legacyEndedOn: cast?.endedOn ?? null, primaryStoreId: cast?.primaryStoreId ?? null, targetMembershipStatus: target?.status ?? null, targetMembershipLeftAt: target?.leftAt ?? null, otherStoreActiveMemberships: cast?.memberships.filter((membership) => membership.storeId !== store.id && (membership.status === CastMembershipStatus.ACTIVE || membership.status === CastMembershipStatus.ON_LEAVE)).map((membership) => ({ storeId: membership.storeId, status: membership.status })) ?? [], townCurrent: candidate?.evidence.townCurrent ?? false, townDatasetDate: candidate?.evidence.townDataset?.date ?? null, townBatchId: candidate?.evidence.townDataset?.batchId ?? null, ctiCurrent: candidate?.evidence.ctiCurrent ?? false, ctiDatasetDate: candidate?.evidence.ctiDataset?.date ?? null, ctiBatchId: candidate?.evidence.ctiDataset?.batchId ?? null, aliasEvidence: candidate?.evidence.aliasEvidence ?? false, mediaListingEvidence: candidate?.evidence.mediaListingEvidence ?? false, retiredMarker: marker, activeReview: review?.classification ?? null, classification, reason: review?.reason ?? (classification === "EXPECTED_STORE_SCOPE_DIFFERENCE" ? "他StoreにACTIVE/ON_LEAVE Membershipがあり、対象StoreにDataset Evidenceなし" : classification === "CURRENT_STORE_MEMBERSHIP_MISSING" ? "対象StoreにCurrent Town/CTI Dataset Evidenceあり" : classification === "LEFT_STORE_CONFLICT" ? "対象StoreがLEFT MembershipでCurrent Dataset Evidenceあり" : classification === "LEGACY_STATUS_STALE" ? "Legacy ACTIVEだがMembershipとCurrent Dataset Evidenceなし" : classification === "RETIRED_OR_REVIEW_REQUIRED" ? "退店markerまたはHuman Reviewあり" : "分類条件外") };
     });
-    const classificationCounts = classified.reduce<Record<string, number>>((counts, row) => { counts[row.classification] = (counts[row.classification] ?? 0) + 1; return counts; }, {});
+    const differenceRows = classified.filter((row) => row.differenceType !== "MATCH");
+    const classificationCounts = differenceRows.reduce<Record<string, number>>((counts, row) => { counts[row.classification] = (counts[row.classification] ?? 0) + 1; return counts; }, {});
     reports.push({
       store: store.shortName,
       storeId: store.id,
@@ -68,11 +68,13 @@ async function main() {
       legacyTrueMembershipFalse: shadow?.differenceCounts.LEGACY_TRUE_MEMBERSHIP_FALSE ?? 0,
       legacyFalseMembershipTrue: shadow?.differenceCounts.LEGACY_FALSE_MEMBERSHIP_TRUE ?? 0,
       differenceRate: shadow?.evaluated ? (shadow.differences / shadow.evaluated) : 0,
-      examples: classified.slice(0, 20).map((example) => {
+      examples: differenceRows.map((example) => {
         const cast = exampleById.get(example.castId);
         return { ...example, membershipStatuses: cast?.memberships.map((membership) => membership.status) ?? [] };
       }),
-      shadowClassification: { counts: classificationCounts, total: classified.length, exclusive: Object.values(classificationCounts).reduce((sum, count) => sum + count, 0) === classified.length, other: classificationCounts.OTHER ?? 0 },
+      differenceRows: differenceRows.length,
+      differenceClassificationCounts: classificationCounts,
+      shadowClassification: { counts: classificationCounts, total: differenceRows.length, exclusive: Object.values(classificationCounts).reduce((sum, count) => sum + count, 0) === differenceRows.length, other: classificationCounts.OTHER ?? 0 },
       legacyPreviewValidation: {
         rows: preview.rows.length,
         reResolvedRows: legacyRunA.length,
@@ -80,12 +82,16 @@ async function main() {
         unchanged: changedRows.length === 0,
         legacyRunAComparedToRunBChangedRows: legacyRunDifferences.length,
         shadowLegacyRowsComparedToLegacyRunChangedRows: [...new Set([...runAByKey.keys(), ...byKey(result.rows).keys()])].filter((rowKey) => runAByKey.get(rowKey)?.castId !== byKey(result.rows).get(rowKey)?.castId || runAByKey.get(rowKey)?.resolutionStatus !== byKey(result.rows).get(rowKey)?.resolutionStatus).length,
-        changedRowDetails: changedRows.map(({ original, reResolved }) => ({ store: batch.importSource.store?.shortName ?? null, original: rowState(original), reResolved: rowState(reResolved) })),
         legacyNondeterministicRowKeys: legacyRunDifferences,
       },
     });
   }
-  console.log(JSON.stringify({ mode: "shadow", readOnly: true, resolver: "TOWN_CAST", stores: stores.map((store) => store.shortName), reports }, null, 2));
+  const globalClassificationCounts = reports.reduce<Record<string, number>>((counts, report) => {
+    for (const [classification, count] of Object.entries(report.differenceClassificationCounts)) counts[classification] = (counts[classification] ?? 0) + count;
+    return counts;
+  }, {});
+  const globalDifferenceRows = reports.reduce((total, report) => total + report.differenceRows, 0);
+  console.log(JSON.stringify({ mode: "shadow", readOnly: true, resolver: "TOWN_CAST", stores: stores.map((store) => store.shortName), global: { differenceRows: globalDifferenceRows, classificationCounts: globalClassificationCounts, exclusive: Object.values(globalClassificationCounts).reduce((sum, count) => sum + count, 0) === globalDifferenceRows, other: globalClassificationCounts.OTHER ?? 0 }, reports }, null, 2));
 }
 
 main().catch((error) => {
