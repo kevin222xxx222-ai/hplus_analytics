@@ -254,6 +254,7 @@ export type CastWhereInput = {
   mergesAsSource?: Prisma.CastMergeHistoryListRelationFilter
   mergesAsTarget?: Prisma.CastMergeHistoryListRelationFilter
   memberships?: Prisma.CastStoreMembershipListRelationFilter
+  membershipReviews?: Prisma.CastStoreMembershipReviewListRelationFilter
 }
 
 export type CastOrderByWithRelationInput = {
@@ -285,6 +286,7 @@ export type CastOrderByWithRelationInput = {
   mergesAsSource?: Prisma.CastMergeHistoryOrderByRelationAggregateInput
   mergesAsTarget?: Prisma.CastMergeHistoryOrderByRelationAggregateInput
   memberships?: Prisma.CastStoreMembershipOrderByRelationAggregateInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewOrderByRelationAggregateInput
 }
 
 export type CastWhereUniqueInput = Prisma.AtLeast<{
@@ -319,6 +321,7 @@ export type CastWhereUniqueInput = Prisma.AtLeast<{
   mergesAsSource?: Prisma.CastMergeHistoryListRelationFilter
   mergesAsTarget?: Prisma.CastMergeHistoryListRelationFilter
   memberships?: Prisma.CastStoreMembershipListRelationFilter
+  membershipReviews?: Prisma.CastStoreMembershipReviewListRelationFilter
 }, "id">
 
 export type CastOrderByWithAggregationInput = {
@@ -384,6 +387,7 @@ export type CastCreateInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateInput = {
@@ -413,6 +417,7 @@ export type CastUncheckedCreateInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastUpdateInput = {
@@ -442,6 +447,7 @@ export type CastUpdateInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateInput = {
@@ -471,6 +477,7 @@ export type CastUncheckedUpdateInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastCreateManyInput = {
@@ -703,6 +710,20 @@ export type CastUpdateOneRequiredWithoutMembershipsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CastUpdateToOneWithWhereWithoutMembershipsInput, Prisma.CastUpdateWithoutMembershipsInput>, Prisma.CastUncheckedUpdateWithoutMembershipsInput>
 }
 
+export type CastCreateNestedOneWithoutMembershipReviewsInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutMembershipReviewsInput, Prisma.CastUncheckedCreateWithoutMembershipReviewsInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutMembershipReviewsInput
+  connect?: Prisma.CastWhereUniqueInput
+}
+
+export type CastUpdateOneRequiredWithoutMembershipReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.CastCreateWithoutMembershipReviewsInput, Prisma.CastUncheckedCreateWithoutMembershipReviewsInput>
+  connectOrCreate?: Prisma.CastCreateOrConnectWithoutMembershipReviewsInput
+  upsert?: Prisma.CastUpsertWithoutMembershipReviewsInput
+  connect?: Prisma.CastWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CastUpdateToOneWithWhereWithoutMembershipReviewsInput, Prisma.CastUpdateWithoutMembershipReviewsInput>, Prisma.CastUncheckedUpdateWithoutMembershipReviewsInput>
+}
+
 export type CastCreateNestedOneWithoutNameHistoriesInput = {
   create?: Prisma.XOR<Prisma.CastCreateWithoutNameHistoriesInput, Prisma.CastUncheckedCreateWithoutNameHistoriesInput>
   connectOrCreate?: Prisma.CastCreateOrConnectWithoutNameHistoriesInput
@@ -907,6 +928,7 @@ export type CastCreateWithoutPrimaryStoreInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutPrimaryStoreInput = {
@@ -935,6 +957,7 @@ export type CastUncheckedCreateWithoutPrimaryStoreInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutPrimaryStoreInput = {
@@ -1007,6 +1030,7 @@ export type CastCreateWithoutMergedSourcesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutMergedSourcesInput = {
@@ -1035,6 +1059,7 @@ export type CastUncheckedCreateWithoutMergedSourcesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutMergedSourcesInput = {
@@ -1068,6 +1093,7 @@ export type CastCreateWithoutMergedIntoInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutMergedIntoInput = {
@@ -1096,6 +1122,7 @@ export type CastUncheckedCreateWithoutMergedIntoInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutMergedIntoInput = {
@@ -1145,6 +1172,7 @@ export type CastUpdateWithoutMergedSourcesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutMergedSourcesInput = {
@@ -1173,6 +1201,7 @@ export type CastUncheckedUpdateWithoutMergedSourcesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastUpsertWithWhereUniqueWithoutMergedIntoInput = {
@@ -1217,6 +1246,7 @@ export type CastCreateWithoutMembershipsInput = {
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutMembershipsInput = {
@@ -1245,6 +1275,7 @@ export type CastUncheckedCreateWithoutMembershipsInput = {
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutMembershipsInput = {
@@ -1289,6 +1320,7 @@ export type CastUpdateWithoutMembershipsInput = {
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutMembershipsInput = {
@@ -1317,6 +1349,139 @@ export type CastUncheckedUpdateWithoutMembershipsInput = {
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
+}
+
+export type CastCreateWithoutMembershipReviewsInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedAt?: Date | string | null
+  primaryStore?: Prisma.StoreCreateNestedOneWithoutCastsInput
+  aliases?: Prisma.CastAliasCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingCreateNestedManyWithoutCastInput
+  mediaListingHistories?: Prisma.MediaListingHistoryCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryCreateNestedManyWithoutCastInput
+  mergedInto?: Prisma.CastCreateNestedOneWithoutMergedSourcesInput
+  mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
+  memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+}
+
+export type CastUncheckedCreateWithoutMembershipReviewsInput = {
+  id?: string
+  displayName: string
+  normalizedName: string
+  status?: $Enums.CastStatus
+  startedOn: Date | string
+  endedOn?: Date | string | null
+  primaryStoreId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mergedIntoCastId?: string | null
+  mergedAt?: Date | string | null
+  aliases?: Prisma.CastAliasUncheckedCreateNestedManyWithoutCastInput
+  mediaListings?: Prisma.MediaListingUncheckedCreateNestedManyWithoutCastInput
+  mediaListingHistories?: Prisma.MediaListingHistoryUncheckedCreateNestedManyWithoutCastInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedCreateNestedManyWithoutCastInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedCreateNestedManyWithoutCastInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedCreateNestedManyWithoutCastInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedCreateNestedManyWithoutCastInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedCreateNestedManyWithoutCastInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutCastInput
+  mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
+  memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+}
+
+export type CastCreateOrConnectWithoutMembershipReviewsInput = {
+  where: Prisma.CastWhereUniqueInput
+  create: Prisma.XOR<Prisma.CastCreateWithoutMembershipReviewsInput, Prisma.CastUncheckedCreateWithoutMembershipReviewsInput>
+}
+
+export type CastUpsertWithoutMembershipReviewsInput = {
+  update: Prisma.XOR<Prisma.CastUpdateWithoutMembershipReviewsInput, Prisma.CastUncheckedUpdateWithoutMembershipReviewsInput>
+  create: Prisma.XOR<Prisma.CastCreateWithoutMembershipReviewsInput, Prisma.CastUncheckedCreateWithoutMembershipReviewsInput>
+  where?: Prisma.CastWhereInput
+}
+
+export type CastUpdateToOneWithWhereWithoutMembershipReviewsInput = {
+  where?: Prisma.CastWhereInput
+  data: Prisma.XOR<Prisma.CastUpdateWithoutMembershipReviewsInput, Prisma.CastUncheckedUpdateWithoutMembershipReviewsInput>
+}
+
+export type CastUpdateWithoutMembershipReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStore?: Prisma.StoreUpdateOneWithoutCastsNestedInput
+  aliases?: Prisma.CastAliasUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUpdateManyWithoutCastNestedInput
+  mediaListingHistories?: Prisma.MediaListingHistoryUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUpdateManyWithoutCastNestedInput
+  mergedInto?: Prisma.CastUpdateOneWithoutMergedSourcesNestedInput
+  mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
+  memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+}
+
+export type CastUncheckedUpdateWithoutMembershipReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  normalizedName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCastStatusFieldUpdateOperationsInput | $Enums.CastStatus
+  startedOn?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endedOn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  primaryStoreId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mergedIntoCastId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mergedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  aliases?: Prisma.CastAliasUncheckedUpdateManyWithoutCastNestedInput
+  mediaListings?: Prisma.MediaListingUncheckedUpdateManyWithoutCastNestedInput
+  mediaListingHistories?: Prisma.MediaListingHistoryUncheckedUpdateManyWithoutCastNestedInput
+  improvementLogs?: Prisma.ImprovementLogUncheckedUpdateManyWithoutCastNestedInput
+  ctiCastDailies?: Prisma.CtiCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townCastDailies?: Prisma.TownCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  townUrlDailies?: Prisma.TownUrlDailyUncheckedUpdateManyWithoutCastNestedInput
+  townLandingDailies?: Prisma.TownLandingDailyUncheckedUpdateManyWithoutCastNestedInput
+  heavenCastDailies?: Prisma.HeavenCastDailyUncheckedUpdateManyWithoutCastNestedInput
+  nameHistories?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutCastNestedInput
+  mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
+  mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
+  mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
+  memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastCreateWithoutNameHistoriesInput = {
@@ -1345,6 +1510,7 @@ export type CastCreateWithoutNameHistoriesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutNameHistoriesInput = {
@@ -1373,6 +1539,7 @@ export type CastUncheckedCreateWithoutNameHistoriesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutNameHistoriesInput = {
@@ -1417,6 +1584,7 @@ export type CastUpdateWithoutNameHistoriesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutNameHistoriesInput = {
@@ -1445,6 +1613,7 @@ export type CastUncheckedUpdateWithoutNameHistoriesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastCreateWithoutMergesAsSourceInput = {
@@ -1473,6 +1642,7 @@ export type CastCreateWithoutMergesAsSourceInput = {
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutMergesAsSourceInput = {
@@ -1501,6 +1671,7 @@ export type CastUncheckedCreateWithoutMergesAsSourceInput = {
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutMergesAsSourceInput = {
@@ -1534,6 +1705,7 @@ export type CastCreateWithoutMergesAsTargetInput = {
   mergedSources?: Prisma.CastCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutMergesAsTargetInput = {
@@ -1562,6 +1734,7 @@ export type CastUncheckedCreateWithoutMergesAsTargetInput = {
   mergedSources?: Prisma.CastUncheckedCreateNestedManyWithoutMergedIntoInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutMergesAsTargetInput = {
@@ -1606,6 +1779,7 @@ export type CastUpdateWithoutMergesAsSourceInput = {
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutMergesAsSourceInput = {
@@ -1634,6 +1808,7 @@ export type CastUncheckedUpdateWithoutMergesAsSourceInput = {
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastUpsertWithoutMergesAsTargetInput = {
@@ -1673,6 +1848,7 @@ export type CastUpdateWithoutMergesAsTargetInput = {
   mergedSources?: Prisma.CastUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutMergesAsTargetInput = {
@@ -1701,6 +1877,7 @@ export type CastUncheckedUpdateWithoutMergesAsTargetInput = {
   mergedSources?: Prisma.CastUncheckedUpdateManyWithoutMergedIntoNestedInput
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastCreateWithoutAliasesInput = {
@@ -1729,6 +1906,7 @@ export type CastCreateWithoutAliasesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutAliasesInput = {
@@ -1757,6 +1935,7 @@ export type CastUncheckedCreateWithoutAliasesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutAliasesInput = {
@@ -1801,6 +1980,7 @@ export type CastUpdateWithoutAliasesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutAliasesInput = {
@@ -1829,6 +2009,7 @@ export type CastUncheckedUpdateWithoutAliasesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastCreateWithoutMediaListingsInput = {
@@ -1857,6 +2038,7 @@ export type CastCreateWithoutMediaListingsInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutMediaListingsInput = {
@@ -1885,6 +2067,7 @@ export type CastUncheckedCreateWithoutMediaListingsInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutMediaListingsInput = {
@@ -1929,6 +2112,7 @@ export type CastUpdateWithoutMediaListingsInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutMediaListingsInput = {
@@ -1957,6 +2141,7 @@ export type CastUncheckedUpdateWithoutMediaListingsInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastCreateWithoutMediaListingHistoriesInput = {
@@ -1985,6 +2170,7 @@ export type CastCreateWithoutMediaListingHistoriesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutMediaListingHistoriesInput = {
@@ -2013,6 +2199,7 @@ export type CastUncheckedCreateWithoutMediaListingHistoriesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutMediaListingHistoriesInput = {
@@ -2057,6 +2244,7 @@ export type CastUpdateWithoutMediaListingHistoriesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutMediaListingHistoriesInput = {
@@ -2085,6 +2273,7 @@ export type CastUncheckedUpdateWithoutMediaListingHistoriesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastCreateWithoutCtiCastDailiesInput = {
@@ -2113,6 +2302,7 @@ export type CastCreateWithoutCtiCastDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutCtiCastDailiesInput = {
@@ -2141,6 +2331,7 @@ export type CastUncheckedCreateWithoutCtiCastDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutCtiCastDailiesInput = {
@@ -2185,6 +2376,7 @@ export type CastUpdateWithoutCtiCastDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutCtiCastDailiesInput = {
@@ -2213,6 +2405,7 @@ export type CastUncheckedUpdateWithoutCtiCastDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastCreateWithoutTownCastDailiesInput = {
@@ -2241,6 +2434,7 @@ export type CastCreateWithoutTownCastDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutTownCastDailiesInput = {
@@ -2269,6 +2463,7 @@ export type CastUncheckedCreateWithoutTownCastDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutTownCastDailiesInput = {
@@ -2313,6 +2508,7 @@ export type CastUpdateWithoutTownCastDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutTownCastDailiesInput = {
@@ -2341,6 +2537,7 @@ export type CastUncheckedUpdateWithoutTownCastDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastCreateWithoutTownUrlDailiesInput = {
@@ -2369,6 +2566,7 @@ export type CastCreateWithoutTownUrlDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutTownUrlDailiesInput = {
@@ -2397,6 +2595,7 @@ export type CastUncheckedCreateWithoutTownUrlDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutTownUrlDailiesInput = {
@@ -2441,6 +2640,7 @@ export type CastUpdateWithoutTownUrlDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutTownUrlDailiesInput = {
@@ -2469,6 +2669,7 @@ export type CastUncheckedUpdateWithoutTownUrlDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastCreateWithoutTownLandingDailiesInput = {
@@ -2497,6 +2698,7 @@ export type CastCreateWithoutTownLandingDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutTownLandingDailiesInput = {
@@ -2525,6 +2727,7 @@ export type CastUncheckedCreateWithoutTownLandingDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutTownLandingDailiesInput = {
@@ -2569,6 +2772,7 @@ export type CastUpdateWithoutTownLandingDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutTownLandingDailiesInput = {
@@ -2597,6 +2801,7 @@ export type CastUncheckedUpdateWithoutTownLandingDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastCreateWithoutHeavenCastDailiesInput = {
@@ -2625,6 +2830,7 @@ export type CastCreateWithoutHeavenCastDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutHeavenCastDailiesInput = {
@@ -2653,6 +2859,7 @@ export type CastUncheckedCreateWithoutHeavenCastDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutHeavenCastDailiesInput = {
@@ -2697,6 +2904,7 @@ export type CastUpdateWithoutHeavenCastDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutHeavenCastDailiesInput = {
@@ -2725,6 +2933,7 @@ export type CastUncheckedUpdateWithoutHeavenCastDailiesInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastCreateWithoutImprovementLogsInput = {
@@ -2753,6 +2962,7 @@ export type CastCreateWithoutImprovementLogsInput = {
   mergesAsSource?: Prisma.CastMergeHistoryCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutCastInput
 }
 
 export type CastUncheckedCreateWithoutImprovementLogsInput = {
@@ -2781,6 +2991,7 @@ export type CastUncheckedCreateWithoutImprovementLogsInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutSourceCastInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutTargetCastInput
   memberships?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCastInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutCastInput
 }
 
 export type CastCreateOrConnectWithoutImprovementLogsInput = {
@@ -2825,6 +3036,7 @@ export type CastUpdateWithoutImprovementLogsInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutImprovementLogsInput = {
@@ -2853,6 +3065,7 @@ export type CastUncheckedUpdateWithoutImprovementLogsInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastCreateManyPrimaryStoreInput = {
@@ -2895,6 +3108,7 @@ export type CastUpdateWithoutPrimaryStoreInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutPrimaryStoreInput = {
@@ -2923,6 +3137,7 @@ export type CastUncheckedUpdateWithoutPrimaryStoreInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateManyWithoutPrimaryStoreInput = {
@@ -2979,6 +3194,7 @@ export type CastUpdateWithoutMergedIntoInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateWithoutMergedIntoInput = {
@@ -3007,6 +3223,7 @@ export type CastUncheckedUpdateWithoutMergedIntoInput = {
   mergesAsSource?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutSourceCastNestedInput
   mergesAsTarget?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutTargetCastNestedInput
   memberships?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCastNestedInput
+  membershipReviews?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutCastNestedInput
 }
 
 export type CastUncheckedUpdateManyWithoutMergedIntoInput = {
@@ -3043,6 +3260,7 @@ export type CastCountOutputType = {
   mergesAsSource: number
   mergesAsTarget: number
   memberships: number
+  membershipReviews: number
 }
 
 export type CastCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3060,6 +3278,7 @@ export type CastCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   mergesAsSource?: boolean | CastCountOutputTypeCountMergesAsSourceArgs
   mergesAsTarget?: boolean | CastCountOutputTypeCountMergesAsTargetArgs
   memberships?: boolean | CastCountOutputTypeCountMembershipsArgs
+  membershipReviews?: boolean | CastCountOutputTypeCountMembershipReviewsArgs
 }
 
 /**
@@ -3170,6 +3389,13 @@ export type CastCountOutputTypeCountMembershipsArgs<ExtArgs extends runtime.Type
   where?: Prisma.CastStoreMembershipWhereInput
 }
 
+/**
+ * CastCountOutputType without action
+ */
+export type CastCountOutputTypeCountMembershipReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CastStoreMembershipReviewWhereInput
+}
+
 
 export type CastSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3200,6 +3426,7 @@ export type CastSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   mergesAsSource?: boolean | Prisma.Cast$mergesAsSourceArgs<ExtArgs>
   mergesAsTarget?: boolean | Prisma.Cast$mergesAsTargetArgs<ExtArgs>
   memberships?: boolean | Prisma.Cast$membershipsArgs<ExtArgs>
+  membershipReviews?: boolean | Prisma.Cast$membershipReviewsArgs<ExtArgs>
   _count?: boolean | Prisma.CastCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["cast"]>
 
@@ -3270,6 +3497,7 @@ export type CastInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   mergesAsSource?: boolean | Prisma.Cast$mergesAsSourceArgs<ExtArgs>
   mergesAsTarget?: boolean | Prisma.Cast$mergesAsTargetArgs<ExtArgs>
   memberships?: boolean | Prisma.Cast$membershipsArgs<ExtArgs>
+  membershipReviews?: boolean | Prisma.Cast$membershipReviewsArgs<ExtArgs>
   _count?: boolean | Prisma.CastCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CastIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3300,6 +3528,7 @@ export type $CastPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     mergesAsSource: Prisma.$CastMergeHistoryPayload<ExtArgs>[]
     mergesAsTarget: Prisma.$CastMergeHistoryPayload<ExtArgs>[]
     memberships: Prisma.$CastStoreMembershipPayload<ExtArgs>[]
+    membershipReviews: Prisma.$CastStoreMembershipReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3724,6 +3953,7 @@ export interface Prisma__CastClient<T, Null = never, ExtArgs extends runtime.Typ
   mergesAsSource<T extends Prisma.Cast$mergesAsSourceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$mergesAsSourceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastMergeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   mergesAsTarget<T extends Prisma.Cast$mergesAsTargetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$mergesAsTargetArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastMergeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   memberships<T extends Prisma.Cast$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastStoreMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  membershipReviews<T extends Prisma.Cast$membershipReviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Cast$membershipReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastStoreMembershipReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4537,6 +4767,30 @@ export type Cast$membershipsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.CastStoreMembershipScalarFieldEnum | Prisma.CastStoreMembershipScalarFieldEnum[]
+}
+
+/**
+ * Cast.membershipReviews
+ */
+export type Cast$membershipReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CastStoreMembershipReview
+   */
+  select?: Prisma.CastStoreMembershipReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CastStoreMembershipReview
+   */
+  omit?: Prisma.CastStoreMembershipReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CastStoreMembershipReviewInclude<ExtArgs> | null
+  where?: Prisma.CastStoreMembershipReviewWhereInput
+  orderBy?: Prisma.CastStoreMembershipReviewOrderByWithRelationInput | Prisma.CastStoreMembershipReviewOrderByWithRelationInput[]
+  cursor?: Prisma.CastStoreMembershipReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CastStoreMembershipReviewScalarFieldEnum | Prisma.CastStoreMembershipReviewScalarFieldEnum[]
 }
 
 /**

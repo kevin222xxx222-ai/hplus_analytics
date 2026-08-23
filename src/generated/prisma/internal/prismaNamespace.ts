@@ -389,6 +389,7 @@ export const ModelName = {
   Store: 'Store',
   Cast: 'Cast',
   CastStoreMembership: 'CastStoreMembership',
+  CastStoreMembershipReview: 'CastStoreMembershipReview',
   CastNameHistory: 'CastNameHistory',
   CastMergeHistory: 'CastMergeHistory',
   CastStartDateBulkChangeHistory: 'CastStartDateBulkChangeHistory',
@@ -425,7 +426,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "store" | "cast" | "castStoreMembership" | "castNameHistory" | "castMergeHistory" | "castStartDateBulkChangeHistory" | "castAlias" | "mediaListing" | "mediaListingHistory" | "importSource" | "importError" | "importBatch" | "driveFolderMapping" | "driveFileState" | "ctiCastDaily" | "townStoreDaily" | "townCastDaily" | "townUrlDaily" | "townLandingDaily" | "heavenShopDaily" | "heavenCastDaily" | "improvementLog" | "monthlyGoal" | "monthlyGoalChangeHistory"
+    modelProps: "user" | "session" | "store" | "cast" | "castStoreMembership" | "castStoreMembershipReview" | "castNameHistory" | "castMergeHistory" | "castStartDateBulkChangeHistory" | "castAlias" | "mediaListing" | "mediaListingHistory" | "importSource" | "importError" | "importBatch" | "driveFolderMapping" | "driveFileState" | "ctiCastDaily" | "townStoreDaily" | "townCastDaily" | "townUrlDaily" | "townLandingDaily" | "heavenShopDaily" | "heavenCastDaily" | "improvementLog" | "monthlyGoal" | "monthlyGoalChangeHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -796,6 +797,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CastStoreMembershipCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CastStoreMembershipCountAggregateOutputType> | number
+        }
+      }
+    }
+    CastStoreMembershipReview: {
+      payload: Prisma.$CastStoreMembershipReviewPayload<ExtArgs>
+      fields: Prisma.CastStoreMembershipReviewFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CastStoreMembershipReviewFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStoreMembershipReviewPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CastStoreMembershipReviewFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStoreMembershipReviewPayload>
+        }
+        findFirst: {
+          args: Prisma.CastStoreMembershipReviewFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStoreMembershipReviewPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CastStoreMembershipReviewFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStoreMembershipReviewPayload>
+        }
+        findMany: {
+          args: Prisma.CastStoreMembershipReviewFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStoreMembershipReviewPayload>[]
+        }
+        create: {
+          args: Prisma.CastStoreMembershipReviewCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStoreMembershipReviewPayload>
+        }
+        createMany: {
+          args: Prisma.CastStoreMembershipReviewCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CastStoreMembershipReviewCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStoreMembershipReviewPayload>[]
+        }
+        delete: {
+          args: Prisma.CastStoreMembershipReviewDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStoreMembershipReviewPayload>
+        }
+        update: {
+          args: Prisma.CastStoreMembershipReviewUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStoreMembershipReviewPayload>
+        }
+        deleteMany: {
+          args: Prisma.CastStoreMembershipReviewDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CastStoreMembershipReviewUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CastStoreMembershipReviewUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStoreMembershipReviewPayload>[]
+        }
+        upsert: {
+          args: Prisma.CastStoreMembershipReviewUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CastStoreMembershipReviewPayload>
+        }
+        aggregate: {
+          args: Prisma.CastStoreMembershipReviewAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCastStoreMembershipReview>
+        }
+        groupBy: {
+          args: Prisma.CastStoreMembershipReviewGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CastStoreMembershipReviewGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CastStoreMembershipReviewCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CastStoreMembershipReviewCountAggregateOutputType> | number
         }
       }
     }
@@ -2474,6 +2549,24 @@ export const CastStoreMembershipScalarFieldEnum = {
 export type CastStoreMembershipScalarFieldEnum = (typeof CastStoreMembershipScalarFieldEnum)[keyof typeof CastStoreMembershipScalarFieldEnum]
 
 
+export const CastStoreMembershipReviewScalarFieldEnum = {
+  id: 'id',
+  castId: 'castId',
+  storeId: 'storeId',
+  classification: 'classification',
+  reason: 'reason',
+  evidenceSnapshot: 'evidenceSnapshot',
+  confirmedByUserId: 'confirmedByUserId',
+  confirmedAt: 'confirmedAt',
+  note: 'note',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CastStoreMembershipReviewScalarFieldEnum = (typeof CastStoreMembershipReviewScalarFieldEnum)[keyof typeof CastStoreMembershipReviewScalarFieldEnum]
+
+
 export const CastNameHistoryScalarFieldEnum = {
   id: 'id',
   castId: 'castId',
@@ -2933,19 +3026,19 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const JsonNullValueInput = {
-  JsonNull: JsonNull
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
-
-
 export const NullableJsonNullValueInput = {
   DbNull: DbNull,
   JsonNull: JsonNull
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -3095,6 +3188,20 @@ export type EnumCastMembershipSourceConfidenceFieldRefInput<$PrismaModel> = Fiel
  * Reference to a field of type 'CastMembershipSourceConfidence[]'
  */
 export type ListEnumCastMembershipSourceConfidenceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CastMembershipSourceConfidence[]'>
+
+
+
+/**
+ * Reference to a field of type 'CastMembershipReviewClassification'
+ */
+export type EnumCastMembershipReviewClassificationFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CastMembershipReviewClassification'>
+
+
+
+/**
+ * Reference to a field of type 'CastMembershipReviewClassification[]'
+ */
+export type ListEnumCastMembershipReviewClassificationFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CastMembershipReviewClassification[]'>
 
 
 
@@ -3506,6 +3613,7 @@ export type GlobalOmitConfig = {
   store?: Prisma.StoreOmit
   cast?: Prisma.CastOmit
   castStoreMembership?: Prisma.CastStoreMembershipOmit
+  castStoreMembershipReview?: Prisma.CastStoreMembershipReviewOmit
   castNameHistory?: Prisma.CastNameHistoryOmit
   castMergeHistory?: Prisma.CastMergeHistoryOmit
   castStartDateBulkChangeHistory?: Prisma.CastStartDateBulkChangeHistoryOmit

@@ -7,6 +7,7 @@ import { requireAdmin } from "@/lib/auth";
 import { parseDateOnly } from "@/lib/date";
 import { closeMembership, createMembership, createReentryMembership, exitCast, ExitDateConflictError, initializeCurrentMemberships, listMemberships, resumeFromLeave, setOnLeave, updateMembership, reenterCast, ReentryValidationError } from "@/lib/casts/membership-service";
 import { loadCurrentMembershipCandidates, summarizeCurrentMembershipCandidates } from "@/lib/casts/current-membership-evidence";
+import { createExpectedNonRegularReview } from "@/lib/casts/membership-review-exception-service";
 
 const uuid = z.string().uuid();
 const date = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
@@ -145,4 +146,11 @@ export async function initializeCurrentMembershipsAction(formData: FormData) {
   await initializeCurrentMemberships(selected.map((candidate) => ({ castId: candidate.castId, storeId: candidate.storeId, status: CastMembershipStatus.ACTIVE, joinedAt: null, leftAt: null, source: "MEDIA_EVIDENCE_BACKFILL", sourceConfidence: CastMembershipSourceConfidence.CONFIRMED, createdByUserId: admin.id, updatedByUserId: admin.id })));
   revalidatePath("/masters/casts/memberships/initialize");
   revalidatePath("/masters/casts");
+}
+
+export async function confirmExpectedNonRegularAction(formData: FormData) {
+  const admin = await requireAdmin();
+  const parsed = z.object({ castId: uuid, storeId: uuid, reason: z.string().trim().min(1).max(1000), note: optionalText }).parse(Object.fromEntries(formData));
+  await createExpectedNonRegularReview({ ...parsed, confirmedByUserId: admin.id });
+  revalidatePath("/masters/casts/memberships");
 }

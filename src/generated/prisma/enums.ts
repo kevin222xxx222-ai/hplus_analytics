@@ -53,6 +53,17 @@ export const CastMembershipSourceConfidence = {
 export type CastMembershipSourceConfidence = (typeof CastMembershipSourceConfidence)[keyof typeof CastMembershipSourceConfidence]
 
 
+export const CastMembershipReviewClassification = {
+  EXPECTED_NON_REGULAR: 'EXPECTED_NON_REGULAR',
+  MEMBERSHIP_REQUIRED: 'MEMBERSHIP_REQUIRED',
+  REENTRY_REQUIRED: 'REENTRY_REQUIRED',
+  DATA_CONFLICT: 'DATA_CONFLICT',
+  OTHER_REVIEW: 'OTHER_REVIEW'
+} as const
+
+export type CastMembershipReviewClassification = (typeof CastMembershipReviewClassification)[keyof typeof CastMembershipReviewClassification]
+
+
 export const MediaType = {
   CTI: 'CTI',
   TOWN: 'TOWN',

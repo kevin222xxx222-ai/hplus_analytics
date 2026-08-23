@@ -67,6 +67,11 @@ export type Cast = Prisma.CastModel
  */
 export type CastStoreMembership = Prisma.CastStoreMembershipModel
 /**
+ * Model CastStoreMembershipReview
+ *
+ */
+export type CastStoreMembershipReview = Prisma.CastStoreMembershipReviewModel
+/**
  * Model CastNameHistory
  *
  */

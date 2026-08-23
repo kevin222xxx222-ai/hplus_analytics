@@ -44,6 +44,8 @@ The audit artifact now contains a complete Cast×Store trace: Membership state, 
 
 Current Evidence classification is calculated only over the audit's `CURRENT_MEDIA_EVIDENCE` Cast set, not over all Membership-free rows. Its Cast-level precedence is `STRONG_DATASET_EVIDENCE`, `ALIAS_AND_LISTING_ONLY`, `ALIAS_ONLY`, `LISTING_ONLY`, `HEAVEN_ONLY`, then `OTHER_CURRENT_EVIDENCE`. Strong Dataset Casts that are excluded from `CREATE_ACTIVE` are listed with their decision and reasons.
 
+Human-confirmed non-regular exceptions are persisted in `CastStoreMembershipReview` as `EXPECTED_NON_REGULAR` with a Cast×Store key, reason, confirmation user/time, and evidence snapshot. An active review is unique per Cast×Store; replacing a decision deactivates the prior row and creates a new history row. This exception is never inferred from media data and does not create a Membership.
+
 ## Final Store Scope Audit
 
 Run `npm run memberships:store-scope-audit` for a read-only Cast×Store reconciliation. `LEGACY_ACTIVE_MEMBERSHIP_INACTIVE` is separated into `EXPECTED_STORE_SCOPE_DIFFERENCE`, `CURRENT_STORE_MEMBERSHIP_MISSING`, `LEFT_STORE_CONFLICT`, `LEGACY_STATUS_STALE`, and `OTHER`. `PRIMARY_STORE_DIFFERENCE` is reported by Cast as `EXPECTED_MULTI_STORE_DIFFERENCE`, `PRIMARY_STORE_STALE`, `PRIMARY_STORE_MISSING`, `NO_ACTIVE_MEMBERSHIP`, or `OTHER`. The complete row-level report is written to `artifacts/audits/store-scope-*.json`; `OTHER` prevents a close decision. No primaryStoreId is changed.

@@ -56,6 +56,7 @@ export const ModelName = {
   Store: 'Store',
   Cast: 'Cast',
   CastStoreMembership: 'CastStoreMembership',
+  CastStoreMembershipReview: 'CastStoreMembershipReview',
   CastNameHistory: 'CastNameHistory',
   CastMergeHistory: 'CastMergeHistory',
   CastStartDateBulkChangeHistory: 'CastStartDateBulkChangeHistory',
@@ -175,6 +176,24 @@ export const CastStoreMembershipScalarFieldEnum = {
 } as const
 
 export type CastStoreMembershipScalarFieldEnum = (typeof CastStoreMembershipScalarFieldEnum)[keyof typeof CastStoreMembershipScalarFieldEnum]
+
+
+export const CastStoreMembershipReviewScalarFieldEnum = {
+  id: 'id',
+  castId: 'castId',
+  storeId: 'storeId',
+  classification: 'classification',
+  reason: 'reason',
+  evidenceSnapshot: 'evidenceSnapshot',
+  confirmedByUserId: 'confirmedByUserId',
+  confirmedAt: 'confirmedAt',
+  note: 'note',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CastStoreMembershipReviewScalarFieldEnum = (typeof CastStoreMembershipReviewScalarFieldEnum)[keyof typeof CastStoreMembershipReviewScalarFieldEnum]
 
 
 export const CastNameHistoryScalarFieldEnum = {
@@ -636,19 +655,19 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const JsonNullValueInput = {
-  JsonNull: JsonNull
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
-
-
 export const NullableJsonNullValueInput = {
   DbNull: DbNull,
   JsonNull: JsonNull
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

@@ -221,6 +221,7 @@ export type UserWhereInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryListRelationFilter
   castMembershipsCreated?: Prisma.CastStoreMembershipListRelationFilter
   castMembershipsUpdated?: Prisma.CastStoreMembershipListRelationFilter
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewListRelationFilter
   goalsCreated?: Prisma.MonthlyGoalListRelationFilter
   goalsUpdated?: Prisma.MonthlyGoalListRelationFilter
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryListRelationFilter
@@ -243,6 +244,7 @@ export type UserOrderByWithRelationInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryOrderByRelationAggregateInput
   castMembershipsCreated?: Prisma.CastStoreMembershipOrderByRelationAggregateInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipOrderByRelationAggregateInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewOrderByRelationAggregateInput
   goalsCreated?: Prisma.MonthlyGoalOrderByRelationAggregateInput
   goalsUpdated?: Prisma.MonthlyGoalOrderByRelationAggregateInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryOrderByRelationAggregateInput
@@ -268,6 +270,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryListRelationFilter
   castMembershipsCreated?: Prisma.CastStoreMembershipListRelationFilter
   castMembershipsUpdated?: Prisma.CastStoreMembershipListRelationFilter
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewListRelationFilter
   goalsCreated?: Prisma.MonthlyGoalListRelationFilter
   goalsUpdated?: Prisma.MonthlyGoalListRelationFilter
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryListRelationFilter
@@ -320,6 +323,7 @@ export type UserCreateInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryCreateNestedManyWithoutChangedByInput
@@ -342,6 +346,7 @@ export type UserUncheckedCreateInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
@@ -364,6 +369,7 @@ export type UserUpdateInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUpdateManyWithoutChangedByNestedInput
@@ -386,6 +392,7 @@ export type UserUncheckedUpdateInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
@@ -539,6 +546,22 @@ export type UserUpdateOneWithoutCastMembershipsUpdatedNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCastMembershipsUpdatedInput, Prisma.UserUpdateWithoutCastMembershipsUpdatedInput>, Prisma.UserUncheckedUpdateWithoutCastMembershipsUpdatedInput>
 }
 
+export type UserCreateNestedOneWithoutCastMembershipReviewsConfirmedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCastMembershipReviewsConfirmedInput, Prisma.UserUncheckedCreateWithoutCastMembershipReviewsConfirmedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCastMembershipReviewsConfirmedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutCastMembershipReviewsConfirmedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCastMembershipReviewsConfirmedInput, Prisma.UserUncheckedCreateWithoutCastMembershipReviewsConfirmedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCastMembershipReviewsConfirmedInput
+  upsert?: Prisma.UserUpsertWithoutCastMembershipReviewsConfirmedInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCastMembershipReviewsConfirmedInput, Prisma.UserUpdateWithoutCastMembershipReviewsConfirmedInput>, Prisma.UserUncheckedUpdateWithoutCastMembershipReviewsConfirmedInput>
+}
+
 export type UserCreateNestedOneWithoutCastNameChangesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCastNameChangesInput, Prisma.UserUncheckedCreateWithoutCastNameChangesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCastNameChangesInput
@@ -655,6 +678,7 @@ export type UserCreateWithoutSessionsInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryCreateNestedManyWithoutChangedByInput
@@ -676,6 +700,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
@@ -713,6 +738,7 @@ export type UserUpdateWithoutSessionsInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUpdateManyWithoutChangedByNestedInput
@@ -734,6 +760,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
@@ -755,6 +782,7 @@ export type UserCreateWithoutCastMembershipsCreatedInput = {
   castMergeActions?: Prisma.CastMergeHistoryCreateNestedManyWithoutMergedByInput
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryCreateNestedManyWithoutChangedByInput
@@ -776,6 +804,7 @@ export type UserUncheckedCreateWithoutCastMembershipsCreatedInput = {
   castMergeActions?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutMergedByInput
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
@@ -802,6 +831,7 @@ export type UserCreateWithoutCastMembershipsUpdatedInput = {
   castMergeActions?: Prisma.CastMergeHistoryCreateNestedManyWithoutMergedByInput
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipCreateNestedManyWithoutCreatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryCreateNestedManyWithoutChangedByInput
@@ -823,6 +853,7 @@ export type UserUncheckedCreateWithoutCastMembershipsUpdatedInput = {
   castMergeActions?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutMergedByInput
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
@@ -860,6 +891,7 @@ export type UserUpdateWithoutCastMembershipsCreatedInput = {
   castMergeActions?: Prisma.CastMergeHistoryUpdateManyWithoutMergedByNestedInput
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUpdateManyWithoutChangedByNestedInput
@@ -881,6 +913,7 @@ export type UserUncheckedUpdateWithoutCastMembershipsCreatedInput = {
   castMergeActions?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutMergedByNestedInput
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
@@ -913,6 +946,7 @@ export type UserUpdateWithoutCastMembershipsUpdatedInput = {
   castMergeActions?: Prisma.CastMergeHistoryUpdateManyWithoutMergedByNestedInput
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUpdateManyWithoutCreatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUpdateManyWithoutChangedByNestedInput
@@ -934,6 +968,111 @@ export type UserUncheckedUpdateWithoutCastMembershipsUpdatedInput = {
   castMergeActions?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutMergedByNestedInput
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutConfirmedByNestedInput
+  goalsCreated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutCreatedByNestedInput
+  goalsUpdated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutUpdatedByNestedInput
+  goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+}
+
+export type UserCreateWithoutCastMembershipReviewsConfirmedInput = {
+  id?: string
+  loginId: string
+  email?: string | null
+  displayName: string
+  passwordHash: string
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  importBatches?: Prisma.ImportBatchCreateNestedManyWithoutUploadedByUserInput
+  castNameChanges?: Prisma.CastNameHistoryCreateNestedManyWithoutChangedByInput
+  castMergeActions?: Prisma.CastMergeHistoryCreateNestedManyWithoutMergedByInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
+  castMembershipsCreated?: Prisma.CastStoreMembershipCreateNestedManyWithoutCreatedByInput
+  castMembershipsUpdated?: Prisma.CastStoreMembershipCreateNestedManyWithoutUpdatedByInput
+  goalsCreated?: Prisma.MonthlyGoalCreateNestedManyWithoutCreatedByInput
+  goalsUpdated?: Prisma.MonthlyGoalCreateNestedManyWithoutUpdatedByInput
+  goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryCreateNestedManyWithoutChangedByInput
+}
+
+export type UserUncheckedCreateWithoutCastMembershipReviewsConfirmedInput = {
+  id?: string
+  loginId: string
+  email?: string | null
+  displayName: string
+  passwordHash: string
+  role?: $Enums.UserRole
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  importBatches?: Prisma.ImportBatchUncheckedCreateNestedManyWithoutUploadedByUserInput
+  castNameChanges?: Prisma.CastNameHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  castMergeActions?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutMergedByInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCreatedByInput
+  castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  goalsCreated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutCreatedByInput
+  goalsUpdated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutUpdatedByInput
+  goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
+}
+
+export type UserCreateOrConnectWithoutCastMembershipReviewsConfirmedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCastMembershipReviewsConfirmedInput, Prisma.UserUncheckedCreateWithoutCastMembershipReviewsConfirmedInput>
+}
+
+export type UserUpsertWithoutCastMembershipReviewsConfirmedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCastMembershipReviewsConfirmedInput, Prisma.UserUncheckedUpdateWithoutCastMembershipReviewsConfirmedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCastMembershipReviewsConfirmedInput, Prisma.UserUncheckedCreateWithoutCastMembershipReviewsConfirmedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCastMembershipReviewsConfirmedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCastMembershipReviewsConfirmedInput, Prisma.UserUncheckedUpdateWithoutCastMembershipReviewsConfirmedInput>
+}
+
+export type UserUpdateWithoutCastMembershipReviewsConfirmedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loginId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  importBatches?: Prisma.ImportBatchUpdateManyWithoutUploadedByUserNestedInput
+  castNameChanges?: Prisma.CastNameHistoryUpdateManyWithoutChangedByNestedInput
+  castMergeActions?: Prisma.CastMergeHistoryUpdateManyWithoutMergedByNestedInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
+  castMembershipsCreated?: Prisma.CastStoreMembershipUpdateManyWithoutCreatedByNestedInput
+  castMembershipsUpdated?: Prisma.CastStoreMembershipUpdateManyWithoutUpdatedByNestedInput
+  goalsCreated?: Prisma.MonthlyGoalUpdateManyWithoutCreatedByNestedInput
+  goalsUpdated?: Prisma.MonthlyGoalUpdateManyWithoutUpdatedByNestedInput
+  goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUpdateManyWithoutChangedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCastMembershipReviewsConfirmedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  loginId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  importBatches?: Prisma.ImportBatchUncheckedUpdateManyWithoutUploadedByUserNestedInput
+  castNameChanges?: Prisma.CastNameHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  castMergeActions?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutMergedByNestedInput
+  castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
+  castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
@@ -955,6 +1094,7 @@ export type UserCreateWithoutCastNameChangesInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryCreateNestedManyWithoutChangedByInput
@@ -976,6 +1116,7 @@ export type UserUncheckedCreateWithoutCastNameChangesInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
@@ -1013,6 +1154,7 @@ export type UserUpdateWithoutCastNameChangesInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUpdateManyWithoutChangedByNestedInput
@@ -1034,6 +1176,7 @@ export type UserUncheckedUpdateWithoutCastNameChangesInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
@@ -1055,6 +1198,7 @@ export type UserCreateWithoutCastMergeActionsInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryCreateNestedManyWithoutChangedByInput
@@ -1076,6 +1220,7 @@ export type UserUncheckedCreateWithoutCastMergeActionsInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
@@ -1113,6 +1258,7 @@ export type UserUpdateWithoutCastMergeActionsInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUpdateManyWithoutChangedByNestedInput
@@ -1134,6 +1280,7 @@ export type UserUncheckedUpdateWithoutCastMergeActionsInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
@@ -1155,6 +1302,7 @@ export type UserCreateWithoutCastStartDateBulkChangesInput = {
   castMergeActions?: Prisma.CastMergeHistoryCreateNestedManyWithoutMergedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryCreateNestedManyWithoutChangedByInput
@@ -1176,6 +1324,7 @@ export type UserUncheckedCreateWithoutCastStartDateBulkChangesInput = {
   castMergeActions?: Prisma.CastMergeHistoryUncheckedCreateNestedManyWithoutMergedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
@@ -1213,6 +1362,7 @@ export type UserUpdateWithoutCastStartDateBulkChangesInput = {
   castMergeActions?: Prisma.CastMergeHistoryUpdateManyWithoutMergedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUpdateManyWithoutChangedByNestedInput
@@ -1234,6 +1384,7 @@ export type UserUncheckedUpdateWithoutCastStartDateBulkChangesInput = {
   castMergeActions?: Prisma.CastMergeHistoryUncheckedUpdateManyWithoutMergedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
@@ -1255,6 +1406,7 @@ export type UserCreateWithoutImportBatchesInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryCreateNestedManyWithoutChangedByInput
@@ -1276,6 +1428,7 @@ export type UserUncheckedCreateWithoutImportBatchesInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
@@ -1313,6 +1466,7 @@ export type UserUpdateWithoutImportBatchesInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUpdateManyWithoutChangedByNestedInput
@@ -1334,6 +1488,7 @@ export type UserUncheckedUpdateWithoutImportBatchesInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
@@ -1356,6 +1511,7 @@ export type UserCreateWithoutGoalsCreatedInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutConfirmedByInput
   goalsUpdated?: Prisma.MonthlyGoalCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryCreateNestedManyWithoutChangedByInput
 }
@@ -1377,6 +1533,7 @@ export type UserUncheckedCreateWithoutGoalsCreatedInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutConfirmedByInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutUpdatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
 }
@@ -1403,6 +1560,7 @@ export type UserCreateWithoutGoalsUpdatedInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalCreateNestedManyWithoutCreatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryCreateNestedManyWithoutChangedByInput
 }
@@ -1424,6 +1582,7 @@ export type UserUncheckedCreateWithoutGoalsUpdatedInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutCreatedByInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
 }
@@ -1461,6 +1620,7 @@ export type UserUpdateWithoutGoalsCreatedInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUpdateManyWithoutConfirmedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUpdateManyWithoutChangedByNestedInput
 }
@@ -1482,6 +1642,7 @@ export type UserUncheckedUpdateWithoutGoalsCreatedInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutConfirmedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutUpdatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
 }
@@ -1514,6 +1675,7 @@ export type UserUpdateWithoutGoalsUpdatedInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUpdateManyWithoutCreatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUpdateManyWithoutChangedByNestedInput
 }
@@ -1535,6 +1697,7 @@ export type UserUncheckedUpdateWithoutGoalsUpdatedInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutCreatedByNestedInput
   goalChangeHistory?: Prisma.MonthlyGoalChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
 }
@@ -1556,6 +1719,7 @@ export type UserCreateWithoutGoalChangeHistoryInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalCreateNestedManyWithoutUpdatedByInput
 }
@@ -1577,6 +1741,7 @@ export type UserUncheckedCreateWithoutGoalChangeHistoryInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedCreateNestedManyWithoutChangedByInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutCreatedByInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedCreateNestedManyWithoutUpdatedByInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedCreateNestedManyWithoutConfirmedByInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutCreatedByInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedCreateNestedManyWithoutUpdatedByInput
 }
@@ -1614,6 +1779,7 @@ export type UserUpdateWithoutGoalChangeHistoryInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUpdateManyWithoutUpdatedByNestedInput
 }
@@ -1635,6 +1801,7 @@ export type UserUncheckedUpdateWithoutGoalChangeHistoryInput = {
   castStartDateBulkChanges?: Prisma.CastStartDateBulkChangeHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   castMembershipsCreated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutCreatedByNestedInput
   castMembershipsUpdated?: Prisma.CastStoreMembershipUncheckedUpdateManyWithoutUpdatedByNestedInput
+  castMembershipReviewsConfirmed?: Prisma.CastStoreMembershipReviewUncheckedUpdateManyWithoutConfirmedByNestedInput
   goalsCreated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutCreatedByNestedInput
   goalsUpdated?: Prisma.MonthlyGoalUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
@@ -1652,6 +1819,7 @@ export type UserCountOutputType = {
   castStartDateBulkChanges: number
   castMembershipsCreated: number
   castMembershipsUpdated: number
+  castMembershipReviewsConfirmed: number
   goalsCreated: number
   goalsUpdated: number
   goalChangeHistory: number
@@ -1665,6 +1833,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   castStartDateBulkChanges?: boolean | UserCountOutputTypeCountCastStartDateBulkChangesArgs
   castMembershipsCreated?: boolean | UserCountOutputTypeCountCastMembershipsCreatedArgs
   castMembershipsUpdated?: boolean | UserCountOutputTypeCountCastMembershipsUpdatedArgs
+  castMembershipReviewsConfirmed?: boolean | UserCountOutputTypeCountCastMembershipReviewsConfirmedArgs
   goalsCreated?: boolean | UserCountOutputTypeCountGoalsCreatedArgs
   goalsUpdated?: boolean | UserCountOutputTypeCountGoalsUpdatedArgs
   goalChangeHistory?: boolean | UserCountOutputTypeCountGoalChangeHistoryArgs
@@ -1732,6 +1901,13 @@ export type UserCountOutputTypeCountCastMembershipsUpdatedArgs<ExtArgs extends r
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountCastMembershipReviewsConfirmedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CastStoreMembershipReviewWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountGoalsCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.MonthlyGoalWhereInput
 }
@@ -1768,6 +1944,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   castStartDateBulkChanges?: boolean | Prisma.User$castStartDateBulkChangesArgs<ExtArgs>
   castMembershipsCreated?: boolean | Prisma.User$castMembershipsCreatedArgs<ExtArgs>
   castMembershipsUpdated?: boolean | Prisma.User$castMembershipsUpdatedArgs<ExtArgs>
+  castMembershipReviewsConfirmed?: boolean | Prisma.User$castMembershipReviewsConfirmedArgs<ExtArgs>
   goalsCreated?: boolean | Prisma.User$goalsCreatedArgs<ExtArgs>
   goalsUpdated?: boolean | Prisma.User$goalsUpdatedArgs<ExtArgs>
   goalChangeHistory?: boolean | Prisma.User$goalChangeHistoryArgs<ExtArgs>
@@ -1819,6 +1996,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   castStartDateBulkChanges?: boolean | Prisma.User$castStartDateBulkChangesArgs<ExtArgs>
   castMembershipsCreated?: boolean | Prisma.User$castMembershipsCreatedArgs<ExtArgs>
   castMembershipsUpdated?: boolean | Prisma.User$castMembershipsUpdatedArgs<ExtArgs>
+  castMembershipReviewsConfirmed?: boolean | Prisma.User$castMembershipReviewsConfirmedArgs<ExtArgs>
   goalsCreated?: boolean | Prisma.User$goalsCreatedArgs<ExtArgs>
   goalsUpdated?: boolean | Prisma.User$goalsUpdatedArgs<ExtArgs>
   goalChangeHistory?: boolean | Prisma.User$goalChangeHistoryArgs<ExtArgs>
@@ -1837,6 +2015,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     castStartDateBulkChanges: Prisma.$CastStartDateBulkChangeHistoryPayload<ExtArgs>[]
     castMembershipsCreated: Prisma.$CastStoreMembershipPayload<ExtArgs>[]
     castMembershipsUpdated: Prisma.$CastStoreMembershipPayload<ExtArgs>[]
+    castMembershipReviewsConfirmed: Prisma.$CastStoreMembershipReviewPayload<ExtArgs>[]
     goalsCreated: Prisma.$MonthlyGoalPayload<ExtArgs>[]
     goalsUpdated: Prisma.$MonthlyGoalPayload<ExtArgs>[]
     goalChangeHistory: Prisma.$MonthlyGoalChangeHistoryPayload<ExtArgs>[]
@@ -2252,6 +2431,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   castStartDateBulkChanges<T extends Prisma.User$castStartDateBulkChangesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$castStartDateBulkChangesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastStartDateBulkChangeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   castMembershipsCreated<T extends Prisma.User$castMembershipsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$castMembershipsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastStoreMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   castMembershipsUpdated<T extends Prisma.User$castMembershipsUpdatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$castMembershipsUpdatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastStoreMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  castMembershipReviewsConfirmed<T extends Prisma.User$castMembershipReviewsConfirmedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$castMembershipReviewsConfirmedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CastStoreMembershipReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   goalsCreated<T extends Prisma.User$goalsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$goalsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MonthlyGoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   goalsUpdated<T extends Prisma.User$goalsUpdatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$goalsUpdatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MonthlyGoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   goalChangeHistory<T extends Prisma.User$goalChangeHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$goalChangeHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MonthlyGoalChangeHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2851,6 +3031,30 @@ export type User$castMembershipsUpdatedArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.CastStoreMembershipScalarFieldEnum | Prisma.CastStoreMembershipScalarFieldEnum[]
+}
+
+/**
+ * User.castMembershipReviewsConfirmed
+ */
+export type User$castMembershipReviewsConfirmedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CastStoreMembershipReview
+   */
+  select?: Prisma.CastStoreMembershipReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CastStoreMembershipReview
+   */
+  omit?: Prisma.CastStoreMembershipReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CastStoreMembershipReviewInclude<ExtArgs> | null
+  where?: Prisma.CastStoreMembershipReviewWhereInput
+  orderBy?: Prisma.CastStoreMembershipReviewOrderByWithRelationInput | Prisma.CastStoreMembershipReviewOrderByWithRelationInput[]
+  cursor?: Prisma.CastStoreMembershipReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CastStoreMembershipReviewScalarFieldEnum | Prisma.CastStoreMembershipReviewScalarFieldEnum[]
 }
 
 /**
