@@ -100,6 +100,10 @@ Membershipの状態・信頼度は日本語で表示する（在籍・休業・�
 
 現行`MediaListing`はcurrent状態の正本として維持し、再入店前の行は`MediaListingHistory`へ保存してからcurrent行を更新する。Expected Business ErrorはServer Actionの戻り値として画面表示し、Next.jsのエラーページへ送らない。Importによる自動再入店は行わない。
 
+## Production Verification
+
+Cast Managementの日常運用はProductionでVerified済み。複数店舗のCast-level退店、Legacy conflict確認、再入店、過去LEFT Membership保持、新ACTIVE Membership、Alias新期間、MediaListingHistory保存、current Listing再openを確認した。通常画面はCast Managementを主画面とし、Membership Review画面は履歴・Evidence・例外監査用に残す。
+
 ## J0-E Production Canary手順
 
 1. `/masters/casts/memberships/initialize`でPreviewを表示する。

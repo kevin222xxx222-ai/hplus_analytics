@@ -307,4 +307,24 @@ CLIは`npm run memberships:backfill-audit`で実行し、`artifacts/audits/`へJ
 
 ## 22. J0-E Current Membership Initialization / Cast Management Integration
 
-現在媒体EvidenceをCast・店舗単位で判定し、`/masters/casts/memberships/initialize`でPreview後にAdminが明示Confirmできる導線を追加した。日常の店舗追加・退店・再入店は`/masters/casts`へ統合し、Membershipを正本として扱う。Production Apply、Resolver切替、Analytics切替は未実施である。
+現在媒体EvidenceをCast・店舗単位で判定し、`/masters/casts/memberships/initialize`でPreview後にAdminが明示Confirmできる導線を追加した。日常の店舗追加・退店・再入店は`/masters/casts`へ統合し、Membershipを正本として扱う。
+
+## 23. J0 Production Final Status
+
+J0 Cast Lifecycle: **COMPLETE / Production VERIFIED**。
+
+Productionでは、Current Membership初期化190件、複数店舗退店、Legacy future-start conflictのHuman Confirm、Legacy Media Repair、Town CASTの退店済みListing再open防止、Cast-level複数店舗再入店を確認した。過去LEFT Membership保持、新ACTIVE Membership、Alias新期間、MediaListingHistory、current Listing、Cast Legacy state復帰もVerified済み。
+
+最終監査：Alias期間逆転0、MediaListing期間逆転0、退店済みCastのcurrent Alias/Listing 0、All-LEFT Castのcurrent Alias/Listing 0。
+
+| Step | Status |
+|---|---|
+| J0-A DESIGN | COMPLETE |
+| J0-B SCHEMA | COMPLETE |
+| J0-C BACKFILL AUDIT | COMPLETE |
+| J0-D REVIEW UI | COMPLETE |
+| J0-E INITIALIZATION | COMPLETE / Production VERIFIED |
+| J0 Re-entry | COMPLETE / Production VERIFIED |
+| J0 Cast Lifecycle | COMPLETE / Production VERIFIED |
+
+次工程はJ0-F Shadow Read / Legacy Comparison。Resolver・Analytics切替は差分監査後に判断する。

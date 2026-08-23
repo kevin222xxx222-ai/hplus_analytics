@@ -60,3 +60,11 @@ Canary中に、(1) `castId:storeId`複合値をUUID配列として検証して�
 日常操作は`/masters/casts`を主画面とし、店舗追加・退店日入力・再入店・必要時の休業/復帰をMembership service経由で行う。`/masters/casts/memberships`は履歴・Evidence・例外・監査用に残す。退店日は人間の明示入力だけを`leftAt`へ保存し、Fact最終日、Alias/Listing終了日、Import日からは生成しない。
 
 次のProduction Canaryは、既存データを壊さない専用対象Castを選び、(1)新規店舗追加、(2)ACTIVEの退店、(3)LEFT店舗への新規再入店、(4)必要ならON_LEAVE/復帰を各1件確認する。完了後はJ0-F Shadow Read / Legacy comparison（読み取り専用）へ進む。Resolver・Analyticsはまだ切り替えない。
+
+## J0 Final Production Verification
+
+J0-E: **COMPLETE / Production VERIFIED**。初期Membership 190件、退店・Legacy Repair・Town CAST再open防止、複数店舗再入店までProductionで確認済み。再入店では旧LEFT行を保持し、新ACTIVE Membership、Alias新期間、MediaListingHistory、current Listingを作成した。
+
+最終監査は、Alias期間逆転0、MediaListing期間逆転0、退店済みCastのcurrent Alias/Listing 0、All-LEFT Castのcurrent Alias/Listing 0。
+
+次工程はJ0-F Shadow Read / Legacy Comparison（読み取り専用）。
