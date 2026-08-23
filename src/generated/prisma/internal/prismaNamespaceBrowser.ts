@@ -61,6 +61,7 @@ export const ModelName = {
   CastStartDateBulkChangeHistory: 'CastStartDateBulkChangeHistory',
   CastAlias: 'CastAlias',
   MediaListing: 'MediaListing',
+  MediaListingHistory: 'MediaListingHistory',
   ImportSource: 'ImportSource',
   ImportError: 'ImportError',
   ImportBatch: 'ImportBatch',
@@ -251,6 +252,20 @@ export const MediaListingScalarFieldEnum = {
 } as const
 
 export type MediaListingScalarFieldEnum = (typeof MediaListingScalarFieldEnum)[keyof typeof MediaListingScalarFieldEnum]
+
+
+export const MediaListingHistoryScalarFieldEnum = {
+  id: 'id',
+  castId: 'castId',
+  storeId: 'storeId',
+  mediaType: 'mediaType',
+  listedFrom: 'listedFrom',
+  listedTo: 'listedTo',
+  source: 'source',
+  createdAt: 'createdAt'
+} as const
+
+export type MediaListingHistoryScalarFieldEnum = (typeof MediaListingHistoryScalarFieldEnum)[keyof typeof MediaListingHistoryScalarFieldEnum]
 
 
 export const ImportSourceScalarFieldEnum = {

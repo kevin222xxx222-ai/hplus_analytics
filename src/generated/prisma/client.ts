@@ -92,6 +92,11 @@ export type CastAlias = Prisma.CastAliasModel
  */
 export type MediaListing = Prisma.MediaListingModel
 /**
+ * Model MediaListingHistory
+ *
+ */
+export type MediaListingHistory = Prisma.MediaListingHistoryModel
+/**
  * Model ImportSource
  *
  */

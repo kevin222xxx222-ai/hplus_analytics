@@ -394,6 +394,7 @@ export const ModelName = {
   CastStartDateBulkChangeHistory: 'CastStartDateBulkChangeHistory',
   CastAlias: 'CastAlias',
   MediaListing: 'MediaListing',
+  MediaListingHistory: 'MediaListingHistory',
   ImportSource: 'ImportSource',
   ImportError: 'ImportError',
   ImportBatch: 'ImportBatch',
@@ -424,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "store" | "cast" | "castStoreMembership" | "castNameHistory" | "castMergeHistory" | "castStartDateBulkChangeHistory" | "castAlias" | "mediaListing" | "importSource" | "importError" | "importBatch" | "driveFolderMapping" | "driveFileState" | "ctiCastDaily" | "townStoreDaily" | "townCastDaily" | "townUrlDaily" | "townLandingDaily" | "heavenShopDaily" | "heavenCastDaily" | "improvementLog" | "monthlyGoal" | "monthlyGoalChangeHistory"
+    modelProps: "user" | "session" | "store" | "cast" | "castStoreMembership" | "castNameHistory" | "castMergeHistory" | "castStartDateBulkChangeHistory" | "castAlias" | "mediaListing" | "mediaListingHistory" | "importSource" | "importError" | "importBatch" | "driveFolderMapping" | "driveFileState" | "ctiCastDaily" | "townStoreDaily" | "townCastDaily" | "townUrlDaily" | "townLandingDaily" | "heavenShopDaily" | "heavenCastDaily" | "improvementLog" | "monthlyGoal" | "monthlyGoalChangeHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1165,6 +1166,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MediaListingCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MediaListingCountAggregateOutputType> | number
+        }
+      }
+    }
+    MediaListingHistory: {
+      payload: Prisma.$MediaListingHistoryPayload<ExtArgs>
+      fields: Prisma.MediaListingHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MediaListingHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaListingHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MediaListingHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaListingHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.MediaListingHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaListingHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MediaListingHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaListingHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.MediaListingHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaListingHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.MediaListingHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaListingHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.MediaListingHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MediaListingHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaListingHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.MediaListingHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaListingHistoryPayload>
+        }
+        update: {
+          args: Prisma.MediaListingHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaListingHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.MediaListingHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MediaListingHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MediaListingHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaListingHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.MediaListingHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaListingHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.MediaListingHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMediaListingHistory>
+        }
+        groupBy: {
+          args: Prisma.MediaListingHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MediaListingHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MediaListingHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MediaListingHistoryCountAggregateOutputType> | number
         }
       }
     }
@@ -2476,6 +2551,20 @@ export const MediaListingScalarFieldEnum = {
 export type MediaListingScalarFieldEnum = (typeof MediaListingScalarFieldEnum)[keyof typeof MediaListingScalarFieldEnum]
 
 
+export const MediaListingHistoryScalarFieldEnum = {
+  id: 'id',
+  castId: 'castId',
+  storeId: 'storeId',
+  mediaType: 'mediaType',
+  listedFrom: 'listedFrom',
+  listedTo: 'listedTo',
+  source: 'source',
+  createdAt: 'createdAt'
+} as const
+
+export type MediaListingHistoryScalarFieldEnum = (typeof MediaListingHistoryScalarFieldEnum)[keyof typeof MediaListingHistoryScalarFieldEnum]
+
+
 export const ImportSourceScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -3422,6 +3511,7 @@ export type GlobalOmitConfig = {
   castStartDateBulkChangeHistory?: Prisma.CastStartDateBulkChangeHistoryOmit
   castAlias?: Prisma.CastAliasOmit
   mediaListing?: Prisma.MediaListingOmit
+  mediaListingHistory?: Prisma.MediaListingHistoryOmit
   importSource?: Prisma.ImportSourceOmit
   importError?: Prisma.ImportErrorOmit
   importBatch?: Prisma.ImportBatchOmit
