@@ -49,3 +49,32 @@ Human-confirmed non-regular exceptions are persisted in `CastStoreMembershipRevi
 ## Final Store Scope Audit
 
 Run `npm run memberships:store-scope-audit` for a read-only Cast×Store reconciliation. `LEGACY_ACTIVE_MEMBERSHIP_INACTIVE` is separated into `EXPECTED_STORE_SCOPE_DIFFERENCE`, `CURRENT_STORE_MEMBERSHIP_MISSING`, `LEFT_STORE_CONFLICT`, `LEGACY_STATUS_STALE`, and `OTHER`. `PRIMARY_STORE_DIFFERENCE` is reported by Cast as `EXPECTED_MULTI_STORE_DIFFERENCE`, `PRIMARY_STORE_STALE`, `PRIMARY_STORE_MISSING`, `NO_ACTIVE_MEMBERSHIP`, or `OTHER`. The complete row-level report is written to `artifacts/audits/store-scope-*.json`; `OTHER` prevents a close decision. No primaryStoreId is changed.
+
+## Final Production Close
+
+**Status: J0-G Membership Gap Resolution — COMPLETE / Production VERIFIED**
+
+Production read-only verification:
+
+| Audit | Result |
+|---|---:|
+| Casts / Memberships | 197 / 137 |
+| Memberships | ACTIVE 220 / LEFT 4 |
+| Membership-free Casts | 60 |
+| CREATE_ACTIVE | 0 |
+| Strong Dataset Membership-free | 0 |
+| Shadow difference cells | 419 |
+| Shadow MEMBERSHIP_MISSING | 240 |
+| Shadow PRIMARY_STORE_DIFFERENCE | 132 |
+| Shadow LEGACY_ACTIVE_MEMBERSHIP_INACTIVE | 47 |
+| Store Scope Expected difference | 47 |
+| Current Store Membership Missing | 0 |
+| Primary Store Expected multi-store | 58 Casts |
+| Primary Store missing / stale | 1 / 47 Casts |
+| Date-range conflicts | 0 |
+
+The 49 Legacy status stale candidates are a separate, documented population and are not Shadow `LEGACY_ACTIVE_MEMBERSHIP_INACTIVE` cells. Primary Store stale values, Historical UNKNOWN dates, and Legacy stale candidates remain non-blocking documentation items; no automatic repair is performed.
+
+The remaining explicit review is `【退店】あずさ × 越谷`: Town latest Dataset 2026-08-22, no Membership, Legacy ACTIVE, retired marker and Legacy conflict. It is intentionally excluded from `CREATE_ACTIVE` and is treated as an explained Human Review item, not an unresolved automatic gap.
+
+Close criteria are satisfied: no automatic Membership candidates, no unexplained Current Store Membership gap, all 47 Shadow Store Scope differences are Expected, no `OTHER`, and all date-range audits are zero. Resolver and Analytics remain on Legacy reads; the next phase is Membership-as-source Shadow/feature-flag migration design, not an immediate global cutover. Production DB, Membership, Resolver, Analytics, Import, Schema, Migration, and settings were not changed for this documentation close.

@@ -327,4 +327,4 @@ Productionでは、Current Membership初期化190件、複数店舗退店、Lega
 | J0 Re-entry | COMPLETE / Production VERIFIED |
 | J0 Cast Lifecycle | COMPLETE / Production VERIFIED |
 
-次工程はJ0-F Shadow Read / Legacy Comparison。Resolver・Analytics切替は差分監査後に判断する。
+J0-G Membership Gap ResolutionはCOMPLETE / Production VERIFIED。次工程はMembershipを正本候補とするResolver / AnalyticsのShadow Read・feature flag・段階移行設計であり、即時の一括切替は行わない。Resolver・Analyticsは引き続きLegacy readsを維持する。
