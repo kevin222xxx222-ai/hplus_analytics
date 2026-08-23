@@ -10,7 +10,7 @@ describe("Town CAST media currentization policy", () => {
   });
 
   it("keeps a retired cast closed for post-exit facts", () => {
-    expect(canCurrentizeTownCastState({ status: CastStatus.INACTIVE, endedOn: exitDate, targetDate: new Date("2026-08-22T00:00:00.000Z"), membershipStatuses: [CastMembershipStatus.LEFT], ignoredAlias: false })).toBe(false);
+    expect(canCurrentizeTownCastState({ status: CastStatus.INACTIVE, endedOn: exitDate, targetDate: new Date("2026-08-22T00:00:00.000Z"), membershipStatuses: [CastMembershipStatus.LEFT], membershipEvidenceAvailable: true, ignoredAlias: false })).toBe(false);
   });
 
   it("allows historical facts through the media-state gate", () => {
@@ -19,6 +19,6 @@ describe("Town CAST media currentization policy", () => {
 
   it("does not currentize an ignored alias or an all-left cast", () => {
     expect(canCurrentizeTownCastState({ status: CastStatus.ACTIVE, endedOn: null, targetDate: new Date("2026-08-22T00:00:00.000Z"), membershipStatuses: [CastMembershipStatus.ACTIVE], ignoredAlias: true })).toBe(false);
-    expect(canCurrentizeTownCastState({ status: CastStatus.ACTIVE, endedOn: null, targetDate: new Date("2026-08-22T00:00:00.000Z"), membershipStatuses: [CastMembershipStatus.LEFT], ignoredAlias: false })).toBe(false);
+    expect(canCurrentizeTownCastState({ status: CastStatus.ACTIVE, endedOn: null, targetDate: new Date("2026-08-22T00:00:00.000Z"), membershipStatuses: [CastMembershipStatus.LEFT], membershipEvidenceAvailable: true, ignoredAlias: false })).toBe(false);
   });
 });

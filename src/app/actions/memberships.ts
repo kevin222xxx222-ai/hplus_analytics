@@ -5,7 +5,7 @@ import { z } from "zod";
 import { CastMembershipSourceConfidence, CastMembershipStatus } from "@/generated/prisma/client";
 import { requireAdmin } from "@/lib/auth";
 import { parseDateOnly } from "@/lib/date";
-import { closeMembership, createMembership, createReentryMembership, exitCast, ExitDateConflictError, initializeCurrentMemberships, listMemberships, resumeFromLeave, setOnLeave, updateMembership } from "@/lib/casts/membership-service";
+import { closeMembership, createMembership, createReentryMembership, exitCast, ExitDateConflictError, initializeCurrentMemberships, listMemberships, resumeFromLeave, setOnLeave, updateMembership, reenterCast, ReentryValidationError } from "@/lib/casts/membership-service";
 import { loadCurrentMembershipCandidates, summarizeCurrentMembershipCandidates } from "@/lib/casts/current-membership-evidence";
 
 const uuid = z.string().uuid();
@@ -95,6 +95,27 @@ export async function createReentryMembershipAction(formData: FormData) {
   const data = common(formValues(formData));
   await createReentryMembership({ ...data, createdByUserId: admin.id, updatedByUserId: admin.id });
   revalidatePath("/masters/casts/memberships");
+}
+
+export type ReentryActionState = { status?: "ERROR" | "COMPLETED"; message?: string };
+
+export async function reenterCastAction(_previous: ReentryActionState, formData: FormData): Promise<ReentryActionState> {
+  const admin = await requireAdmin();
+  try {
+    const castId = uuid.parse(formData.get("castId"));
+    const reentryDate = parseDateOnly(date.parse(String(formData.get("reentryDate"))));
+    const storeIds = [...new Set(formData.getAll("storeId").map((value) => uuid.parse(value)))];
+    const confirmedSamePerson = formData.get("confirmedSamePerson") === "on";
+    const aliasesValue = String(formData.get("aliases") || "[]");
+    const aliases = z.array(z.object({ storeId: uuid, mediaType: z.enum(["CTI", "TOWN", "HEAVEN"]), aliasName: z.string().trim().min(1).max(100), normalizedAlias: z.string().trim().min(1).max(100) })).parse(JSON.parse(aliasesValue));
+    await reenterCast({ castId, reentryDate, storeIds, aliases, confirmedSamePerson, updatedByUserId: admin.id });
+    revalidatePath("/masters/casts");
+    revalidatePath("/masters/casts/memberships");
+    return { status: "COMPLETED", message: "再入店を登録しました。" };
+  } catch (error) {
+    if (error instanceof ReentryValidationError || error instanceof z.ZodError) return { status: "ERROR", message: error.message };
+    throw error;
+  }
 }
 
 export async function setOnLeaveAction(formData: FormData) {

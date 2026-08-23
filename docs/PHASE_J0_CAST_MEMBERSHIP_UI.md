@@ -94,6 +94,12 @@ Membershipの状態・信頼度は日本語で表示する（在籍・休業・�
 - Analytics: 未変更
 - Importからの再入店・Cast自動変更: なし
 
+## Cast-level Re-entry implementation
+
+再入店は`/masters/casts`からCast単位で実行する。店舗を複数選択し、再入店日と「同一人物」確認を入力すると、過去LEFT Membershipを変更せず新しいACTIVE Membershipを同一transactionで作成し、Legacy CastをACTIVE/`endedOn=NULL`へ同期する。通常画面から店舗単位の再入店操作は表示しない。Aliasは旧期間を再openせず、新しい期間を明示登録する。
+
+現行`MediaListing`はcurrent状態の正本として維持し、再入店前の行は`MediaListingHistory`へ保存してからcurrent行を更新する。Expected Business ErrorはServer Actionの戻り値として画面表示し、Next.jsのエラーページへ送らない。Importによる自動再入店は行わない。
+
 ## J0-E Production Canary手順
 
 1. `/masters/casts/memberships/initialize`でPreviewを表示する。

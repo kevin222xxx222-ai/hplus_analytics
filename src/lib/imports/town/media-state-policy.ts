@@ -5,11 +5,12 @@ export function canCurrentizeTownCastState(input: {
   endedOn: Date | null;
   targetDate: Date;
   membershipStatuses: CastMembershipStatus[];
+  membershipEvidenceAvailable?: boolean;
   ignoredAlias: boolean;
 }) {
   if (input.endedOn && input.targetDate > input.endedOn) return false;
   if (input.status === CastStatus.INACTIVE && (!input.endedOn || input.targetDate > input.endedOn)) return false;
-  if (input.membershipStatuses.length > 0 && input.membershipStatuses.every((status) => status === CastMembershipStatus.LEFT)) return false;
+  if (input.membershipEvidenceAvailable && (input.membershipStatuses.length === 0 || input.membershipStatuses.every((status) => status === CastMembershipStatus.LEFT))) return false;
   return !input.ignoredAlias;
 }
 
@@ -24,14 +25,14 @@ export async function canCurrentizeTownCast(
   // missing optional table never aborts the surrounding transaction.
   const [{ tableName }] = await tx.$queryRaw<Array<{ tableName: string | null }>>`SELECT to_regclass('public.cast_store_memberships')::text AS "tableName"`;
   const memberships = tableName
-    ? await tx.castStoreMembership.findMany({ where: { castId: input.castId }, select: { status: true } })
+    ? await tx.castStoreMembership.findMany({ where: { castId: input.castId, storeId: input.storeId }, select: { status: true } })
     : [];
   if (input.normalizedAlias) {
     const ignored = await tx.castAlias.findFirst({
       where: { castId: input.castId, storeId: input.storeId, mediaType: MediaType.TOWN, normalizedAlias: input.normalizedAlias, reviewStatus: AliasReviewStatus.IGNORED },
       select: { id: true },
     });
-    return canCurrentizeTownCastState({ status: cast.status, endedOn: cast.endedOn, targetDate: input.targetDate, membershipStatuses: memberships.map((membership) => membership.status), ignoredAlias: Boolean(ignored) });
+    return canCurrentizeTownCastState({ status: cast.status, endedOn: cast.endedOn, targetDate: input.targetDate, membershipStatuses: memberships.map((membership) => membership.status), membershipEvidenceAvailable: Boolean(tableName), ignoredAlias: Boolean(ignored) });
   }
-  return canCurrentizeTownCastState({ status: cast.status, endedOn: cast.endedOn, targetDate: input.targetDate, membershipStatuses: memberships.map((membership) => membership.status), ignoredAlias: false });
+  return canCurrentizeTownCastState({ status: cast.status, endedOn: cast.endedOn, targetDate: input.targetDate, membershipStatuses: memberships.map((membership) => membership.status), membershipEvidenceAvailable: Boolean(tableName), ignoredAlias: false });
 }

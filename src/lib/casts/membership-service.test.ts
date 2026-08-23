@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { CastMembershipStatus } from "@/generated/prisma/client";
-import { classifyMediaRepair, isMembershipActiveOn, membershipPeriodsOverlap, validateExitDateConsistency, validateExitDatePreflight, validateMembershipInput } from "./membership-service";
+import { classifyMediaRepair, isMembershipActiveOn, membershipPeriodsOverlap, validateExitDateConsistency, validateExitDatePreflight, validateMembershipInput, validateReentryDate } from "./membership-service";
 
 const day = (value: string) => new Date(`${value}T00:00:00.000Z`);
 
@@ -49,5 +49,11 @@ describe("membership-service validation", () => {
     expect(classifyMediaRepair(day("2026-06-01"), day("2026-06-30"))).toBe("NORMAL_CLOSE");
     expect(classifyMediaRepair(day("2026-06-30"), day("2026-06-30"))).toBe("NORMAL_CLOSE");
     expect(classifyMediaRepair(day("2026-07-13"), day("2026-06-30"))).toBe("FUTURE_START_CONFLICT");
+  });
+
+  it("requires re-entry after the previous exit date", () => {
+    expect(() => validateReentryDate(day("2026-08-23"), day("2026-06-30"))).not.toThrow();
+    expect(() => validateReentryDate(day("2026-06-30"), day("2026-06-30"))).toThrow();
+    expect(() => validateReentryDate(day("2026-06-29"), day("2026-06-30"))).toThrow();
   });
 });

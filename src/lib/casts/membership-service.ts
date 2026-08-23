@@ -18,6 +18,33 @@ export type MembershipInput = {
 
 export type MembershipDateRange = Pick<MembershipInput, "joinedAt" | "leftAt">;
 
+export type ReentryAliasInput = {
+  storeId: string;
+  mediaType: "CTI" | "TOWN" | "HEAVEN";
+  aliasName: string;
+  normalizedAlias: string;
+};
+
+export type ReentryInput = {
+  castId: string;
+  reentryDate: Date;
+  storeIds: string[];
+  aliases?: ReentryAliasInput[];
+  confirmedSamePerson: boolean;
+  updatedByUserId?: string | null;
+};
+
+export class ReentryValidationError extends Error {
+  constructor(public readonly code: string, message: string) {
+    super(message);
+    this.name = "ReentryValidationError";
+  }
+}
+
+export function validateReentryDate(reentryDate: Date, endedOn: Date | null) {
+  if (!endedOn || reentryDate <= endedOn) throw new ReentryValidationError("DATE_NOT_AFTER_EXIT", "再入店日は前回退店日より後にしてください。");
+}
+
 function dateValue(value: Date | null | undefined) {
   return value ? value.getTime() : null;
 }
@@ -320,6 +347,55 @@ export async function closeMembership(id: string, leftAt: Date, updatedByUserId?
 
 export async function createReentryMembership(input: Omit<MembershipInput, "status">) {
   return createMembership({ ...input, status: CastMembershipStatus.ACTIVE });
+}
+
+/** Cast-level re-entry. Prior Membership/Alias periods are never reopened. */
+export async function reenterCast(input: ReentryInput) {
+  const storeIds = [...new Set(input.storeIds)];
+  if (!input.confirmedSamePerson) throw new ReentryValidationError("CONFIRMATION_REQUIRED", "同一人物の再入店確認が必要です。");
+  if (!storeIds.length) throw new ReentryValidationError("STORE_REQUIRED", "再入店する店舗を1つ以上選択してください。");
+  if (input.aliases?.some((alias) => !storeIds.includes(alias.storeId))) throw new ReentryValidationError("ALIAS_STORE_INVALID", "Aliasの店舗が再入店店舗に含まれていません。");
+
+  return prisma.$transaction(async (tx) => {
+    await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`cast-reentry:${input.castId}`})) IS NULL AS locked`;
+    const cast = await tx.cast.findFirst({ where: { id: input.castId, mergedIntoCastId: null }, select: { id: true, status: true, endedOn: true } });
+    if (!cast) throw new ReentryValidationError("CAST_NOT_FOUND", "キャストが見つかりません。");
+    if (cast.status !== CastStatus.INACTIVE || !cast.endedOn) throw new ReentryValidationError("CAST_NOT_RETIRED", "再入店対象は退店済みCastに限ります。");
+    validateReentryDate(input.reentryDate, cast.endedOn);
+
+    const memberships = await tx.castStoreMembership.findMany({ where: { castId: cast.id }, select: { id: true, storeId: true, status: true, joinedAt: true, leftAt: true } });
+    for (const storeId of storeIds) {
+      const storeMemberships = memberships.filter((membership) => membership.storeId === storeId);
+      if (storeMemberships.some((membership) => membership.status === CastMembershipStatus.ACTIVE || membership.status === CastMembershipStatus.ON_LEAVE)) {
+        throw new ReentryValidationError("ACTIVE_MEMBERSHIP_EXISTS", "選択店舗に在籍中または休業中のMembershipがあります。");
+      }
+      await assertNoOverlap(tx, { castId: cast.id, storeId, joinedAt: input.reentryDate, leftAt: null });
+    }
+
+    const aliases = input.aliases ?? [];
+    for (const alias of aliases) {
+      const ignored = await tx.castAlias.findFirst({ where: { castId: cast.id, storeId: alias.storeId, mediaType: alias.mediaType, normalizedAlias: alias.normalizedAlias, reviewStatus: "IGNORED" }, select: { id: true } });
+      if (ignored) throw new ReentryValidationError("IGNORED_ALIAS_REUSE", "IGNORED Aliasは再利用できません。新しい媒体Aliasを確認してください。");
+      const duplicate = await tx.castAlias.findFirst({ where: { storeId: alias.storeId, mediaType: alias.mediaType, normalizedAlias: alias.normalizedAlias, validFrom: input.reentryDate }, select: { id: true, castId: true } });
+      if (duplicate) throw new ReentryValidationError("ALIAS_CONFLICT", "同じ店舗・媒体・Alias・再入店日のAliasが既に存在します。");
+    }
+
+    for (const storeId of storeIds) {
+      const currentListings = await tx.mediaListing.findMany({ where: { castId: cast.id, storeId } });
+      if (currentListings.some((listing) => listing.isListed)) throw new ReentryValidationError("LISTING_CONFLICT", "選択店舗に現在掲載中のMediaListingがあります。先に状態を確認してください。");
+      for (const current of currentListings) {
+        await tx.mediaListingHistory.create({ data: { castId: current.castId, storeId: current.storeId, mediaType: current.mediaType, listedFrom: current.listedFrom, listedTo: current.listedTo, source: "REENTRY_SNAPSHOT" } });
+      }
+    }
+
+    for (const storeId of storeIds) {
+      await tx.castStoreMembership.create({ data: { castId: cast.id, storeId, joinedAt: input.reentryDate, leftAt: null, status: CastMembershipStatus.ACTIVE, source: "MANUAL_REENTRY", sourceConfidence: "CONFIRMED", createdByUserId: input.updatedByUserId ?? null, updatedByUserId: input.updatedByUserId ?? null } });
+      const currentListings = await tx.mediaListing.findMany({ where: { castId: cast.id, storeId }, select: { id: true } });
+      for (const current of currentListings) await tx.mediaListing.update({ where: { id: current.id }, data: { isListed: true, listedFrom: input.reentryDate, listedTo: null } });
+    }
+    for (const alias of aliases) await tx.castAlias.create({ data: { castId: cast.id, storeId: alias.storeId, mediaType: alias.mediaType, aliasName: alias.aliasName, normalizedAlias: alias.normalizedAlias, reviewStatus: "MAPPED", validFrom: input.reentryDate, validTo: null } });
+    return tx.cast.update({ where: { id: cast.id }, data: { status: CastStatus.ACTIVE, endedOn: null } });
+  });
 }
 
 export async function setOnLeave(id: string, updatedByUserId?: string | null) {
