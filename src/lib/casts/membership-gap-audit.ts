@@ -50,6 +50,9 @@ export type GapApplyValidation = {
   both: number;
   storeCounts: Record<string, number>;
   currentEvidence60: Record<string, number>;
+  currentEvidenceCastCount: number;
+  strongDatasetCastCount: number;
+  strongDatasetExcluded: Array<{ castId: string; displayName: string; decision: string; reasons: string[] }>;
 };
 
 function reviewReasons(candidate: CurrentMembershipCandidate, input: { marker: boolean; legacyInactive: boolean; alias: boolean; listing: boolean; heaven: boolean; strong: boolean }): string[] {
@@ -111,7 +114,7 @@ export async function loadGapApplyPreview(db: Prisma.TransactionClient | typeof 
   return rows;
 }
 
-export function validateGapApplyPreview(rows: GapApplyCandidate[]): GapApplyValidation {
+export function validateGapApplyPreview(rows: GapApplyCandidate[], currentEvidenceCastIds?: Set<string>): GapApplyValidation {
   const errors: string[] = [];
   const membershipFreeRows = rows.filter((row) => row.membershipFree);
   const membershipFreeCastCount = new Set(membershipFreeRows.map((row) => row.castId)).size;
@@ -127,9 +130,11 @@ export function validateGapApplyPreview(rows: GapApplyCandidate[]): GapApplyVali
   if (townOnly + ctiOnly + both !== create.length) errors.push("CREATE_ACTIVE evidence totals do not reconcile");
   if (Object.values(storeCounts).reduce((sum, count) => sum + count, 0) !== create.length) errors.push("CREATE_ACTIVE store totals do not reconcile");
   if (create.some((row) => row.displayNameRetiredMarker || row.legacyStatus !== CastStatus.ACTIVE || !row.membershipFree || row.existingMembershipStatuses.includes(CastMembershipStatus.LEFT) || (!row.townCurrent && !row.ctiCurrent))) errors.push("CREATE_ACTIVE contains an unsafe row");
-  const evidenceRows = rows.filter((row) => row.membershipFree && (row.aliasEvidence || row.mediaListingEvidence || row.townCurrent || row.ctiCurrent));
+  const evidenceCastIds = currentEvidenceCastIds ?? new Set(rows.filter((row) => row.membershipFree && (row.aliasEvidence || row.mediaListingEvidence || row.townCurrent || row.ctiCurrent)).map((row) => row.castId));
+  const evidenceRows = rows.filter((row) => row.membershipFree && evidenceCastIds.has(row.castId));
   const currentEvidence60: Record<string, number> = { STRONG_DATASET_EVIDENCE: 0, ALIAS_ONLY: 0, LISTING_ONLY: 0, ALIAS_AND_LISTING_ONLY: 0, HEAVEN_ONLY: 0, OTHER_CURRENT_EVIDENCE: 0 };
-  for (const castId of new Set(evidenceRows.map((row) => row.castId))) {
+  const strongDatasetExcluded: Array<{ castId: string; displayName: string; decision: string; reasons: string[] }> = [];
+  for (const castId of evidenceCastIds) {
     const castRows = evidenceRows.filter((row) => row.castId === castId);
     const strong = castRows.some((row) => row.townCurrent || row.ctiCurrent);
     const alias = castRows.some((row) => row.aliasEvidence);
@@ -137,8 +142,13 @@ export function validateGapApplyPreview(rows: GapApplyCandidate[]): GapApplyVali
     const heaven = castRows.some((row) => row.heavenEvidence);
     const key = strong ? "STRONG_DATASET_EVIDENCE" : alias && listing ? "ALIAS_AND_LISTING_ONLY" : alias ? "ALIAS_ONLY" : listing ? "LISTING_ONLY" : heaven ? "HEAVEN_ONLY" : "OTHER_CURRENT_EVIDENCE";
     currentEvidence60[key] += 1;
+    if (strong && !castRows.some((row) => row.decision === "CREATE_ACTIVE")) {
+      const representative = castRows.find((row) => row.townCurrent || row.ctiCurrent) ?? castRows[0];
+      strongDatasetExcluded.push({ castId, displayName: representative.displayName, decision: representative.decision, reasons: representative.reviewReasons });
+    }
   }
-  return { valid: errors.length === 0, errors, membershipFreeCastCount, membershipFreeCellCount: membershipFreeRows.length, createActiveCount: create.length, reviewRequiredCount: review.length, reentryReviewCount: reentry.length, noopCount: noop.length, townOnly, ctiOnly, both, storeCounts, currentEvidence60 };
+  if (Object.values(currentEvidence60).reduce((sum, count) => sum + count, 0) !== evidenceCastIds.size) errors.push("Current Evidence exclusive categories do not reconcile");
+  return { valid: errors.length === 0, errors, membershipFreeCastCount, membershipFreeCellCount: membershipFreeRows.length, createActiveCount: create.length, reviewRequiredCount: review.length, reentryReviewCount: reentry.length, noopCount: noop.length, townOnly, ctiOnly, both, storeCounts, currentEvidence60, currentEvidenceCastCount: evidenceCastIds.size, strongDatasetCastCount: currentEvidence60.STRONG_DATASET_EVIDENCE, strongDatasetExcluded };
 }
 
 export async function applyGapMemberships(candidateKeys: Array<{ castId: string; storeId: string }>, confirmation: string, db: Prisma.TransactionClient | typeof prisma = prisma) {
