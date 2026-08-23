@@ -1,6 +1,6 @@
 import { ImportBatchStatus, ImportDataType } from "@/generated/prisma/client";
 import { readPreview } from "@/lib/imports/storage";
-import { resolveTownPreviewRowsWithShadow } from "@/lib/imports/town/resolver";
+import { resolveTownPreviewRows, resolveTownPreviewRowsWithShadow } from "@/lib/imports/town/resolver";
 import type { TownPreview } from "@/lib/imports/town/types";
 import { prisma } from "@/lib/prisma";
 
@@ -22,14 +22,20 @@ async function main() {
   for (const batch of latestByStore.values()) {
     if (!batch.importSource.store) continue;
     const preview = await readPreview<TownPreview>(batch.id);
+    // Two legacy-only runs isolate resolver nondeterminism from the shadow pass.
+    const legacyRunA = await resolveTownPreviewRows(preview.rows, batch.importSource.store.id, batch.targetTo);
+    const legacyRunB = await resolveTownPreviewRows(preview.rows, batch.importSource.store.id, batch.targetTo);
     const result = await resolveTownPreviewRowsWithShadow(preview.rows, batch.importSource.store.id, batch.targetTo, "shadow");
+    const rowState = (row: TownPreview["rows"][number] | undefined) => row ? { rowKey: row.rowKey, sourceRowNumber: row.sourceRowNumber, mediaCastName: row.kind === "CAST" ? row.originalCastName : row.kind === "URL" || row.kind === "LANDING" ? row.sourceCastName : null, castId: row.castId, resolutionStatus: row.resolutionStatus, castDisplayName: row.castDisplayName, normalizedCastName: row.kind === "CAST" || row.kind === "URL" || row.kind === "LANDING" ? row.normalizedCastName : null, issues: row.issues } : null;
+    const byKey = (rows: TownPreview["rows"]) => new Map(rows.map((row) => [row.rowKey, row]));
+    const originalByKey = byKey(preview.rows);
+    const runAByKey = byKey(legacyRunA);
+    const runBByKey = byKey(legacyRunB);
+    const changedRows = [...new Set([...originalByKey.keys(), ...runAByKey.keys()])].map((rowKey) => ({ rowKey, original: originalByKey.get(rowKey), reResolved: runAByKey.get(rowKey) })).filter(({ original, reResolved }) => original?.castId !== reResolved?.castId || original?.resolutionStatus !== reResolved?.resolutionStatus);
+    const legacyRunDifferences = [...new Set([...runAByKey.keys(), ...runBByKey.keys()])].filter((rowKey) => runAByKey.get(rowKey)?.castId !== runBByKey.get(rowKey)?.castId || runAByKey.get(rowKey)?.resolutionStatus !== runBByKey.get(rowKey)?.resolutionStatus);
     const exampleCastIds = [...new Set((result.shadow?.examples ?? []).map((example) => example.castId))];
     const exampleCasts = await prisma.cast.findMany({ where: { id: { in: exampleCastIds } }, select: { id: true, displayName: true, status: true, memberships: { where: { storeId: batch.importSource.store.id }, select: { status: true } } } });
     const exampleById = new Map(exampleCasts.map((cast) => [cast.id, cast]));
-    const changedRows = preview.rows.reduce((count, row, index) => {
-      const resolved = result.rows[index];
-      return count + (row.castId !== resolved?.castId || row.resolutionStatus !== resolved?.resolutionStatus ? 1 : 0);
-    }, 0);
     const shadow = result.shadow;
     reports.push({
       store: batch.importSource.store.shortName,
@@ -47,7 +53,16 @@ async function main() {
         const cast = exampleById.get(example.castId);
         return { ...example, displayName: cast?.displayName ?? null, store: batch.importSource.store?.shortName ?? null, legacyStatus: cast?.status ?? null, membershipStatuses: cast?.memberships.map((membership) => membership.status) ?? [] };
       }),
-      legacyPreviewValidation: { rows: preview.rows.length, reResolvedRows: result.rows.length, changedRows, unchanged: changedRows === 0 },
+      legacyPreviewValidation: {
+        rows: preview.rows.length,
+        reResolvedRows: legacyRunA.length,
+        changedRows: changedRows.length,
+        unchanged: changedRows.length === 0,
+        legacyRunAComparedToRunBChangedRows: legacyRunDifferences.length,
+        shadowLegacyRowsComparedToLegacyRunChangedRows: [...new Set([...runAByKey.keys(), ...byKey(result.rows).keys()])].filter((rowKey) => runAByKey.get(rowKey)?.castId !== byKey(result.rows).get(rowKey)?.castId || runAByKey.get(rowKey)?.resolutionStatus !== byKey(result.rows).get(rowKey)?.resolutionStatus).length,
+        changedRowDetails: changedRows.map(({ original, reResolved }) => ({ store: batch.importSource.store?.shortName ?? null, original: rowState(original), reResolved: rowState(reResolved) })),
+        legacyNondeterministicRowKeys: legacyRunDifferences,
+      },
     });
   }
   console.log(JSON.stringify({ mode: "shadow", readOnly: true, resolver: "TOWN_CAST", stores: stores.map((store) => store.shortName), reports }, null, 2));
