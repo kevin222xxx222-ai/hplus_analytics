@@ -25,6 +25,7 @@
     "memberships:store-scope-audit": "node --import tsx scripts/audit-store-scope.ts",
     "memberships:town-resolver-shadow": "node --import tsx scripts/memberships-town-resolver-shadow.ts",
     "memberships:gap-apply": "node --import tsx scripts/apply-membership-gaps.ts",
+    "memberships:store-gap-apply": "node --import tsx scripts/memberships-store-gap-apply.ts",
     "drive:test-connection": "node --import tsx scripts/phase-h-drive-test.ts",
     "drive:test-download": "node --import tsx scripts/phase-h-drive-download-test.ts",
     "drive:inspect-folder": "node --import tsx scripts/drive-inspect-folder.ts",
