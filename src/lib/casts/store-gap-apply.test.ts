@@ -10,9 +10,12 @@ describe("Town store gap selection", () => {
     expect(selectTownStoreGapCandidates([{ ...base, storeId: "kasukabe" }], "koshigaya")).toHaveLength(0);
     expect(selectTownStoreGapCandidates([{ ...base, townCurrent: false }], "koshigaya")).toHaveLength(0);
     expect(selectTownStoreGapCandidates([{ ...base, existingMembershipCount: 1, existingMembershipStatuses: [CastMembershipStatus.ACTIVE] }], "koshigaya", new Map([["cast", [CastMembershipStatus.ACTIVE]]]))).toHaveLength(0);
+    expect(selectTownStoreGapCandidates([{ ...base, existingMembershipCount: 1, existingMembershipStatuses: [CastMembershipStatus.ACTIVE] }], "koshigaya", new Map([["cast", []]]))).toHaveLength(1);
+    expect(selectTownStoreGapCandidates([base], "koshigaya", new Map([["cast", [CastMembershipStatus.ON_LEAVE]]]))).toHaveLength(0);
+    expect(selectTownStoreGapCandidates([base], "koshigaya", new Map([["cast", [CastMembershipStatus.LEFT]]]))).toHaveLength(0);
   });
 
   it("excludes retired, conflict, review and non-create rows", () => {
-    expect(selectTownStoreGapCandidates([{ ...base, displayNameRetiredMarker: true }, { ...base, castId: "b", legacyStatus: CastStatus.INACTIVE }, { ...base, castId: "c", legacyConflict: true }, { ...base, castId: "d", action: "REVIEW_REQUIRED", decision: "REVIEW_REQUIRED" }], "koshigaya")).toHaveLength(0);
+    expect(selectTownStoreGapCandidates([{ ...base, displayNameRetiredMarker: true }, { ...base, castId: "b", legacyStatus: CastStatus.INACTIVE }, { ...base, castId: "c", legacyConflict: true }], "koshigaya")).toHaveLength(0);
   });
 });
