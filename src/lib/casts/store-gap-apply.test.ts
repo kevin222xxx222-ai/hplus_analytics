@@ -9,7 +9,7 @@ describe("Town store gap selection", () => {
     expect(selectTownStoreGapCandidates([base], "koshigaya")).toHaveLength(1);
     expect(selectTownStoreGapCandidates([{ ...base, storeId: "kasukabe" }], "koshigaya")).toHaveLength(0);
     expect(selectTownStoreGapCandidates([{ ...base, townCurrent: false }], "koshigaya")).toHaveLength(0);
-    expect(selectTownStoreGapCandidates([{ ...base, existingMembershipCount: 1, existingMembershipStatuses: [CastMembershipStatus.ACTIVE] }], "koshigaya")).toHaveLength(0);
+    expect(selectTownStoreGapCandidates([{ ...base, existingMembershipCount: 1, existingMembershipStatuses: [CastMembershipStatus.ACTIVE] }], "koshigaya", new Map([["cast", [CastMembershipStatus.ACTIVE]]]))).toHaveLength(0);
   });
 
   it("excludes retired, conflict, review and non-create rows", () => {

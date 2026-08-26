@@ -3,9 +3,13 @@ import { prisma } from "@/lib/prisma";
 import { loadGapApplyPreview, type GapApplyCandidate } from "@/lib/casts/membership-gap-audit";
 
 export type StoreGapApplyCandidate = GapApplyCandidate & { classification: "CURRENT_STORE_MEMBERSHIP_MISSING" };
+export type StoreGapApplyExclusion = { castId: string; displayName: string; storeId: string; reason: "TARGET_ACTIVE" | "TARGET_ON_LEAVE" | "TARGET_LEFT_REENTRY" | "LEGACY_INACTIVE" | "RETIRED_MARKER" | "LEGACY_CONFLICT" | "NO_TOWN_CURRENT" | "OTHER" };
 
-export function selectTownStoreGapCandidates(rows: GapApplyCandidate[], targetStoreId: string): StoreGapApplyCandidate[] {
-  return rows.filter((row) => row.storeId === targetStoreId && row.action === "CREATE_ACTIVE" && row.decision === "CREATE_ACTIVE" && row.townCurrent && row.existingMembershipCount === 0 && row.legacyStatus === CastStatus.ACTIVE && !row.displayNameRetiredMarker && !row.legacyConflict)
+export function selectTownStoreGapCandidates(rows: GapApplyCandidate[], targetStoreId: string, targetMembershipStatuses = new Map<string, CastMembershipStatus[]>): StoreGapApplyCandidate[] {
+  return rows.filter((row) => {
+    const statuses = targetMembershipStatuses.get(row.castId) ?? [];
+    return row.storeId === targetStoreId && row.action === "CREATE_ACTIVE" && row.decision === "CREATE_ACTIVE" && row.townCurrent && !statuses.includes(CastMembershipStatus.ACTIVE) && !statuses.includes(CastMembershipStatus.ON_LEAVE) && !statuses.includes(CastMembershipStatus.LEFT) && row.legacyStatus === CastStatus.ACTIVE && !row.displayNameRetiredMarker && !row.legacyConflict;
+  })
     .map((row) => ({ ...row, classification: "CURRENT_STORE_MEMBERSHIP_MISSING" as const }));
 }
 
@@ -16,8 +20,18 @@ async function lock(db: Prisma.TransactionClient, castId: string) {
 export async function loadTownStoreGapApplyPreview(db: Prisma.TransactionClient | typeof prisma = prisma) {
   const store = await db.store.findFirst({ where: { code: StoreCode.KOSHIGAYA, isActive: true }, select: { id: true, shortName: true, code: true } });
   if (!store) throw new Error("越谷Storeが見つかりません。");
-  const rows = selectTownStoreGapCandidates(await loadGapApplyPreview(db), store.id);
-  return { store, rows };
+  const allRows = await loadGapApplyPreview(db);
+  const relevant = allRows.filter((row) => row.storeId === store.id);
+  const memberships = await db.castStoreMembership.findMany({ where: { castId: { in: relevant.map((row) => row.castId) }, storeId: store.id }, select: { castId: true, status: true } });
+  const targetStatuses = new Map<string, CastMembershipStatus[]>();
+  for (const membership of memberships) targetStatuses.set(membership.castId, [...(targetStatuses.get(membership.castId) ?? []), membership.status]);
+  const rows = selectTownStoreGapCandidates(relevant, store.id, targetStatuses);
+  const exclusions: StoreGapApplyExclusion[] = relevant.filter((row) => !rows.some((candidate) => candidate.castId === row.castId)).map((row) => {
+    const statuses = targetStatuses.get(row.castId) ?? [];
+    const reason = statuses.includes(CastMembershipStatus.ACTIVE) ? "TARGET_ACTIVE" : statuses.includes(CastMembershipStatus.ON_LEAVE) ? "TARGET_ON_LEAVE" : statuses.includes(CastMembershipStatus.LEFT) ? "TARGET_LEFT_REENTRY" : !row.townCurrent ? "NO_TOWN_CURRENT" : row.legacyStatus !== CastStatus.ACTIVE ? "LEGACY_INACTIVE" : row.displayNameRetiredMarker ? "RETIRED_MARKER" : row.legacyConflict ? "LEGACY_CONFLICT" : "OTHER";
+    return { castId: row.castId, displayName: row.displayName, storeId: row.storeId, reason };
+  });
+  return { store, rows, evaluatedTownCurrent: relevant.filter((row) => row.townCurrent).length, targetActiveExists: relevant.filter((row) => (targetStatuses.get(row.castId) ?? []).includes(CastMembershipStatus.ACTIVE)).length, targetOnLeaveExists: relevant.filter((row) => (targetStatuses.get(row.castId) ?? []).includes(CastMembershipStatus.ON_LEAVE)).length, targetLeftExists: relevant.filter((row) => (targetStatuses.get(row.castId) ?? []).includes(CastMembershipStatus.LEFT)).length, exclusions };
 }
 
 export async function applyTownStoreGapMemberships(keys: Array<{ castId: string; storeId: string }>, confirmation: string, db: Prisma.TransactionClient | typeof prisma = prisma) {
