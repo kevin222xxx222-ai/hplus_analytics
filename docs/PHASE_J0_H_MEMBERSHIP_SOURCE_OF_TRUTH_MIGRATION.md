@@ -131,3 +131,7 @@ H4では、現在の店舗別Cast Scopeを対象に、Legacy（`Cast.status` + `
 初回CanaryではprimaryStoreIdを仮想Legacy baselineとしていたため、実Analytics Readerとの差異が判明した。現在は`fetchAnalyticsSnapshot`のCTI/Town/Heaven fact store scopeをLegacy baselineとして使用し、退店・複数店舗差分を分類する。H4 status: IMPLEMENTATION / CANARY REWORK REQUIRED。
 
 その後のレビューで、全期間Fact（2000年〜現在）もCurrent Scopeではないことを確認した。H4 CLIは仮想baselineを廃止し、現時点では`ANALYTICS CURRENT SCOPE AUDIT COMPLETE / NO SAFE CURRENT-ROSTER READER FOUND`を返す。Historical Fact Scopeは従来どおり維持し、Current Roster Readerの選定後にのみShadow Canaryを再開する。Status: IMPLEMENTATION / BASELINE RESELECTION。
+
+## J0-H5 Town CAST Formal Switch Preparation
+
+Town専用の`TOWN_CAST_MEMBERSHIP_READ_MODE`（`legacy` / `shadow` / `membership`）とRead-only formal-switch Canaryを追加した。Membership modeはCurrent dataset semanticsに限定し、Historical・reparse・任意過去日付ではLegacyへfallbackする。Productionはlegacyのまま。H5 status: CURRENT DATASET CANARY VERIFIED / HISTORICAL-REPROCESS SAFETY PENDING。

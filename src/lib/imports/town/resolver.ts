@@ -69,6 +69,13 @@ export type TownResolverShadowSummary = ReturnType<typeof summarizeCurrentMember
   examples: CurrentMembershipShadowRow[];
 };
 
+export type TownDatasetSemantics = "current" | "historical";
+
+export function effectiveTownCastMode(requestedMode: MembershipReadMode, semantics: TownDatasetSemantics): { mode: MembershipReadMode; membershipEligible: boolean; fallbackReason?: string } {
+  if (requestedMode === "membership" && semantics !== "current") return { mode: "legacy", membershipEligible: false, fallbackReason: "CURRENT_MEMBERSHIP_REQUIRES_CURRENT_DATASET" };
+  return { mode: requestedMode, membershipEligible: requestedMode === "membership" };
+}
+
 function townShadowReason(membershipResult: boolean, cast: TownResolverCast, storeId: string): CurrentMembershipShadowRow["reason"] {
   if (membershipResult) return undefined;
   if (cast.memberships?.length === 0) return "MEMBERSHIP_MISSING";
@@ -81,10 +88,12 @@ function townShadowReason(membershipResult: boolean, cast: TownResolverCast, sto
  * resolved rows as the legacy resolver; the membership comparison is an
  * additional aggregate payload for CLI/audit callers.
  */
-export async function resolveTownPreviewRowsWithShadow(rows: TownPreviewRow[], storeId: string, businessDate: Date, requestedMode = resolveTownCastMembershipReadMode(), exampleLimit = 20): Promise<{ rows: TownPreviewRow[]; shadow: TownResolverShadowSummary | null }> {
-  const resolved = await resolveTownPreviewRows(rows, storeId, businessDate, requestedMode);
+export async function resolveTownPreviewRowsWithShadow(rows: TownPreviewRow[], storeId: string, businessDate: Date, requestedMode = resolveTownCastMembershipReadMode(), exampleLimit = 20, datasetSemantics: TownDatasetSemantics = "historical"): Promise<{ rows: TownPreviewRow[]; shadow: TownResolverShadowSummary | null }> {
+  const effective = effectiveTownCastMode(requestedMode, datasetSemantics);
+  const resolved = await resolveTownPreviewRows(rows, storeId, businessDate, requestedMode === "membership" ? effective.mode : "legacy");
   const mode = requestedMode;
   if (mode === "legacy") return { rows: resolved, shadow: null };
+  if (mode === "membership" && !effective.membershipEligible) return { rows: resolved, shadow: null };
   const [casts] = await Promise.all([
     prisma.cast.findMany({ where: { id: { in: resolved.flatMap((row) => row.castId ? [row.castId] : []) } }, select: { id: true, displayName: true, startedOn: true, endedOn: true, primaryStoreId: true, memberships: { select: { storeId: true, status: true, joinedAt: true, leftAt: true } } } }),
   ]);

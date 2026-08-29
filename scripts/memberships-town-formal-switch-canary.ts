@@ -1,6 +1,7 @@
 import { ImportBatchStatus, ImportDataType } from "@/generated/prisma/client";
 import { readPreview } from "@/lib/imports/storage";
 import { resolveTownPreviewRows } from "@/lib/imports/town/resolver";
+import { resolveTownCastMembershipReadMode } from "@/lib/casts/membership-read";
 import type { TownPreview } from "@/lib/imports/town/types";
 import { prisma } from "@/lib/prisma";
 
@@ -20,7 +21,7 @@ async function main() {
     const changed = a.filter((value, index) => value !== m[index]);
     reports.push({ store: store.shortName, datasetDate: batch.targetTo.toISOString().slice(0, 10), importBatchId: batch.id, evaluated: rows.length, sameRows: legacy.length === membership.length, changedRows: changed.length, changedResolvedCast: changed.filter((value) => value.includes(":EXACT_ALIAS") || value.includes(":NORMALIZED_ALIAS") || value.includes(":NORMALIZED_CAST")).length, changedResolutionStatus: changed.length, changedSkipStatus: 0, legacyRunAComparedToLegacyRunBChangedRows: a.filter((value, index) => value !== b[index]).length, membershipResultRows: membership.length, differences: changed.slice(0, 100) });
   }
-  console.log(JSON.stringify({ mode: "formal-switch-canary", readOnly: true, resolver: "TOWN_CAST", productionResultMode: "legacy", reports }, null, 2));
+  console.log(JSON.stringify({ mode: "formal-switch-canary", readOnly: true, resolver: "TOWN_CAST", productionResultMode: resolveTownCastMembershipReadMode(), reports }, null, 2));
 }
 
 main().catch((error) => { console.error(error instanceof Error ? error.message : error); process.exitCode = 1; }).finally(() => prisma.$disconnect());
