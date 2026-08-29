@@ -34,5 +34,6 @@ COPY --from=builder /app/src/lib/date.ts ./src/lib/date.ts
 COPY --from=builder /app/src/lib/normalize.ts ./src/lib/normalize.ts
 COPY --from=builder /app/src/lib/prisma.ts ./src/lib/prisma.ts
 COPY --from=builder /app/src/lib/casts ./src/lib/casts
+COPY --from=builder /app/src/lib/analytics ./src/lib/analytics
 EXPOSE 3000
 CMD ["npm", "start"]
