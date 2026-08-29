@@ -123,3 +123,7 @@ CTI CAST Resolver向けに、実績日と対象Storeを使ったHistorical Membe
 出力は `MEMBER` / `NOT_MEMBER` / `UNKNOWN` の3値、差分分類、Legacy run A/B差分、ShadowによるLegacy結果差分を含む。Productionは `MEMBERSHIP_READ_MODE=legacy` のままとし、DB・Fact・Alias・Membershipへの書込みは行わない。
 
 Status: J0-H1 COMPLETE / Production VERIFIED、J0-H2 COMPLETE / Production VERIFIED、J0-H3 IMPLEMENTATION（Production Canary未実施）。
+
+## J0-H4 Analytics Current Store Scope Membership Shadow
+
+H4では、現在の店舗別Cast Scopeを対象に、Legacy（`Cast.status` + `primaryStoreId`）とMembership（対象Storeの`ACTIVE`/`ON_LEAVE`）をRead-only比較する基盤を追加した。`npm run memberships:analytics-scope-shadow` は春日部・越谷を対象に差分分類と決定性ガードを出力する。Legacy結果、KPI、ランキング、Historical判定、Production設定は変更しない。
