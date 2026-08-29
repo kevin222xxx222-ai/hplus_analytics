@@ -2,6 +2,7 @@ import { MediaType, type Cast } from "@/generated/prisma/client";
 import type { CtiPreviewRow } from "@/lib/imports/cti/types";
 import { normalizeCastName } from "@/lib/normalize";
 import { prisma } from "@/lib/prisma";
+import { getCastMembershipAsOf, type HistoricalMembershipResult, type MembershipLike } from "@/lib/casts/membership-read";
 
 export type ResolverCast = Pick<Cast, "id" | "displayName" | "startedOn" | "endedOn">;
 export type ResolverAlias = {
@@ -33,6 +34,36 @@ export async function resolvePreviewRows(rows: CtiPreviewRow[], businessDate: Da
   ]);
 
   return rows.map((row) => resolvePreviewRow(row, businessDate, aliases, casts));
+}
+
+export type CtiHistoricalShadowRow = {
+  rowKey: string;
+  sourceSheetName: string;
+  sourceRowNumber: number;
+  castId: string;
+  sourceName: string;
+  storeId: string;
+  datasetDate: Date;
+  legacyResult: "RESOLVED";
+  membershipHistoricalResult: HistoricalMembershipResult;
+  differenceType: "MATCH_MEMBER" | "MATCH_NOT_MEMBER" | "LEGACY_TRUE_MEMBERSHIP_NOT_MEMBER" | "LEGACY_FALSE_MEMBERSHIP_MEMBER" | "MEMBERSHIP_UNKNOWN";
+  memberships: MembershipLike[];
+};
+
+export async function resolveCtiRowsWithHistoricalShadow(rows: CtiPreviewRow[], businessDate: Date, datasetDate = businessDate) {
+  const resolved = await resolvePreviewRows(rows, businessDate);
+  const castIds = [...new Set(resolved.flatMap((row) => row.castId ? [row.castId] : []))];
+  const casts = await prisma.cast.findMany({ where: { id: { in: castIds } }, select: { id: true, memberships: { select: { storeId: true, status: true, joinedAt: true, leftAt: true } } } });
+  const membershipByCast = new Map(casts.map((cast) => [cast.id, cast.memberships]));
+  const shadow: CtiHistoricalShadowRow[] = [];
+  for (const row of resolved) {
+    if (!row.castId || row.resolutionStatus === "SKIPPED" || row.resolutionStatus === "UNMATCHED" || row.resolutionStatus === "AMBIGUOUS") continue;
+    const memberships = membershipByCast.get(row.castId) ?? [];
+    const membershipHistoricalResult = getCastMembershipAsOf({ memberships, storeId: row.storeId, businessDate });
+    const differenceType = membershipHistoricalResult === "UNKNOWN" ? "MEMBERSHIP_UNKNOWN" : membershipHistoricalResult === "MEMBER" ? "MATCH_MEMBER" : "LEGACY_TRUE_MEMBERSHIP_NOT_MEMBER";
+    shadow.push({ rowKey: row.rowKey, sourceSheetName: row.sourceSheetName, sourceRowNumber: row.sourceRowNumber, castId: row.castId, sourceName: row.originalCastName, storeId: row.storeId, datasetDate, legacyResult: "RESOLVED", membershipHistoricalResult, differenceType, memberships });
+  }
+  return { rows: resolved, shadow };
 }
 
 export function resolvePreviewRow(row: CtiPreviewRow, businessDate: Date, aliases: ResolverAlias[], casts: ResolverCast[]) {

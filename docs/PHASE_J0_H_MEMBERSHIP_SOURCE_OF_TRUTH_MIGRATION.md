@@ -115,3 +115,11 @@ Membership modeへの各段階の受入条件は、差分が `MATCH` または�
 8. Legacy参照縮小のDecision Record
 
 本書作成時点では、上記のコード・DB・設定は変更していない。Productionも未変更である。
+
+## J0-H3 CTI Historical Resolver Shadow
+
+CTI CAST Resolver向けに、実績日と対象Storeを使ったHistorical Membership Shadowを実装した。既存Legacy Resolverの解決結果は変更せず、`memberships:cti-resolver-shadow` Read-only CLIで最新・中間・過去の成功Batchを比較する。
+
+出力は `MEMBER` / `NOT_MEMBER` / `UNKNOWN` の3値、差分分類、Legacy run A/B差分、ShadowによるLegacy結果差分を含む。Productionは `MEMBERSHIP_READ_MODE=legacy` のままとし、DB・Fact・Alias・Membershipへの書込みは行わない。
+
+Status: J0-H1 COMPLETE / Production VERIFIED、J0-H2 COMPLETE / Production VERIFIED、J0-H3 IMPLEMENTATION（Production Canary未実施）。
