@@ -26,6 +26,7 @@
     "memberships:town-resolver-shadow": "node --import tsx scripts/memberships-town-resolver-shadow.ts",
     "memberships:cti-resolver-shadow": "node --import tsx scripts/memberships-cti-resolver-shadow.ts",
     "memberships:analytics-scope-shadow": "node --import tsx scripts/memberships-analytics-scope-shadow.ts",
+    "memberships:town-formal-switch-canary": "node --import tsx scripts/memberships-town-formal-switch-canary.ts",
     "memberships:gap-apply": "node --import tsx scripts/apply-membership-gaps.ts",
     "memberships:store-gap-apply": "node --import tsx scripts/memberships-store-gap-apply.ts",
     "drive:test-connection": "node --import tsx scripts/phase-h-drive-test.ts",

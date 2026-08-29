@@ -2,7 +2,7 @@ import { MediaType, type Cast } from "@/generated/prisma/client";
 import type { TownPreviewRow } from "@/lib/imports/town/types";
 import { normalizeCastName } from "@/lib/normalize";
 import { prisma } from "@/lib/prisma";
-import { resolveMembershipReadMode, resolveCurrentMembershipRead, summarizeCurrentMembershipShadow, isCastCurrentMember, type CurrentMembershipShadowRow, type MembershipLike } from "@/lib/casts/membership-read";
+import { resolveTownCastMembershipReadMode, resolveCurrentMembershipRead, summarizeCurrentMembershipShadow, isCastCurrentMember, type CurrentMembershipShadowRow, type MembershipLike, type MembershipReadMode } from "@/lib/casts/membership-read";
 
 export type TownResolverCast = Pick<Cast, "id" | "displayName" | "startedOn" | "endedOn"> & { primaryStoreId?: string | null; memberships?: MembershipLike[] };
 export type TownResolverAlias = {
@@ -18,7 +18,8 @@ function inRange(date: Date, from: Date | null, to: Date | null) {
   return (!from || from <= date) && (!to || to >= date);
 }
 
-function active(cast: TownResolverCast, date: Date) {
+function active(cast: TownResolverCast, date: Date, storeId?: string, mode: MembershipReadMode = "legacy") {
+  if (mode === "membership" && storeId && cast.memberships) return isCastCurrentMember({ memberships: cast.memberships, storeId });
   return cast.startedOn <= date && (!cast.endedOn || cast.endedOn >= date);
 }
 
@@ -33,11 +34,11 @@ function sourceName(row: TownPreviewRow) {
   return null;
 }
 
-export function resolveTownPreviewRow(row: TownPreviewRow, storeId: string, businessDate: Date, aliases: TownResolverAlias[], casts: TownResolverCast[]): TownPreviewRow {
+export function resolveTownPreviewRow(row: TownPreviewRow, storeId: string, businessDate: Date, aliases: TownResolverAlias[], casts: TownResolverCast[], mode: MembershipReadMode = "legacy"): TownPreviewRow {
   if (row.kind === "STORE") return row;
   const name = sourceName(row);
   if (!name) return row;
-  const validAliases = aliases.filter((alias) => alias.storeId === storeId && alias.cast && active(alias.cast, businessDate) && inRange(businessDate, alias.validFrom, alias.validTo));
+  const validAliases = aliases.filter((alias) => alias.storeId === storeId && alias.cast && active(alias.cast, businessDate, storeId, mode) && inRange(businessDate, alias.validFrom, alias.validTo));
   const levels = [
     validAliases.filter((alias) => alias.aliasName.trim() === name.raw.trim()),
     validAliases.filter((alias) => alias.normalizedAlias === name.normalized),
@@ -47,18 +48,18 @@ export function resolveTownPreviewRow(row: TownPreviewRow, storeId: string, busi
     if (result.type === "ONE") return { ...row, castId: result.cast.id, castDisplayName: result.cast.displayName, resolutionStatus: index === 0 ? "EXACT_ALIAS" : "NORMALIZED_ALIAS" };
     if (result.type === "MANY") return { ...row, resolutionStatus: "AMBIGUOUS", issues: [...row.issues, { code: "AMBIGUOUS_CAST", level: "ERROR", message: "対象店舗・期間内のタウンAliasに同名候補が複数あります。" }] };
   }
-  const castResult = unique(casts.filter((cast) => active(cast, businessDate) && normalizeCastName(cast.displayName) === name.normalized).map((cast) => ({ id: cast.id, displayName: cast.displayName })));
+  const castResult = unique(casts.filter((cast) => active(cast, businessDate, storeId, mode) && normalizeCastName(cast.displayName) === name.normalized).map((cast) => ({ id: cast.id, displayName: cast.displayName })));
   if (castResult.type === "ONE") return { ...row, castId: castResult.cast.id, castDisplayName: castResult.cast.displayName, resolutionStatus: "NORMALIZED_CAST" };
   if (castResult.type === "MANY") return { ...row, resolutionStatus: "AMBIGUOUS", issues: [...row.issues, { code: "AMBIGUOUS_CAST", level: "ERROR", message: "対象日の在籍キャストに同じ正規化名の候補が複数あります。" }] };
   return { ...row, resolutionStatus: "UNMATCHED", issues: [...row.issues, { code: "UNMATCHED_CAST", level: "WARNING", message: row.kind === "CAST" ? "内部キャストへ自動紐付けできないため保留します。" : "キャスト名を内部キャストへ紐付けできませんでした。URL実績はキャスト未設定で取込可能です。" }] };
 }
 
-export async function resolveTownPreviewRows(rows: TownPreviewRow[], storeId: string, businessDate: Date) {
+export async function resolveTownPreviewRows(rows: TownPreviewRow[], storeId: string, businessDate: Date, mode: MembershipReadMode = "legacy") {
   const [aliases, casts] = await Promise.all([
     prisma.castAlias.findMany({ where: { mediaType: MediaType.TOWN, storeId, castId: { not: null }, cast: { mergedIntoCastId: null } }, include: { cast: true } }),
-    prisma.cast.findMany({ where: { mergedIntoCastId: null, startedOn: { lte: businessDate }, OR: [{ endedOn: null }, { endedOn: { gte: businessDate } }] } }),
+    prisma.cast.findMany({ where: { mergedIntoCastId: null, ...(mode === "legacy" ? { startedOn: { lte: businessDate }, OR: [{ endedOn: null }, { endedOn: { gte: businessDate } }] } : {}) }, include: mode === "membership" ? { memberships: { select: { storeId: true, status: true, joinedAt: true, leftAt: true } } } : undefined }),
   ]);
-  return rows.map((row) => resolveTownPreviewRow(row, storeId, businessDate, aliases, casts));
+  return rows.map((row) => resolveTownPreviewRow(row, storeId, businessDate, aliases, casts, mode));
 }
 
 export type TownResolverShadowSummary = ReturnType<typeof summarizeCurrentMembershipShadow> & {
@@ -80,8 +81,8 @@ function townShadowReason(membershipResult: boolean, cast: TownResolverCast, sto
  * resolved rows as the legacy resolver; the membership comparison is an
  * additional aggregate payload for CLI/audit callers.
  */
-export async function resolveTownPreviewRowsWithShadow(rows: TownPreviewRow[], storeId: string, businessDate: Date, requestedMode = resolveMembershipReadMode(), exampleLimit = 20): Promise<{ rows: TownPreviewRow[]; shadow: TownResolverShadowSummary | null }> {
-  const resolved = await resolveTownPreviewRows(rows, storeId, businessDate);
+export async function resolveTownPreviewRowsWithShadow(rows: TownPreviewRow[], storeId: string, businessDate: Date, requestedMode = resolveTownCastMembershipReadMode(), exampleLimit = 20): Promise<{ rows: TownPreviewRow[]; shadow: TownResolverShadowSummary | null }> {
+  const resolved = await resolveTownPreviewRows(rows, storeId, businessDate, requestedMode);
   const mode = requestedMode;
   if (mode === "legacy") return { rows: resolved, shadow: null };
   const [casts] = await Promise.all([

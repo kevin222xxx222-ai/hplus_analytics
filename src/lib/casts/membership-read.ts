@@ -55,6 +55,10 @@ export function resolveMembershipReadMode(env: NodeJS.ProcessEnv = process.env):
   return parseMembershipReadMode(env.MEMBERSHIP_READ_MODE);
 }
 
+export function resolveTownCastMembershipReadMode(env: NodeJS.ProcessEnv = process.env): MembershipReadMode {
+  return parseMembershipReadMode(env.TOWN_CAST_MEMBERSHIP_READ_MODE ?? env.MEMBERSHIP_READ_MODE);
+}
+
 export function classifyCurrentMembershipDifference(legacyResult: boolean, membershipResult: boolean): CurrentShadowDifference {
   if (legacyResult === membershipResult) return "MATCH";
   return legacyResult ? "LEGACY_TRUE_MEMBERSHIP_FALSE" : "LEGACY_FALSE_MEMBERSHIP_TRUE";

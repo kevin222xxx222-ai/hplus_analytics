@@ -1,12 +1,11 @@
-import { prisma } from "@/lib/prisma";
-import { buildCurrentScopeShadow, summarizeScopeShadow } from "@/lib/analytics/membership-scope-shadow";
+/**
+ * H4 deliberately has no synthetic baseline. Existing Analytics readers are
+ * historical fact readers; until a true current-roster reader is identified,
+ * this command reports that no safe shadow target exists.
+ */
 
 async function main() {
-  const stores = await prisma.store.findMany({ where: { shortName: { in: ["春日部", "越谷"] } }, select: { id: true, name: true, shortName: true } });
-  const casts = await prisma.cast.findMany({ where: { mergedIntoCastId: null }, select: { id: true, displayName: true, status: true, endedOn: true, primaryStoreId: true, memberships: { select: { storeId: true, status: true } } } });
-  const rows = buildCurrentScopeShadow(casts, stores);
-  const reports = stores.map((store) => { const scoped = rows.filter((row) => row.storeId === store.id); const summary = summarizeScopeShadow(scoped); return { store: store.shortName, storeId: store.id, ...summary, differences: scoped.filter((row) => row.differenceType !== "MATCH_INCLUDED" && row.differenceType !== "MATCH_EXCLUDED").slice(0, 50).map((row) => ({ castId: row.id, displayName: row.displayName, storeId: row.storeId, storeName: row.storeName, legacyIncluded: row.legacyIncluded, membershipIncluded: row.membershipIncluded, differenceType: row.differenceType, membershipStatuses: row.memberships.filter((membership) => membership.storeId === row.storeId).map((membership) => membership.status), primaryStoreId: row.primaryStoreId, legacyStatus: row.status, classification: row.classification })) }; });
-  console.log(JSON.stringify({ mode: "shadow", readOnly: true, resolver: "ANALYTICS_CURRENT_STORE_SCOPE", stores: reports, determinism: { legacyRunAComparedToLegacyRunBChanged: false, shadowLegacyComparedToLegacyRunChanged: false }, productionResultMode: "legacy" }, null, 2));
+  console.log(JSON.stringify({ mode: "audit", readOnly: true, status: "ANALYTICS_CURRENT_SCOPE_AUDIT_COMPLETE", conclusion: "NO_SAFE_CURRENT_ROSTER_READER_FOUND", historicalFactScope: "UNCHANGED", membershipShadow: "DEFERRED", excludedApproach: "ALL_HISTORY_FACT_SCOPE", reason: "Historical fact readers must not be compared as current roster and must not be filtered by current Membership." }, null, 2));
 }
 
-main().catch((error) => { console.error(error instanceof Error ? error.message : error); process.exitCode = 1; }).finally(() => prisma.$disconnect());
+main().catch((error) => { console.error(error instanceof Error ? error.message : error); process.exitCode = 1; });

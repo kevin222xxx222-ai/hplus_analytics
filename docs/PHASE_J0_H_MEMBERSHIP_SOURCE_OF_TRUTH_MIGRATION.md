@@ -127,3 +127,7 @@ Status: J0-H1 COMPLETE / Production VERIFIED、J0-H2 COMPLETE / Production VERIF
 ## J0-H4 Analytics Current Store Scope Membership Shadow
 
 H4では、現在の店舗別Cast Scopeを対象に、Legacy（`Cast.status` + `primaryStoreId`）とMembership（対象Storeの`ACTIVE`/`ON_LEAVE`）をRead-only比較する基盤を追加した。`npm run memberships:analytics-scope-shadow` は春日部・越谷を対象に差分分類と決定性ガードを出力する。Legacy結果、KPI、ランキング、Historical判定、Production設定は変更しない。
+
+初回CanaryではprimaryStoreIdを仮想Legacy baselineとしていたため、実Analytics Readerとの差異が判明した。現在は`fetchAnalyticsSnapshot`のCTI/Town/Heaven fact store scopeをLegacy baselineとして使用し、退店・複数店舗差分を分類する。H4 status: IMPLEMENTATION / CANARY REWORK REQUIRED。
+
+その後のレビューで、全期間Fact（2000年〜現在）もCurrent Scopeではないことを確認した。H4 CLIは仮想baselineを廃止し、現時点では`ANALYTICS CURRENT SCOPE AUDIT COMPLETE / NO SAFE CURRENT-ROSTER READER FOUND`を返す。Historical Fact Scopeは従来どおり維持し、Current Roster Readerの選定後にのみShadow Canaryを再開する。Status: IMPLEMENTATION / BASELINE RESELECTION。
