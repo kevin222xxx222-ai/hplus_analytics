@@ -7,18 +7,21 @@ import { CastExitForm } from "@/components/cast-exit-form";
 import { CastReentryForm } from "@/components/cast-reentry-form";
 import { CastPrimaryStoreForm } from "@/components/cast-primary-store-form";
 import { PageHeader } from "@/components/page-header";
-import { CastStatus } from "@/generated/prisma/client";
+import { CastStatus, StoreCode } from "@/generated/prisma/client";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-export default async function CastsPage({ searchParams }: { searchParams: Promise<{ showMerged?: string; q?: string }> }) {
+export function parseMastersCastsStore(value?: string) { return value === StoreCode.KASUKABE || value === StoreCode.KOSHIGAYA ? value : undefined; }
+
+export default async function CastsPage({ searchParams }: { searchParams: Promise<{ showMerged?: string; q?: string; store?: string }> }) {
   await requireAdmin();
   const params = await searchParams;
   const showMerged = params.showMerged === "true";
   const query = params.q?.trim() ?? "";
+  const selectedStore = parseMastersCastsStore(params.store);
   const [casts, stores] = await Promise.all([
     prisma.cast.findMany({
-      where: showMerged ? { mergedIntoCastId: { not: null } } : { mergedIntoCastId: null, ...(query ? { OR: [{ displayName: { contains: query, mode: "insensitive" } }, { aliases: { some: { aliasName: { contains: query, mode: "insensitive" } } } }] } : {}) },
+      where: showMerged ? { mergedIntoCastId: { not: null } } : { mergedIntoCastId: null, ...(selectedStore ? { memberships: { some: { store: { code: selectedStore }, status: { in: ["ACTIVE", "ON_LEAVE"] } } } } : {}), ...(query ? { OR: [{ displayName: { contains: query, mode: "insensitive" } }, { aliases: { some: { aliasName: { contains: query, mode: "insensitive" } } } }] } : {}) },
       include: {
         primaryStore: true,
         mergedInto: { select: { id: true, displayName: true } },
@@ -35,7 +38,7 @@ export default async function CastsPage({ searchParams }: { searchParams: Promis
     <PageHeader title="キャスト管理" description="内部IDを維持したまま表示名・主所属・在籍状態を管理します。媒体名はAliasとして保持します。" />
     <div className="mb-5 flex flex-wrap gap-3"><Link href="/masters/casts/duplicates" className="secondary-button"><GitMerge className="size-4" />重複候補</Link><Link href="/masters/casts/merges" className="secondary-button"><History className="size-4" />統合履歴</Link><Link href="/masters/casts/start-date-maintenance" className="secondary-button"><CalendarRange className="size-4" />開始日一括前倒し</Link><Link href={showMerged ? "/masters/casts" : "/masters/casts?showMerged=true"} className="secondary-button">{showMerged ? "通常キャストを表示" : "統合済みを表示"}</Link></div>
     <section className="panel mb-6 p-5">
-      <form method="get" className="mb-5 flex flex-wrap items-end gap-3"><div><label className="form-label">キャスト検索</label><input name="q" defaultValue={query} placeholder="表示名・媒体Alias" className="form-input mt-2 w-72" /></div><button className="secondary-button">検索</button>{query && <Link href="/masters/casts" className="text-sm text-slate-500 underline">クリア</Link>}</form>
+      <form method="get" className="mb-5 flex flex-wrap items-end gap-3"><div><label className="form-label">キャスト検索</label><input name="q" defaultValue={query} placeholder="表示名・媒体Alias" className="form-input mt-2 w-72" /></div><div><label className="form-label">店舗</label><select name="store" defaultValue={selectedStore ?? ""} className="form-input mt-2"><option value="">全キャスト</option><option value={StoreCode.KASUKABE}>春日部</option><option value={StoreCode.KOSHIGAYA}>越谷</option></select></div><button className="secondary-button">検索</button>{(query || selectedStore) && <Link href="/masters/casts" className="text-sm text-slate-500 underline">クリア</Link>}</form>
       <h2 className="text-base font-semibold text-slate-900">キャストを登録</h2>
       <form action={createCastAction} className="mt-4 grid gap-4 lg:grid-cols-[1fr_180px_220px_1fr_auto] lg:items-end">
         <div><label className="form-label">キャスト名</label><input name="displayName" required className="form-input mt-2" /></div>
