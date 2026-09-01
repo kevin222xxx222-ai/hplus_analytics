@@ -162,3 +162,9 @@ H6では共通helperやcall site切替を追加していない。次の優先対
 `/masters/casts`は現状、検索・統合除外を行った全Cast一覧であり、店舗別Legacy roster filterは存在しない。Membership側には対象Storeの`ACTIVE`/`ON_LEAVE`のみを返すN+1なしのreaderを追加し、`memberships:masters-roster-shadow`で既存global listとの差分をRead-only確認する。正式UI結果・Cast status・primaryStore・検索・ページングは変更しない。H7 status: IMPLEMENTATION / STORE-SCOPED LEGACY BASELINE REQUIRED。
 
 H8ではStore filterを`store=KASUKABE|KOSHIGAYA`として正式統合する。指定時のみMembership relation filterを適用し、未指定時は既存Global Listを維持する。検索はAND条件、無効値はGlobalへfallbackする。
+
+H8 status: COMPLETE / Production VERIFIED。
+
+## J0-H9 Masters Casts Membership Operations UI
+
+`/masters/casts`の表示を、Membershipを主表示、Cast.statusを「人物状態」、primaryStoreIdを「表示用主店舗（Legacy）」として分離した。StoreごとのACTIVE / ON_LEAVE / LEFTを色だけに依存しない文言Badgeで表示し、既存の在籍追加・Cast単位退店・再入店・履歴リンクActionは変更していない。H9 status: MASTERS CASTS MEMBERSHIP OPERATIONS UI IMPLEMENTATION。
