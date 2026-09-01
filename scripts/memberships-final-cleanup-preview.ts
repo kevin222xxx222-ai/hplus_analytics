@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { isMergedP0Source } from "@/lib/casts/final-cleanup-guard";
 
 async function main() {
   const casts = await prisma.cast.findMany({ where: { mergedIntoCastId: null }, select: { id: true, displayName: true, status: true, endedOn: true, memberships: { select: { status: true } }, aliases: { where: { validTo: null, reviewStatus: { not: "IGNORED" } }, select: { id: true } }, mediaListings: { where: { isListed: true }, select: { id: true } } } });
@@ -21,6 +22,7 @@ async function main() {
       },
     },
   });
-  console.log(JSON.stringify({ readOnly: true, audit: "MEMBERSHIP_FINAL_CLEANUP_PREVIEW", mergedP0: merged, safeInactive: { count: safeInactive.length, details: safeInactive }, mediaConflict: { count: mediaConflict.length, details: mediaConflict }, productionApply: false }, null, 2));
+  const mergedP0 = merged.filter((row) => isMergedP0Source({ mergedIntoCastId: row.mergedIntoCastId, currentMembershipCount: row.memberships.length, currentListingCount: row.mediaListings.length })).map((row) => ({ ...row, applyEligible: row.id === "a9a779a0-328c-4c30-aca3-e715b0d79e1a", classification: row.id === "a9a779a0-328c-4c30-aca3-e715b0d79e1a" ? "TARGET_MEMBERSHIP_DATA_GAP_CONFIRMED" : "MERGED_SOURCE_CURRENT_STATE", closeDate: row.mergedAt?.toISOString().slice(0, 10) ?? null }));
+  console.log(JSON.stringify({ readOnly: true, audit: "MEMBERSHIP_FINAL_CLEANUP_PREVIEW", mergedSourcesTotal: merged.length, mergedSourceClean: merged.filter((row) => row.memberships.length === 0 && row.mediaListings.length === 0).length, mergedP0: mergedP0.length, mergedP0Details: mergedP0, safeInactiveCandidates: safeInactive.length, currentMediaConflict: mediaConflict.length, applyEligibleMergedRepairs: mergedP0.filter((row) => row.applyEligible).length, productionApply: false }, null, 2));
 }
 main().catch((error) => { console.error(error instanceof Error ? error.message : error); process.exitCode = 1; }).finally(() => prisma.$disconnect());

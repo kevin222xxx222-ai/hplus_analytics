@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { validateMergedCleanupCandidate } from "@/lib/casts/final-cleanup-guard";
 
 function option(name: string) { return process.argv.find((arg) => arg.startsWith(`${name}=`))?.slice(name.length + 1); }
 
@@ -13,7 +14,12 @@ async function main() {
     for (const id of [source.id, target.id].sort()) await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${`final-cleanup:${id}`})) IS NULL AS locked`;
     const storeIds = [...new Set(source.memberships.map((m) => m.storeId))];
     for (const storeId of storeIds) {
-      if (target.memberships.some((m) => m.storeId === storeId && (m.status === "ACTIVE" || m.status === "ON_LEAVE"))) continue;
+      const targetCurrentMembership = target.memberships.some((m) => m.storeId === storeId && (m.status === "ACTIVE" || m.status === "ON_LEAVE"));
+      const targetLeftMembership = target.memberships.some((m) => m.storeId === storeId && m.status === "LEFT");
+      const targetCurrentListing = await tx.mediaListing.count({ where: { castId: target.id, storeId, isListed: true } }) > 0;
+      const sourceListingCount = source.mediaListings.filter((listing) => listing.storeId === storeId).length;
+      const guard = validateMergedCleanupCandidate({ mergedIntoCastId: source.mergedIntoCastId, sourceMembershipCount: 1, sourceListingCount, targetHasEquivalentMembership: targetCurrentMembership, targetHasEquivalentListing: targetCurrentListing, targetHasLeftMembership: targetLeftMembership, targetMembershipCreateCandidate: !targetCurrentMembership && targetCurrentListing, mergedAt: source.mergedAt });
+      if (!guard.applyEligible) throw new Error(`対象StoreのCleanupを実行できません: ${guard.blockReasons.join(",")}`);
       if (target.memberships.some((m) => m.storeId === storeId && m.status === "LEFT")) throw new Error("targetにLEFT Membershipがあるため自動再入店を行いません。");
       await tx.castStoreMembership.create({ data: { castId: target.id, storeId, status: "ACTIVE", joinedAt: null, leftAt: null, source: "MERGE_REPAIR", sourceConfidence: "CONFIRMED", note: `merged source ${source.id} のcurrent state引継ぎ` } });
     }
