@@ -40,6 +40,7 @@
     "memberships:j1-cleanup-preview": "node --import tsx scripts/memberships-j1-cleanup-preview.ts",
     "memberships:j1-cleanup-apply": "node --import tsx scripts/memberships-j1-cleanup-apply.ts",
     "memberships:j1-cleanup-audit": "node --import tsx scripts/memberships-j1-cleanup-audit.ts",
+    "memberships:j2-evidence-preview": "node --import tsx scripts/memberships-j2-evidence-preview.ts",
     "drive:test-connection": "node --import tsx scripts/phase-h-drive-test.ts",
     "drive:test-download": "node --import tsx scripts/phase-h-drive-download-test.ts",
     "drive:inspect-folder": "node --import tsx scripts/drive-inspect-folder.ts",
