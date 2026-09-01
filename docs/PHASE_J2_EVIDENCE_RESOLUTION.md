@@ -5,3 +5,11 @@ J1のHuman Review backlogをRead-onlyで横断監査する。Current Membership�
 分類：`EXACT_CLOSE_DATE_CONFIRMED`、`CLOSE_DATE_RANGE_CONFIRMED`、`RETIRED_MARKER_SUPPORTED`、`RETIRED_MARKER_CONFLICT`、`CURRENT_EVIDENCE_STALE_MEDIA_ONLY`、`POSSIBLE_MEMBERSHIP_GAP`、`DUPLICATE_OR_ALIAS_COLLISION`、`INSUFFICIENT_EVIDENCE`。現行Previewは全件をHuman Reviewとして出力し、自動Repairは行わない。Historical Fact単独、最終Town出現日、今日の日付からclose dateを生成しない。
 
 実行：`npm run memberships:j2-evidence-preview`。ProductionではRead-only Canaryのみを行い、結果の再現性（`runAComparedToRunBChangedRows=0`）を確認する。
+
+## J2 Final Close / Production Verified
+
+J2: **EVIDENCE RESOLUTION COMPLETE / PRODUCTION VERIFIED**。
+
+Production最終結果：`backlogTotal=49`、`repairEligibleExact=0`、`reviewRequired=49`、`runAComparedToRunBChangedRows=0`。49件すべて、現時点の既存Evidenceだけでは安全にExact close dateを確定できないことを確認し、自動修復は行わない。
+
+この49件は未解決エラーではなく、「既存Evidenceでは安全にExact dateを確定できない」Human Review backlogとして保持する。終了日を推測せず、明示的な業務根拠とHuman Confirmが得られた場合のみ個別Repairを検討する。Production DB、コード、Schema、Migration、設定への追加変更はない。
