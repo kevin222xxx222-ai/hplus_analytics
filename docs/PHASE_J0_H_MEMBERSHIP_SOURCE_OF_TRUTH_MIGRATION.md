@@ -182,3 +182,7 @@ Read-only drift audit `npm run memberships:legacy-state-drift-audit` を追加�
 ### H11 Review scope refinement
 
 レビュー対象は全Castではなく、(a) `Cast.status=ACTIVE` かつCurrent Membershipが0の非merged Cast、または (b) `mergedIntoCastId` がありCurrent stateを持つmerged source に限定する。正常なCurrent Membershipを持つnon-merged Castは `NOT_REVIEW_TARGET` としてノイズなく除外する。merged sourceは `MERGED_SOURCE_CLEAN`（current Membership/Alias/Listingなし、`NO_ACTION`）と、Membership/Mediaの残存状態別P0 reviewへ分離し、修復は行わない。`primaryStoreId` は表示用Legacy差分として別集計する。H11 status: PRODUCTION CANARY COMPLETE / REVIEW SCOPE REFINEMENT REQUIRED。
+
+## J0-H12 Merged Current State Repair Preparation
+
+`memberships:merged-state-repair-preview` は merged source のP0をStore・mediaType単位で比較するRead-only Previewである。同一Storeのcurrent Membership、同一Store/mediaTypeのcurrent Listingがtargetにも存在する場合のみsource close候補とし、不足resourceは `REVIEW_TARGET_*_MISSING` として自動移管・作成しない。Apply CLIは明示的な `--confirm=CONFIRM`、`MEMBERSHIP_MERGED_REPAIR_ENABLED=true`、`--close-date=YYYY-MM-DD` を要求し、推測日付を使用しない。source/target advisory lock、Serializable transaction、MediaListingHistory保存を維持する。H12 status: MERGED CURRENT STATE REPAIR / IMPLEMENTATION（Production Apply未実施）。
