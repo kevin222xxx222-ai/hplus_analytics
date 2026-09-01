@@ -178,3 +178,7 @@ Read-only drift audit `npm run memberships:legacy-state-drift-audit` を追加�
 ## J0-H11 Legacy Global Lifecycle Drift Review
 
 `memberships:global-lifecycle-review`で、全MembershipがLEFTのACTIVE Castを、退店marker・Current Alias/Listing・最新成功Town CAST evidence・Merge疑いに基づき分類する。`SET_CAST_INACTIVE`やMerge Membership closeはRepair予定値として表示するのみで、Cast/Membership/endedOnの更新は行わない。退店日を推測しない。H11 status: GLOBAL LIFECYCLE DRIFT REVIEW IMPLEMENTATION。
+
+### H11 Review scope refinement
+
+レビュー対象は全Castではなく、(a) `Cast.status=ACTIVE` かつCurrent Membershipが0の非merged Cast、または (b) `mergedIntoCastId` がありCurrent stateを持つmerged source に限定する。正常なCurrent Membershipを持つnon-merged Castは `NOT_REVIEW_TARGET` としてノイズなく除外する。merged sourceは `MERGED_SOURCE_CLEAN`（current Membership/Alias/Listingなし、`NO_ACTION`）と、Membership/Mediaの残存状態別P0 reviewへ分離し、修復は行わない。`primaryStoreId` は表示用Legacy差分として別集計する。H11 status: PRODUCTION CANARY COMPLETE / REVIEW SCOPE REFINEMENT REQUIRED。
