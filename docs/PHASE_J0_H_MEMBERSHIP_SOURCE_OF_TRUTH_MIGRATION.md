@@ -190,3 +190,7 @@ Read-only drift audit `npm run memberships:legacy-state-drift-audit` を追加�
 ### H12.1 Selective Apply Guard
 
 Apply対象は `--source-cast-id` で指定した1つのmerged pairに限定し、Previewが `fullySafe=true` の場合のみ許可する。targetに同一StoreのMembership、同一Store/mediaTypeのListingがないpairはpartial applyを拒否する。`source.mergedAt` がある場合はclose-dateをその日付と一致させ、ない場合は明示日付を要求する。H12.1 status: SELECTIVE HUMAN CONFIRM APPLY GUARD IMPLEMENTATION（Production Apply未実施）。
+
+### H12.2 Target Membership Missing Review
+
+`memberships:merged-target-membership-review` は、merged sourceの各所属Storeについてtarget側のMembership、Alias、MediaListing、最新成功Town CAST、補助CTIをRead-onlyで比較する。targetにACTIVE/ON_LEAVEがあれば作成不要、LEFTのみなら再入店Review、current evidenceが揃いmerge identityが確認できる場合だけ `TARGET_MEMBERSHIP_DATA_GAP_CONFIRMED` をPreview候補とする。Membership作成・source close・Listing変更は本フェーズでは実行しない。joinedAtや退店日を推測せず、targetの既存resourceも変更しない。H12.2 status: TARGET MEMBERSHIP MISSING REVIEW IMPLEMENTATION（Production Apply未実施）。
