@@ -29,6 +29,7 @@
     "memberships:town-formal-switch-canary": "node --import tsx scripts/memberships-town-formal-switch-canary.ts",
     "memberships:masters-roster-shadow": "node --import tsx scripts/memberships-masters-roster-shadow.ts",
     "memberships:legacy-state-drift-audit": "node --import tsx scripts/memberships-legacy-state-drift-audit.ts",
+    "memberships:global-lifecycle-review": "node --import tsx scripts/memberships-global-lifecycle-review.ts",
     "memberships:gap-apply": "node --import tsx scripts/apply-membership-gaps.ts",
     "memberships:store-gap-apply": "node --import tsx scripts/memberships-store-gap-apply.ts",
     "drive:test-connection": "node --import tsx scripts/phase-h-drive-test.ts",

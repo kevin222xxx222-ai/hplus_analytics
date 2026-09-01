@@ -174,3 +174,7 @@ H8 status: COMPLETE / Production VERIFIED。
 Legacy参照をCurrent Store Membership、Person Global State、Display/Default、Historical/Fact、Audit/Migrationへ分類した。店舗所属の正本は`CastStoreMembership`、`Cast.status`は人物global lifecycle、`primaryStoreId`はdisplay/default/Legacy互換、`startedOn`/`endedOn`は人物global・Historical互換として当面維持する。
 
 Read-only drift audit `npm run memberships:legacy-state-drift-audit` を追加した。Cast/Membershipの不整合を分類・表示するだけで、自動修復は行わない。H10 status: LEGACY CAST STATE DEPENDENCY REDUCTION AUDIT IMPLEMENTATION。
+
+## J0-H11 Legacy Global Lifecycle Drift Review
+
+`memberships:global-lifecycle-review`で、全MembershipがLEFTのACTIVE Castを、退店marker・Current Alias/Listing・最新成功Town CAST evidence・Merge疑いに基づき分類する。`SET_CAST_INACTIVE`やMerge Membership closeはRepair予定値として表示するのみで、Cast/Membership/endedOnの更新は行わない。退店日を推測しない。H11 status: GLOBAL LIFECYCLE DRIFT REVIEW IMPLEMENTATION。
