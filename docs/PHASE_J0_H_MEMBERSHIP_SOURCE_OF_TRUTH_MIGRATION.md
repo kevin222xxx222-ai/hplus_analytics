@@ -186,3 +186,7 @@ Read-only drift audit `npm run memberships:legacy-state-drift-audit` を追加�
 ## J0-H12 Merged Current State Repair Preparation
 
 `memberships:merged-state-repair-preview` は merged source のP0をStore・mediaType単位で比較するRead-only Previewである。同一Storeのcurrent Membership、同一Store/mediaTypeのcurrent Listingがtargetにも存在する場合のみsource close候補とし、不足resourceは `REVIEW_TARGET_*_MISSING` として自動移管・作成しない。Apply CLIは明示的な `--confirm=CONFIRM`、`MEMBERSHIP_MERGED_REPAIR_ENABLED=true`、`--close-date=YYYY-MM-DD` を要求し、推測日付を使用しない。source/target advisory lock、Serializable transaction、MediaListingHistory保存を維持する。H12 status: MERGED CURRENT STATE REPAIR / IMPLEMENTATION（Production Apply未実施）。
+
+### H12.1 Selective Apply Guard
+
+Apply対象は `--source-cast-id` で指定した1つのmerged pairに限定し、Previewが `fullySafe=true` の場合のみ許可する。targetに同一StoreのMembership、同一Store/mediaTypeのListingがないpairはpartial applyを拒否する。`source.mergedAt` がある場合はclose-dateをその日付と一致させ、ない場合は明示日付を要求する。H12.1 status: SELECTIVE HUMAN CONFIRM APPLY GUARD IMPLEMENTATION（Production Apply未実施）。
