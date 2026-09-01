@@ -3,6 +3,7 @@ import type { TownPreviewRow } from "@/lib/imports/town/types";
 import { normalizeCastName } from "@/lib/normalize";
 import { prisma } from "@/lib/prisma";
 import { resolveTownCastMembershipReadMode, resolveCurrentMembershipRead, summarizeCurrentMembershipShadow, isCastCurrentMember, type CurrentMembershipShadowRow, type MembershipLike, type MembershipReadMode } from "@/lib/casts/membership-read";
+import { type TownDatasetSemantics } from "@/lib/imports/town/dataset-semantics";
 
 export type TownResolverCast = Pick<Cast, "id" | "displayName" | "startedOn" | "endedOn"> & { primaryStoreId?: string | null; memberships?: MembershipLike[] };
 export type TownResolverAlias = {
@@ -68,8 +69,6 @@ export type TownResolverShadowSummary = ReturnType<typeof summarizeCurrentMember
   evaluated: number;
   examples: CurrentMembershipShadowRow[];
 };
-
-export type TownDatasetSemantics = "current" | "historical";
 
 export function effectiveTownCastMode(requestedMode: MembershipReadMode, semantics: TownDatasetSemantics): { mode: MembershipReadMode; membershipEligible: boolean; fallbackReason?: string } {
   if (requestedMode === "membership" && semantics !== "current") return { mode: "legacy", membershipEligible: false, fallbackReason: "CURRENT_MEMBERSHIP_REQUIRES_CURRENT_DATASET" };

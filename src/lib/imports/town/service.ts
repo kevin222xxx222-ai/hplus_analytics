@@ -7,6 +7,7 @@ import { saveImportFile, writePreview } from "@/lib/imports/storage";
 import { TOWN_DATA_TYPES } from "@/lib/imports/town/columns";
 import { parseTownCsv } from "@/lib/imports/town/parser";
 import { resolveTownPreviewRowsWithShadow } from "@/lib/imports/town/resolver";
+import { determineTownDatasetSemantics } from "@/lib/imports/town/dataset-semantics";
 import type { TownImportDataType, TownIssue, TownPreview } from "@/lib/imports/town/types";
 import { prisma } from "@/lib/prisma";
 
@@ -87,7 +88,8 @@ export async function createTownPreview(input: CreateTownPreviewInput) {
       targetFrom: input.targetFrom, targetTo: input.targetTo,
       expectedExternalStoreId: TOWN_EXTERNAL_STORE_IDS[importSource.store.code] || null,
     });
-    const resolved = await resolveTownPreviewRowsWithShadow(preview.rows, importSource.store.id, targetToDate, undefined, 20, input.metadata?.origin === "GOOGLE_DRIVE" ? "current" : "historical");
+    const metadata = input.metadata ?? {};
+    const resolved = await resolveTownPreviewRowsWithShadow(preview.rows, importSource.store.id, targetToDate, undefined, 20, determineTownDatasetSemantics({ ...metadata, targetFrom: input.targetFrom, targetTo: input.targetTo }));
     preview = { ...preview, rows: resolved.rows, ...(resolved.shadow ? { membershipShadow: resolved.shadow } : {}) };
     if (input.additionalGlobalIssues?.length) preview.globalIssues.push(...input.additionalGlobalIssues);
     if (duplicate) preview.globalIssues.push({ code: "DUPLICATE_COMPLETED_FILE", level: "WARNING", message: "同じハッシュ・種別の完了済みファイルがあります。確定には明示的な再処理指定が必要です。", rawData: { batchId: duplicate.id } });

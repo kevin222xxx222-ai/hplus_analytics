@@ -1,6 +1,6 @@
 import { ImportBatchStatus, ImportDataType } from "@/generated/prisma/client";
 import { readPreview } from "@/lib/imports/storage";
-import { resolveTownPreviewRows } from "@/lib/imports/town/resolver";
+import { effectiveTownCastMode, resolveTownPreviewRows, resolveTownPreviewRowsWithShadow } from "@/lib/imports/town/resolver";
 import { resolveTownCastMembershipReadMode } from "@/lib/casts/membership-read";
 import type { TownPreview } from "@/lib/imports/town/types";
 import { prisma } from "@/lib/prisma";
@@ -16,10 +16,15 @@ async function main() {
     const legacy = await resolveTownPreviewRows(rows, store.id, batch.targetTo, "legacy");
     const legacyAgain = await resolveTownPreviewRows(rows, store.id, batch.targetTo, "legacy");
     const membership = await resolveTownPreviewRows(rows, store.id, batch.targetTo, "membership");
+    const requestedMode = resolveTownCastMembershipReadMode();
+    const currentGuard = effectiveTownCastMode(requestedMode, "current");
+    const historicalGuard = effectiveTownCastMode(requestedMode, "historical");
+    await resolveTownPreviewRowsWithShadow(rows, store.id, batch.targetTo, requestedMode, 0, "current");
+    await resolveTownPreviewRowsWithShadow(rows, store.id, batch.targetTo, requestedMode, 0, "historical");
     const key = (row: typeof legacy[number]) => `${row.rowKey}:${row.castId ?? ""}:${row.resolutionStatus}`;
     const a = legacy.map(key).sort(); const b = legacyAgain.map(key).sort(); const m = membership.map(key).sort();
     const changed = a.filter((value, index) => value !== m[index]);
-    reports.push({ store: store.shortName, datasetDate: batch.targetTo.toISOString().slice(0, 10), importBatchId: batch.id, evaluated: rows.length, sameRows: legacy.length === membership.length, changedRows: changed.length, changedResolvedCast: changed.filter((value) => value.includes(":EXACT_ALIAS") || value.includes(":NORMALIZED_ALIAS") || value.includes(":NORMALIZED_CAST")).length, changedResolutionStatus: changed.length, changedSkipStatus: 0, legacyRunAComparedToLegacyRunBChangedRows: a.filter((value, index) => value !== b[index]).length, membershipResultRows: membership.length, differences: changed.slice(0, 100) });
+    reports.push({ store: store.shortName, datasetDate: batch.targetTo.toISOString().slice(0, 10), importBatchId: batch.id, currentSimulation: { datasetSemantics: "current", requestedMode, effectiveMode: currentGuard.mode, membershipEligible: currentGuard.membershipEligible, fallbackReason: currentGuard.fallbackReason }, historicalSimulation: { datasetSemantics: "historical", requestedMode, effectiveMode: historicalGuard.mode, membershipEligible: historicalGuard.membershipEligible, fallbackReason: historicalGuard.fallbackReason }, evaluated: rows.length, sameRows: legacy.length === membership.length, changedRows: changed.length, changedResolvedCast: changed.filter((value) => value.includes(":EXACT_ALIAS") || value.includes(":NORMALIZED_ALIAS") || value.includes(":NORMALIZED_CAST")).length, changedResolutionStatus: changed.length, changedSkipStatus: 0, legacyRunAComparedToLegacyRunBChangedRows: a.filter((value, index) => value !== b[index]).length, membershipResultRows: membership.length, differences: changed.slice(0, 100) });
   }
   console.log(JSON.stringify({ mode: "formal-switch-canary", readOnly: true, resolver: "TOWN_CAST", productionResultMode: resolveTownCastMembershipReadMode(), reports }, null, 2));
 }

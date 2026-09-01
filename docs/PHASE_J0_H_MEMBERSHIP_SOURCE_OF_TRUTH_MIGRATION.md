@@ -135,3 +135,5 @@ H4では、現在の店舗別Cast Scopeを対象に、Legacy（`Cast.status` + `
 ## J0-H5 Town CAST Formal Switch Preparation
 
 Town専用の`TOWN_CAST_MEMBERSHIP_READ_MODE`（`legacy` / `shadow` / `membership`）とRead-only formal-switch Canaryを追加した。Membership modeはCurrent dataset semanticsに限定し、Historical・reparse・任意過去日付ではLegacyへfallbackする。Productionはlegacyのまま。H5 status: CURRENT DATASET CANARY VERIFIED / HISTORICAL-REPROCESS SAFETY PENDING。
+
+Current semanticsはGoogle Drive由来だけでは成立しない。通常Executeかつ明示`datasetSemantics=current`、単日であることをhelperが検証し、manual・reprocess・過去期間はhistoricalへfallbackする。Canaryはcurrent/historical双方のeffectiveMode、eligibility、fallback理由を出力する。Status: CURRENT DATASET RESOLVER CANARY VERIFIED / HISTORICAL FALLBACK IMPLEMENTED / CURRENT SEMANTICS HARDENING REQUIRED。
