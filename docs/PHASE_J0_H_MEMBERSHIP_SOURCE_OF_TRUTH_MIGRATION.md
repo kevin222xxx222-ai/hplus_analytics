@@ -134,6 +134,29 @@ H4では、現在の店舗別Cast Scopeを対象に、Legacy（`Cast.status` + `
 
 ## J0-H5 Town CAST Formal Switch Preparation
 
-Town専用の`TOWN_CAST_MEMBERSHIP_READ_MODE`（`legacy` / `shadow` / `membership`）とRead-only formal-switch Canaryを追加した。Membership modeはCurrent dataset semanticsに限定し、Historical・reparse・任意過去日付ではLegacyへfallbackする。Productionはlegacyのまま。H5 status: CURRENT DATASET CANARY VERIFIED / HISTORICAL-REPROCESS SAFETY PENDING。
+Town専用の`TOWN_CAST_MEMBERSHIP_READ_MODE`（`legacy` / `shadow` / `membership`）とRead-only formal-switch Canaryを追加した。Membership modeはCurrent dataset semanticsに限定し、Historical・reparse・任意過去日付ではLegacyへfallbackする。Productionはlegacyのまま。H5 status: COMPLETE / Production VERIFIED。
 
 Current semanticsはGoogle Drive由来だけでは成立しない。通常Executeかつ明示`datasetSemantics=current`、単日であることをhelperが検証し、manual・reprocess・過去期間はhistoricalへfallbackする。Canaryはcurrent/historical双方のeffectiveMode、eligibility、fallback理由を出力する。Status: CURRENT DATASET RESOLVER CANARY VERIFIED / HISTORICAL FALLBACK IMPLEMENTED / CURRENT SEMANTICS HARDENING REQUIRED。
+
+## J0-H6 Current Reader Membership Migration Inventory
+
+全コード検索（`src/app`, `src/lib`, `src/components`, `scripts`）では、Legacy在籍項目（`status`, `startedOn`, `endedOn`, `primaryStoreId`）を含む参照が349箇所（テスト・監査・移行スクリプトを含む）確認された。用途を次のように分類した。
+
+| 分類 | 主な箇所 | 判定 | 優先度 |
+| --- | --- | --- | --- |
+| CURRENT_ROSTER_SAFE_CANDIDATE | `/masters/casts` のMembership表示・店舗操作、将来のCurrent roster reader | Membershipへ移行候補。ただし現UIの退店・再入店はCast legacy同期を併用 | P0/P1 |
+| CURRENT_GLOBAL_CAST_STATE | `/masters/casts` の`Cast.status`表示、exit/reentry | 店舗Membershipと人物全体状態を分離して段階移行 | P1 |
+| HISTORICAL_DATE_SCOPE | `src/lib/imports/*/resolver.ts`、`imports/[id]`、start-date maintenance、cast trend | business/target date判定。Current Membershipで置換禁止 | DEFER |
+| FACT_SCOPE | `analytics/integration/query.ts`, diary, goal benchmarks, weekday, data-health | Factの期間・storeIdがscope。Membership filter禁止 | DEFER |
+| DISPLAY_ONLY_LEGACY | cast view-model、performance/dashboard DTO、primary store表示 | 表示/default/互換用途。自動削除・自動修正しない | P2 |
+| AUDIT_OR_MIGRATION | membership gap/shadow/store-scope/date-range audit、reparse/repair scripts | 比較・監査のためLegacy参照を維持 | F |
+
+主要Reader監査：`fetchAnalyticsSnapshot()`はCTI/Town/Heaven Factを期間取得するMixed/FACT_SCOPEであり、Current roster readerではない。`cast-diagnosis/service.ts`、`diary/service.ts`、`integration/service.ts`、`goal-benchmarks.ts`も期間Factを母集団にするため、H6のCurrent Membership切替対象外とした。`/masters/casts`は現在Membershipを表示・操作する最有力のP0候補だが、一覧のLegacy status表示は互換表示として残す。
+
+Alias管理は`CastAlias.validFrom/validTo`とmedia/store scopeを使う期間解決で、Historical resolverとCurrent表示を分離する必要がある。MediaListingは掲載履歴の正本でありMembershipへ統合しない。CTI/Heaven resolverはtarget/business dateを使うHistorical処理のため、Current Membershipへの切替候補外（Town CASTのみH5でCurrent dataset限定切替済み）。selector/dropdownや新規Cast作成フォームの`primaryStoreId`/`startedOn`はP2または別途Human入力改善対象である。
+
+H6では共通helperやcall site切替を追加していない。次の優先対象は、Legacy factを母集団にしない独立したCurrent roster readerを新設または特定した上で、Master UIのCurrent店舗表示をShadowすること。H6 status: CURRENT READER INVENTORY COMPLETE / FORMAL ANALYTICS SWITCH DEFERRED。
+
+## J0-H7 Masters Casts Current Roster Shadow
+
+`/masters/casts`は現状、検索・統合除外を行った全Cast一覧であり、店舗別Legacy roster filterは存在しない。Membership側には対象Storeの`ACTIVE`/`ON_LEAVE`のみを返すN+1なしのreaderを追加し、`memberships:masters-roster-shadow`で既存global listとの差分をRead-only確認する。正式UI結果・Cast status・primaryStore・検索・ページングは変更しない。H7 status: IMPLEMENTATION / STORE-SCOPED LEGACY BASELINE REQUIRED。
