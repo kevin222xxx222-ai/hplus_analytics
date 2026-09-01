@@ -198,3 +198,11 @@ Apply対象は `--source-cast-id` で指定した1つのmerged pairに限定し�
 ## Membership Migration Final Cleanup
 
 H1〜H12の成果を、Current Membership初期化、Cast-level退店・再入店、Legacy conflict repair、Resolver Shadow、Store Scope gap解消、Merged stateのPreview/Selective Guard、target Membership不足Reviewまでとして整理した。最終Cleanup CLIはmerged P0、safe inactive候補、current media conflictを一括Read-only確認する。久るい→るいの引継ぎApplyは明示source ID、Human Confirm、環境ガード、確定mergedAt日付を要求し、target Membership作成・source Membership/Listing終了を1 transactionで実施する設計だがProductionでは未実行である。safe inactive 8件とcurrent media conflict 50件は自動修復せずHuman Review対象とする。
+
+## J0 Final Close / Production Verified
+
+J0 Membership Source-of-Truth Migration: **COMPLETE / PRODUCTION VERIFIED**。
+
+Production最終確認：mergedSourcesTotal 16、mergedSourceClean 16、mergedP0 0、applyEligibleMergedRepairs 0、mergedCurrentStateCandidates 0。Masters Current Rosterは春日部137、越谷82、OTHER 0、Membership determinism 0。Town CASTは`productionResultMode=membership`、changedRows 0、Legacy determinism 0で、Historical datasetは安全性のためLegacy fallbackを維持する。
+
+safeInactiveCandidates 8、currentMediaConflict 49は自動修復せず、J0 blockerではないLegacy Cleanup / Data Quality backlogとしてJ1へ移管する。J0完了に伴い、MembershipをCurrent Store在籍判定の正本とし、Resolverの正式切替はCurrent datasetに限定、Historical処理はLegacy fallbackを継続する。Production DB、コード、Schema、Migration、設定への追加変更はない。
