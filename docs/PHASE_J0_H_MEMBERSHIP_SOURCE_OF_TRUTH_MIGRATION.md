@@ -194,3 +194,7 @@ Apply対象は `--source-cast-id` で指定した1つのmerged pairに限定し�
 ### H12.2 Target Membership Missing Review
 
 `memberships:merged-target-membership-review` は、merged sourceの各所属Storeについてtarget側のMembership、Alias、MediaListing、最新成功Town CAST、補助CTIをRead-onlyで比較する。targetにACTIVE/ON_LEAVEがあれば作成不要、LEFTのみなら再入店Review、current evidenceが揃いmerge identityが確認できる場合だけ `TARGET_MEMBERSHIP_DATA_GAP_CONFIRMED` をPreview候補とする。Membership作成・source close・Listing変更は本フェーズでは実行しない。joinedAtや退店日を推測せず、targetの既存resourceも変更しない。H12.2 status: TARGET MEMBERSHIP MISSING REVIEW IMPLEMENTATION（Production Apply未実施）。
+
+## Membership Migration Final Cleanup
+
+H1〜H12の成果を、Current Membership初期化、Cast-level退店・再入店、Legacy conflict repair、Resolver Shadow、Store Scope gap解消、Merged stateのPreview/Selective Guard、target Membership不足Reviewまでとして整理した。最終Cleanup CLIはmerged P0、safe inactive候補、current media conflictを一括Read-only確認する。久るい→るいの引継ぎApplyは明示source ID、Human Confirm、環境ガード、確定mergedAt日付を要求し、target Membership作成・source Membership/Listing終了を1 transactionで実施する設計だがProductionでは未実行である。safe inactive 8件とcurrent media conflict 50件は自動修復せずHuman Review対象とする。
