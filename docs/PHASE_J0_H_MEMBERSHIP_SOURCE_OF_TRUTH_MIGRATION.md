@@ -168,3 +168,9 @@ H8 status: COMPLETE / Production VERIFIED。
 ## J0-H9 Masters Casts Membership Operations UI
 
 `/masters/casts`の表示を、Membershipを主表示、Cast.statusを「人物状態」、primaryStoreIdを「表示用主店舗（Legacy）」として分離した。StoreごとのACTIVE / ON_LEAVE / LEFTを色だけに依存しない文言Badgeで表示し、既存の在籍追加・Cast単位退店・再入店・履歴リンクActionは変更していない。H9 status: MASTERS CASTS MEMBERSHIP OPERATIONS UI IMPLEMENTATION。
+
+## J0-H10 Legacy Cast State Dependency Reduction Audit
+
+Legacy参照をCurrent Store Membership、Person Global State、Display/Default、Historical/Fact、Audit/Migrationへ分類した。店舗所属の正本は`CastStoreMembership`、`Cast.status`は人物global lifecycle、`primaryStoreId`はdisplay/default/Legacy互換、`startedOn`/`endedOn`は人物global・Historical互換として当面維持する。
+
+Read-only drift audit `npm run memberships:legacy-state-drift-audit` を追加した。Cast/Membershipの不整合を分類・表示するだけで、自動修復は行わない。H10 status: LEGACY CAST STATE DEPENDENCY REDUCTION AUDIT IMPLEMENTATION。
